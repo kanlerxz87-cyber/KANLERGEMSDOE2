@@ -1,0 +1,90 @@
+{
+  "E1": {
+    "evidence": "HOLDOUT-DTI",
+    "evaluator": "KANLER quadrant-blocked OOF v1 (whole-quadrant holdout, 15px collar, 12px domain erosion, visible-only B=2 gate, alpha0.2 beta0.8 300m triangular)",
+    "pooled_dti": 0.12524379452733242,
+    "ci95_foldbootstrap": [
+      0.09675062289707907,
+      0.15658420319400643
+    ],
+    "n_withheld_positives": 56464,
+    "per_fold": {
+      "fold0": {
+        "dti": 0.13148255184017718,
+        "tp": 1235.6847479835683,
+        "fp": 7414.761158694495,
+        "n_truth": 9585,
+        "emitted": 8000,
+        "budget": 8000
+      },
+      "fold1": {
+        "dti": 0.16522972348551965,
+        "tp": 1919.2342753572943,
+        "fp": 9050.52058832772,
+        "n_truth": 11777,
+        "emitted": 9919,
+        "budget": 9919
+      },
+      "fold2": {
+        "dti": 0.08545983270436627,
+        "tp": 1471.8688691173907,
+        "fp": 9118.790061299087,
+        "n_truth": 18881,
+        "emitted": 9793,
+        "budget": 9793
+      },
+      "fold3": {
+        "dti": 0.13620786138009236,
+        "tp": 2013.8548296568565,
+        "fp": 7027.938044997067,
+        "n_truth": 16221,
+        "emitted": 7891,
+        "budget": 7891
+      }
+    }
+  },
+  "E2": {
+    "evidence": "HOLDOUT-DTI",
+    "evaluator": "KANLER quadrant-blocked OOF v1 (whole-quadrant holdout, 15px collar, 12px domain erosion, visible-only B=2 gate, alpha0.2 beta0.8 300m triangular)",
+    "pooled_dti": 0.07483274909934592,
+    "ci95_foldbootstrap": [
+      0.06845228725911721,
+      0.08000022487386454
+    ],
+    "n_withheld_positives": 56464,
+    "per_fold": {
+      "fold0": {
+        "dti": 0.07020572044101021,
+        "tp": 655.6527580802515,
+        "fp": 7699.456555067411,
+        "n_truth": 9585,
+        "emitted": 8000,
+        "budget": 8000
+      },
+      "fold1": {
+        "dti": 0.06702666756974464,
+        "tp": 769.9004187134824,
+        "fp": 9554.495270089177,
+        "n_truth": 11777,
+        "emitted": 9919,
+        "budget": 9919
+      },
+      "fold2": {
+        "dti": 0.07721208555147763,
+        "tp": 1329.1989730344262,
+        "fp": 9221.342566725129,
+        "n_truth": 18881,
+        "emitted": 9793,
+        "budget": 9793
+      },
+      "fold3": {
+        "dti": 0.08108924762597416,
+        "tp": 1191.308521501171,
+        "fp": 7381.318366696509,
+        "n_truth": 16221,
+        "emitted": 7891,
+        "budget": 7891
+      }
+    }
+  }
+}

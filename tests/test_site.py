@@ -48,3 +48,13 @@ def test_status_and_reference_scope_are_visible():
     assert 'No candidate is cleared' in PAGES[0].read_text()
     assert 'no new candidate' in PAGES[1].read_text().lower()
     assert 'no approved TIFF' in PAGES[2].read_text()
+
+
+def test_parallel_legacy_pages_do_not_suggest_an_unverified_outside_fix():
+    guide = (ROOT / 'docs/executive-summary.html').read_text()
+    assert 'cause is unknown' in guide
+    assert 'zero-outside variant is troubleshooting only' in guide
+    assert "Use the shared writer's zero-outside mode" not in guide
+    parallel = (ROOT / 'docs/lane-e1-xg-hgb.html').read_text()
+    assert '99.31%' in parallel and 'registered lattice' in parallel
+    assert 'DO NOT SUBMIT' in parallel

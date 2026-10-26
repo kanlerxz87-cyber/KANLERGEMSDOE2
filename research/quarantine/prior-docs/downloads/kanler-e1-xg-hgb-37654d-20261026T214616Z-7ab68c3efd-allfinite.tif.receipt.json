@@ -1,0 +1,25 @@
+{
+  "file": "kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif",
+  "sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
+  "bytes": 194386,
+  "dots": 37654,
+  "min": 0.0,
+  "max": 1.0,
+  "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "no_nan_anywhere": true,
+    "no_inf_anywhere": true,
+    "values_in_0_1_everywhere": true,
+    "zero_outside_footprint": true,
+    "zero_on_catalogue": true,
+    "nodata_none": true
+  },
+  "all_pass": true,
+  "unique_name": "KANLER-E1-XG-HGB-37654D-7AB68C3EFD",
+  "note": "E1 XG-HGB xgrad+multiphysics 37654d B2 | OOF 0.1252 SGMC 0.0752 vs champ 0.0961 | unique; est ~0.22",
+  "note_chars": 99
+}

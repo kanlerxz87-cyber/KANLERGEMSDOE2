@@ -1,0 +1,53 @@
+{
+  "hypothesis": "Research lead only: persistent ECOSTRESS L2 surface-temperature anomalies may help locate concealed geothermal-fluid conduits; no candidate was implemented or tested.",
+  "mechanism": "Scene-normalized temperature residuals and repeated-observation persistence may expose shallow fluid upflow associated with an unmapped fault, even without a preserved scarp.",
+  "non_fault_mimic": "Solar/topographic illumination, soil moisture and vegetation stress, lithologic emissivity, wildfire, mining, and irrigation.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "shared evaluator pinned; not run on a candidate",
+    "value": null,
+    "n_withheld_positive_pixels": null,
+    "ci95": null,
+    "reason": "No exclusive method lane for this review; organizer-authenticated bytes, fold-local cache, and a frozen comparable current best are not established."
+  },
+  "registry": {
+    "scope": "nine historical priority champions only; NOT full registry",
+    "surface_check": "not run; no candidate surface",
+    "final_dot_directed_pairs": 72,
+    "duplicate_gate_hits": 72,
+    "champion_vs_GEMSDOE36": {
+      "a": "GEMSDOE32",
+      "b": "GEMSDOE36",
+      "spearman_rho": 0.9843213108530009,
+      "fraction_a_dots_within_3px_of_b": 1.0,
+      "duplicate_gate": true,
+      "decoded_pixels_equal_inside_footprint": false
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "not generated; not validated",
+    "historical_files": 9,
+    "historical_format_passes": 9,
+    "scope": "Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated."
+  },
+  "submission_name": null,
+  "note": "Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.",
+  "verdict": "negative",
+  "ok_to_download_and_submit": false,
+  "experiments_used": 0,
+  "integration_review": {
+    "prior_main": "80d3c57",
+    "prior_blindbasin_authorization": "withdrawn",
+    "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
+  },
+  "blockers": [
+    "Missing exclusive method paragraph",
+    "Shared-template ambiguity between peer repositories",
+    "No organizer receipts",
+    "No complete frozen registry surface set",
+    "Organizer-authenticated training bytes, fold-local cache, and a comparable holdout-best are not established",
+    "Competition data page redirects to login; no authenticated DrivenData session",
+    "Public leaderboard snapshot at 2026-10-26 21:52:09 UTC showed #1 0.4437; not a project score or submission receipt"
+  ]
+}
