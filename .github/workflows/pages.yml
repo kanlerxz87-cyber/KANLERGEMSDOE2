@@ -20,11 +20,13 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-      - run: pip install -r requirements.txt
+          cache-dependency-path: requirements-lock.txt
+      - run: pip install -r requirements-lock.txt
       - run: python -m compileall -q scripts tests vendor/template/src
       - run: python scripts/run_tests.py
       - run: python -m pytest -q
       - run: node tests/test_feed.js
+      - run: node --test tests/test_leaderboard_script.cjs
       - run: python scripts/build_site.py
       - run: python scripts/build_k2_site.py --check
       - run: python scripts/check_site.py
