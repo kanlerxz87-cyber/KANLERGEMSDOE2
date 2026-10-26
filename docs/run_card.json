@@ -36,6 +36,11 @@
   "verdict": "negative",
   "ok_to_download_and_submit": false,
   "experiments_used": 0,
+  "integration_review": {
+    "prior_main": "80d3c57",
+    "prior_blindbasin_authorization": "withdrawn",
+    "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
+  },
   "blockers": [
     "Missing exclusive method paragraph",
     "Shared-template ambiguity between peer repositories",

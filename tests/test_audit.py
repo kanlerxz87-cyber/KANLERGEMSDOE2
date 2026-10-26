@@ -52,7 +52,7 @@ class FormatTests(unittest.TestCase):
 class NoveltyTests(unittest.TestCase):
     def test_identical_support(self):
         a=np.zeros((16,16));a[2,2]=1
-        r=compare(a,a,np.ones_like(a,bool));self.assertTrue(r['duplicate_gate']);self.assertEqual(r['spearman_rho'],1)
+        r=compare(a,a,np.ones_like(a,bool));self.assertTrue(r['duplicate_gate']);self.assertAlmostEqual(r['spearman_rho'],1)
     def test_shifted_duplicate(self):
         a=np.zeros((16,16));b=a.copy();a[2,2]=1;b[2,5]=1
         self.assertTrue(compare(a,b,np.ones_like(a,bool))['duplicate_gate'])
@@ -105,3 +105,19 @@ class SharedHoldoutContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):SegmentHoldout(fp,fp,buffer_px=2)
 
 if __name__=='__main__':unittest.main()
+
+class IntegrationSafetyTests(unittest.TestCase):
+    def test_old_card_is_withdrawn(self):
+        card=json.loads((ROOT/'evidence/run_card.json').read_text())
+        self.assertEqual(card['integration_review']['prior_blindbasin_authorization'],'withdrawn')
+        self.assertFalse(card['ok_to_download_and_submit'])
+    def test_old_selector_cannot_approve(self):
+        decision=json.loads((ROOT/'evidence/selector_decision.json').read_text())
+        self.assertFalse(decision['ok_to_submit'])
+        self.assertFalse(decision['slot_approved'])
+    def test_archived_tiffs_not_published(self):
+        self.assertTrue(list((ROOT/'research/quarantine').rglob('*.tif')))
+        self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
+    def test_active_source_has_no_placeholder_canary(self):
+        self.assertFalse((ROOT/'src/features.py').exists())
+        self.assertTrue((ROOT/'vendor/template/src/gems/holdout.py').exists())

@@ -28,3 +28,7 @@
 - This deliverable does NOT fulfill the requested unique high-scoring competition TIFF: no such file passed the prerequisites, and publishing a fake approved download would violate the stronger protocol. Remaining work is recorded in README and run card.
 
 Verification: 16 automated tests passed locally. Actual nine-raster audit was rerun after restoration; SHA-256 data and all comparisons are committed. File-format PASS is not organizer acceptance or scientific validation. Pages publishing and PR merge are checked separately through GitHub.
+
+## Integration re-review (concurrent main)
+
+Main changed after the initial checkout. Resolved conflicts while preserving prior files under `research/quarantine/`. Inspected generator, canary, evaluator and selector line-by-line: synthetic layers, placeholder AUC, normally distributed pseudo-CIs and hard-coded authorization cannot substantiate the prior promotion. Removed these paths from the active/published pipeline, withdrew the old positive card, retained original bytes privately in Git and replaced the selector with a call to the existing fail-closed gate. Added dependency installation to the inherited Pages workflow and removed its build-error-masking shell fallback. Legacy submission URLs now clearly withdraw authorization. This integration adds prior gate tests to the test suite; final test count is recorded by the CI run rather than the earlier 16-test baseline.

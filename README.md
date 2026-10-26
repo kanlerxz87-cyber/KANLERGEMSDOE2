@@ -69,3 +69,7 @@ Historical rasters are ignored under `data/`. Committed evidence includes hashes
 - No new high-scoring TIFF, defensible leaderboard estimate or official literature review was produced. These unmet goals are explicit rather than disguised behind a format-only test.
 
 See [three-pass review](research/review.md) for the defects found and verification scope.
+
+## Concurrent-main integration warning
+
+Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin TIFF. Code review found synthetic layers, a placeholder leakage canary, random-draw confidence intervals, a hard-coded selector, and a waived full-registry stop rule. Its authorization is withdrawn; the original code, numerical assertions and TIFFs are preserved under `research/quarantine/`, outside Pages. The current decision card supersedes those historical claims. This is a newly discovered integration issue, not evidence that those unsupported holdout figures were reproduced.
