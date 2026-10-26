@@ -4,8 +4,13 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '17 7 * * *'
 permissions:
   contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,11 +19,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: pip
       - run: pip install -r requirements.txt
       - run: python scripts/run_tests.py
+      - name: Observe source revisions (not leaderboard scores)
+        if: github.event_name != 'pull_request'
+        # An unreachable source must appear as unavailable on the site, not leave an old PASS.
+        continue-on-error: true
+        run: python scripts/check_source_freshness.py --out docs/source_freshness.json
       - run: python scripts/build_site.py
+      - name: Verify published links
+        run: python scripts/check_site.py
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: docs
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: test
     permissions:
       pages: write
@@ -28,10 +45,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
       - uses: actions/deploy-pages@v4
         id: deployment

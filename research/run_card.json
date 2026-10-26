@@ -1,14 +1,34 @@
 {
-  "hypothesis": "Research lead only: persistent ECOSTRESS L2 surface-temperature anomalies may help locate concealed geothermal-fluid conduits; no candidate was implemented or tested.",
-  "mechanism": "Scene-normalized temperature residuals and repeated-observation persistence may expose shallow fluid upflow associated with an unmapped fault, even without a preserved scarp.",
-  "non_fault_mimic": "Solar/topographic illumination, soil moisture and vegetation stress, lithologic emissivity, wildfire, mining, and irrigation.",
+  "hypothesis": "Research queue leader (unassigned): coherent cross-scarp displacement of K/Th/U texture could reveal unmapped structures; not implemented.",
+  "mechanism": "Patch translation consistency along cached LiDAR scarp orientation, rather than gradient strength or reuse of champion dots.",
+  "non_fault_mimic": "Erosional truncation, lithologic contacts, irrigation boundaries and radiometric survey seams.",
+  "lane": null,
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": "shared evaluator pinned; not run on a candidate",
+    "evaluator_version": "gems-segment-pooled-v1",
     "value": null,
-    "n_withheld_positive_pixels": null,
+    "dti": null,
     "ci95": null,
-    "reason": "No exclusive method lane; competition labels/features and fold-local cache are absent; no frozen comparable current best."
+    "n_withheld_positive_pixels": null,
+    "reason": "No detector evaluated. Whole-component masks cached; no assigned lane or frozen fold-local current-best predictions."
+  },
+  "diagnostics": {
+    "label": "LEAKAGE-CANARY AUC (not a DTI or organizer score)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "raw_channels": 39,
+    "validity_masks": 39,
+    "max_two_polarity_fold_or_pooled_auc": 0.6297168688888889,
+    "passed": true,
+    "context_withheld_positives": 60988,
+    "limitation": "Only raw cached channels and missingness tested; transforms and fitted features require new fold-local canaries.",
+    "evidence": "evidence/raw_feature_canaries.json"
+  },
+  "data": {
+    "peer_mirror_restored": true,
+    "grid_and_hash_audit_passed": true,
+    "organizer_authenticated": false,
+    "report": "evidence/data_preparation.json",
+    "fold_masks": "evidence/segment_folds.json"
   },
   "registry": {
     "scope": "nine historical priority champions only; NOT full registry",
@@ -27,27 +47,32 @@
   "raster_sha256": null,
   "validator_output": {
     "candidate": "not generated; not validated",
-    "historical_files": 9,
-    "historical_format_passes": 9,
-    "scope": "Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated."
+    "no_nan_inside_footprint": null,
+    "range_0_1": null,
+    "crs_match": null,
+    "shape_match": null,
+    "transform_match": null,
+    "single_band": null,
+    "historical_audit": "research/raster_audit.json; nine references only, not a candidate approval"
   },
   "submission_name": null,
-  "note": "Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.",
+  "note": "Negative: data restored and raw canaries pass; no assigned lane, complete registry or frozen best. No candidate or slot.",
   "verdict": "negative",
   "ok_to_download_and_submit": false,
   "experiments_used": 0,
+  "competition_slots_used": 0,
   "integration_review": {
     "prior_main": "80d3c57",
     "prior_blindbasin_authorization": "withdrawn",
     "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
   },
   "blockers": [
-    "Missing exclusive method paragraph",
-    "Shared-template ambiguity between peer repositories",
-    "No organizer receipts",
-    "No complete frozen registry surface set",
-    "No competition training labels/features, fold-local cache, or comparable holdout-best restored",
-    "Competition data page redirects to login; no authenticated DrivenData session",
-    "Public leaderboard snapshot at 2026-10-26 21:52:09 UTC showed #1 0.4437; not a project score or submission receipt"
+    "No exclusive method paragraph was supplied; do not self-assign a concurrent scientific lane.",
+    "No complete frozen surface/final-dot registry; nine historical champions alone cannot certify novelty.",
+    "No comparable current-best predictions rebuilt fold-locally on the frozen whole-component split.",
+    "Raw-feature canaries are not model/transform canaries or holdout performance.",
+    "Peer hashes prove integrity, not official origin; authenticate sample and external-data permissions before a real slot.",
+    "No organizer submission-page receipt or authenticated remaining weekly cap.",
+    "Parallel peers have conflicting template pins; active adapters now use the unchanged vendor/template only."
   ]
 }

@@ -1,25 +1,116 @@
 # KANLERGEMSDOE2 — evidence-first GEMS submission desk
 
-**Start every session here, then read `research/run_card.json`, `research/hypotheses.md` and the evidence manifests.**
+**Start every session here, then read `research/run_card.json` and `research/hypotheses.md`.**
 
-## Current decision — 2026-10-26 UTC
+## Current executive decision — 2026-10-26 UTC
 
-**DO NOT SUBMIT. No new submission TIFF is approved or generated in this session.**
+**DO NOT SUBMIT. There is no approved new competition TIFF.**
 
-The original checkout was a 16-byte README, not the trained project described in the request. We restored nine historical reference rasters strictly for education/audit, retrieved 44 pinned text sources, and vendored the GEMSDOE24 shared tools byte-for-byte using GEMSDOE36's recorded pins. No detector experiment or competition submission was run. There was no supplied exclusive method paragraph. A correct negative result is preferable to a fabricated high-scoring file.
+Data placement has been completed autonomously from a SHA256-pinned peer mirror.
+Raw-feature leakage diagnostics pass. Neither result proves high leaderboard
+performance or full-registry uniqueness. No new detector experiment or weekly
+submission slot was used in this continuation.
 
-- [Executive decision desk](docs/index.html) — per-site table, historical filenames, eligibility, unavailable estimates, provenance.
-- [Submission guide](docs/executive-summary.html) — release gates, range error and upload instructions.
-- [Hypotheses](research/hypotheses.md) — four ranked, untested in-repo mechanisms with layers, signatures, non-fault mimics and feasibility.
-- [External-data source review](research/external-data-candidate-review-20261026.md) — three remote-sensing hypotheses, official product/catalog checks, limitations and next validation gates.
-- [Run card](research/run_card.json), [raster audit](research/raster_audit.json), [source manifest](research/source_manifest.json), and [official page-check evidence](evidence/official-page-check-20261026.json).
-- Expected Pages address after deployment: https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/
+- [Executive comparison: all nine priority sites](docs/index.html)
+- [Submission instructions and range-error guidance](docs/executive-summary.html)
+- [Ranked hypotheses](research/hypotheses.md) · [current run card](research/run_card.json)
+- [Data readiness / band coverage](evidence/data_preparation.json)
+- [Raw feature leakage diagnostics](evidence/raw_feature_canaries.json)
+- [Official reference implementation](https://github.com/drivendataorg/gems-prize-reference-solution)
+- Pages: https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/
 
-### Verified local measurements (RASTER-AUDIT, not scores)
+### Historical champion finding
 
-All nine selected historical whole-grid-finite rasters match the pinned peer-mirrored sample's CRS, shape and geotransform and contain only finite values in [0,1]. All 72 directed cross-site comparisons fail the requested uniqueness rule (>0.90 rank correlation OR >70% of positive pixels within 3 pixels). GEMSDOE25 and GEMSDOE30 are pixel-identical inside the footprint. GEMSDOE32 vs GEMSDOE36 has rho 0.9843 and 100% directional overlap. This does not certify any surface or the full registry: this audit covers only the selected historical final rasters.
+GEMSDOE32's H33 B=2 artifact has the highest **unverified owner-reported** result
+among the requested nine sites. Its reported 0.2778 is not an organizer receipt or
+a prediction for a new upload. Sparse placement and catalogue-flank pruning are
+plausible explanations, not causal proof. All nine selected historical champions
+fail the requested near-duplicate rule against each other; GEMSDOE25 and GEMSDOE30
+are pixel-identical inside the footprint. These are historical **RASTER-AUDIT**
+findings, not a complete-registry certificate. Reusing them cannot meet this request.
+See [exact hashes and pairwise measurements](research/raster_audit.json).
 
-The reported 0.2778 is an **unverified owner report**, not an organizer submission receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. The official public leaderboard was separately fetched at 2026-10-26 21:52:09 UTC and showed rank 1 at 0.4437; this is a time-stamped public-board snapshot, not our score or a submission receipt. It supersedes 0.3195 as a description of the public lead at that timestamp; the prompt's 0.4413 is also stale relative to that snapshot. No score estimate for a new local candidate is available. See [official source checks and new-data hypotheses](research/external-data-candidate-review-20261026.md) and the machine-readable [page-check evidence](evidence/official-page-check-20261026.json).
+The inherited [official-page-check record](evidence/official-page-check-20261026.json)
+is timestamped, not a fresh leaderboard verification in this continuation. The
+prompt's conflicting leader values must not be used as a calibrated score target.
+A public leaderboard snapshot is not a submission-page receipt for our artifact.
+
+## Latest continuation — data placement resolved (2026-10-26, branch b5b715a7)
+
+Read this section **before** the historical session notes above. The merged checkout
+was not empty. PR #6's conflict-marker repairs and source review were integrated,
+not recreated. This continuation executed **zero detector experiments and zero
+competition submissions**. The absent single-method paragraph still prevents
+claiming an exclusive parallel lane. No new competition TIFF is approved.
+
+### Completed autonomously
+
+- Restored the **418,912,844-byte, 19-band training raster**, `labels.tif`,
+  `existing_faults.tif`, `sample_submission.tif`, and all external entries in the
+  pinned manifest. All final bytes match their SHA-256 pins. GitHub API access hit
+  a rate limit; pinned codeload archives succeeded without credentials or manual
+  data placement. See [restoration](evidence/data_restoration.json) and
+  [data/band/coverage audit](evidence/data_preparation.json).
+- Data grids match. The footprint has **5,167,373 pixels** (DATA-AUDIT, not a score).
+  Core bands have missing cells inside it; LiDAR support is incomplete. Radiometric
+  fourth bands carry an alpha display tag despite being quantitative channels;
+  nodata masks take precedence. Core `tc` metadata is ambiguous. Neither sample
+  values nor the byte-identical labels/catalogue are independent hidden truth.
+- Cached whole-component, buffered fold masks under ignored `.cache/segment-folds/`;
+  committed their hashes and counts in [segment_folds.json](evidence/segment_folds.json).
+  **60,988 withheld pixels** describe this split, not a scored detector run.
+- Ran the unchanged shared leakage canary on **39 raw channels + 39 validity masks**.
+  Maximum pooled/fold AUC over both polarities: **0.629717**, below the 0.90 flag
+  threshold (**LEAKAGE-CANARY**, not HOLDOUT-DTI). All diagnostics passed. This does
+  not prove independence, transform safety, prediction quality or novelty.
+- Archived the competing E1 runner/evaluator/writer under
+  `research/quarantine/e1-legacy/`. Active adapters reuse `vendor/template`
+  unchanged. The writer preserves probabilities, rejects NaN/Inf/out-of-range
+  inputs, enforces a safe name and 140-character note, and cannot publish into
+  `docs/`. Format PASS never authorizes upload.
+- Added regression tests for real test discovery, syntax/conflict markers,
+  malformed gate inputs, atomic archive validation and probability preservation.
+  Site rendering no longer overwrites the authoritative scientific run card.
+- Added a read-only daily Git revision monitor and deploys the **built** Pages
+  artifact, not a second unchecked checkout. It does not refresh leaderboard scores,
+  reinterpret older results, or silently change pinned reference rasters.
+
+### Reproduce this continuation
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+PYTHON=.venv/bin/python bash scripts/download_competition_data.sh
+.venv/bin/python scripts/prepare_data.py --out evidence/data_preparation.json
+.venv/bin/python scripts/audit_feature_canaries.py  # pretraining audit, no detector
+.venv/bin/python scripts/run_tests.py
+.venv/bin/python scripts/build_site.py
+.venv/bin/python scripts/check_site.py
+```
+
+All large data/caches remain ignored. Archives are downloaded at pinned revisions
+and only selected entries are extracted; checksums fail closed. Mirror obtainability
+is verified, but organizer origin and external-data permission remain separate.
+
+### Next-session priorities and unresolved limits
+
+1. Use the supplied method paragraph if one exists in the next request; it is absent
+   here. The four ranked in-cache hypotheses in `research/hypotheses.md` remain
+   proposals, not lane claims. Do not repeat the archived XG-HGB experiment as new.
+2. Freeze the **complete** novelty registry, including surfaces and lattice probes;
+   do not exempt dense probes to get a pass. Rebuild a baseline on the same cached
+   whole-component folds using only visible catalogue features.
+3. Test the assigned candidate's *transformed* features and final model, then use
+   the shared paired pooled-DTI comparison. Stop at a duplicate or the three-run /
+   two-hour budget. A score projection remains unavailable, not a fabricated number.
+4. Only after a positive paired improvement, complete novelty checks and exact-byte
+   validation may a separate selector approve a weekly slot. No account/session or
+   remaining cap is available here; no portal action is attempted.
+
+The requested unique **high-scoring** submission is still unmet. Data placement
+is no longer its blocker. A negative run card honestly records the remaining gates.
+The standing brief above is a condensed operational record, not a verbatim archive
+of the entire repeated prompt and historical leaderboard list.
 
 ## Owner's standing project brief (condensed, not a verbatim transcript)
 
@@ -38,44 +129,28 @@ The request in this session is the source of these requirements. This operationa
 11. Perform three passes: implement/verify; find and fix bugs/edge cases; recheck against requirements. Create a PR and merge it when checks permit; record remaining work.
 12. Core values: **Maximize P(Win)** by weighing tradeoffs and evidence; **Own the Outcome** end-to-end, including negative results and failure disclosure. Winning cannot be guaranteed by local proxy metrics.
 
-## Reproduce
 
-```bash
-python -m venv .venv
-.venv/bin/pip install -r requirements.txt
-# Uses GitHub API only. No DrivenData credentials needed. Restores historical references,
-# shared tools, and the mirrored sample/catalogue; does NOT restore training feature stacks.
-python scripts/restore_audit.py
-.venv/bin/python scripts/compare_registry.py
-python scripts/build_site.py
-.venv/bin/python -m unittest discover -s tests -v
-python -m http.server 8000 --bind 0.0.0.0 --directory docs
-```
+## Historical evidence and scientific integrity
 
-`python scripts/audit_sources.py` re-fetches the already pinned tree blobs, NOT a live leaderboard. Tree snapshots were retrieved on the audit date. Updating to newer tree revisions is a separate, reviewable change; do not silently mix a new registry with old measurements.
+Prior E1 results and the earlier withdrawn synthetic-input candidate remain in
+`research/quarantine/`, not as website downloads. E1's incomplete-registry check,
+noncomparable evaluator and SGMC-ratio projection are not promotion evidence.
+The prior implementations are archived byte-for-byte in `research/quarantine/e1-legacy/`.
+Active evaluator/writer adapters now use the unchanged pinned GEMSDOE24 template.
+Cross-project template authority remains a coordination issue, not permission for
+private forks. Original audit notes are in `research/session-history/`.
 
-Historical rasters are ignored under `data/`. Committed evidence includes hashes and metrics, not training data. The source manifest links peer data to pinned GitHub bytes, **not** to independently authenticated organizer files. The mirrored sample is used for geometry/footprint only; its finite values are not model predictions or new hidden-fault truth.
+The four existing in-cache geological hypotheses are proposals, not globally novel
+claims. The inherited external-data review documents official catalog metadata,
+not successful scene retrieval, legal eligibility or geothermal vent discovery.
+The competition target is faults; a detected fault is not a confirmed geothermal vent.
 
-### Shared tooling
+The Git revision monitor is scheduled daily, subject to GitHub Actions availability.
+It never silently refreshes historical scores, baseline predictions or registry pins.
+It is not a live leaderboard feed. An unavailable remote is reported as unavailable.
 
-`vendor/template/` contains unchanged peer code; tests enforce every recorded SHA-256. The canonical choice is provisional: GEMSDOE36 pins GEMSDOE24, while peer evidence says GEMSDOE31 pins 57GEMSDOE. Resolve authority before comparing experiments. Use `gems.holdout.SegmentHoldout` and `gems.submission.write_submission(..., outside='zero')`, not a private metric implementation. The strict local `scripts/validate_raster.py` is an additional range/grid checker, not a competing writer or scientific evaluator. Shared canary needs scikit-learn, which is not required for this audit and is not installed here. The shared `make_note` limit is looser than this protocol; enforce 140 characters independently.
+## Verification
 
-## Limitations and exact next steps
-
-- No exclusive method paragraph, complete registry surface set, frozen best fold predictions or restored feature cache is available locally. Establish those before any experiment; do not perturb an old raster merely to evade novelty.
-- This session fetched the public DrivenData problem page, the public leaderboard, and several official NASA/USGS product pages via the page-reading tool; the competition data page still redirects to login. No authenticated DrivenData session is present. The NLR PDF, Dropbox files, binary NASA/USGS scenes, training labels/features and weekly-cap page were not retrieved. A public hash-pinned mirror is integrity evidence, not authentication of the organizer origin.
-- Retrieve features using peer cache manifests once the method lane is known; verify band names, coverage and hashes. GPU is optional, not universally required: the official reference README explicitly supports CPU-only use.
-- Run candidate canaries, pre-placement novelty, fold-local hide-and-recover and paired baseline comparisons. Publish exact CI/count/version and full-registry final-dot checks. If any gate fails, leave submission disabled.
-- An authenticated selector must check rules and remaining weekly allowance. Save the exact-byte receipt after upload. This site never submits on its own.
-- No new high-scoring TIFF, defensible leaderboard estimate or official literature review was produced. These unmet goals are explicit rather than disguised behind a format-only test.
-
-See [three-pass review](research/review.md) for the defects found and verification scope.
-
-## Concurrent-main integration warning
-
-Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin TIFF. Code review found synthetic layers, a placeholder leakage canary, random-draw confidence intervals, a hard-coded selector, and a waived full-registry stop rule. Its authorization is withdrawn; the original code, numerical assertions and TIFFs are preserved under `research/quarantine/`, outside Pages. The current decision card supersedes those historical claims. This is a newly discovered integration issue, not evidence that those unsupported holdout figures were reproduced.
-
----
-
-## Parallel lane E1 XG-HGB — merged as negative deliverable (2026-10-26)
-A separate lane (supervised 47-channel HistGradientBoosting incl. magnetic×gravity cross-gradient boundary; spacing≥3 px, B=2) was merged after main's evidence-first restructure. Its TIF now lives at `research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif` (quarantine = research only, consistent with this README's DO NOT SUBMIT decision). Results: quadrant-OOF HOLDOUT-DTI 0.1252 [0.097,0.157] (56,464 withheld), canary max AUC 0.580, uniqueness vs 9 focus bests max |ρ| 0.089 / max 3-px overlap 40.9%, format PASS — but SGMC HOLDOUT-DTI 0.0752 vs champion 0.0961, MODEL ESTIMATE ~0.22 < 0.2778 → **verdict negative; do not submit**. Lane page: `docs/lane-e1-xg-hgb.html`; card: `evidence/run_card_e1_xg_hgb.json`. This does not change the current decision above.
+See [three-pass continuation review](research/continuation-review-20261026.md).
+Software fixtures are synthetic unit tests only, never scientific HOLDOUT-DTI.
+Large inputs and caches stay in ignored `data/` and `.cache/`, outside Git/Pages.
