@@ -60,3 +60,19 @@ def test_muted_text_on_k2_tinted_section():
     css = (ROOT / 'docs/assets/site.css').read_text()
     match = re.search(r'--muted:(#[0-9a-fA-F]{6})', css)
     assert match and contrast(match.group(1), '#eaeee4') >= 4.5
+
+
+@pytest.mark.parametrize(('selector', 'background'), [
+    ('.brand small', '#ffffff'),
+    ('.stat-label', '#ffffff'),
+    ('.stat-grid small', '#ffffff'),
+    ('.section-heading>p', '#f6f8f4'),
+    ('thead th', '#f9fbf8'),
+    ('td small', '#ffffff'),
+    ('.proof-card p,.site-card p', '#ffffff'),
+    ('.footer-inner', '#ffffff'),
+])
+def test_decision_desk_small_text_meets_wcag_aa(selector, background):
+    css = (ROOT / 'docs/style.css').read_text()
+    fg = foreground(css, selector)
+    assert contrast(fg, background) >= 4.5, (selector, fg, background)
