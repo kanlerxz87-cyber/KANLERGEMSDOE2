@@ -30,7 +30,7 @@ node tests/test_feed.js
 python scripts/build_k2_site.py --check
 ```
 
-To audit an existing research TIFF's format only, see the [submission guide](docs/k2-how-to-submit.html). The checker cannot authorize a submission. The site is served from the repository root; regenerate its static pages with `python scripts/build_k2_site.py` after updating evidence. The public GitHub Pages setting already points to `main` at `/`.
+To audit an existing research TIFF's format only, see the [submission guide](docs/k2-how-to-submit.html). The checker cannot authorize a submission. The tracked dashboard starts at `index.html`; regenerate it with `python scripts/build_k2_site.py` after updating evidence. The staged Pages workflow publishes only the dashboard, docs and evidence, but the repository setting still also deploys `main` at `/`. Those two deploy paths can race, and a branch build may publish additional public-repository files including quarantined research artifacts. Change Pages to **GitHub Actions** source when the administrator REST quota is available, then verify a fresh deployment; see [IR-PAGES-SOURCE](docs/research/irregularities.md).
 
 ## Original standing request (owner-provided; historical claims below are not verification)
 

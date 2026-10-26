@@ -14,3 +14,14 @@ All findings apply to the pinned snapshots or bytes named below; they are not cl
 | **IR-OUTSIDE** | The exact file responsible for the reported `[0,1]` portal rejection and the server diagnostic are unavailable. The problem description asks for null/NaN outside the bounds; an all-zero-outside variant is not the same sample mask. | Never assert that either variant is accepted or that NaN caused the rejection. `scripts/check_format.py` reopens the exact TIFF and distinguishes local range, masks, and sample-null matching, but never approves a slot. |
 | **IR-SHARED-INPUTS** | All restored inputs are hash-pinned owner mirrors; direct organizer data requires login and external data rights/coverage are not established by their mirror hash. Local band descriptions for `tc` and earthquake-related bands differ in terminology from the problem-page feature summary. | Do not use disputed bands as verified physical measurements without original metadata and provenance checks. |
 | **IR-FORECAST** | Hidden public/private truth, authenticated score-to-file receipts, and a demonstrated cross-family calibration from holdout to leaderboard are unavailable. | `estimated leaderboard score = not estimable`; a HOLDOUT-DTI would be a conditional proxy, never a live score. |
+| **IR-PAGES-SOURCE** | The repository's Pages setting was still **main / (branch source)** when the dashboard was merged. Both GitHub's branch-source deploy and the custom staged-artifact deploy ran successfully on the same commit. Their finish order is not guaranteed: a branch-source build may publish additional repository files, including quarantined research artifacts. Those artifacts are already in the public Git repository and are never approved submissions. | Switch the repository's Pages build type to **GitHub Actions** using an administrator-authorized API or setting, then verify a fresh staged deployment. The authenticated REST core quota was exhausted during this session. Until corrected, do not mistake the staged artifact's absence of TIFFs for an access restriction on the public repository or every possible deployment. |
+
+Once REST quota permits, an authorized agent can switch only the build type and verify it, without changing the branch or any domain setting:
+
+```bash
+gh api --method PUT repos/kanlerxz87-cyber/KANLERGEMSDOE2/pages -f build_type=workflow
+gh api repos/kanlerxz87-cyber/KANLERGEMSDOE2/pages --jq '{build_type, html_url}'
+gh workflow run pages.yml --ref main
+```
+
+Verify the resulting workflow and live URLs. If administration is denied, record the error rather than treating a failed update as effective.
