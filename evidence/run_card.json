@@ -42,7 +42,8 @@
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
-    }
+    },
+    "inherited_archived_E1_lattice_audit": "evidence/parallel-e1-lattice-audit-20261026.json"
   },
   "raster_sha256": null,
   "validator_output": {
@@ -73,6 +74,8 @@
     "Raw-feature canaries are not model/transform canaries or holdout performance.",
     "Peer hashes prove integrity, not official origin; authenticate sample and external-data permissions before a real slot.",
     "No organizer submission-page receipt or authenticated remaining weekly cap.",
-    "Parallel peers have conflicting template pins; active adapters now use the unchanged vendor/template only."
-  ]
+    "Parallel peers have conflicting template pins; active adapters now use the unchanged vendor/template only.",
+    "Concurrent K2 audit records an unavoidable >70% lattice overlap at its 37,654-dot budget; its lane is stopped. Do not exempt the lattice or retune to evade the stop."
+  ],
+  "shared_tool_scope": "These raw canaries use pinned GEMSDOE24 gems-segment-pooled-v1, not the GEMSDOE33 evaluator implicated by the separate K2 defect receipt."
 }

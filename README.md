@@ -1073,3 +1073,13 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```
+
+## Parallel K2 audit integration notice
+
+The separately preregistered K2-SCALE lane remains stopped by its literal registered
+lattice-overlap bound. Its root dashboard and evidence are preserved; they are not
+this continuation's raw-feature audit. See `AGENTS.md`, `evidence/run-card.json`
+(K2) and `research/run_card.json` (data-restoration continuation). Neither authorizes
+a submission. The recorded GEMSDOE33 evaluator defects do not refer to the pinned
+GEMSDOE24 `SegmentHoldout` used for this continuation's raw diagnostics. Do not use
+or privately repair the affected K2 functions.

@@ -1,6 +1,11 @@
+# Large owner-mirror inputs, caches, local virtual environments and intermediate rasters
+.cache/
+/data/
 .venv/
 __pycache__/
-/data/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-.cache/
+_site/

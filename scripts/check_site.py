@@ -4,7 +4,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 import urllib.parse
 
-ROOT = Path(__file__).resolve().parents[1] / 'docs'
+REPO = Path(__file__).resolve().parents[1]
+ROOT = REPO / 'docs'
 
 
 class Links(HTMLParser):
@@ -17,7 +18,7 @@ class Links(HTMLParser):
 
 def check():
     errors = []
-    for path in ROOT.rglob('*.html'):
+    for path in [REPO / 'index.html', *ROOT.rglob('*.html')]:
         parser = Links()
         parser.feed(path.read_text())
         for link in parser.links:
@@ -25,7 +26,8 @@ def check():
             if url.scheme or url.netloc or not url.path:
                 continue
             target = (path.parent / urllib.parse.unquote(url.path)).resolve()
-            if not target.is_relative_to(ROOT.resolve()) or not target.exists():
+            public = (target.is_relative_to(ROOT.resolve()) or target.is_relative_to((REPO / 'evidence').resolve()) or target == REPO / 'index.html')
+            if not public or not target.exists():
                 errors.append(f'{path.name}: unresolved local link {link}')
     # Current decision is negative: no accidental data publication is allowed.
     for suffix in ('*.tif', '*.tiff', '*.zip'):

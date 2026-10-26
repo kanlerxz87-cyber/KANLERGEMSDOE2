@@ -49,3 +49,18 @@ historical code archives remain for traceability; no retired scientific assertio
 is republished. Final integrated suite: **54 tests pass**, including all concurrent
 safety regressions. Clean-index tests/build/link validation were rerun after this
 integration. No new detector or competition slot was added during resolution.
+
+A second concurrent-main advance (`000cf5f`, PR #11) added the stopped K2-SCALE
+lane, its literal lattice-feasibility audit and an additional dashboard. These
+artifacts were retained, not relabeled as this continuation's results. The K2
+GEMSDOE33 template-defect receipt concerns a different pinned evaluator from the
+GEMSDOE24 raw canaries run here. No affected K2 function was used or privately
+patched. The archived E1 lattice audit reinforces its DO NOT SUBMIT decision.
+
+Integrated both dashboards with a visible data-audit link, preserved all K2 tests,
+and published the tested root/docs/evidence layout from one build artifact. Range
+error guidance now explicitly says the cause is unknown without the rejected file;
+a zero-outside variant is troubleshooting only, not proven official compliance.
+Final combined checks: **54 unittest tests, 81 pytest tests, and the Node source-feed
+edge-case suite pass**. These suites overlap; the counts are not additive. No new
+scientific hypothesis experiment or competition slot was used during integration.
