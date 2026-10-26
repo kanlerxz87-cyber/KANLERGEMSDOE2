@@ -9,7 +9,7 @@
     "surface.max_overlap_3px: missing, invalid, or duplicate",
     "dots.max_abs_rank_correlation: missing, invalid, or duplicate",
     "dots.max_overlap_3px: missing, invalid, or duplicate",
-    "Leakage canary absent or failed",
+    "Leakage canary absent, not polarity-normalized, or failed",
     "Missing versioned holdout evidence",
     "Missing or invalid HOLDOUT-DTI",
     "Missing or invalid holdout 95% CI",

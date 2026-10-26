@@ -1,6 +1,6 @@
 # Shared-template corrections and unresolved authority
 
-The locally selected shared template is the pinned GEMSDOE24 package in `vendor/template/`; it is the **only active** metric/holdout/novelty/writer implementation in this repository. Upstream and locally patched SHA-256 values are retained in [pins.json](../vendor/template/pins.json). These changes have **not** been submitted to the upstream peer repository, and peer projects that use a different template do not automatically receive them. The owner prompt did not identify which of the conflicting peer template pins is authoritative across sessions. The older GEMSDOE32-derived E1 code is quarantined, not a second active implementation.
+The locally selected shared template is the pinned GEMSDOE24 package in `vendor/template/`; it is the **selected shared** metric/holdout/novelty/writer implementation for this desk. The retained K2 diagnostic can inspect a separate external GEMSDOE33 pin but did not run a candidate. Upstream and locally patched SHA-256 values are retained in [pins.json](../vendor/template/pins.json). These changes have **not** been submitted to the upstream peer repository, and peer projects that use a different template do not automatically receive them. The owner prompt did not identify which of the conflicting peer template pins is authoritative across sessions. The older GEMSDOE32-derived E1 code is quarantined, not a second active implementation.
 
 ## 1. Isolated marginal-credit helper
 
@@ -14,7 +14,13 @@ The previous shared checker validated only raster shape, could report a pass wit
 
 The corrected helper and checker do not resolve whether a continuous raster should be considered a set of dots in the **owner's intended** policy. The pinned template's present implementation defines dots as positive pixels, and under that literal convention the [GEMSDOE48 witness](../evidence/registry_witness.json) blocks every nonempty candidate. No unapproved semantic change has been made.
 
-## 3. Important remaining limits
+## 3. GEMSDOE24 canary with no background
+
+A synthetic 20×20 four-fold fixture with one positive in each quadrant and no background pixel at least nine pixels from that fold's truth reproduced an additional **GEMSDOE24** defect: the prior shared `SegmentHoldout.canary` returned `passed: true` with `NaN` AUC. The local shared template now rejects folds missing either class and non-finite fold or pooled AUC; it labels the corrected diagnostic `gems-feature-canary-v1.1-fail-closed`. Fold construction and DTI scoring are unchanged. Synthetic tests cover the failure and a valid constant-feature case. These changes are in the one locally selected shared template, transparently pinned and not propagated to the upstream peer.
+
+The independently retained raw-feature canary receipt was produced with the **earlier** GEMSDOE24 pin and has not been recomputed after this patch. Its 78 diagnostics are historical raw-channel results, not a candidate result. The separate GEMSDOE33 empty-canary/mask/registry defects in [the parallel audit](../docs/research/irregularities.md) concern another template and remain unpatched upstream.
+
+## 4. Important remaining limits
 
 - The shared canary accepts one global feature surface. The guarded local CLI permits only declared label-free static surfaces; catalogue-derived features need a fold-specific canary implementation in this same shared template before use. A declaration alone does not prove label independence.
 - The evaluator cannot establish from a saved array that the model was trained without a withheld component; that provenance needs separately reproducible training/fold evidence.

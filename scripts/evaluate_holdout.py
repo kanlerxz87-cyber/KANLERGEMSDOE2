@@ -34,6 +34,9 @@ def load_predictions(directory: Path, count: int):
 
 
 def main():
+    if len(sys.argv) == 1:
+        print("BLOCKED: literal registry stop; independent fold predictions, canaries and a frozen baseline are required.", file=sys.stderr)
+        raise SystemExit(2)
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--predictions", type=Path, required=True, help="directory of fold0.npy ... fold3.npy")
     p.add_argument("--baseline", type=Path, required=True, help="same-fold baseline predictions")

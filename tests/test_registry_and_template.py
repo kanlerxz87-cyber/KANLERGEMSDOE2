@@ -14,6 +14,7 @@ from rasterio.transform import from_origin
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'vendor/template/src'))
 from gems.metric import marginal_inclusion_threshold
+from gems.holdout import SegmentHoldout
 from gems.novelty import compare_registry, compare_prospective_registry
 from scripts.audit_registry_witness import measure
 from scripts.registry_guard import require_candidate_generation_allowed
@@ -77,6 +78,24 @@ class WitnessGeometryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(RuntimeError, 'fail closed'):
                 require_candidate_generation_allowed(Path(tmp))
+
+
+class CanaryTests(unittest.TestCase):
+    def test_empty_background_never_passes(self):
+        foot = np.ones((20, 20), bool); labels = np.zeros_like(foot)
+        for pos in [(4, 4), (4, 15), (15, 4), (15, 15)]: labels[pos] = True
+        context = SegmentHoldout(foot, labels, buffer_px=3)
+        with self.assertRaisesRegex(ValueError, 'no positive or background samples'):
+            context.canary({'constant': np.zeros(foot.shape)})
+
+    def test_defined_canary_and_nonfinite_auc(self):
+        foot = np.ones((80, 80), bool); labels = np.zeros_like(foot)
+        for pos in [(10, 10), (10, 60), (60, 10), (60, 60)]: labels[pos] = True
+        context = SegmentHoldout(foot, labels, buffer_px=3)
+        self.assertTrue(context.canary({'constant': np.zeros(foot.shape)})['passed'])
+        with mock.patch('sklearn.metrics.roc_auc_score', return_value=float('nan')):
+            with self.assertRaisesRegex(ValueError, 'Undefined canary AUC'):
+                context.canary({'constant': np.zeros(foot.shape)})
 
 
 class ThresholdTests(unittest.TestCase):

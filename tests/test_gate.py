@@ -21,3 +21,13 @@ class GateTests(unittest.TestCase):
         c=self.valid();del c['holdout']['dti'];self.assertEqual(check(c)['verdict'],'negative')
     def test_missing_fold_local(self):
         c=self.valid();del c['holdout']['fold_local_features'];self.assertEqual(check(c)['verdict'],'negative')
+
+    def test_canary_must_be_polarity_normalized(self):
+        c=self.valid();c['max_feature_alone_auc']=.1;self.assertEqual(check(c)['verdict'],'negative')
+    def test_bool_is_not_positive_count(self):
+        c=self.valid();c['holdout']['withheld_positives']=True;self.assertEqual(check(c)['verdict'],'negative')
+    def test_empty_note_rejected(self):
+        c=self.valid();c['note']=' ';self.assertEqual(check(c)['verdict'],'negative')
+    def test_boundaries_are_allowed(self):
+        c=self.valid();c['max_feature_alone_auc']=.9;c['dots']['max_overlap_3px']=.7
+        c['surface']['max_abs_rank_correlation']=.9;self.assertTrue(check(c)['eligible_for_selector'])

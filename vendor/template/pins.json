@@ -7,7 +7,8 @@
     "gems.submission.make_note enforces a 200-character limit; the owner protocol requires <= 140. GEMSDOE36 does not call make_note and enforces <= 140 in scripts/build_h36_submission.py.",
     "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant).",
     "Local canonical metric.py correction: isolated break-even helper must be alpha*current_DTI when alpha+beta=1; upstream alpha*s/(1-alpha*s) is not generally valid. See research/template-fixes.md. The actual DTI metric was not changed.",
-    "Local canonical novelty.py correction: fail closed for empty/undefined references, require matching CRS/transform/shape/bands, and preserve literal gating even when controls are classified diagnostically. See research/template-fixes.md."
+    "Local canonical novelty.py correction: fail closed for empty/undefined references, require matching CRS/transform/shape/bands, and preserve literal gating even when controls are classified diagnostically. See research/template-fixes.md.",
+    "Local canonical holdout.py correction: feature canaries fail closed on missing positives/background or non-finite AUC; no scoring/fold change. See research/template-fixes.md."
   ],
   "files": [
     {
@@ -24,9 +25,11 @@
       "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
       "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
       "upstream_path": "src/gems/holdout.py",
-      "sha256": "34fb7f12e849280c8162d5c433aa972f70746ddecf1a289ce3a9c81144b344dc",
-      "bytes": 26813,
-      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/holdout.py"
+      "sha256": "a99956b749e58bed00b2dd17fca05bbd3ce69a59cd5ce31067659ca98f5b6d32",
+      "bytes": 27289,
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/holdout.py",
+      "upstream_sha256": "34fb7f12e849280c8162d5c433aa972f70746ddecf1a289ce3a9c81144b344dc",
+      "local_patch": "Fail closed when any canary fold lacks a class or produces non-finite AUC; no DTI or fold generation change."
     },
     {
       "local": "src/gems/metric.py",

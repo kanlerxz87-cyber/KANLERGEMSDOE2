@@ -22,8 +22,8 @@ def check(card):
         for name, limit in [('max_abs_rank_correlation', .90), ('max_overlap_3px', .70)]:
             if not _number(values.get(name), 0, limit):
                 errors.append(f'{stage}.{name}: missing, invalid, or duplicate')
-    if not _number(card.get('max_feature_alone_auc'), 0, .90):
-        errors.append('Leakage canary absent or failed')
+    if not _number(card.get('max_feature_alone_auc'), .50, .90):
+        errors.append('Leakage canary absent, not polarity-normalized, or failed')
     h = _object(card.get('holdout'))
     count = h.get('withheld_positives')
     if h.get('label') != 'HOLDOUT-DTI' or not isinstance(h.get('evaluator_version'), str) or not h['evaluator_version'].strip() or type(count) is not int or count <= 0:

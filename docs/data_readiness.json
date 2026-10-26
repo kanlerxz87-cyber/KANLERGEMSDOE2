@@ -2,6 +2,7 @@
   "evidence_class": "DATA-INTEGRITY (not an organizer score)",
   "core_mirror_ready": true,
   "ready": true,
+  "training_authorized": false,
   "organizer_authenticated": false,
   "scientific_promotion_ready": false,
   "scientific_promotion_reason": "Data placement alone cannot establish lane, leakage, holdout improvement, complete-registry novelty or selector approval.",

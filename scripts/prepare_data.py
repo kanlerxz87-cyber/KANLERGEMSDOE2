@@ -20,7 +20,10 @@ CORE = ("training_features", "labels", "existing_faults", "sample_submission")
 OPTIONAL = ("ext_geodawn_rad_u8", "ext_geodawn_extensions_u8", "ext_lidar_scarp_features_u8")
 
 
-def inspect(data_dir: Path, manifest: dict) -> dict:
+def inspect(data_dir: Path, manifest: dict | None = None) -> dict:
+    data_dir = Path(data_dir)
+    if manifest is None:
+        manifest = json.loads(MANIFEST.read_text())
     by_id = {row["id"]: row for row in manifest["files"]}
     checks = {}
     for key in CORE + OPTIONAL:
@@ -86,6 +89,7 @@ def inspect(data_dir: Path, manifest: dict) -> dict:
         "evidence_class": "DATA-INTEGRITY (not an organizer score)",
         "core_mirror_ready": core_ready,
         "ready": core_ready,
+        "training_authorized": False,
         "organizer_authenticated": False,
         "scientific_promotion_ready": False,
         "scientific_promotion_reason": "Data placement alone cannot establish lane, leakage, holdout improvement, complete-registry novelty or selector approval.",
@@ -103,7 +107,7 @@ def inspect(data_dir: Path, manifest: dict) -> dict:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
-    parser.add_argument("--output", type=Path, default=ROOT / "data/prepared_manifest.json")
+    parser.add_argument("--output", "--out", dest="output", type=Path, default=ROOT / "data/prepared_manifest.json")
     args = parser.parse_args()
     result = inspect(args.data_dir, json.loads(MANIFEST.read_text()))
     args.output.parent.mkdir(parents=True, exist_ok=True)
