@@ -1,0 +1,11 @@
+# Competition data and model outputs are not committed.
+data/
+*.tif
+*.tiff
+*.zip
+*.pt
+*.pth
+*.ckpt
+__pycache__/
+*.py[cod]
+.venv/

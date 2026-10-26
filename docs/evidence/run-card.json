@@ -1,0 +1,33 @@
+{
+  "schema_version": "gems-research-run-card-v1",
+  "review_date_utc": "2026-10-26",
+  "hypothesis": "Cross-scale edge-decoupling at buried basement steps may expose concealed faults beneath conductive cover.",
+  "mechanism": "Use only the official provided conductivity, depth-to-conductive-base, gravity anomaly/slope, and TMI gradient layers; derive multi-scale oriented ridges and measure persistent shallow/deep edge separation. This is a preregistered hypothesis only; no raster was built.",
+  "named_non_fault_mimic": "Lithologic contacts and basin geometry; also fluvial terraces, alluvial-fan margins, volcanic-flow boundaries, and anthropogenic linear features.",
+  "experiments_used": 0,
+  "experiments_budget": 3,
+  "time_budget_hours": 2,
+  "weekly_slots_used": 0,
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN — no competition features, labels, shared evaluator, or cached stack in checkout",
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "value": null,
+    "ci95": null
+  },
+  "correlation_overlap_vs_registry": {
+    "surface_before_placement": "NOT RUN — no surface or registry rasters",
+    "final_dots": "NOT RUN — no placed dots or registry rasters",
+    "literal_lane_thresholds": {
+      "absolute_spearman_max": 0.9,
+      "within_3_pixels_max_fraction": 0.7
+    }
+  },
+  "raster_sha256": "NOT GENERATED",
+  "validator_output": "NOT RUN — no candidate TIFF or official sample template; checker unit tests use synthetic fixtures only",
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative",
+  "verdict_reason": "No evidence is available to authorize a competition submission. This is a fail-closed procedural negative, not evidence the geological hypothesis is false."
+}
