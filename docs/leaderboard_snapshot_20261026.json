@@ -1,0 +1,18 @@
+{
+  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "retrieved": "2026-10-26 (fetch_page tool, public leaderboard; private test set performance is not shown)",
+  "label": "ORGANIZER-PUBLISHED PUBLIC LEADERBOARD (read 2026-10-26; time-varying)",
+  "top": [
+    {"rank": 1, "team": "xiaofanhu", "public_dti": 0.4437, "submissions": 31},
+    {"rank": 2, "team": "cfld__", "public_dti": 0.3916, "submissions": 18},
+    {"rank": 3, "team": "Batik Shirt Brothers", "public_dti": 0.3904, "submissions": 53},
+    {"rank": 4, "team": "BrandenKMurray", "public_dti": 0.3724, "submissions": 32},
+    {"rank": 5, "team": "No Fault of Our Own", "public_dti": 0.3561, "submissions": 44},
+    {"rank": 6, "team": "joeyfezster", "public_dti": 0.3447, "submissions": 40},
+    {"rank": 7, "team": "JerryDataWorks", "public_dti": 0.3418, "submissions": 22},
+    {"rank": 8, "team": "alexoktaba", "public_dti": 0.3416, "submissions": 34},
+    {"rank": 9, "team": "DARD", "public_dti": 0.3398, "submissions": 28},
+    {"rank": 10, "team": "Azazel", "public_dti": 0.3379, "submissions": 9}
+  ],
+  "reconciliation": "Prompt cites leaderboard bests 0.4413 and (earlier) 0.3195. Both are stale snapshots of a moving board: 0.4437 was rank 1 when read on 2026-10-26, and 0.3195 would no longer be in the top 20 (rank 20 = 0.3273). The nine focus sites' best (0.2778 OWNER-REPORTED) is far below the current public top-10 threshold (0.3379). Public scores are computed on the public chunk of expert-labelled new faults; Initial Prize Round uses the private set (problem page, fetched same day)."
+}

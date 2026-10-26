@@ -1,0 +1,237 @@
+[
+  {
+    "feature": "raw_mag_anom",
+    "auc_abs": 0.5093672972551978,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_rtp",
+    "auc_abs": 0.5026555394503838,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_tmi_hg",
+    "auc_abs": 0.5290336831835771,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_geod_2ndinv",
+    "auc_abs": 0.5751118977093854,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_iso_grav_anom_slope",
+    "auc_abs": 0.5350369473093067,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_tc",
+    "auc_abs": 0.5564385245458122,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_geod_shearrate",
+    "auc_abs": 0.5738048263182921,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_geod_dilaterate",
+    "auc_abs": 0.5277426556453728,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_tmi_vg",
+    "auc_abs": 0.5137906051190397,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_deq_n100a15",
+    "auc_abs": 0.5541370064192956,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_iso_grav_anom_vg",
+    "auc_abs": 0.5298718678674493,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_det_elev",
+    "auc_abs": 0.5154020281038894,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_iso_grav_anom",
+    "auc_abs": 0.543419593567587,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_tmi",
+    "auc_abs": 0.5115900731701318,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_depth_to_base_surf",
+    "auc_abs": 0.5124790119777661,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_ieq_n100a15",
+    "auc_abs": 0.5737162591001509,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_cond_surf",
+    "auc_abs": 0.5174628324834394,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_iso_grav_anom_hg",
+    "auc_abs": 0.5005160104446776,
+    "leakage_flag": false
+  },
+  {
+    "feature": "raw_det_elev_slope",
+    "auc_abs": 0.5617178046500951,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_rtp",
+    "auc_abs": 0.534869843001902,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_tmi",
+    "auc_abs": 0.5306479094248049,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_grav",
+    "auc_abs": 0.5387079040139043,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_elev",
+    "auc_abs": 0.5773301670410572,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_cond",
+    "auc_abs": 0.5056240869925231,
+    "leakage_flag": false
+  },
+  {
+    "feature": "grad_depth",
+    "auc_abs": 0.5354160195858202,
+    "leakage_flag": false
+  },
+  {
+    "feature": "line_rtp",
+    "auc_abs": 0.5025585607004657,
+    "leakage_flag": false
+  },
+  {
+    "feature": "line_grav",
+    "auc_abs": 0.5015492020971339,
+    "leakage_flag": false
+  },
+  {
+    "feature": "line_elev",
+    "auc_abs": 0.505561236308782,
+    "leakage_flag": false
+  },
+  {
+    "feature": "xgrad_mag_grav",
+    "auc_abs": 0.5286403785990686,
+    "leakage_flag": false
+  },
+  {
+    "feature": "tilt_abs",
+    "auc_abs": 0.5007585156506198,
+    "leakage_flag": false
+  },
+  {
+    "feature": "tilt_zero",
+    "auc_abs": 0.5007585198727619,
+    "leakage_flag": false
+  },
+  {
+    "feature": "rad_K",
+    "auc_abs": 0.5654811569898996,
+    "leakage_flag": false
+  },
+  {
+    "feature": "rad_Th",
+    "auc_abs": 0.5533027277087296,
+    "leakage_flag": false
+  },
+  {
+    "feature": "rad_U",
+    "auc_abs": 0.5261645233488556,
+    "leakage_flag": false
+  },
+  {
+    "feature": "rad_TC",
+    "auc_abs": 0.5569030635944776,
+    "leakage_flag": false
+  },
+  {
+    "feature": "ext_ThK",
+    "auc_abs": 0.5164693287613957,
+    "leakage_flag": false
+  },
+  {
+    "feature": "ext_UK",
+    "auc_abs": 0.5371135990276775,
+    "leakage_flag": false
+  },
+  {
+    "feature": "ext_UTh",
+    "auc_abs": 0.5428865019348068,
+    "leakage_flag": false
+  },
+  {
+    "feature": "ext_TMIup150",
+    "auc_abs": 0.5109023554223782,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_ex",
+    "auc_abs": 0.5660662891470453,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_step",
+    "auc_abs": 0.5671055242834656,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_dipole",
+    "auc_abs": 0.5798317566160557,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_lap",
+    "auc_abs": 0.5721812213058307,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_cross",
+    "auc_abs": 0.5756017839165082,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_coh",
+    "auc_abs": 0.509467138986358,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_relief",
+    "auc_abs": 0.5670976039548764,
+    "leakage_flag": false
+  },
+  {
+    "feature": "lid_valid",
+    "auc_abs": 0.5221382945415493,
+    "leakage_flag": false
+  }
+]

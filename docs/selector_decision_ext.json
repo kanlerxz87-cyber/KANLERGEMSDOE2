@@ -1,0 +1,14 @@
+{
+  "lane": "KANLER-EXT-CORROB (Exp3 EMIT = MCSUP surface @44,090 dots)",
+  "gate_input_summary": "paired_improvement_ci95 uses independent-CI bound (conservative); true paired fold diff also crosses zero (E1 >= EXP3 in 3 of 4 folds)",
+  "verdict": "negative",
+  "eligible_for_selector": false,
+  "authorized_to_submit": false,
+  "errors": [
+    "Registry coverage unverified",
+    "No positive paired 95% CI against current holdout best"
+  ],
+  "ok_to_submit": false,
+  "slot_approved": false,
+  "reason": "Fail-closed selector: no positive paired improvement vs frozen holdout best and registry scope incomplete. Format validity is insufficient."
+}
