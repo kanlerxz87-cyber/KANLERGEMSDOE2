@@ -1,0 +1,30 @@
+{
+  "generated_utc": "2026-10-26T22:50:08.257010+00:00",
+  "reference": "Ben-David, Blitzer, Crammer, Kulesza, Pereira & Vaughan (2010), Machine Learning 79(1-2):151-175",
+  "source_domain": {
+    "name": "1m_USGS_3DEP_LiDAR_covered",
+    "pixels": 3894460,
+    "footprint_fraction": 0.753663,
+    "catalogue_positive_pixels": 48465
+  },
+  "target_domain": {
+    "name": "1m_LiDAR_void_bridged_by_10m_3DEP",
+    "pixels": 1272913,
+    "footprint_fraction": 0.246337,
+    "catalogue_positive_pixels": 12523
+  },
+  "empirical_proxy_d_HDeltaH": {
+    "raw_30ch_with_missing_lidar_nans": 2.0,
+    "quantile_aligned_10m_dem_and_geophysics": 0.0,
+    "aligned_domain_discriminator_auc": 0.340109,
+    "note": "Empirical proxy d_HDeltaH estimated on spatially blocked 15 km tiles via HGB class; full theoretical bound epsilon_T <= epsilon_S + 0.5*d_HDeltaH + lambda also depends on unknown unobservable joint error lambda on hidden expert faults."
+  },
+  "calibrated_oof_surface_parity": {
+    "source_mean": 0.126387,
+    "target_mean": 0.122832,
+    "source_p99": 0.562368,
+    "target_p99": 0.548473,
+    "emitted_dot_fraction_in_gap": 0.24441,
+    "true_area_fraction_in_gap": 0.246337
+  }
+}

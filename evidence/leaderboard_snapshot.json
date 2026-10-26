@@ -1,8 +1,0 @@
-{
-  "evidence_class": "ORGANIZER-PUBLIC-LEADERBOARD-SNAPSHOT",
-  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
-  "observed_utc": "2026-10-26T22:10:00Z",
-  "top_public_dti": "0.4437",
-  "scope": "Public leaderboard rank one, not a team submission receipt, hidden/private score, or prediction.",
-  "retrieval": "Organizer page read through web fetch; time recorded to the minute. Public snapshots can lag or change."
-}

@@ -1,11 +1,15 @@
-# Large owner-mirror inputs, caches, local virtual environments and intermediate rasters
-.cache/
-/data/
-.venv/
+# Keep workspace and snapshots lightweight (<15 MB); bulk rasters live in GEMS_DATA_DIR or data/ (ignored)
 __pycache__/
 *.py[cod]
-*.partial
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-/_site/
+.venv/
+.cache/
+build/
+dist/
+/data/
+!docs/data/
+submissions/*.tif
+submissions/*.zip
+*.partial.npy
