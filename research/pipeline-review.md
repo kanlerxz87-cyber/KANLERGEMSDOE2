@@ -44,7 +44,7 @@ The supplied highest-score claims conflict, and no organizer receipt resolves th
 5. At most three experiments or two hours. Publish pooled HOLDOUT-DTI, withheld-positive count, evaluator hash/version, spatial 95% CI and paired improvement CI against the current best. Only then stage a candidate and check final-dot novelty.
 6. A separate selector verifies exact artifact bytes and authenticated remaining weekly allowance. No automated slot was spent here.
 
-The full repeated owner prompt has **not** been preserved verbatim; README contains a condensed standing brief. This remains an unmet documentation request rather than a false claim of completeness.
+At the time of this pipeline review, the full repeated owner prompt had not yet been preserved verbatim. Follow-up commit `8e40c5f` added it to the README under `Original Prompt Specification`; the concise operational summary remains above it. This resolves the earlier documentation gap while keeping the current safety decision prominent.
 
 ### Final verification record
 

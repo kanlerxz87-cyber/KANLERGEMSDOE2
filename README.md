@@ -74,7 +74,7 @@ The owner-mirrored sample matches the mirrored training labels rather than the a
 
 ## Integration of parallel work on main
 
-Other sessions merged independent evidence while this lane was running. Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
+Other sessions merged independent evidence while this lane was running. Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
 
 ## Original Prompt Specification
 
