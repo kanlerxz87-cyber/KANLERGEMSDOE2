@@ -17,10 +17,6 @@ jobs:
       - run: python -m pip install -r requirements-validation.txt
       - run: python -m unittest discover -s tests -v
       - run: python scripts/build_site.py
-      - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request'
-        with:
-          path: docs
   deploy:
     if: github.event_name != 'pull_request'
     needs: test
@@ -32,5 +28,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
       - uses: actions/deploy-pages@v4
         id: deployment

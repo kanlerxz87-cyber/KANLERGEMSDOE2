@@ -1,45 +1,125 @@
-# KANLERGEMSDOE2 — evidence-first GEMS submission research
+# KANLERGEMSDOE2 — DOE GEMS Prize Fault Discovery
 
-**START HERE EVERY SESSION.** Read this README, [research protocol](docs/research.md), [current run card](docs/run-card.json), and [executive summary](docs/index.html) before making changes.
+> **Mission:** Generate a **unique, format-valid GeoTIFF** that predicts geological fault structures indicative of geothermal resources in the GeoDAWN region, with automated validation and no human inspection in the critical path.
 
-**Current verdict: negative / no approved submission.** The checkout initially contained only a one-line README. The current branch now includes commit-pinned third-party research snapshots and a fail-closed format checker, but no competition rasters, local feature cache, complete current registry, or active shared template pipeline. No new TIFF has been generated, zero experiments were run, and zero competition slots were used.
+**Competition:** [DOE GEMS Prize #306 on DrivenData](https://www.drivendata.org/competitions/306/competition-doe-gems/) — Total prize pool $300k (Initial Round $50k + Final Round $250k). Deadline 2026-12-03 UTC.
 
-## Standing user brief (operational transcription, not the full verbatim chat)
+**Reference Solution:** [drivendataorg/gems-prize-reference-solution](https://github.com/drivendataorg/gems-prize-reference-solution) — U-Net + Monte-Carlo CV baseline using ~16 GeoDAWN channels at 100 m, EPSG:32611.
 
-The full original request remains in the Arena conversation; this is a faithful operational summary rather than a claim to preserve every repeated paragraph. Focus on GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36. Produce clear per-site executive summaries, obvious file/download status, estimated-score evidence and uniqueness status. Generate a genuinely unique competition TIFF only after scientific validation; never copy/rename a prior submission. Clearly distinguish HOLDOUT-DTI (version, withheld positives, 95% CI), organizer receipt-confirmed scores, owner reports and projections. Do not invent data, scores, sources or validation.
+---
 
-Parallel-run protocol: stay within the assigned single-method lane. **No method lane was actually supplied in this request.** Stop if rank correlation exceeds 0.90 or >70% of dots are within 3 pixels of any registry raster; test surfaces before placement and final dots. Reuse the shared cached stack, evaluate_holdout.py and submission_writer.py; fix shared tools upstream, never maintain private executable forks. Use whole-segment buffered hide-and-recover, visible-only catalogue features, pixel-exact visible-fault masking, pooled DTI alpha 0.2/beta 0.8 with a 300m triangular kernel. Test each feature alone; AUC >0.90 is leakage until explained. End with a JSON run card including mechanism, named non-fault mimic, holdout + CI, registry comparisons, SHA256, validator results, name/note <=140 characters and promote/negative verdict. Maximum three experiments or two hours. Promotion is a separate selector step under the authenticated weekly cap; do not upload automatically.
+## Core Values — Own the Outcome
 
-Before implementation, rank 3–5 geological hypotheses by expected benefit/cost, naming layers, physical transforms, off-catalogue mechanism, difference from existing work and confounders. Verify external official/free data availability before claiming viability. Freeze spatial evaluation and beat current holdout best before spending any slot. Research faults as a proxy for geothermal permeability, not proof of vents. Maintain an auditable source table with links, honest limitations and a clean GitHub Pages executive-summary/submission guide. Validate single-band TIFF values [0,1], finite footprint and exact organizer CRS/shape/transform. Do not require human raster inspection as a substitute for automated checks. Review in three passes; open and merge a PR only after testing. No secrets in chat or Git.
+**Maximize P(Win):** Every decision weighs tradeoff, risk, and the path that maximizes probability of winning. Weekly submission slots are experiments, not lottery tickets — we don't spend a slot without paired, fold-local holdout evidence and uniqueness clearance.
 
-## Core values
+**Own the Outcome:** We own results end-to-end. Failures are signals. Every claim carries an evidence class: `HOLDOUT-DTI` (evaluator version, withheld positives, 95% CI), `ORGANIZER-CONFIRMED` (submission-page receipt hash→score), or `PROJECTION` (model forecast, never a score).
 
-**Maximize P(Win):** weigh risks and evidence; do not spend scarce leaderboard slots on unvalidated ideas. **Own the Outcome:** own the end-to-end result; treat negative experiments as useful deliverables, fix defects and document limitations. A truthful blocked state is better than a fabricated winning score.
+**Verified Line-by-Line:** Every fact carries an official link for manual review. No hallucinations. Flag irregularities. If data is missing, say so — don't invent.
 
-## What exists now
+---
 
-- [Nine-site executive summary](docs/index.html), [submission guide](docs/submission.html), [ranked research plan](docs/research.md), [live-source irregularity notes](docs/research/source-audit.md), and [three-pass review log](docs/research/review-log.md).
-- Commit-pinned public repository snapshots and tree inventories in `docs/evidence/`; third-party evidence is not organizer confirmation. Executable-looking files under evidence are **audit snapshots**, not a copied training pipeline.
-- Fail-closed evidence gate: `scripts/promotion_gate.py`. This checks reported evidence structure; it does not itself run raster validation, prove provenance or authorize a slot. `scripts/validate_submission.py` checks an actual candidate against an organizer template for exact grid, EPSG:32611/100m, single float32 band, footprint mask, and finite `[0,1]` values. It does not assess science or uniqueness.
-- Reproducible static builder and source-audit script. Refresh with `python scripts/audit_sources.py` (needs configured `gh`) then `python scripts/build_site.py`.
+## The Problem in One Paragraph
 
-## Local checks / preview
+Geological faults are fractures where rock blocks have displaced (normal = vertical, strike-slip = horizontal). Faults control geothermal fluid pathways but are often *hidden* — buried under alluvium, expressed only as subtle scarps, or absent from the USGS Quaternary Fault catalogue that is known to be incomplete. The GEMS Prize provides GeoDAWN airborne magnetics/radiometrics + lidar elevation over northwestern Great Basin (Walker Lane) and asks competitors to predict *new* expert-labeled faults not in the catalogue. Scoring uses a distance-weighted Tversky index (α=0.2, β=0.8, 300 m triangular kernel): false negatives penalized 4× more than false positives. The Final Round re-scores every submission against an expanded label set built from expert review of all submissions — so genuinely novel, geologically defensible predictions can outscore catalogue-clones.
 
-```sh
-python -m pip install -r requirements-validation.txt
-python -m unittest discover -s tests -v
-python scripts/build_site.py
-python -m http.server 8000 --bind 0.0.0.0 --directory docs
+**Official Sources:**
+- Problem description: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
+- About/data: https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/
+- Official Rules PDF: https://docs.nlr.gov/docs/fy26osti/96647.pdf (also Dropbox mirror: https://www.dropbox.com/scl/fi/aemhtutjgcp6tr3tint94/GEMS_96647.pdf?rlkey=rek210cj2smnmzb8n0sla1vmd)
+- GeoDAWN: https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and
+- INGENIOUS: https://gbcge.org/current-projects/ingenious/
+- CRS EPSG:32611: https://epsg.io/32611
+- Tversky index: https://en.wikipedia.org/wiki/Tversky_index
+- Metric weighting α=0.2/β=0.8/300m kernel documented on competition page and replicated in reference evaluator (see `src/metric.py`).
+
+---
+
+## TL;DR — Submission decision under the current literal protocol
+
+> **🔴 NO FILE IS APPROVED TO SUBMIT under the parallel-run protocol in this prompt.** The currently committed blind-basin GeoTIFF was generated by a different parallel method lane and is preserved here for audit only. Do not treat its prior green selector banner as permission under this stricter request.
+
+### Irregularity that controls the decision
+
+The parallel HVG-BLIND-BASIN run card reports `HOLDOUT-DTI 0.1427 [0.1301, 0.1553]` (evaluator `GEMSDOE32-HIDE-RECOVER-v3.0 + gems-segment-pooled-v1`; **60,988 withheld positives**) and a positive paired delta `+0.0094 [0.0012, 0.0176]` versus its same-run control. These are **source-recorded HOLDOUT-DTI values from another lane, not independently rerun here and not a leaderboard score**.
+
+However, that same run card reports **99.68%** of candidate dots within 3 px of the R13 spacing-5 lattice. The current prompt's rule is literal: **more than 70% against any registry raster means duplicate/lane drift, log it and stop**. The existing selector instead applies the `IR-U-02` discrete-peer rescope and marks the lattice informational. That exception conflicts with this prompt and cannot be used here. Therefore this candidate is **NOT protocol-unique** and **DO NOT SUBMIT** it. The explicit stop gate takes precedence over the prior `promote`/`slot_approved` fields.
+
+[Download the existing TIFF for research/audit only — DO NOT SUBMIT](docs/downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif) · [source run card](evidence/run_card.json) · [format audit](evidence/download_audit.json) · [selector record whose lattice rescope is not accepted here](evidence/selector_decision.json) · [protocol/source irregularity audit](docs/research/source-audit.md).
+
+- File: `kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif`
+- SHA-256: `2858780ea1f6729be234dc5e5e0b6e4d1b8f4f9710166a80939b8a3cce1df8f4`
+- **HOLDOUT-DTI (source run card, not independently rerun; evaluator and withheld count above):** `0.1427`, 95% CI `[0.1301, 0.1553]`.
+- **PROJECTION (not a score):** `0.3342` from the source run card's anchor inversion. Cross-family calibration is explicitly unproven; do not use this as an estimated organizer result.
+- **Uniqueness:** fails the literal rule (99.68% within 3 px of one registry raster, above 70%); no exemption.
+- **Current-session candidate/run:** none. `docs/run-card.json` is the negative current-session card, with metrics left `NOT RUN` where no independent run occurred.
+
+The official public leaderboard displayed `0.4437` at retrieval on 2026-10-26 UTC. This is a dated public snapshot, not a private/final result or receipt. The user-provided `0.3195` and `0.4413` values are prior/conflicting snapshots. Recheck the [official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) before acting.
+
+## Standing Brief — Read Every Session (Condensed Operational Summary; not verbatim)
+
+> *Review the repo. Focus on the highest scoring submissions from GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, GEMSDOE36. Produce an executive summary on every site that is clear and obvious which is the best submission to submit to obtain a high score on the leaderboard. It should be unique and not an exact duplicate. Keep iterating and testing until we have the highest scoring submission to download and submit. We should be able to estimate the score for a submission. Table must clearly list what file to download, what estimate score is, and whether unique. MUST GENERATE A UNIQUE TIF SUBMISSION — DO NOT COPY PREVIOUS SUBMISSION unless for learning. IT MUST BE OBVIOUS WHETHER IT IS OK TO DOWNLOAD AND SUBMIT. There should be an easy to download TIF as described. Read entire prompt. A lot of sites mention inspection only and human inspector, but inspection needs to be done through the project and validated for submission without human intervention. Parallel-run protocol: lane, reuse don't rebuild, label every number, leakage canary, run card, budget. The following sites are starting points ... Current leaderboard high score 0.4413 ... Reference links above ... No hallucinations ... Generate 3–5 candidate hypotheses ... Put this prompt into repo readme ... Own the Outcome ... Verify no hallucinations ... Site creation: GitHub page clean UI ... Must be able to do own research ... Blocker to training is data placement: bash scripts/download_competition_data.sh on unrestricted machine into data/, then python scripts/prepare_data.py — after that train→inference→validate ready (GPU needed for training; metric/losses/validation verified on CPU) ... 3 passes ... PR and merge ... etc.*
+
+**Operational note (parallel-session disclosure):** No method lane was assigned for this session, so no new experiment or TIFF was generated here. The merged `HVG-BLIND-BASIN` TIFF and its `promote` selector belong to another parallel lane. Its own run card reports 99.68% within 3 px of the R13 lattice; the current prompt's literal >70% stop makes it a duplicate here. Keep it for audit/learning only; do not submit it under this prompt.
+
+---
+
+## How the Project Works Without Manual Inspection
+
+```
+data/ (not committed)                      src/
+  training_features.tif  ← from DrivenData    ├─ metric.py  → distance-weighted Tversky (α0.2/β0.8/R300 + 6px buffer)
+  labels.tif                               ├─ holdout.py → hide-and-recover: withhold whole fault segments + buffer, visible-only features, mask visible faults pixel-exact, pooled DTI
+  sample_submission.tif  ← CRS/shape/xform   ├─ features.py→ cached feature stack (35–59 channels, leakage-canary tested)
+  1m_DEM_links.csv                         ├─ model training → not implemented/verified in this checkout
+                                             └─ submission_writer.py → single-band Float32, EPSG32611, 3730×3292, [0,1], zeros- and nan-twins
+
+scripts/
+  download_competition_data.sh  → curls Dropbox mirrors into data/ (requires unrestricted network; see Limitations)
+  prepare_data.py               → builds footprint mask, catalogue distance, train patches
+  src/generate_tif.py / src/generate_tif_v2.py → archived lane-specific candidate generators; not approved by this session's literal uniqueness rule
+  verify_downloads.py           → 13/13 gate check: single band, Float32, 3730×3292, EPSG32611, transform, [0,1], finite footprint, 0 on-catalogue, etc.; writes audit JSON
+  select_submission.py          → placeholder selector script; its hard-coded output is stale and must not be treated as authorization
+  audit_sources.py / build_site.py / promotion_gate.py → evidence-first helpers (preserved from parallel session; see docs/research.md)
 ```
 
-Validate a candidate only after a scientific result and using the real sample template:
+**Automated checks:** `scripts/verify_downloads.py` and this branch's `scripts/validate_submission.py` provide local GeoTIFF checks, but the competition template is absent, so neither was run against the committed TIFF in this session. `scripts/select_submission.py` contains hard-coded placeholder identifiers/decisions that do not match the current run-card file; do not execute it as an authorization source. The saved selector JSON is a separate lane's historical decision and is overridden here by the prompt's literal >70% any-raster duplicate stop. A file-format pass alone never authorizes upload.
 
-```sh
-python scripts/validate_submission.py --template data/sample_submission.tif --candidate candidate.tif --json candidate-audit.json
-```
+---
 
-## Limitations / next session
+## Limitations & What We Need
 
-The competition data endpoint redirected to DrivenData login during this review. No authenticated organizer receipts or current submission cap are available in this checkout. Shared data/cache and complete registry are not placed locally; a data restore receipt in another repository is not proof of local availability. The claimed GPU-only training requirement is contradicted by the official reference README's CPU option. The prompt's historic leaderboard values conflict: the official public leaderboard displayed 0.4437 on 2026-10-26 when retrieved (a dated public snapshot, not a private/final result or receipt). Recheck the official page before using any leaderboard value. A per-site source conflict audit is linked above.
+- **No authenticated competition data in this checkout:** the official DrivenData data endpoint redirects to login. `data/` contains only `.gitkeep`; there is no local `training_features.tif`, `labels.tif`, sample template, feature cache, or full raster registry. A third-party run card is not a substitute for local data or an independent replay.
+- **Training pipeline status:** the repository contains lane-specific raster generators and helper scripts, but no verified end-to-end training/inference pipeline or current-session holdout run. Do not claim GPU is required or that CPU/GPU training is ready without checking the official reference and actual scripts.
+- **External data reachability:** `scripts/download_competition_data.sh` describes mirrors, but this sandbox has not authenticated to DrivenData and has not verified those mirrors. Do not assume GDR/Dropbox/3DEP are available from this environment.
 
-Resolve lane and dense-lattice registry conflict, verify template/cache/input hashes and semantic band metadata, then execute a maximum-three-experiment fold-local comparison. Don't begin by optimizing against the public score ledger. There is no scientifically justified new raster or score estimate yet.
+See `knowledge/03_limitations_and_external_data.md` for free, official sources and licenses. See also `docs/research.md` for the evidence-first limitations note.
+
+---
+
+## Safe next steps
+
+1. Do not upload the merged blind-basin TIFF under this prompt: its recorded 99.68% lattice overlap exceeds the literal 70% limit.
+2. Read [`docs/research.md`](docs/research.md), the [source irregularity audit](docs/research/source-audit.md), and [`docs/run-card.json`](docs/run-card.json) before starting any new work.
+3. Do not run another lane until an explicit lane and authorized inputs are available. If data become lawfully available, verify exact hashes/metadata, import the canonical shared cache/evaluator/writer, and reconcile feature-band mappings before running the bounded experiment plan.
+4. Use the fail-closed format checker only with the exact competition template: `python scripts/validate_submission.py --template data/sample_submission.tif --candidate candidate.tif`. This session has no such template or candidate from its own lane.
+
+Every session: read this README, then `docs/index.html`, `docs/research.md`, and `docs/run-card.json`.
+
+---
+
+## Repository Map
+
+- `docs/` — GitHub Pages site (executive summary, downloads, how-to-submit, research)
+  - `docs/index.html` — rebuilt fail-closed summary; the parallel-lane TIFF is audit-only under the literal rule
+  - `docs/evidence/` — pinned cross-site research snapshots, not organizer authorization
+- `evidence/` — source run cards, saved-byte audits, and selector records; some belong to another lane and are preserved as evidence, not current authorization
+- `knowledge/` — research, hypotheses, limitations, and run-specific analyses
+- `scripts/` / `src/` — lane-specific generators and validation helpers; not a verified end-to-end training pipeline
+- `data/` — `.gitignored`; holds competition rasters after manual download
+- `.github/workflows/pages.yml` — deploys `docs/` to Pages on push to main
+
+---
+
+## License & Attribution
+
+Code MIT; data under competition rules and source licenses. DOE GEMS Prize by DOE Office of Geothermal + National Lab of the Rockies (NLR). This repo is not affiliated with DOE/DrivenData; it is an independent competitor entry. Cite NLR Official Rules (Sept 2026) https://docs.nlr.gov/docs/fy26osti/96647.pdf.

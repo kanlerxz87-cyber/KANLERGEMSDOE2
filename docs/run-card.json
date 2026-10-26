@@ -1,7 +1,7 @@
 {
-  "hypothesis": "No experiment selected: the request does not identify an assigned single-method lane. Highest-priority conditional idea is contact-conditioned residual topography as described in docs/research.md; global novelty is unverified.",
-  "mechanism": "No candidate mechanism was run. The ranked contact-conditioned terrain/magnetic-contact residual hypothesis remains preregistration only; shared features, labels, and semantic channel mapping are not present locally.",
-  "non_fault_mimic": "Erosional terraces; lithologic contacts; fluvial terrace risers.",
+  "hypothesis": "No experiment selected or run in this session: the current prompt does not identify an assigned method lane.",
+  "mechanism": "No current-session candidate was built. The ranked research ideas remain preregistration only; no new raster was created.",
+  "non_fault_mimic": "Erosional terraces, lithologic contacts, fluvial terrace risers, alluvial-fan channels, and volcanic-flow boundaries.",
   "lane": null,
   "experiments_run": 0,
   "experiments_budget": 3,
@@ -9,7 +9,7 @@
   "weekly_slots_used": 0,
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "status": "NOT RUN — no local competition features/labels/cache or active shared evaluator",
+    "status": "NOT RUN by this session — no local competition features/labels/cache or active shared evaluator",
     "evaluator_version": null,
     "withheld_positives": null,
     "dti": null,
@@ -23,16 +23,32 @@
   "surface": {
     "max_abs_rank_correlation": null,
     "max_overlap_3px": null,
-    "status": "NOT RUN — no candidate surface or complete registry locally"
+    "status": "NOT RUN for this session — no new surface generated; complete registry not independently audited"
   },
   "dots": {
     "max_abs_rank_correlation": null,
     "max_overlap_3px": null,
-    "status": "NOT RUN — no candidate dots or complete registry locally"
+    "status": "NOT RUN for this session — no new dots generated"
+  },
+  "parallel_artifact_review": {
+    "file": "docs/downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif",
+    "sha256_verified_bytes": "2858780ea1f6729be234dc5e5e0b6e4d1b8f4f9710166a80939b8a3cce1df8f4",
+    "sha256_matches_source_run_card": true,
+    "source_evidence": "evidence/run_card.json and evidence/selector_decision.json; from a different parallel lane, not independently rerun here",
+    "HOLDOUT-DTI": {
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0 + gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "reported_value": 0.1427,
+      "reported_ci95": [0.1301, 0.1553]
+    },
+    "reported_final_dots_within_3px_of_R13_spacing5_lattice_pct": 99.68,
+    "prompt_limit_pct": 70,
+    "literal_protocol_result": "DUPLICATE STOP — exceeds the prompt's >70% any-registry-raster rule",
+    "prior_parallel_selector_verdict": "promote under a disclosed IR-U-02 peer-only rescope; not accepted under this session's literal rule"
   },
   "raster_sha256": null,
   "validator": {
-    "status": "NOT RUN_NO_CANDIDATE_OR_TEMPLATE",
+    "status": "NOT RUN for this session — no new candidate or local official template",
     "no_nan_inside_footprint": null,
     "range_0_1": null,
     "crs_match": null,
@@ -41,7 +57,7 @@
     "single_band": null
   },
   "submission_name": null,
-  "note": "No TIFF generated. Research-only review; do not submit. No weekly slot used.",
+  "note": "No current-session TIFF. Parallel artifact is audit-only and fails the literal uniqueness gate; DO NOT SUBMIT.",
   "verdict": "negative",
-  "verdict_reason": "No candidate can pass missing-data, lane, holdout, leakage, registry, format, and separate-selector gates. This is not a claim the hypothesis is geologically false."
+  "verdict_reason": "No candidate from this session has evidence to promote. The only merged parallel-lane candidate is excluded by the literal registry-overlap stop. No weekly slot used."
 }
