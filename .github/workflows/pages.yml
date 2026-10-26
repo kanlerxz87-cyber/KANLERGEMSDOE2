@@ -17,7 +17,10 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m compileall -q scripts src
       - run: python scripts/run_tests.py
+      - run: python -m pytest -q
+      - run: node tests/test_feed.js
       - run: python scripts/build_site.py
+      - run: python scripts/build_k2_site.py --check
   deploy:
     if: github.event_name != 'pull_request'
     needs: test
@@ -31,8 +34,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Stage the public dashboard and evidence
+        run: |
+          mkdir -p _site/docs _site/evidence
+          cp index.html .nojekyll _site/
+          cp -R docs/. _site/docs/
+          cp -R evidence/. _site/evidence/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: _site
       - uses: actions/deploy-pages@v4
         id: deployment

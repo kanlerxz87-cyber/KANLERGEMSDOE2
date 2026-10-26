@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-26T21:42:50.275835+00:00",
+  "hypothesis": "K2-SCALE: scale-persistent magnetic\u2013topographic edge phase",
+  "mechanism": "Relative sign persistence of cached reduced-to-pole magnetic and detrended-elevation curvature with multiscale gradient strength; no catalogue-derived surface.",
+  "named_non_fault_mimic": "A lithologic contact or volcanic flow edge; magnetic flight-line processing artifacts are another risk.",
+  "holdout_dti": {
+    "status": "not run: stopped before feature construction and placement",
+    "evaluator_planned": "gems-segment-pooled-v1 (GEMSDOE33 pinned template)",
+    "withheld_positives": null,
+    "score": null,
+    "ci95": null,
+    "baseline": null
+  },
+  "canary": {
+    "status": "not run; no features constructed",
+    "max_auc": null
+  },
+  "correlation_and_overlap_vs_registry": {
+    "surface_rank_correlation": "not evaluated; geometry preflight stopped the lane",
+    "final_dot_rank_correlation": "not evaluated; no dots placed",
+    "actual_final_dot_overlap": "not evaluated; no dots placed",
+    "minimum_possible_fraction_within_3px_of_pinned_lattice": 0.8234184947150369,
+    "scope": "mathematical lower bound for a fixed 37,654-dot binary emission against one registered lattice; not an actual candidate measurement",
+    "duplicate_stop": true,
+    "registry_raster_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "status": "not run; no candidate GeoTIFF exists",
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null
+  },
+  "submission_name": null,
+  "note": "K2-SCALE preflight duplicate stop; no TIFF, no score, no upload.",
+  "verdict": "negative",
+  "ok_to_download_candidate": false,
+  "ok_to_submit": false,
+  "geological_experiments_run": 0,
+  "preflight_checks_run": 1,
+  "weekly_slots_spent_by_this_session": 0,
+  "reason": "Even the best possible placement at the preregistered budget must exceed the literal 70% overlap stop; surface and final-dot tests cannot be bypassed.",
+  "registry_evidence": "evidence/lattice-feasibility-20261026.json"
+}
