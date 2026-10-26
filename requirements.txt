@@ -1,0 +1,6 @@
+numpy==1.26.4
+scipy==1.13.1
+rasterio==1.4.3
+scikit-learn==1.5.2
+pyshp==2.3.1
+pytest==8.3.5

@@ -1,0 +1,34 @@
+{
+  "candidate_budget": 37654,
+  "registry_points_in_footprint": 206895,
+  "footprint_cells": 5167373,
+  "halo_radius_pixels_euclidean": 3.0,
+  "footprint_cells_outside_halo": 6649,
+  "footprint_cells_inside_halo": 5160724,
+  "minimum_candidate_dots_inside_halo": 31005,
+  "minimum_fraction_inside_halo": 0.8234184947150369,
+  "strict_more_than_70_percent_unavoidable": true,
+  "verdict": "duplicate-stop",
+  "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "registry_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "registry_source": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "template_provenance": "owner-supplied mirror; hash-pinned, not organizer-authenticated",
+  "grid": {
+    "height": 3730,
+    "width": 3292,
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "footprint_rule": "finite sample values"
+  },
+  "scope": "one pinned registry raster only; a pass cannot establish overall uniqueness",
+  "surface_correlation": "not evaluated: geometric impossibility was detected before the surface was built",
+  "actual_dot_overlap": "not evaluated: no dots were placed",
+  "checked_utc": "2026-10-26T22:01:06.860183+00:00"
+}

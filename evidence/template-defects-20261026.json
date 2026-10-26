@@ -1,0 +1,48 @@
+{
+  "checked_utc": "2026-10-26T22:00:51.969346+00:00",
+  "scope": "synthetic evaluator regression only; not a feature canary, holdout, candidate or slot approval",
+  "shared_commit": "1d99d73fe14d9a87126ffca2db52c69336d6099b",
+  "evaluator_version": "GEMSDOE33-HIDE-AND-RECOVER-v1.0",
+  "input_sha256": {
+    "evaluate_holdout.py": "51dd3aa1315b5fd195c2c5301b6bd65826d07390372eae991408367b92fcb099",
+    "src/gems33/__init__.py": "e63b4d4ce4ba3f605e6a9d27de87623aac2fa94b9e05729d6ac75a752f73e04f",
+    "src/gems33/grid.py": "7ad984dbfd894b609af56bc0e2c1b7d6c31a3239a9980d217a9b855455bc4463",
+    "src/gems33/metric.py": "575524d5c9357cdd22a43301a4dfe847fdd6506f48761b8713ce51057b4cdcfe"
+  },
+  "empty_fold_canary_output": {
+    "raw_auc": 0.5,
+    "canary_auc": 0.5,
+    "leakage_flag": false,
+    "fold_aucs": []
+  },
+  "synthetic_fold_counts": [
+    {
+      "withheld": 1,
+      "visible": 0,
+      "known_for_scoring": 3
+    },
+    {
+      "withheld": 1,
+      "visible": 0,
+      "known_for_scoring": 3
+    },
+    {
+      "withheld": 1,
+      "visible": 0,
+      "known_for_scoring": 3
+    },
+    {
+      "withheld": 1,
+      "visible": 0,
+      "known_for_scoring": 3
+    }
+  ],
+  "missing_registry_expected": 1,
+  "missing_registry_checked": 0,
+  "missing_registry_duplicate_triggered": false,
+  "defects_reproduced": {
+    "empty_canary_returns_unflagged_half_auc": true,
+    "collar_removed_faults_still_masked": true,
+    "missing_registry_silently_skipped": true
+  }
+}
