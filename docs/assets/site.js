@@ -1,22 +1,46 @@
-// The site remains useful without JavaScript. This only updates the public snapshot.
-(async () => {
-  const score = document.getElementById('leader-score');
-  const time = document.getElementById('leader-time');
-  const state = document.getElementById('leader-state');
-  try {
-    const response = await fetch('./data/leaderboard.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('snapshot unavailable');
-    const data = await response.json();
-    const observed = new Date(data.observed_utc);
-    if (!Number.isFinite(data.score) || data.score < 0 || data.score > 1 || Number.isNaN(observed.valueOf())) throw new Error('invalid snapshot');
-    const ageMs = Date.now() - observed.valueOf();
-    const stale = ageMs > 24 * 60 * 60 * 1000 || ageMs < -60 * 60 * 1000 || Boolean(data.last_refresh_error);
-    score.textContent = data.score.toFixed(4);
-    const date = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).format(observed);
-    time.textContent = `Observed ${date} UTC. This is another participant’s public result, not a score for this project.`;
-    state.textContent = stale ? 'STALE SNAPSHOT' : 'DATED SNAPSHOT';
-  } catch (_) {
-    // Preserve the clearly dated HTML fallback; never present an error as a new score.
-    state.textContent = 'DATED SNAPSHOT';
-  }
+(() => {
+  'use strict';
+  const feed = document.querySelector('[data-github-feed]');
+  if (!feed) return;
+  const button = feed.querySelector('[data-refresh]');
+  const status = feed.querySelector('[data-status]');
+  const items = Array.from(feed.querySelectorAll('[data-repo]'));
+  if (!button || !status || !items.length) return;
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    status.textContent = 'Checking public GitHub heads. This does not check scores or submission readiness.';
+    let changed = 0, unavailable = 0;
+    await Promise.all(items.map(async item => {
+      const state = item.querySelector('[data-state-text]');
+      const repo = item.dataset.repo;
+      const expected = item.dataset.head;
+      try {
+        if (!/^buffedlizard55-lab\/GEMSDOE(24|25|27|28|30|31|32|33|36)$/.test(repo) || !/^[0-9a-f]{40}$/.test(expected)) throw new Error('missing snapshot');
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 10000);
+        let body;
+        try {
+          const response = await fetch(`https://api.github.com/repos/${repo}/commits/main`, {signal: controller.signal, headers: {'Accept': 'application/vnd.github+json'}});
+          if (!response.ok) throw new Error(`GitHub HTTP ${response.status}`);
+          body = await response.json();
+        } finally { window.clearTimeout(timeout); }
+        if (!/^[0-9a-f]{40}$/.test(body.sha || '')) throw new Error('invalid GitHub response');
+        if (body.sha === expected) {
+          item.dataset.state = 'unchanged';
+          state.textContent = 'Head unchanged';
+        } else {
+          changed += 1;
+          item.dataset.state = 'changed';
+          state.textContent = 'Updated · re-audit needed';
+        }
+      } catch (_) {
+        unavailable += 1;
+        item.dataset.state = 'unknown';
+        state.textContent = 'Check unavailable';
+      }
+    }));
+    const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+    status.textContent = `Checked ${now}: ${changed} changed, ${unavailable} unavailable. Head checks do not validate scores or approve submissions.`;
+    button.disabled = false;
+  });
 })();

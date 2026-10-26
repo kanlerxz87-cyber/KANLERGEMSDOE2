@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
-const source = fs.readFileSync(path.join(__dirname, '../docs/assets/site.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '../docs/assets/dashboard.js'), 'utf8');
 async function render(payload, reject = false) {
   const nodes = {'leader-score': {textContent: '0.4437'}, 'leader-time': {textContent:'dated fallback'}, 'leader-state':{textContent:'DATED SNAPSHOT'}};
   const context = {document:{getElementById: id => nodes[id]}, fetch: async () => {

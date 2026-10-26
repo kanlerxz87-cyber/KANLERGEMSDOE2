@@ -27,7 +27,7 @@ The supplied **0.2778 is an OWNER-REPORTED, UNVERIFIED historical claim**, not a
 
 The metric can reward removing low-value false-positive mass, so pruning provides a plausible explanation for the supplied ordering. It is **not proven** to be the cause of the reported score: hidden fault labels and the actual receipt are not available. Nor does it prove a new candidate will score higher. [Machine-readable comparison](../docs/data/focus-audit.json); [independent source discussion](https://buffedlizard55-lab.github.io/GEMSDOE30/priority-executive-summary.html).
 
-A direct public page read on 2026-10-26 at approximately 21:37 UTC showed **0.4437, ORGANIZER-PUBLISHED PUBLIC LEADERBOARD** for another participant. That is a timestamped public observation, not an organizer receipt for any project TIFF. Earlier prompt values cannot be treated as today's live score. The site refresh job will retain its old timestamp if the official page cannot be parsed.
+A direct public page read on 2026-10-26 at approximately 21:37 UTC showed **0.4437, ORGANIZER-PUBLISHED PUBLIC LEADERBOARD** for another participant. That is a timestamped public observation, not an organizer receipt for any project TIFF. Earlier prompt values cannot be treated as today's live score. The site shows this dated static snapshot and links to the official page; repository rules prohibit automated DrivenData monitoring.
 
 ## H1 and the literal registry stop
 

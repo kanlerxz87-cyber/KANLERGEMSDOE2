@@ -7,14 +7,14 @@
 ## The decision in a minute
 
 - The highest historical figure supplied for the nine sites is **0.2778**, an **owner-reported, unverified claim** for GEMSDOE32. No organizer receipt ties it to the cited hash. The decoded 37,654-dot H33-B2 file is exactly the 44,090-dot D2.8 map pruned within two pixels of mirrored known faults. Lower false-positive mass could improve the metric, but hidden labels are unavailable, so the cause and any future score remain unknown.
-- The official public leaderboard read **0.4437** on 2026-10-26 at approximately 21:37 UTC for another participant. It is not a score for this project. The dashboard is timestamped and attempts a six-hourly refresh; failures retain the old observation rather than relabeling it live.
+- The official public leaderboard read **0.4437** on 2026-10-26 at approximately 21:37 UTC for another participant. It is not a score for this project. The dashboard uses a dated static snapshot; check the official page directly for the current value. In accordance with repository rules, it does not automatically monitor or scrape DrivenData.
 - A registered every-fifth-pixel lattice covers 99.8713% of the footprint within three pixels. Any 37,654-point raster has at least **82.34%** overlap with it, no matter where its points go. A ≤70% result requires at most 22,163 distinct dots, a necessary—not sufficient—condition. Do not silently remove a reference from the registry.
 - Post-run review found that the probe implemented **unsigned**, not the proposed signed-polarity signal, and that its full-catalogue-masked production-surface AUC was not a valid withheld-fold canary. The measured feature AUCs are diagnostics only; no DTI or clean test of the proposed signed mechanism is claimed.
 - The shared evaluator drops false-positive mass in a zero-truth cell; a synthetic reproducer is included and [the defect was reported upstream](https://github.com/buffedlizard55-lab/GEMSDOE32/issues/41). We lack write permission to that template and did not privately fork its evaluator. The stopped probe never called it.
 
 ## Project charter / prompt to reread each session
 
-A concurrent main-branch merge restored the full original prompt, reproduced at the end of this README with trailing whitespace normalized. The following is a concise requirements reconstruction; re-read both before changing science or submission status:
+One concurrent main-branch transcription of the original prompt is reproduced at the end of this README with trailing whitespace normalized. Another transcription differs in two historical links or filenames; both are preserved here and in `research/concurrent-k2/README.md` (with earlier snapshots in `PARALLEL-README-f5d1675.md` and `PARALLEL-README-20261026.md`). Neither can be verified as byte-exact from the condensed session context. The following is a concise requirements reconstruction; re-read both before changing science or submission status:
 
 > Review the DOE GEMS geothermal-fault competition using official sources and an auditable site-by-site executive analysis of GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36. Explain the owner-reported 0.2778 GEMSDOE32 result and assess whether it can be beaten. Generate an independently unique, valid, high-performing GeoTIFF only if the scientific, format and uniqueness gates pass; no human inspection should be required. Never copy an old submission except for educational analysis. State clearly whether submission is permitted. Use trusted free data and automatically obtain and prepare inputs where possible; disclose any authentication or format blocker. Build a clean GitHub Pages report with live-or-dated evidence, clear sources and download/submit instructions. Perform three review/fix passes, and create a PR and merge to main when permitted.
 >
@@ -66,7 +66,7 @@ python3 -m http.server 8000 --bind 0.0.0.0 --directory docs
 | `data/registry-lock.json` | Pinned public nine-repository registry inventory. |
 | `scripts/validate_saved_tiff.py` | Independent fail-closed saved-byte reader; cannot authorize submission. |
 | `evidence/historical_h33_format.json` | Research-only zero-exterior read-back example, not portal acceptance. |
-| `.github/workflows/pages.yml` | Pages publication and stale-safe scheduled leaderboard snapshot refresh. |
+| `.github/workflows/pages.yml` | Pages publication; the leaderboard snapshot is dated and static, with a separate public-GitHub source freshness check. |
 
 ## Limitations and next steps
 
@@ -74,7 +74,7 @@ The owner-mirrored sample matches the mirrored training labels rather than the a
 
 ## Integration of parallel work on main
 
-Other sessions merged independent evidence while this lane was running. Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
+Other sessions merged independent evidence while this lane was running, including the K2-SCALE geometric stop and its [separate research dashboard](index.html). Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The K2 geometry stop and distinct run card are preserved under `docs/research/` and `evidence/run-card.json`. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
 
 ## Original Prompt Specification
 

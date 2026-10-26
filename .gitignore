@@ -1,8 +1,11 @@
-# Local caches, environments and data downloads must not be committed.
-.venv/
+# Large owner-mirror inputs, caches, local virtual environments and intermediate rasters
 .cache/
-__pycache__/
-.pytest_cache/
-*.pyc
-*.partial
 /data/
+.venv/
+__pycache__/
+*.py[cod]
+*.partial
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+/_site/
