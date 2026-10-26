@@ -1,0 +1,47 @@
+{
+  "hypothesis": "No experiment selected: the request does not identify an assigned single-method lane. Highest-priority conditional idea is contact-conditioned residual topography as described in docs/research.md; global novelty is unverified.",
+  "mechanism": "No candidate mechanism was run. The ranked contact-conditioned terrain/magnetic-contact residual hypothesis remains preregistration only; shared features, labels, and semantic channel mapping are not present locally.",
+  "non_fault_mimic": "Erosional terraces; lithologic contacts; fluvial terrace risers.",
+  "lane": null,
+  "experiments_run": 0,
+  "experiments_budget": 3,
+  "time_budget_hours": 2,
+  "weekly_slots_used": 0,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN — no local competition features/labels/cache or active shared evaluator",
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "dti": null,
+    "ci95": null,
+    "fold_local_features": null,
+    "baseline_id": null,
+    "paired_improvement_ci95": null
+  },
+  "max_feature_alone_auc": null,
+  "registry_complete": false,
+  "surface": {
+    "max_abs_rank_correlation": null,
+    "max_overlap_3px": null,
+    "status": "NOT RUN — no candidate surface or complete registry locally"
+  },
+  "dots": {
+    "max_abs_rank_correlation": null,
+    "max_overlap_3px": null,
+    "status": "NOT RUN — no candidate dots or complete registry locally"
+  },
+  "raster_sha256": null,
+  "validator": {
+    "status": "NOT RUN_NO_CANDIDATE_OR_TEMPLATE",
+    "no_nan_inside_footprint": null,
+    "range_0_1": null,
+    "crs_match": null,
+    "shape_match": null,
+    "transform_match": null,
+    "single_band": null
+  },
+  "submission_name": null,
+  "note": "No TIFF generated. Research-only review; do not submit. No weekly slot used.",
+  "verdict": "negative",
+  "verdict_reason": "No candidate can pass missing-data, lane, holdout, leakage, registry, format, and separate-selector gates. This is not a claim the hypothesis is geologically false."
+}

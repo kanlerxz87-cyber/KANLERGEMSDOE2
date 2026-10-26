@@ -86,6 +86,53 @@ class ValidateSubmissionTests(unittest.TestCase):
         self.assertFalse(report["format_valid"])
         self.assertFalse(report["checks"]["candidate_mask_matches_template_footprint"])
 
+    def test_empty_template_footprint_fails(self):
+        empty = np.full((4, 5), -9999.0, dtype="float32")
+        self._write(self.template, empty, nodata=-9999.0)
+        self._write(self.candidate, empty, nodata=-9999.0)
+        report = validate(self.template, self.candidate)
+        self.assertFalse(report["format_valid"])
+        self.assertFalse(report["checks"]["nonempty_template_footprint"])
+
+    def test_wrong_template_crs_fails(self):
+        with rasterio.open(
+            self.template,
+            "w",
+            driver="GTiff",
+            height=4,
+            width=5,
+            count=1,
+            dtype="float32",
+            crs="EPSG:32612",
+            transform=self.transform,
+            nodata=-9999.0,
+        ) as dst:
+            dst.write(np.ones((4, 5), dtype="float32"), 1)
+        with rasterio.open(
+            self.candidate,
+            "w",
+            driver="GTiff",
+            height=4,
+            width=5,
+            count=1,
+            dtype="float32",
+            crs="EPSG:32612",
+            transform=self.transform,
+            nodata=-9999.0,
+        ) as dst:
+            dst.write(np.full((4, 5), 0.5, dtype="float32"), 1)
+        report = validate(self.template, self.candidate)
+        self.assertFalse(report["format_valid"])
+        self.assertFalse(report["checks"]["template_epsg_32611"])
+
+    def test_wrong_template_resolution_fails(self):
+        wrong_transform = from_origin(500000, 4100000, 200, 200)
+        self._write(self.template, self.template_data, nodata=-9999.0, transform=wrong_transform)
+        self._write(self.candidate, np.full((4, 5), 0.5, dtype="float32"), nodata=-9999.0, transform=wrong_transform)
+        report = validate(self.template, self.candidate)
+        self.assertFalse(report["format_valid"])
+        self.assertFalse(report["checks"]["template_pixel_size_100m"])
+
 
 if __name__ == "__main__":
     unittest.main()
