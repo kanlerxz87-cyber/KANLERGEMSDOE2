@@ -18,12 +18,18 @@ def sha256(path: Path) -> str:
 
 
 def audit(file: Path, template: Path, outside: str) -> dict:
+    file, template = Path(file), Path(template)
     if outside not in {'nan', 'zero'}:
         raise ValueError('outside must be nan or zero')
+    before_file, before_template = sha256(file), sha256(template)
     with rasterio.open(template) as t:
         if t.count != 1:
             raise ValueError('footprint template must have one band')
         reference = t.read(1)
+        reference_mask = t.read_masks(1)
+        template_dependencies = [name for name in t.files if Path(name).resolve() != template.resolve()]
+        if np.any(np.isfinite(reference) & (reference_mask == 0)):
+            raise ValueError('template contains masked finite pixels; the footprint is ambiguous')
         if np.isinf(reference).any():
             raise ValueError('footprint template contains infinite values')
         footprint = np.isfinite(reference)
@@ -32,6 +38,8 @@ def audit(file: Path, template: Path, outside: str) -> dict:
         template_grid = (t.height, t.width, t.crs, t.transform)
     with rasterio.open(file) as t:
         a = t.read(1)
+        valid_mask = t.read_masks(1)
+        candidate_dependencies = [name for name in t.files if Path(name).resolve() != file.resolve()]
         same_grid = (t.height, t.width, t.crs, t.transform) == template_grid
         one_band = t.count == 1
         dtype_ok = t.dtypes == ('float32',)
@@ -43,6 +51,8 @@ def audit(file: Path, template: Path, outside: str) -> dict:
     interior_shape_ok = a.shape == footprint.shape
     inside = a[footprint] if interior_shape_ok else np.array([], dtype=np.float32)
     exterior = a[~footprint] if interior_shape_ok else np.array([], dtype=np.float32)
+    masked_inside_count = int((valid_mask[footprint] == 0).sum()) if interior_shape_ok else None
+    after_file, after_template = sha256(file), sha256(template)
     finite_inside = bool(inside.size and np.isfinite(inside).all())
     inside_range = bool(finite_inside and (inside >= 0).all() and (inside <= 1).all())
     all_finite = bool(np.isfinite(a).all())
@@ -52,10 +62,18 @@ def audit(file: Path, template: Path, outside: str) -> dict:
                   'single_band': one_band, 'float32': dtype_ok, 'epsg_32611': epsg_ok,
                   'matching_crs_shape_transform': same_grid,
                   'finite_inside_footprint': finite_inside, 'inside_in_0_1': inside_range,
+                  'unmasked_inside_footprint': masked_inside_count == 0,
+                  'no_external_candidate_dependencies': not candidate_dependencies,
+                  'no_external_template_dependencies': not template_dependencies,
+                  'candidate_unchanged_during_audit': before_file == after_file,
+                  'template_unchanged_during_audit': before_template == after_template,
                   f'{outside}_outside': exterior_ok}
     if outside == 'zero':
         conditions['whole_array_finite_in_0_1'] = all_range
-    return {'file': str(file), 'sha256': sha256(file), 'footprint_template_sha256': sha256(template),
+    return {'file': str(file), 'sha256': after_file, 'footprint_template_sha256': after_template,
+            'inside_masked_count': masked_inside_count,
+            'candidate_external_dependencies': candidate_dependencies,
+            'template_external_dependencies': template_dependencies,
             'checks': conditions, 'local_format_pass': all(conditions.values()),
             'outside_mode': outside, 'whole_array_finite': all_finite,
             'nonfinite_total': int((~np.isfinite(a)).sum()),

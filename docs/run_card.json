@@ -49,7 +49,11 @@
     "shape_match": null,
     "transform_match": null,
     "single_band": null,
-    "dtype_float32": null
+    "dtype_float32": null,
+    "unmasked_inside_footprint": null,
+    "no_external_dependencies": null,
+    "candidate_unchanged_during_audit": null,
+    "template_unchanged_during_audit": null
   },
   "validator_output": {
     "candidate": "not generated; no candidate bytes to validate",

@@ -22,6 +22,10 @@
     "Validator missing/failed: transform_match",
     "Validator missing/failed: single_band",
     "Validator missing/failed: dtype_float32",
+    "Validator missing/failed: unmasked_inside_footprint",
+    "Validator missing/failed: no_external_dependencies",
+    "Validator missing/failed: candidate_unchanged_during_audit",
+    "Validator missing/failed: template_unchanged_during_audit",
     "Missing raster SHA256",
     "Invalid name/note",
     "DUPLICATE STOP: registered continuous support covers the full footprint; every nonempty dot set overlaps it 100%. See evidence/registry_witness.json."

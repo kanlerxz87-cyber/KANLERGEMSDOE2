@@ -39,7 +39,8 @@ def check(card):
     if not isinstance(ci, list) or len(ci) != 2 or not all(_number(v, -1, 1) for v in ci) or not 0 < ci[0] <= ci[1]:
         errors.append('No positive paired 95% CI against current holdout best')
     validator = _object(card.get('validator'))
-    for key in ('no_nan_inside_footprint', 'range_0_1', 'crs_match', 'shape_match', 'transform_match', 'single_band', 'dtype_float32'):
+    for key in ('no_nan_inside_footprint', 'range_0_1', 'crs_match', 'shape_match', 'transform_match', 'single_band', 'dtype_float32',
+                'unmasked_inside_footprint', 'no_external_dependencies', 'candidate_unchanged_during_audit', 'template_unchanged_during_audit'):
         if validator.get(key) is not True:
             errors.append('Validator missing/failed: ' + key)
     sha = card.get('raster_sha256', '')
