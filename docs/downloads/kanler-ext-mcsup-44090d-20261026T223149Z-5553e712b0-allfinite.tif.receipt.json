@@ -1,0 +1,25 @@
+{
+  "file": "kanler-ext-mcsup-44090d-20261026T223149Z-5553e712b0-allfinite.tif",
+  "sha256": "06c56b9a5df2ee7451f63be7d01593602e8e025518e3c3fe677c97156d9ae666",
+  "bytes": 202420,
+  "dots": 44090,
+  "min": 0.0,
+  "max": 1.0,
+  "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "no_nan_anywhere": true,
+    "no_inf_anywhere": true,
+    "values_in_0_1_everywhere": true,
+    "zero_outside_footprint": true,
+    "zero_on_catalogue": true,
+    "nodata_none": true
+  },
+  "all_pass": true,
+  "unique_name": "KANLER-EXT-MCSUP-44090D-5553E712B0",
+  "note": "EXT MCSUP cat+SGMC HGB 44090d B2 | OOF 0.1264 =E1 | unique; NEGATIVE verdict, experiment only",
+  "note_chars": 93
+}

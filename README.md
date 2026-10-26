@@ -18,7 +18,7 @@ The original checkout was a 16-byte README, not the trained project described in
 
 All nine selected historical whole-grid-finite rasters match the pinned peer-mirrored sample's CRS, shape and geotransform and contain only finite values in [0,1]. All 72 directed cross-site comparisons fail the requested uniqueness rule (>0.90 rank correlation OR >70% of positive pixels within 3 pixels). GEMSDOE25 and GEMSDOE30 are pixel-identical inside the footprint. GEMSDOE32 vs GEMSDOE36 has rho 0.9843 and 100% directional overlap. This does not certify any surface or the full registry: this audit covers only the selected historical final rasters.
 
-The reported 0.2778 is an **unverified owner report**, not an organizer receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. No reliable new leaderboard estimate exists. The claimed overall best values 0.3195 and 0.4413 conflict and neither is freshly verified.
+The reported 0.2778 is an **unverified owner report**, not an organizer receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. Leaderboard conflict resolved 2026-10-26: the organizer-published public board then read 0.4437 (#1) — 0.4413/0.3195 were stale snapshots (`evidence/leaderboard_snapshot_20261026.json`). Byte autopsy addendum: champion dots ⊂ GEMSDOE31 best ⊂ D2.8 exactly; near-catalogue dot share 14.6%→6.3%→0.0% tracks 0.2600→0.2708→0.2778; fixed-mask hide-recover anti-ranks that ladder (B-gate artefact — gate only on fold-local emission).
 
 ## Owner's standing project brief (condensed, not a verbatim transcript)
 
@@ -61,12 +61,11 @@ Historical rasters are ignored under `data/`. Committed evidence includes hashes
 
 ## Limitations and exact next steps
 
-- No exclusive method paragraph, complete registry surface set, frozen best fold predictions or restored feature cache is available locally. Establish those before any experiment; do not perturb an old raster merely to evade novelty.
-- Official DrivenData pages, USGS, NLR PDF, Dropbox and other non-allowlisted sources cannot be fetched from this environment. No authenticated DrivenData session is present. A public hash-pinned mirror is integrity evidence, not authentication of the official origin.
-- Retrieve features using peer cache manifests once the method lane is known; verify band names, coverage and hashes. GPU is optional, not universally required: the official reference README explicitly supports CPU-only use.
-- Run candidate canaries, pre-placement novelty, fold-local hide-and-recover and paired baseline comparisons. Publish exact CI/count/version and full-registry final-dot checks. If any gate fails, leave submission disabled.
+- Uniqueness registry here = 10 rasters (9 focus bests + E1), NOT every raster on the ~100 prompt sites (IR-EXT-02). Restore the full registry byte-wise before claiming a full-registry uniqueness certificate; never perturb an old raster merely to evade novelty.
+- No organizer receipt exists for any new or historical file; all historical scores remain OWNER-REPORTED. No authenticated DrivenData session here; hash-pinned mirrors are integrity evidence, not official-origin authentication. DrivenData public pages + community clarifications were read 2026-10-26 via the fetch tool; sandbox bash egress remains github/pypi/npm only (USGS FDSN verified unreachable from bash).
+- Next lanes (ranked in `research/preregistration-ext-corrob.md`): (1) full-footprint GPU segmentation (Tversky loss) fixing reference tile-skip blind spots; (2) USGS ANSS/FDSN seismicity lineaments — fetch the catalog on an unrestricted machine first; (3) radiometric texture displacement (uint8 cache limits); (4) raw-3DEP drainage offsets. Each needs its own pre-registration + 3-experiment budget and must beat E1 OOF 0.1252 with a positive paired CI before any slot.
 - An authenticated selector must check rules and remaining weekly allowance. Save the exact-byte receipt after upload. This site never submits on its own.
-- No new high-scoring TIFF, defensible leaderboard estimate or official literature review was produced. These unmet goals are explicit rather than disguised behind a format-only test.
+- Two honest negative lanes (E1, EXT) now bound what this data + CPU methods deliver (~0.22 MODEL ESTIMATE). Beating 0.2778 — let alone the 0.4437 public lead — needs a categorically stronger detector (GPU segmentation and/or expert-style 1 m mapping), not another emission tweak of these surfaces.
 
 See [three-pass review](research/review.md) for the defects found and verification scope.
 
@@ -78,3 +77,8 @@ Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin
 
 ## Parallel lane E1 XG-HGB — merged as negative deliverable (2026-10-26)
 A separate lane (supervised 47-channel HistGradientBoosting incl. magnetic×gravity cross-gradient boundary; spacing≥3 px, B=2) was merged after main's evidence-first restructure. Its TIF now lives at `research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif` (quarantine = research only, consistent with this README's DO NOT SUBMIT decision). Results: quadrant-OOF HOLDOUT-DTI 0.1252 [0.097,0.157] (56,464 withheld), canary max AUC 0.580, uniqueness vs 9 focus bests max |ρ| 0.089 / max 3-px overlap 40.9%, format PASS — but SGMC HOLDOUT-DTI 0.0752 vs champion 0.0961, MODEL ESTIMATE ~0.22 < 0.2778 → **verdict negative; do not submit**. Lane page: `docs/lane-e1-xg-hgb.html`; card: `evidence/run_card_e1_xg_hgb.json`. This does not change the current decision above.
+
+---
+
+## Lane KANLER-EXT-CORROB — negative deliverable (2026-10-26)
+Pre-registered (`research/preregistration-ext-corrob.md`) before running. Exp1 CORROB (label-free geometric-mean corroboration: OOF 0.0792; clean SGMC 0.1015 vs champion 0.0961 but callable hide-recover 0.0499 vs proxy 0.0992 — split), Exp2 MCSUP (catalogue∪SGMC positives @37,654: OOF 0.1181), Exp3 EMIT (budget sweep → MCSUP @44,090: OOF **0.1264 [0.098, 0.154]**, 56,464 withheld; SGMC-OOF fold-local 0.1337; canary max AUC 0.580; uniqueness vs 10 rasters max |ρ| 0.101 / max 3-px overlap 39.1%, 26.8% vs champion; format PASS). Since OOF only ties E1 (0.1252) and MCSUP's flattering global SGMC (0.3288) / hide-recover (0.1598) are training-contaminated (IR-EXT-01, excluded), the headline MODEL ESTIMATE is **~0.22 [0.18, 0.26] < 0.2778 → verdict negative**. Unique file (research download only): `docs/downloads/kanler-ext-mcsup-44090d-20261026T223149Z-5553e712b0-allfinite.tif`, name `KANLER-EXT-MCSUP-44090D-5553E712B0`, sha256 `06c56b9a…ae666`. Card: `evidence/run_card_ext.json`; review: `research/review-ext-lane.md`; lane page: `docs/lane-ext-corrob.html`.
