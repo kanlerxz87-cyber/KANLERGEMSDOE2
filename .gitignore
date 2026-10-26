@@ -1,5 +1,13 @@
 __pycache__/
+*.pyc
+*.pyo
+.venv/
 .cache/
-data/
-*.tif
-*.zip
+data/*.tif
+data/*.pdf
+data/*.csv
+!data/.gitkeep
+.DS_Store
+# Keep our TIFs in docs/downloads (they are submission artifacts, not ignored)
+!docs/downloads/*.tif
+!docs/downloads/*.zip
