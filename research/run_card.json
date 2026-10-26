@@ -41,7 +41,9 @@
     "prior_blindbasin_authorization": "withdrawn",
     "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
   },
+  "pipeline_review": "pipeline-review.md",
   "blockers": [
+    "Legacy experiment paths withdrawn; lane-specific shared-template integration still needed",
     "Missing exclusive method paragraph",
     "Shared-template ambiguity between peer repositories",
     "No organizer receipts",

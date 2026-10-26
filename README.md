@@ -2,7 +2,30 @@
 
 **Start every session here, then read `research/run_card.json`, `research/hypotheses.md` and the evidence manifests.**
 
-## Current decision — 2026-10-26 UTC
+## Follow-up safety review — 2026-10-26 UTC
+
+**No new submission TIFF is approved.** Reviewed the inherited checkout rather than
+assuming its previous safety claims were complete. Found and withdrew active legacy
+experiment/evaluator paths, a conflicting evaluator import, and a site builder with
+unresolved conflict markers. Replaced the local TIFF writer with a research-only
+adapter to the byte-pinned shared writer: preserve probabilities, reject invalid
+values, never publish to `docs/downloads`, never authorize a submission.
+
+See [three-pass pipeline review](research/pipeline-review.md) for specific findings,
+archived originals, limitations and next-session sequence. The existing four geological
+hypotheses remain preregistered but untested: no exclusive method paragraph, complete
+registry surfaces, or frozen current-best fold predictions were supplied. No new
+leaderboard estimate, scientific experiment or competition slot was used.
+
+Active commands `run_experiments.py`, `build_features.py` and `evaluate_holdout.py`
+now return **BLOCKED** instead of running the incompatible legacy workflow. The
+shared `SegmentHoldout` API remains intact under `vendor/template/src/gems/`;
+implementing a lane-specific fold-local orchestration is still required. The staging
+writer is not a release system. Scikit-learn is installed for safety testing, not
+proof that data preparation/training is ready. This review's tests use synthetic
+contract fixtures only; they do not count as HOLDOUT-DTI experiments.
+
+## Inherited audit decision — 2026-10-26 UTC
 
 **DO NOT SUBMIT. No new submission TIFF is approved or generated in this session.**
 
@@ -57,7 +80,7 @@ Historical rasters are ignored under `data/`. Committed evidence includes hashes
 
 ### Shared tooling
 
-`vendor/template/` contains unchanged peer code; tests enforce every recorded SHA-256. The canonical choice is provisional: GEMSDOE36 pins GEMSDOE24, while peer evidence says GEMSDOE31 pins 57GEMSDOE. Resolve authority before comparing experiments. Use `gems.holdout.SegmentHoldout` and `gems.submission.write_submission(..., outside='zero')`, not a private metric implementation. The strict local `scripts/validate_raster.py` is an additional range/grid checker, not a competing writer or scientific evaluator. Shared canary needs scikit-learn, which is not required for this audit and is not installed here. The shared `make_note` limit is looser than this protocol; enforce 140 characters independently.
+`vendor/template/` contains unchanged peer code; tests enforce every recorded SHA-256. The canonical choice is provisional: GEMSDOE36 pins GEMSDOE24, while peer evidence says GEMSDOE31 pins 57GEMSDOE. Resolve authority before comparing experiments. Use `gems.holdout.SegmentHoldout` and `gems.submission.write_submission(..., outside='zero')`, not a private metric implementation. The strict local `scripts/validate_raster.py` is an additional range/grid checker, not a competing writer or scientific evaluator. Shared canary needs scikit-learn; it is now installed, but no scientific canary was run. The shared `make_note` limit is looser than this protocol; enforce 140 characters independently.
 
 ## Limitations and exact next steps
 
