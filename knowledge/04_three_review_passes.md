@@ -40,3 +40,16 @@ A subsequent concurrent K2-SCALE safety PR landed during the final merge attempt
 - Keep all three dashboards available: the K2 root, the current data-readiness desk at `docs/index.html`, and H1 at `docs/h1-audit.html`. Kept the latest upstream data-preparation entry point, moved H1’s separate shared-stack helper to `scripts/build_shared_stack.py`, retained both README/prompt snapshots, and rebuilt the sites.
 - Reused local SHA-verified mirror bytes to populate ignored `data/`, then ran the latest download/preparation entry point successfully; provenance remains peer-mirror, not organizer-authenticated. No experiment or slot was consumed.
 - Integration checks: 112 pytest tests and 54 inherited unittest contracts passed; three Node UI tests and GitHub-feed offline/rate-limit cases passed; both deterministic builders, local link audit and desktop H1 navigation passed. Scheduled monitoring checks only public GitHub revisions, never the DrivenData site.
+
+## Post-merge safety recheck — saved-byte masks
+
+- A synthetic 2×3 reproduction showed that finite zero pixels with TIFF metadata `nodata=0` could be masked inside the footprint while both local read-back validators incorrectly reported a format pass. This was a software contract test, not a geological experiment or competition result.
+- Hardened both repository-owned validators (without modifying or forking the pinned shared writer): require valid in-footprint GDAL masks, reject external candidate/template sidecars, and verify candidate and template hashes are stable across the audit. The whole-grid validator also checks TIFF driver, float32 single band, EPSG:32611 and an unambiguous reference footprint. Added tests for finite nodata sentinels, internal/external masks, ambiguous templates and mutation during validation.
+- Re-audited the same historical H33 research-only zero-outside file. Its saved bytes and grid pass the stricter local profile with zero masked interior pixels; portal acceptance remains unknown, the official outside-footprint encoding remains unresolved, and this is not a candidate or selector approval.
+- Post-fix verification: **118 pytest tests**, **54 unittest contracts**, 3 Node UI tests, GitHub-feed edge cases, deterministic builders and local link checks passed. No scientific experiment or competition slot was used in this recheck.
+
+## Accessibility recheck — dashboard contrast
+
+- An automated axe-core WCAG 2/2.1 A/AA scan found low-contrast secondary text on the K2 root and H1 reports. Darkened affected text colors while preserving the existing visual hierarchy; no scientific content or approval status changed.
+- Rechecked the K2 root, data desk, H1 report, executive summary, submission guide and research page at desktop and/or mobile widths: zero axe-detected violations in the checked views, no horizontal page overflow. This is an automated audit, not a claim of full accessibility conformance. Added 22 lightweight WCAG contrast regressions.
+- Post-fix verification: **140 pytest tests**, **54 unittest contracts**, 3 Node UI tests, feed edge cases, deterministic builders and link checks passed. No experiment or slot was used.

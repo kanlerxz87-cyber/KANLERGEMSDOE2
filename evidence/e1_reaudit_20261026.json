@@ -108,6 +108,7 @@
     "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
     "candidate_external_dependencies": [],
     "template_external_dependencies": [],
+    "inside_masked_count": 0,
     "checks": {
       "tif_extension_and_driver": true,
       "template_single_band": true,
@@ -115,6 +116,8 @@
       "template_footprint_unambiguous": true,
       "template_self_contained": true,
       "candidate_self_contained": true,
+      "no_external_template_dependencies": true,
+      "no_external_candidate_dependencies": true,
       "single_band": true,
       "float32": true,
       "crs_matches": true,

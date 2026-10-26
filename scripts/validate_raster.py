@@ -24,9 +24,14 @@ def sha256_file(path: str | Path) -> str:
     return digest.hexdigest()
 
 
+def digest(path: str | Path) -> str:
+    """Compatibility name for the saved-byte hash used by other validators."""
+    return sha256_file(path)
+
+
 def validate(path: str | Path, template: str | Path) -> dict:
     path, template = Path(path), Path(template)
-    candidate_before, template_before = sha256_file(path), sha256_file(template)
+    candidate_before, template_before = digest(path), digest(template)
     with rasterio.open(template) as t, rasterio.open(path) as r:
         sample = t.read(1)
         template_mask = t.read_masks(1)
@@ -59,6 +64,8 @@ def validate(path: str | Path, template: str | Path) -> dict:
             "template_footprint_unambiguous": bool(not np.isinf(sample).any() and not np.any(np.isfinite(sample) & (template_mask == 0))),
             "template_self_contained": not template_dependencies,
             "candidate_self_contained": not candidate_dependencies,
+            "no_external_template_dependencies": not template_dependencies,
+            "no_external_candidate_dependencies": not candidate_dependencies,
             "single_band": r.count == 1,
             "float32": r.dtypes == ("float32",),
             "crs_matches": r.crs is not None and t.crs is not None and r.crs == t.crs,
@@ -74,7 +81,7 @@ def validate(path: str | Path, template: str | Path) -> dict:
             "no_nan_or_inf_whole_grid": bool(finite.all()),
             "values_in_0_1_whole_grid": bool(finite.all() and np.all((a >= 0) & (a <= 1))),
         }
-        candidate_after, template_after = sha256_file(path), sha256_file(template)
+        candidate_after, template_after = digest(path), digest(template)
         checks["candidate_unchanged_during_audit"] = candidate_before == candidate_after
         checks["template_unchanged_during_audit"] = template_before == template_after
         required = (
@@ -97,6 +104,7 @@ def validate(path: str | Path, template: str | Path) -> dict:
             "template_sha256": template_after,
             "candidate_external_dependencies": candidate_dependencies,
             "template_external_dependencies": template_dependencies,
+            "inside_masked_count": int((inside_mask == 0).sum()) if aligned else None,
             "checks": checks,
             "format_valid": official_format,
             "strict_whole_grid_range_and_grid_valid": strict_range_grid,
