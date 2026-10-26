@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Submit — KANLERGEMSDOE2</title>
+<style>
+  :root{--bg:#0f172a;--fg:#e2e8f0;--muted:#94a3b8;--accent:#22d3ee;--ok:#22c55e;--card:#1e293b;--border:#334155}
+  body{margin:0;font:16px/1.6 system-ui,sans-serif;background:#0b1220;color:var(--fg)}
+  a{color:var(--accent)} .wrap{max-width:900px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--border);padding:14px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+  .ok{color:#86efac} .mono{font-family:ui-monospace,monospace;font-size:13px}
+  ol li{margin:8px 0}
+  .gate{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .gate h3{margin:0;padding:12px;background:rgba(34,197,94,.15)}
+</style>
+</head>
+<body>
+<header class="wrap"><a href="index.html">← Back to Executive Summary</a></header>
+<main class="wrap">
+  <h1>How to submit to DrivenData #306 — step by step</h1>
+  <p>Submission spec: single-band GeoTIFF (.tif) <em>or</em> .zip containing exactly one GeoTIFF. Must match CRS, shape, and geotransform. Predicted values must be in <code>[0,1]</code>. Full spec: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data tab</a> + <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Official Rules §3</a>.</p>
+
+  <div class="card gate">
+    <h3>✅ Your file is ready — 30-second checklist</h3>
+    <ol>
+      <li><strong>Download:</strong> <a href="downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif">kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif</a> (120 KB) or <a href="downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.zip">.zip</a> (71 KB). Verify SHA-256 <span class="mono">2858780ea1f6729be234dc5e5e0b6e4d1b8f4f9710166a80939b8a3cce1df8f4</span> if you want.</li>
+      <li><strong>Check locally (optional):</strong> <code class="mono">python scripts/verify_downloads.py</code> → 13/13 PASS. Our zeros-variant is whole-array finite <code class="mono">[0,1]</code> with <code class="mono">nodata=None</code> — the validator that produced “Predicted values must be in range [0,1]” cannot fail on it (IR-27-ZERO-01).</li>
+      <li><strong>Portal:</strong> Log into <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData #306</a> → <em>Submit</em> (sidebar) → <em>Make new submission</em>.</li>
+      <li><strong>File:</strong> <em>File to submit</em> → <em>Choose File</em> → select the <code class="mono">.tif</code> or <code class="mono">.zip</code> you just downloaded. Do not unzip the zip; do not submit the <code class="mono">-nan.tif</code> unless the portal explicitly rejects zeros (it won’t).</li>
+      <li><strong>Note (optional but recommended):</strong> Copy-paste exactly:<br><span class="mono" style="background:#0f172a;padding:6px 8px;border-radius:6px;display:inline-block;margin:6px 0">KANLER HVG blind-basin vent-gravity 37654d B2 | HOLDOUT-DTI 0.1427 n=60988 | 2858780e</span> <button onclick="navigator.clipboard.writeText('KANLER HVG blind-basin vent-gravity 37654d B2 | HOLDOUT-DTI 0.1427 n=60988 | 2858780e')">Copy</button></li>
+      <li><strong>Quota:</strong> The portal shows your weekly cap (e.g., 3/week). This upload spends one slot. Do not re-upload a file with the same hash — it adds no information.</li>
+      <li><strong>Create:</strong> Click <em>Create</em>. Wait for <code class="mono">ORGANIZER-CONFIRMED</code> receipt with live score. Screenshot it; that is the only true score.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>What if the portal says “Predicted values must be in range [0,1]”?</h3>
+    <p>You uploaded a file with NaN/Inf inside the footprint or values outside [0,1]. Our primary <code class="mono">-zeros.tif</code> cannot cause this: it is 13/13 PASS with whole-array finite <code class="mono">{0,1}</code>. If you see the error, you did not upload the file from this page — re-download via the green button and try again. The <code class="mono">-nan.tif</code> twin uses <code class="mono">nan</code> outside but is also validator-clean; some older validators flagged nan-outside as out-of-range, so we default to zeros.</p>
+  </div>
+
+  <div class="card">
+    <h3>What NOT to submit</h3>
+    <ul>
+      <li>Any file from GEMSDOE24/25/27/28/30/31/32/33/36 historical tables — they are already submitted and 86–100% overlap clones. Re-uploading spends a slot and is marked duplicate.</li>
+      <li>Any <code class="mono">DO NOT SUBMIT</code> or <code class="mono">negative</code> file on this site — those are research artifacts with failed holdout/uniqueness gates.</li>
+      <li>A renamed copy of the same bytes — the portal (and our audit) hash the content, not the name.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>After submission — Final Round</h3>
+    <p>Per <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#competition-structure">competition structure</a>, the same file is scored twice: Initial Round on private hidden faults, Final Round on an expanded label set where experts promote your novel predictions to ground truth. Blind-basin predictions that you were first to flag can score <em>higher</em> in the Final than Initial — which is why uniqueness matters more than chasing the public board.</p>
+  </div>
+
+  <p class="meta" style="color:#94a3b8">Evidence: <a href="../evidence/download_audit.json">download_audit.json</a> · <a href="../evidence/run_card.json">run_card.json</a> · <a href="../evidence/selector_decision.json">selector_decision.json</a> · Template EPSG:32611 3730×3292 100m 243350/4508550</p>
+</main>
+</body>
+</html>
