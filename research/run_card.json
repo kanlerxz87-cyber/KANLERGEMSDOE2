@@ -1,0 +1,48 @@
+{
+  "hypothesis": "Historical champions may be variations of the same prediction support, not independent discovery lanes.",
+  "mechanism": "Decode nine pinned historical rasters; compare ranks and directional Euclidean dot distances in the template footprint.",
+  "non_fault_mimic": "Common placement lattice or survey/terrain sampling support can mimic independent geological agreement.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1 (pinned, not run on a candidate)",
+    "value": null,
+    "n_withheld_positive_pixels": null,
+    "ci95": null,
+    "reason": "No assigned method lane; no new detector or fold-local feature cache restored; no frozen comparable current best."
+  },
+  "registry": {
+    "scope": "nine historical priority champions only; NOT full registry",
+    "surface_check": "not run; no candidate surface",
+    "final_dot_directed_pairs": 72,
+    "duplicate_gate_hits": 72,
+    "champion_vs_GEMSDOE36": {
+      "a": "GEMSDOE32",
+      "b": "GEMSDOE36",
+      "spearman_rho": 0.9843213108530009,
+      "fraction_a_dots_within_3px_of_b": 1.0,
+      "duplicate_gate": true,
+      "decoded_pixels_equal_inside_footprint": false
+    }
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "candidate": "not generated; not validated",
+    "historical_files": 9,
+    "historical_format_passes": 9,
+    "scope": "Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated."
+  },
+  "submission_name": null,
+  "note": "Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.",
+  "verdict": "negative",
+  "ok_to_download_and_submit": false,
+  "experiments_used": 0,
+  "blockers": [
+    "Missing exclusive method paragraph",
+    "Shared-template ambiguity between peer repositories",
+    "No organizer receipts",
+    "No complete frozen registry surface set",
+    "No fold-local cache or comparable holdout-best restored",
+    "Official data origin not authenticated; no DrivenData session",
+    "Contradictory claimed leaderboard bests 0.3195 and 0.4413; neither verified"
+  ]
+}
