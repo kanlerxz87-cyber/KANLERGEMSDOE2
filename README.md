@@ -13,6 +13,8 @@
 - [Ranked scientific hypotheses](research/hypotheses.md), [scientific source register](research/science-and-sources.md), [shared-template fixes](research/template-fixes.md), [audit review](research/review.md), and [nine-raster comparisons](research/raster_audit.json).
 - [Competition leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/): the retained 26 October 2026 public snapshot shows **0.4437** as rank one, not an exact-file organizer receipt or a private score. The desk displays the observation time and staleness, but does not automatically access or scrape DrivenData; consult the official page for a current value. See [`evidence/leaderboard_snapshot.json`](evidence/leaderboard_snapshot.json).
 
+A concurrent review found that both branch-source Pages and the staged Actions deployment had run; their completion order can differ, and branch-root Pages can expose tracked quarantine files. The staged workflow excludes TIFFs. The actual repository Pages source and deployment status must be verified before assuming the safer Actions artifact is authoritative.
+
 The best of the nine supplied historical owner reports is **GEMSDOE32 at 0.2778**, for `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`; the exact-file organizer receipt is unavailable. Sparse, spaced dots and known-catalogue flank pruning are plausible under the 300 m distance-weighted metric, but neither the cause of this value nor a higher score for any new idea is established. The nine selected historical rasters match the mirrored grid and pass local value checks, but all 72 directed pairs fail the near-duplicate rule. That limited audit is not a full-registry comparison.
 
 ## Standing protocol
