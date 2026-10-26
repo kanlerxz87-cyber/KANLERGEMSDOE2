@@ -25,6 +25,7 @@ jobs:
       - run: python scripts/run_tests.py
       - run: python -m pytest -q
       - run: node tests/test_feed.js
+      - run: node --test tests/test_leaderboard_script.cjs
       - name: Observe source revisions (not leaderboard scores)
         if: github.event_name != 'pull_request'
         # Publish unavailable sources as unavailable; never reuse an old PASS.

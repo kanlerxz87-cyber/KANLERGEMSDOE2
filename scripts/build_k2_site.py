@@ -23,7 +23,8 @@ def header(prefix: str, active: str) -> str:
              ('Executive summary', prefix + 'docs/k2-executive-summary.html', 'executive'),
              ('How to submit', prefix + 'docs/k2-how-to-submit.html', 'guide'),
              ('Research', prefix + 'docs/k2-research.html', 'research'),
-             ('Data audit', prefix + 'docs/index.html', 'data')]
+             ('Data audit', prefix + 'docs/index.html', 'data'),
+             ('H1 audit', prefix + 'docs/h1-audit.html', 'h1')]
     nav = ''.join(f'<a href="{href}" class="{("active" if key == active else "")}"'
                   + (' aria-current="page"' if key == active else '') + f'>{label}</a>'
                   for label, href, key in links)

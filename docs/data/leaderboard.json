@@ -1,0 +1,10 @@
+{
+  "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "observed_utc": "2026-10-26T21:37:00Z",
+  "observation_precision": "minute",
+  "method": "Official public page read through the page retrieval tool; transcribed snapshot",
+  "evidence_class": "ORGANIZER-PUBLISHED PUBLIC LEADERBOARD; not a submission-page receipt for this project",
+  "rank": 1,
+  "participant": "xiaofanhu",
+  "score": 0.4437
+}
