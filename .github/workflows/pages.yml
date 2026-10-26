@@ -4,11 +4,13 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '17 7 * * *'
 permissions:
   contents: read
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,11 +21,32 @@ jobs:
           python-version: '3.11'
           cache: pip
       - run: pip install -r requirements.txt
+      - run: python -m compileall -q scripts tests vendor/template/src
       - run: python scripts/run_tests.py
+      - run: python -m pytest -q
+      - run: node tests/test_feed.js
+      - run: node --test tests/test_leaderboard_script.cjs
+      - name: Observe source revisions (not leaderboard scores)
+        if: github.event_name != 'pull_request'
+        # Publish unavailable sources as unavailable; never reuse an old PASS.
+        continue-on-error: true
+        run: python scripts/check_source_freshness.py --out docs/source_freshness.json
       - run: python scripts/build_site.py
-      - run: git diff --exit-code -- docs research/run_card.json
+      - run: python scripts/build_k2_site.py --check
+      - run: python scripts/check_site.py
+      - name: Stage the built public dashboard and evidence
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p _site/docs _site/evidence
+          cp index.html .nojekyll _site/
+          cp -R docs/. _site/docs/
+          cp -R evidence/. _site/evidence/
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: test
     permissions:
       pages: write
@@ -33,13 +56,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
       - uses: actions/deploy-pages@v4
         id: deployment

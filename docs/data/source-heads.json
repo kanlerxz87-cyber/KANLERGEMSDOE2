@@ -1,0 +1,61 @@
+{
+  "checked_utc": "2026-10-26T21:44:32.281778+00:00",
+  "all_heads_observed": true,
+  "scope": "GitHub repository heads only; not an audit, leaderboard, live score or slot decision",
+  "sites": [
+    {
+      "site": "GEMSDOE24",
+      "repository": "buffedlizard55-lab/GEMSDOE24",
+      "observed_head": "7ab1c8f77f0b4b8644e3929403a0dab65838b008",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE25",
+      "repository": "buffedlizard55-lab/GEMSDOE25",
+      "observed_head": "af2b6f2543e5422a7e917638b70e038e6fd91cad",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE27",
+      "repository": "buffedlizard55-lab/GEMSDOE27",
+      "observed_head": "bef7ae8e8f63b69d299c9214c75988c8f5055f9c",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE28",
+      "repository": "buffedlizard55-lab/GEMSDOE28",
+      "observed_head": "2c839d10f57ec9b074829e93c84bc39935f52896",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE30",
+      "repository": "buffedlizard55-lab/GEMSDOE30",
+      "observed_head": "9c0d637c0171407196b61b780444bc772ce75438",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE31",
+      "repository": "buffedlizard55-lab/GEMSDOE31",
+      "observed_head": "776bf4668a8c10631908c9bba9443a8f11ce5036",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE32",
+      "repository": "buffedlizard55-lab/GEMSDOE32",
+      "observed_head": "07806249f4ed3efe70b4fbf866183c32392b7853",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE33",
+      "repository": "buffedlizard55-lab/GEMSDOE33",
+      "observed_head": "1d99d73fe14d9a87126ffca2db52c69336d6099b",
+      "status": "observed"
+    },
+    {
+      "site": "GEMSDOE36",
+      "repository": "buffedlizard55-lab/GEMSDOE36",
+      "observed_head": "05979971df4775aadad34ae6749b0a7ac56d7832",
+      "status": "observed"
+    }
+  ]
+}

@@ -74,6 +74,15 @@ def write_research(*, surface: Path, dots: Path, template: Path, registry: Path,
         raise
 
 
+def write_candidate(predictions, template, output, *, name, note):
+    """Legacy format-only API: disabled because it bypassed registry prerequisites."""
+    raise ValueError("BLOCKED: format-only staging bypasses pre-placement, final-dot and complete-registry checks; no raster written")
+
+
+# Keep the old importable name, but never permit a registry-bypassing artifact.
+stage = write_candidate
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--research-only", action="store_true", required=True)

@@ -80,5 +80,23 @@
   "dots": {
     "max_abs_rank_correlation": 0.023030326765274747,
     "max_overlap_3px": 0.9931215807085568
+  },
+  "parallel_raw_feature_diagnostics": {
+    "label": "LEAKAGE-CANARY AUC (not a DTI or organizer score)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "raw_channels": 39,
+    "validity_masks": 39,
+    "max_two_polarity_fold_or_pooled_auc": 0.6297168688888889,
+    "passed": true,
+    "context_withheld_positives": 60988,
+    "limitation": "Only raw cached channels and missingness tested; transforms and fitted features require new fold-local canaries.",
+    "evidence": "evidence/raw_feature_canaries.json"
+  },
+  "parallel_reports": {
+    "K2": "evidence/run-card.json",
+    "H1": "docs/data/run-card.json",
+    "raw_canaries": "evidence/raw_feature_canaries.json",
+    "historical_public_registry_lock": "data/registry-lock.json",
+    "note": "Parallel lane-specific evidence is retained, not a new valid holdout or an approval. The historic public inventory cannot certify future or private registry completeness."
   }
 }

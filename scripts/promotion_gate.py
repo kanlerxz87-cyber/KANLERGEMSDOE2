@@ -23,7 +23,7 @@ def check(card):
         for name, limit in (("max_abs_rank_correlation", .90), ("max_overlap_3px", .70)):
             if not _number(values.get(name), 0, limit):
                 errors.append(f"{stage}.{name}: missing, invalid, or duplicate")
-    if not _number(card.get("max_feature_alone_auc"), 0, .90):
+    if not _number(card.get("max_feature_alone_auc"), .50, .90):
         errors.append("Leakage canary absent or failed")
     h = card.get("holdout")
     h = h if isinstance(h, dict) else {}

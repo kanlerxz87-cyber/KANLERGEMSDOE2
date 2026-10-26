@@ -82,6 +82,25 @@ class EvidenceTests(unittest.TestCase):
     def test_site_does_not_offer_fake_tiff(self):
         self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
         self.assertIn('No new TIFF is approved', (ROOT/'docs/index.html').read_text())
+
+    def test_withdrawn_pages_cannot_authorize_legacy_candidate(self):
+        docs=ROOT/'docs'
+        page=(docs/'lane-e1-xg-hgb.html').read_text().lower()
+        legacy_builder=(ROOT/'scripts/build_site_e1_xg_hgb.py').read_text().lower()
+        self.assertIn('from build_site import build',legacy_builder)
+        self.assertNotIn('<<<<<<<',legacy_builder)
+        self.assertNotIn('=======',legacy_builder)
+        self.assertNotIn('>>>>>>>',legacy_builder)
+        self.assertIn('do not download or submit',page)
+        self.assertNotIn('authorized submission gate',page)
+        self.assertNotIn('downloads/kanler',page)
+        for stale in ('canaries.json','experiments_oof.json','holdout_template.json',
+                      'run_card_e1_xg_hgb.json','uniqueness_E1.json'):
+            self.assertFalse((docs/stale).exists(),f'stale public evidence remains: {stale}')
+        for html_file in docs.glob('*.html'):
+            text=html_file.read_text().lower()
+            self.assertNotIn('kanlergemsdoe2-blindbasin-vent-gravity',text)
+            self.assertNotIn('all automated gates pass',text)
     def test_audit_claim_matches_pair_records(self):
         d=json.loads((ROOT/'research/raster_audit.json').read_text())
         self.assertEqual(len(d['format_reports']),9)

@@ -1,0 +1,9 @@
+{
+  "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0",
+  "source_sha256": "c476410a3fe27e9c2d6b97e206633ec252929df1c0c0e4c620da0c2f311fd538",
+  "kind": "synthetic bookkeeping diagnostic, not a holdout or leaderboard score",
+  "empty_truth_cell": "draw20_fold0",
+  "fold_false_positive_mass": 1.0,
+  "pooled_false_positive_mass": 0.0,
+  "defect_reproduced": true
+}

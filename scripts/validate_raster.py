@@ -26,9 +26,14 @@ def sha256_file(path: str | Path) -> str:
 
 def validate(path: str | Path, template: str | Path) -> dict:
     path, template = Path(path), Path(template)
+    candidate_before, template_before = sha256_file(path), sha256_file(template)
     with rasterio.open(template) as t, rasterio.open(path) as r:
         sample = t.read(1)
-        footprint = np.isfinite(sample) & (t.read_masks(1) > 0)
+        template_mask = t.read_masks(1)
+        footprint = np.isfinite(sample) & (template_mask > 0)
+        # A lone GeoTIFF upload cannot depend on external .msk/.aux sidecars.
+        template_dependencies = [str(f) for f in t.files if Path(f).resolve() != template.resolve()]
+        candidate_dependencies = [str(f) for f in r.files if Path(f).resolve() != path.resolve()]
         a = r.read(1)
         aligned = r.shape == t.shape
         raster_mask = r.read_masks(1) if aligned else None
@@ -48,13 +53,19 @@ def validate(path: str | Path, template: str | Path) -> dict:
             inside_finite = inside_range = inside_not_masked = outside_null = outside_nan = False
         finite = np.isfinite(a)
         checks = {
+            "tif_extension_and_driver": path.suffix.lower() == ".tif" and r.driver == "GTiff",
             "template_single_band": t.count == 1,
             "template_nonempty_footprint": bool(footprint.any()),
+            "template_footprint_unambiguous": bool(not np.isinf(sample).any() and not np.any(np.isfinite(sample) & (template_mask == 0))),
+            "template_self_contained": not template_dependencies,
+            "candidate_self_contained": not candidate_dependencies,
             "single_band": r.count == 1,
             "float32": r.dtypes == ("float32",),
             "crs_matches": r.crs is not None and t.crs is not None and r.crs == t.crs,
+            "epsg_32611": r.crs is not None and r.crs.to_epsg() == 32611,
             "shape_matches": aligned,
             "transform_matches": r.transform == t.transform,
+            "axis_aligned_100m": (r.transform.a, r.transform.b, r.transform.d, r.transform.e) == (100, 0, 0, -100),
             "finite_inside_footprint": inside_finite,
             "unmasked_inside_footprint": inside_not_masked,
             "values_in_0_1_inside_footprint": inside_range,
@@ -63,22 +74,29 @@ def validate(path: str | Path, template: str | Path) -> dict:
             "no_nan_or_inf_whole_grid": bool(finite.all()),
             "values_in_0_1_whole_grid": bool(finite.all() and np.all((a >= 0) & (a <= 1))),
         }
+        candidate_after, template_after = sha256_file(path), sha256_file(template)
+        checks["candidate_unchanged_during_audit"] = candidate_before == candidate_after
+        checks["template_unchanged_during_audit"] = template_before == template_after
         required = (
-            "template_single_band", "template_nonempty_footprint", "single_band", "float32",
-            "crs_matches", "shape_matches", "transform_matches", "finite_inside_footprint",
+            "tif_extension_and_driver", "template_single_band", "template_nonempty_footprint", "template_footprint_unambiguous", "template_self_contained",
+            "candidate_self_contained", "candidate_unchanged_during_audit", "template_unchanged_during_audit", "single_band", "float32",
+            "crs_matches", "epsg_32611", "shape_matches", "transform_matches", "axis_aligned_100m", "finite_inside_footprint",
             "unmasked_inside_footprint", "values_in_0_1_inside_footprint",
             "outside_footprint_null_or_nan", "no_inf_whole_grid",
         )
         official_format = all(checks[key] for key in required)
         strict_range_grid = all(checks[key] for key in (
-            "template_single_band", "template_nonempty_footprint", "single_band", "float32",
-            "crs_matches", "shape_matches", "transform_matches",
-            "no_nan_or_inf_whole_grid", "values_in_0_1_whole_grid",
+            "tif_extension_and_driver", "template_single_band", "template_nonempty_footprint", "template_footprint_unambiguous", "template_self_contained",
+            "candidate_self_contained", "candidate_unchanged_during_audit", "template_unchanged_during_audit", "single_band", "float32",
+            "crs_matches", "epsg_32611", "shape_matches", "transform_matches", "axis_aligned_100m",
+            "unmasked_inside_footprint", "no_nan_or_inf_whole_grid", "values_in_0_1_whole_grid",
         ))
         return {
             "path": str(path),
-            "sha256": sha256_file(path),
-            "template_sha256": sha256_file(template),
+            "sha256": candidate_after,
+            "template_sha256": template_after,
+            "candidate_external_dependencies": candidate_dependencies,
+            "template_external_dependencies": template_dependencies,
             "checks": checks,
             "format_valid": official_format,
             "strict_whole_grid_range_and_grid_valid": strict_range_grid,

@@ -34,8 +34,16 @@ def evaluate(sample: Path, labels: Path, predictions: Path, features: Path, *,
     with rasterio.open(sample) as t, rasterio.open(labels) as ds:
         if t.count != 1 or ds.count != 1 or (t.shape, t.crs, t.transform) != (ds.shape, ds.crs, ds.transform):
             raise ValueError("Sample and label grids must match and be single-band")
+        if (t.crs is None or t.crs.to_epsg() != 32611
+                or (t.transform.a, t.transform.b, t.transform.d, t.transform.e) != (100, 0, 0, -100)):
+            raise ValueError("The shared 300 m evaluator requires an EPSG:32611 100 m grid")
+        if len(t.files) != 1 or len(ds.files) != 1:
+            raise ValueError("Template and catalogue must not rely on external sidecars")
         footprint = np.isfinite(t.read(1)) & (t.read_masks(1) > 0)
-        truth = (ds.read(1) > 0) & footprint
+        label_values = ds.read(1)
+        if not footprint.any() or not np.isin(label_values[footprint], [0, 1]).all() or np.any(ds.read_masks(1)[footprint] == 0):
+            raise ValueError("Catalogue must be unmasked and binary throughout a nonempty footprint")
+        truth = (label_values > 0) & footprint
     ctx = SegmentHoldout(footprint, truth, buffer_px=buffer_px)
     with np.load(features, allow_pickle=False) as archive:
         if not archive.files:
@@ -77,6 +85,9 @@ def evaluate(sample: Path, labels: Path, predictions: Path, features: Path, *,
 
 
 def main() -> None:
+    if len(sys.argv) == 1:
+        print("BLOCKED: explicit independent fold predictions and feature canaries are required; no legacy run is authorized", file=sys.stderr)
+        raise SystemExit(2)
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--sample", type=Path, default=ROOT / "data/sample_submission.tif")
     p.add_argument("--labels", type=Path, default=ROOT / "data/labels.tif")

@@ -3,7 +3,7 @@
 import sys
 
 MESSAGE = (
-    "STOP: inherited E1 is a registered duplicate and its holdout was not "
+    "BLOCKED: STOP: inherited E1 is a registered duplicate and its holdout was not "
     "whole-segment/fold-local. Source is preserved in research/quarantine/e1-20261026/. "
     "No experiment, GeoTIFF, or submission was created. A new preregistered single "
     "lane, complete registry and comparable baseline are required before a new run."

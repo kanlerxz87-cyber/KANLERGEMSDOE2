@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 from validate_raster import sha256_file
@@ -14,12 +15,12 @@ META = ROOT / "data/prepared/features.json"
 
 def main() -> None:
     if not CACHE.is_file() or not META.is_file():
-        raise SystemExit(
-            "Shared prepared feature cache absent. Do not use the withdrawn E1 cache builder. "
-            "The original shared preparer is at "
-            "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/scripts/prepare_data.py; "
-            "its dependencies, input pins, footprint and resource needs must be restored and verified before a new experiment."
-        )
+        print("BLOCKED: Shared prepared feature cache absent. Do not use the withdrawn E1 cache builder. "
+              "The original shared preparer is at "
+              "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/scripts/prepare_data.py; "
+              "its dependencies, input pins, footprint and resource needs must be verified before a new experiment.",
+              file=sys.stderr)
+        raise SystemExit(2)
     meta = json.loads(META.read_text())
     if sha256_file(CACHE) != meta.get("sha256"):
         raise SystemExit("Shared feature-cache checksum mismatch")

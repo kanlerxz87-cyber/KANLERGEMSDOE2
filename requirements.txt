@@ -1,7 +1,6 @@
 numpy==2.4.6
 scipy==1.17.1
 rasterio==1.4.4
-scikit-learn
-
-# Test runner covers both unittest and pytest-style regression tests.
-pytest>=8,<9
+scikit-learn==1.9.1
+pyshp==2.3.1
+pytest==8.4.2

@@ -39,8 +39,11 @@ def audit(surface_path: Path, template: Path, registry_path: Path, *, dots_path:
             raise ValueError("Missing, duplicate, or mismatched pre-placement surface report")
     surface = np.load(surface_path, allow_pickle=False, mmap_mode="r")
     with rasterio.open(template) as ds:
-        if ds.count != 1 or ds.crs is None:
-            raise ValueError("Template must be a single-band grid with a CRS")
+        if (ds.count != 1 or ds.crs is None or ds.crs.to_epsg() != 32611
+                or (ds.transform.a, ds.transform.b, ds.transform.d, ds.transform.e) != (100, 0, 0, -100)):
+            raise ValueError("Template must be a single-band EPSG:32611 100 m grid")
+        if len(ds.files) != 1:
+            raise ValueError("Template must not rely on external sidecars")
         footprint = np.isfinite(ds.read(1)) & (ds.read_masks(1) > 0)
         grid = (ds.shape, ds.crs, ds.transform)
     if not footprint.any():
@@ -58,8 +61,10 @@ def audit(surface_path: Path, template: Path, registry_path: Path, *, dots_path:
         with rasterio.open(path) as ds:
             if (ds.shape, ds.crs, ds.transform) != grid or ds.count != 1:
                 raise ValueError(f"Registry grid mismatch: {path}")
-            if not np.isfinite(ds.read(1)[footprint]).all():
-                raise ValueError(f"Non-finite registry values in footprint: {path}")
+            if len(ds.files) != 1:
+                raise ValueError(f"Registry depends on external sidecars: {path}")
+            if not np.isfinite(ds.read(1)[footprint]).all() or np.any(ds.read_masks(1)[footprint] == 0):
+                raise ValueError(f"Non-finite or masked registry values in footprint: {path}")
     dots = None
     if dots_path is not None:
         if dots_path.suffix.lower() == ".npy":
