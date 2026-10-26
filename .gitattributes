@@ -1,1 +1,2 @@
-research/quarantine/** -whitespace
+research/quarantine/** -whitespace -diff
+README.md whitespace=-blank-at-eol

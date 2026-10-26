@@ -44,9 +44,9 @@ All nine selected historical whole-grid-finite rasters match the pinned peer-mir
 
 The reported 0.2778 is an **unverified owner report**, not an organizer submission receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. An inherited page-check record reports the official public leaderboard was fetched at 2026-10-26 21:52:09 UTC and showed rank 1 at 0.4437; this is a time-stamped public-board snapshot, not our score or a submission receipt. It supersedes 0.3195 as a description of the public lead at that timestamp; the prompt's 0.4413 is also stale relative to that snapshot. No score estimate for a new local candidate is available. See [official source checks and new-data hypotheses](research/external-data-candidate-review-20261026.md) and the machine-readable [page-check evidence](evidence/official-page-check-20261026.json).
 
-## Owner's standing project brief (condensed, not a verbatim transcript)
+## Owner's standing project brief
 
-The request in this session is the source of these requirements. This operational brief preserves its actionable constraints; it does not claim to reproduce the entire repeated original prompt.
+This operational summary distills the actionable requirements. The complete user prompt is reproduced verbatim in the **Original Prompt Specification** section at the end of this README; read both the current decision and that original context before changing the pipeline.
 
 1. Focus on GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36. Explain the highest historical submissions, especially GEMSDOE32 H33 B=2. Produce a clear per-site executive table with file, estimated score if defensible, uniqueness and an obvious download/submit decision.
 2. Generate a genuinely new single-band GeoTIFF only from a justified, independently validated strategy. Never rename or copy an old submission as a new one. All predictions must be finite in the footprint and in [0,1], with competition-matching CRS, shape and transform. Prefer strict whole-grid-finite output to avoid the reported portal range error. Use a unique name and a note of at most 140 characters.
@@ -100,8 +100,8 @@ Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin
 
 ---
 
-## Parallel lane E1 XG-HGB — merged as negative deliverable (2026-10-26)
-A separate lane (supervised 47-channel HistGradientBoosting incl. magnetic×gravity cross-gradient boundary; spacing≥3 px, B=2) was merged after main's evidence-first restructure. Its TIF now lives at `research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif` (quarantine = research only, consistent with this README's DO NOT SUBMIT decision). Results: quadrant-OOF HOLDOUT-DTI 0.1252 [0.097,0.157] (56,464 withheld), canary max AUC 0.580, uniqueness vs 9 focus bests max |ρ| 0.089 / max 3-px overlap 40.9%, format PASS — but SGMC HOLDOUT-DTI 0.0752 vs champion 0.0961, MODEL ESTIMATE ~0.22 < 0.2778 → **verdict negative; do not submit**. Lane page: `docs/lane-e1-xg-hgb.html`; card: `evidence/run_card_e1_xg_hgb.json`. This does not change the current decision above.
+## Legacy E1 record — withdrawn and not reproducible here
+Earlier branch artifacts describe an E1 model and report local holdout, canary, uniqueness and score-projection numbers. Those records do not establish a valid current result under this project's required shared, segment-blocked evaluator: the underlying feature/label inputs and cached outputs are not present in this checkout, and some supporting claims were subsequently found unable to substantiate promotion. Therefore none of those numbers is reported here as a verified HOLDOUT-DTI, projection, or score. The TIFF and old evidence remain only in `research/quarantine/` for traceability; they are not published as download links and must not be submitted. `docs/lane-e1-xg-hgb.html` is a withdrawal notice retained to prevent stale Pages URLs from appearing to authorize an upload. This withdrawal does not establish any replacement candidate.
 
 ---
 
