@@ -131,10 +131,15 @@ def main() -> int:
     ap.add_argument("--registry", type=Path, default=ROOT / ".cache/audit/verified-registry.json")
     args = ap.parse_args()
     existing = ROOT / "docs/data/run-card.json"
-    if existing.exists():
+    if not existing.is_file():
+        raise SystemExit("H1 stop evidence is missing; fail closed and do not rerun or retune this lane.")
+    try:
         prior = json.loads(existing.read_text())
-        if str(prior.get("stop_reason", "")).startswith("DUPLICATE_LANE"):
-            raise SystemExit("This lane already hit a duplicate stop. Do not rerun or retune it.")
+    except (OSError, ValueError) as exc:
+        raise SystemExit("H1 stop evidence is invalid; fail closed and do not rerun or retune this lane.") from exc
+    if str(prior.get("stop_reason", "")).startswith("DUPLICATE_LANE"):
+        raise SystemExit("This lane already hit a duplicate stop. Do not rerun or retune it.")
+    raise SystemExit("H1 is a stopped historical lane; altered evidence cannot authorize a rerun.")
     start = time.monotonic()
     start_utc = now()
     if not (ROOT / "knowledge/01_preregistration_2026-10-26.md").exists():

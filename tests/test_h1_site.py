@@ -56,6 +56,25 @@ def test_stopped_lane_guard_exits_before_work():
     assert 'already hit a duplicate stop' in result.stderr
 
 
+def test_missing_or_altered_stop_card_cannot_restart_h1(tmp_path, monkeypatch):
+    from scripts import probe_experiment as probe
+    monkeypatch.setattr(probe, 'ROOT', tmp_path)
+    monkeypatch.setattr(sys, 'argv', ['probe_experiment.py'])
+    try:
+        probe.main()
+        assert False, 'missing stop card must fail closed'
+    except SystemExit as exc:
+        assert 'missing' in str(exc)
+    card = tmp_path / 'docs/data/run-card.json'
+    card.parent.mkdir(parents=True)
+    card.write_text('{"stop_reason": "different"}')
+    try:
+        probe.main()
+        assert False, 'altered card must not authorize a rerun'
+    except SystemExit as exc:
+        assert 'cannot authorize' in str(exc)
+
+
 def test_nine_historical_links_and_claims_match_audit():
     text = (ROOT / 'docs/h1-audit.html').read_text()
     audit = json.loads((ROOT / 'docs/data/focus-audit.json').read_text())

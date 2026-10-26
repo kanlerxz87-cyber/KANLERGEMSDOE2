@@ -1,89 +1,69 @@
-# GEMS Research Office
+# KANLER GEMS — evidence-first competition desk
 
-**DO NOT SUBMIT. No new GeoTIFF was generated in this H1 lane, no holdout DTI was calculated, and no competition slot was used.** No file in the combined repository is approved for upload. This preregistered H1 feasibility probe failed the required pre-placement novelty gate: **74.9758%** of its positive surface cells lay within three pixels of a registered GEMSDOE32 raster, above the **70%** limit. The scan stopped at that witness after 306 distinct-byte comparisons; it did not establish uniqueness against the rest. A negative result is a deliverable, not a reason to evade the stop.
+**Maximize the probability of winning. Own the outcome.** This is a standing research brief and an auditable submission decision desk for the [DOE GEMS Prize](https://www.drivendata.org/competitions/306/competition-doe-gems/). A strong-looking map is not a valid submission without independent scientific, novelty, format and selector evidence.
 
-**Dashboard:** [GitHub Pages](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [H1 report](docs/h1-audit.html) · [run card](docs/data/run-card.json) · [nine-site audit](knowledge/03_site_by_site_2026-10-26.md) · [scientific findings and sources](knowledge/02_findings_and_sources_2026-10-26.md) · [upload contract](knowledge/05_upload_contract.md)
-
-## The decision in a minute
-
-- The highest historical figure supplied for the nine sites is **0.2778**, an **owner-reported, unverified claim** for GEMSDOE32. No organizer receipt ties it to the cited hash. The decoded 37,654-dot H33-B2 file is exactly the 44,090-dot D2.8 map pruned within two pixels of mirrored known faults. Lower false-positive mass could improve the metric, but hidden labels are unavailable, so the cause and any future score remain unknown.
-- The official public leaderboard read **0.4437** on 2026-10-26 at approximately 21:37 UTC for another participant. It is not a score for this project. The dashboard uses a dated static snapshot; check the official page directly for the current value. In accordance with repository rules, it does not automatically monitor or scrape DrivenData.
-- A registered every-fifth-pixel lattice covers 99.8713% of the footprint within three pixels. Any 37,654-point raster has at least **82.34%** overlap with it, no matter where its points go. A ≤70% result requires at most 22,163 distinct dots, a necessary—not sufficient—condition. Do not silently remove a reference from the registry.
-- Post-run review found that the probe implemented **unsigned**, not the proposed signed-polarity signal, and that its full-catalogue-masked production-surface AUC was not a valid withheld-fold canary. The measured feature AUCs are diagnostics only; no DTI or clean test of the proposed signed mechanism is claimed.
-- The shared evaluator drops false-positive mass in a zero-truth cell; a synthetic reproducer is included and [the defect was reported upstream](https://github.com/buffedlizard55-lab/GEMSDOE32/issues/41). We lack write permission to that template and did not privately fork its evaluator. The stopped probe never called it.
-
-## Project charter / prompt to reread each session
-
-One concurrent main-branch transcription of the original prompt is reproduced at the end of this README with trailing whitespace normalized. Another transcription differs in two historical links or filenames; both are preserved here and in `research/concurrent-k2/README.md` (with earlier snapshots in `PARALLEL-README-f5d1675.md` and `PARALLEL-README-20261026.md`). The later data-restoration version is preserved in `research/session-history/README-after-data-restoration.md`. Neither can be verified as byte-exact from the condensed session context. The following is a concise requirements reconstruction; re-read both before changing science or submission status:
-
-> Review the DOE GEMS geothermal-fault competition using official sources and an auditable site-by-site executive analysis of GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36. Explain the owner-reported 0.2778 GEMSDOE32 result and assess whether it can be beaten. Generate an independently unique, valid, high-performing GeoTIFF only if the scientific, format and uniqueness gates pass; no human inspection should be required. Never copy an old submission except for educational analysis. State clearly whether submission is permitted. Use trusted free data and automatically obtain and prepare inputs where possible; disclose any authentication or format blocker. Build a clean GitHub Pages report with live-or-dated evidence, clear sources and download/submit instructions. Perform three review/fix passes, and create a PR and merge to main when permitted.
+> **Current decision, 26 October 2026: NEGATIVE. Do not submit.** The registered GEMSDOE48 continuous reference is positive at all 5,167,373 pixels of the mirrored competition footprint. The shared template defines a raster's “dots” as positive pixels. Consequently every nonempty candidate dot set has **100%** directional 3-pixel overlap with that one registered reference, exceeding the specified >70% stop. The full proof, byte hashes, pinned reference and prior-E1 measurements are in [`evidence/registry_witness.json`](evidence/registry_witness.json). This result is conditional on that literal support convention; treating a continuous raster differently would require an explicit change to the shared protocol, not an unannounced exemption.
 >
-> Work in one assigned method lane. Before implementation rank 3–5 not-yet-tried geological hypotheses with layers, physical signatures, mimics, cost and rationale; verify the sources are obtainable and appropriately licensed. Reuse the shared feature stack, `evaluate_holdout.py`, and `submission_writer.py`; repair any shared tool once in its template, rather than keeping a private fork. Before placement and on final dots, stop if surface rank correlation exceeds 0.90 or more than 70% of dots lie within three pixels of any registered raster. Do not reinterpret the registry to bypass the rule. Budget at most three experiments or two hours.
->
-> Hide complete fault segments with a buffer; derive catalogue features only from visible faults and mask visible faults pixel-exactly. Test features individually: AUC above 0.90 is leakage until disproved. Use pooled distance-weighted Tversky with α=.2, β=.8 and a 300 m triangular kernel. Any HOLDOUT-DTI must identify evaluator version, withheld positive count and 95% CI. Never call a projection a score; reserve ORGANIZER-CONFIRMED for an actual submission-page receipt. A candidate must beat the comparable holdout best before a separate selector may approve a real weekly slot; do not spend or choose one automatically.
->
-> Check the saved GeoTIFF bytes for finite in-footprint [0,1] values, band count, CRS, shape and transform; account for the reported portal range error rather than assuming a fix. Produce one JSON run card with hypothesis, mechanism, named non-fault mimic, holdout DTI/CI, registry overlap/correlation, raster SHA-256, validator result, unique name, ≤140-character note, and promote/negative verdict. Negative results are deliverables.
+> No new geological experiment, candidate TIFF, competition upload or weekly slot was used in this session. Earlier E1 uniqueness, holdout and score-projection claims are withdrawn; see [`docs/lane-e1-xg-hgb.html`](docs/lane-e1-xg-hgb.html) and the quarantined records. Historical files are not approved submissions.
 
-The protocol refers to an assigned single method paragraph, but none was identifiable in the preserved request. H1 was self-preregistered as a **feasibility probe**, not represented as an assigned lane. The original Dropbox URLs are retained in the prompt below; the first attempt to access a supplied Dropbox link failed TLS, so the runnable restoration below uses pinned public owner mirrors. Mirror hashes establish byte integrity, not organizer origin or redistribution rights.
+## Decision desk and key evidence
 
-### Arena values
+- [Executive site](docs/index.html) and [submission guide](docs/executive-summary.html): nine priority projects, sources, file names, unambiguous current eligibility and an explanation of the range-error checks.
+- [One negative run card](research/run_card.json), [selector decision](evidence/selector_decision.json), [registry witness](evidence/registry_witness.json) and [data-readiness audit](evidence/data_readiness.json).
+- [Ranked scientific hypotheses](research/hypotheses.md), [scientific source register](research/science-and-sources.md), [shared-template fixes](research/template-fixes.md), [audit review](research/review.md), and [nine-raster comparisons](research/raster_audit.json).
+- [Competition leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/): the retained 26 October 2026 public snapshot shows **0.4437** as rank one, not an exact-file organizer receipt or a private score. The desk displays the observation time and staleness, but does not automatically access or scrape DrivenData; consult the official page for a current value. See [`evidence/leaderboard_snapshot.json`](evidence/leaderboard_snapshot.json).
 
-- **Maximize P(Win):** optimize for a real, verified competition outcome, not a simulated score, a filename, or an invalid upload. Preserve submission budget and compare only compatible evidence.
-- **Own the Outcome:** record failures and uncertainty, fix what can be fixed in the authoritative shared location, provide automated checks and actionable next steps, and do not silently claim completion when a gate fails.
+A concurrent review found that both branch-source Pages and the staged Actions deployment had run; their completion order can differ, and branch-root Pages can expose tracked quarantine files. The staged workflow excludes TIFFs. The actual repository Pages source and deployment status must be verified before assuming the safer Actions artifact is authoritative.
 
-## Reproduce the audit without placing data manually
+The best of the nine supplied historical owner reports is **GEMSDOE32 at 0.2778**, for `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`; the exact-file organizer receipt is unavailable. Sparse, spaced dots and known-catalogue flank pruning are plausible under the 300 m distance-weighted metric, but neither the cause of this value nor a higher score for any new idea is established. The nine selected historical rasters match the mirrored grid and pass local value checks, but all 72 directed pairs fail the near-duplicate rule. That limited audit is not a full-registry comparison.
 
-Prerequisites: Python 3.11, `git`, `curl`, `tar`, `sha256sum` and `gh`; enough disk (at least 5 GB, more for features), network access to GitHub/PyPI and, for large registries, sufficient GitHub API quota. The research data are excluded from Git. We used Linux, two CPU cores and ~3.8 GiB RAM. No GPU is required for the audit; the organizer reference offers a CPU environment.
+## Standing protocol
+
+1. Assign **one exclusive method lane**. The current prompt mentions a single-method paragraph but does not identify one; do not invent exclusivity. Preregister 3–5 evidence-based hypotheses, transforms, costs, known non-fault mimics and usable sources before implementation.
+2. Freeze a complete registry and the current best. Check the **candidate surface before placement** and the **final dots** against every registered raster: stop when Spearman rank correlation is >0.90 or more than 70% of candidate dots are within Euclidean 3 pixels of any reference. Do not evade the rule by renaming, perturbing or excluding inconvenient references. Current literal support semantics make this stop universal.
+3. When the protocol is legitimately resolved, reuse the shared template's features, evaluator and writer. Hide whole connected fault segments with a buffer, derive catalogue features only from fold-visible labels, and mask visible pixels exactly. Every feature alone is a leakage canary: AUC >0.90 is leakage until disproved, but a smaller value is not proof of independence. Use pooled DTI, alpha 0.2, beta 0.8 and the 300 m triangular kernel. Compare with a reproducibly rebuilt frozen best on identical folds, with a paired 95% CI and withheld-positive count. A catalogue holdout is not the organizer's hidden-label score.
+4. At most three experiments or two hours. If the experiment is negative, stop; never create a superficially different historical copy. Any candidate TIFF must be reopened and checked for one float32 band, exact grid, finite values and [0,1] range, unmasked footprint pixels and no external TIFF dependencies; record its exact SHA-256, name and note ≤140 characters. Local format success is not portal acceptance or scientific approval.
+5. Selection is separate from research. Require independently authenticated evidence and the remaining competition allowance before authorizing any upload. The [official NLR rules](https://docs.nlr.gov/docs/fy26osti/96647.pdf) describe up to three submissions per week, one selected submission for both rounds, reproducibility and a generative-AI disclosure. Our remaining allowance is unknown; no code here submits or spends slots.
+
+## Reproduce audits locally
+
+Python 3.11 and the dependencies in `requirements.txt` are needed. Large data are deliberately ignored and must not be committed. The restore downloads pinned public **peer mirrors**, verifies full file hashes and installs only explicitly named archive members; it is not an authenticated organizer download. It needs network access to GitHub codeload and substantial disk space.
 
 ```bash
-# Restore the latest continuation's pinned mirror into ignored data/ (no submission).
 python -m venv .venv
-.venv/bin/python -m pip install -r requirements-lock.txt
-PYTHON=.venv/bin/python bash scripts/download_competition_data.sh
-
-# Optional: restore H1's historical registry lock and shared template cache;
-# --build-stack also builds its upstream 35-channel feature stack (~1.7 GB).
-bash scripts/bootstrap_template.sh --build-stack
-
-# Run fast offline tests and the shared-tool synthetic defect diagnostic.
-.venv/bin/python -m pytest -q
-.venv/bin/python scripts/reproduce_template_defect.py
-
-# Serve the static dashboard locally.
-# A safe Pages-like public staging directory is built in the Pages workflow.
-# For the H1 report alone, serve docs/ and open /h1-audit.html.
-python3 -m http.server 8000 --bind 0.0.0.0 --directory docs
+. .venv/bin/activate
+pip install -r requirements.txt
+python scripts/restore_competition_data.py
+python scripts/prepare_data.py --output evidence/data_readiness.json
+python scripts/audit_registry_witness.py --output evidence/registry_witness.json
+python scripts/compare_registry.py
+python scripts/select_submission.py
+python scripts/run_tests.py
+python scripts/build_site.py
 ```
 
-`data/registry-lock.json` records the nine immutable trees used for the stopped audit. The helper fetches the shared registry and independently checks/restores locked blobs, detects truncation and oversized omissions, and refuses mismatches. This historical lock does **not** prove a later or private registry complete. Concurrent template restore commands overwrite a common receipt, so the helper runs them sequentially. Bootstrap fails closed on exhausted GitHub API quota, unavailable mirrors or checksum mismatches; it never invokes DrivenData submissions. Packages are locked in `requirements-lock.txt`; cache and venv may be safely removed and rebuilt. The actual original organizer files and portal receipt remain unverified. The H1 script contains a persistent duplicate-stop guard and must not be rerun or retuned under the same lane.
+The mirrored sample has positive values matching known labels although the [official page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) describes its example as total fault absence. Use this mirror **only for grid and footprint**, never as a model feature or hidden truth. Compare it and the other inputs against authenticated organizer files when available. A hash match proves equality to the pinned mirror, not organizer origin, source licensing or fold independence.
 
-## Evidence map
+The local scripts use [`vendor/template`](vendor/template/) as the selected shared implementation. The isolated marginal-credit helper, literal novelty check and empty-class canary were fixed there once; upstream and patched hashes, the exact limits of the fixes and unresolved competing peer-template authority are documented in [`research/template-fixes.md`](research/template-fixes.md). Quarantined E1 scripts are historical, not a second implementation or an execution path.
 
-| Path | Purpose |
-|---|---|
-| `knowledge/01_preregistration_2026-10-26.md` | Ranked hypotheses, frozen probe, post-run arithmetic erratum and implementation disclosures. |
-| `knowledge/02_findings_and_sources_2026-10-26.md` | Metric, causal limitations, official sources, provenance and defects. |
-| `knowledge/03_site_by_site_2026-10-26.md` | Nine independently reopened historical file briefs and research-only links. |
-| `knowledge/05_upload_contract.md` | Conditional upload and exact-byte checking, explicitly not permission. |
-| `docs/data/run-card.json` | The one negative run card; null DTI/CI/hash/validator; no slot. |
-| `evidence/novelty_surface.json` | First-failure novelty evidence, 306 distinct-byte comparisons. |
-| `data/registry-lock.json` | Pinned public nine-repository registry inventory. |
-| `scripts/validate_saved_tiff.py` | Independent fail-closed saved-byte reader; cannot authorize submission. |
-| `evidence/historical_h33_format.json` | Research-only zero-exterior read-back example, not portal acceptance. |
-| `.github/workflows/pages.yml` | Pages publication; the leaderboard snapshot is dated and static, with a separate public-GitHub source freshness check. |
+## Next work
 
-## Limitations and next steps
+Resolve the continuous-surface versus discrete-dot interpretation of the stated all-registry rule and identify the exclusive lane; obtain and pin the complete current registry and an authenticated organizer grid; reconstruct the frozen best with whole-segment fold-local training; verify external raw-data availability and provenance; then attempt the highest-ranked eligible physical hypothesis with the canary, paired confidence interval and two-stage registry checks. Until these are achieved, no candidate is authorized and no leaderboard score is projected.
 
-The owner-mirrored sample matches the mirrored training labels rather than the all-zero sample described by the organizer; reconcile with authenticated original downloads. The written spec requires null/NaN outside the footprint, while the user's portal range error has no retained rejected bytes. An all-finite zero exterior may pass a local check but is not proven acceptable to the portal. Repair the shared evaluator upstream, authenticate inputs, obtain the missing lane assignment, resolve the literal lattice constraint rather than excluding it, then run a new independent science/format/registry evaluation. Only a separate selector may decide whether a genuinely passing future file deserves a weekly slot. See the [full upload contract](knowledge/05_upload_contract.md).
+## Concurrent research retained
 
-## Integration of parallel work on main
+The independently stopped K2-SCALE lane, its fixed-budget lattice lower bound, and three reproduced defects in a different pinned GEMSDOE33 evaluator are preserved in [its audit](docs/research/irregularities.md), [negative run card](evidence/run-card.json), and [K2 dashboard](docs/k2-executive-summary.html). Its 37,654-dot budget necessarily overlaps the lattice by at least 82.34%; the newly measured continuous-support witness is stronger under the literal rule and blocks **any** nonempty dot count. Neither result is an organizer score. The shared GEMSDOE24 changes in this branch are documented separately; none silently repairs the upstream GEMSDOE33 evaluator.
 
-Other sessions merged independent evidence while this lane was running, including the K2-SCALE geometric stop, the [separate root dashboard](index.html), and a [data-readiness continuation](research/continuation-review-20261026.md) that restored peer-mirror inputs and audited raw-feature canaries without training a model. Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The K2 geometry stop and distinct run card are preserved under `docs/research/` and `evidence/run-card.json`. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
+Another continuation independently reports raw-channel and validity-mask canaries and fold geometry in [raw-feature diagnostics](evidence/raw_feature_canaries.json) and [fold evidence](evidence/segment_folds.json). These are prior diagnostics under an earlier shared-template pin, not a new model, transformed-feature canary or HOLDOUT-DTI. Their exact upstream [continuation review](research/continuation-review-20261026.md), broader [external-source screen](research/external-data-candidate-review-20261026.md), and historical evidence remain intact.
+
+A parallel [H1 feasibility probe](docs/h1-audit.html) used one experiment and stopped before placement when 74.9758% of its positive surface cells overlapped a registered GEMSDOE32 raster. It produced no final TIFF, holdout DTI or slot. Its full-catalogue-masked surface canary is invalid, and its implemented unsigned signal diverged from the signed preregistration. The 306-entry partial scan is not a complete current registry. A separate GEMSDOE32 zero-truth pooling defect was [reported upstream](https://github.com/buffedlizard55-lab/GEMSDOE32/issues/41); it is not the GEMSDOE24 helper patched here. Both runs remain stopped, and their historical cards are preserved. The GitHub revision monitor is read-only and not a leaderboard feed. Conflicting peer template pins and source-access limitations are not resolved by merging branches.
 
 ## Original Prompt Specification
 
+This is one inherited transcription; another differs in historical links and filenames and is retained in `research/concurrent-k2/README.md`. Neither is claimed byte-exact from the condensed session context.
+
 ```text
-Review the repo.
+Review the repo. 
 
 I want to focus on  the highest scoring submissions from the following sites, GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, GEMSDOE36.  I want an executive summary on every site that is clear and obvious which is the best submission to submit to obtain a high score on the leaderboard.  It should also be unique and not an exact duplicate of any previous submission that is the same as below.  Keep iterating and testing until we have the highest scoring submission to download and submit.
 
@@ -125,7 +105,7 @@ Answer the question using Phd level experience, knowledge, and judgement. Then u
 
 Current competition leaderboard GEMSDOE high score:
 
-0.4413
+0.4413		
 
 WE NEED TO STUDY, ANALYZE, AND UNDERSTAND THE HIGHEST SCORE FROM THE GEMDOE SITE WHERE THE SUBMISSION TIF IS DOWNLOADED FROM WHICH IS THE FOLLOWING:
 
@@ -139,7 +119,7 @@ Answer the question using Phd level experience, knowledge, and judgement. Then u
 
 Current competition leaderboard GEMSDOE high score:
 
-0.4413
+0.4413		
 
 https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html
 
@@ -863,19 +843,19 @@ We need to quickly look at the results and results from the GEMSDOE websites abo
 
 Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo. Rank them by expected DTI improvement and implementation cost. Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best. If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 We have a good understanding of how our hypothesis, methodology, calculations, analysis are done so we should be able to figure out a way to score higher on the leaderboard using previous results and scoring that we have across the sites listed above.  We need to come up with distinct and unique strategies to score higher in this competition leaderboard.  We need to start doing heavy and deep research into the part of the project that matters the most, which is the scientific discovery of geothermal vents.  We should store all of our information and knowledge that we can gather from official verified sources.  This will serve as a starting point for other projects as well.  We need to think outside the box but still be grounded in proper scientific research, we are ultimately aiming for a top prize that many others are competing for.  So it's important to be contrarian but be smart about it.  We need to find sources of data that others are over looking or areas of the project when it comes to geothermal vents.  We need to do deep research and critical thinking and come up with new hypothesis to test.
 
-0.3195	is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.
+0.3195	is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website.  It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.  
 
 Put this prompt into the repo readme and read it everytime we work on the project as a starting point to make sure we are building what we are aiming for and have a strong base to continue building and improving on making something useful for everyday use.  It should solve the problem of having to manually check everything ourselves and having an up to date current feed.
 
-Review the repo.
+Review the repo. 
 
 The following is taken from the Arena AI team and I think it makes a good point on building a successful project, so let's keep the Core Values and Own the Outcome as a focal point when building, developing, researching, suggesting upgrades, and implementing the work.
 
@@ -889,15 +869,15 @@ Own the Outcome
 
 We own results end to end — not just our individual slice of the work. When problems arise and we have the means to act, we do so without waiting for permission or assignment. We treat failure and success as signals and use them to improve. At Arena, we stay accountable to the final outcome.
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
+  
 
-
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
-We need to focus on being able to generate a submission into the competition.
+We need to focus on being able to generate a submission into the competition.  
 
 The site should be able to generate a TIF file that is required for submission.  It should be as easy as download to click a File to submit into the competition.  This needs to be in the executive summary or the very beginning of the site.  it should be obvious when you visit the site.
 
@@ -927,21 +907,21 @@ The goal of this project is to place top of the leaderboard in this competition.
 
 https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
 
-We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.
+We need to create a project that can compete and place top of the leaderboard.  We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.  
 
 This is the guidelines we need to follow.https://www.drivendata.org/competitions/306/competition-doe-gems/
 
 Get familiar with the problem through the overview and problem description,https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/. You might also want to reference additional resources available on the about page,https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/.
 
-Download the data from the data,https://www.drivendata.org/competitions/306/competition-doe-gems/data/, tab.
+Download the data from the data,https://www.drivendata.org/competitions/306/competition-doe-gems/data/, tab.  
 
 Create and train your own model. This reference solution,https://github.com/drivendataorg/gems-prize-reference-solution implements a simple approach.
 
 Use your model to generate predictions that match the submission format.
 
-Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.
+Tell me what are you limitations and what you need access to during this project.  We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.  
 
-this pdf outlines how submissions must be entered into the competition.
+this pdf outlines how submissions must be entered into the competition.  
 
 https://docs.nlr.gov/docs/fy26osti/96647.pdf
 
@@ -967,23 +947,23 @@ https://www.dropbox.com/scl/fi/3vz9o0wwavi26xaeoxlwr/gems-geodawn-numerical-feat
 
 https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&st=srhhir10&dl=0
 
-Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
 Site creation
 
-Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.
+Create a github page for this repo that has clean ui, user friendly, simple and easy to use.  It should be organized and clean.  
 
 It should include all relevant information in an easy to read format with official verified links as sources for review.  Work line by line verify everything no hallucinations.
 
 **The single remaining blocker to training is data placement**: run `bash scripts/download_competition_data.sh` on any unrestricted machine into `data/`, then `python scripts/prepare_data.py` — after that the full train→inference→validate pipeline is ready to run (GPU needed for training; metric/losses/validation all verified working here on CPU).
 
-you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.
+you need to complete the above task by yourself.  Work line by line verifying from official verified trusted sources, provide links for manual review.  There should be no manual input, work on your own to complete tasks.  Flag any irregularities for review.  No hallucinations.                      
 
-Verify no hallucinations.
+Verify no hallucinations.    
 
 The goal of this project is to get a full list that follow our requirements.  No hallucinations.  Verify line by line.
 
@@ -999,3 +979,13 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project.  It should be worked on in this next session or the next session.  Work line by line verify everything no hallucinations.
 ```
+
+## Parallel K2 audit integration notice
+
+The separately preregistered K2-SCALE lane remains stopped by its literal registered
+lattice-overlap bound. Its root dashboard and evidence are preserved; they are not
+this continuation's raw-feature audit. See `AGENTS.md`, `evidence/run-card.json`
+(K2) and `research/run_card.json` (current decision desk). Neither authorizes
+a submission. The recorded GEMSDOE33 evaluator defects do not refer to the pinned
+GEMSDOE24 `SegmentHoldout` used for this continuation's raw diagnostics. Do not use
+or privately repair the affected K2 functions.

@@ -16,7 +16,7 @@ from rasterio.transform import from_origin
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from submission_writer import write_candidate
+from submission_writer import stage as write_candidate
 from restore_core_data import restore_archive_group, safe_destination, valid_existing
 from prepare_data import inspect
 from promotion_gate import check
@@ -75,10 +75,18 @@ class PipelineTests(unittest.TestCase):
             with rasterio.open(sample, 'w', driver='GTiff', height=8, width=8, count=1,
                                dtype='float32', crs='EPSG:32611', transform=from_origin(1000, 2000, 100, 100)) as dst:
                 dst.write(np.zeros((8, 8), np.float32), 1)
+            labels = root / 'labels.tif'
+            with rasterio.open(labels, 'w', driver='GTiff', height=8, width=8, count=1,
+                               dtype='float32', crs='EPSG:32611', transform=from_origin(1000, 2000, 100, 100)) as dst:
+                dst.write(np.zeros((8, 8), np.float32), 1)
             values = np.full((8, 8), .27, np.float32)
-            patcher = patch('submission_writer.ROOT', root)
-            patcher.start()
-            self.addCleanup(patcher.stop)
+            # Synthetic-only format contracts, not a registry or submission pass.
+            from submission_writer import LABELS_SHA
+            for patcher in (patch('submission_writer.ROOT', root),
+                            patch('submission_writer.require_candidate_generation_allowed'),
+                            patch('submission_writer.sha256_file', return_value=LABELS_SHA)):
+                patcher.start()
+                self.addCleanup(patcher.stop)
             output = root / 'data/candidates/candidate.tif'
             receipt = write_candidate(values, sample, output, name='software-fixture', note='Synthetic unit test only')
             self.assertTrue(receipt['format_valid'])

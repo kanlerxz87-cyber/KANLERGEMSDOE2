@@ -27,9 +27,18 @@ class PipelineSafetyTests(unittest.TestCase):
                            transform=from_origin(243350, 4508550, 100, 100)) as dst:
             dst.write(np.zeros((8, 8), dtype=np.float32), 1)
         self.out = self.root / 'data/candidates/test.tif'
-        self.patcher = patch.object(writer, 'ROOT', self.root)
-        self.patcher.start()
-        self.addCleanup(self.patcher.stop)
+        # Synthetic fixtures only: separately tested production guard always stops
+        # on the pinned witness. Bypass it here to exercise post-guard formatting.
+        self.labels = self.root / 'labels.tif'
+        with rasterio.open(self.labels, 'w', driver='GTiff', width=8, height=8,
+                           count=1, dtype='float32', crs='EPSG:32611',
+                           transform=from_origin(243350, 4508550, 100, 100)) as dst:
+            dst.write(np.zeros((8, 8), dtype=np.float32), 1)
+        for patcher in (patch.object(writer, 'ROOT', self.root),
+                        patch.object(writer, 'require_candidate_generation_allowed'),
+                        patch.object(writer, 'sha256_file', return_value=writer.LABELS_SHA)):
+            patcher.start()
+            self.addCleanup(patcher.stop)
 
     def stage(self, arr, **kwargs):
         return writer.stage(arr, self.template, kwargs.pop('out', self.out),
@@ -45,6 +54,17 @@ class PipelineSafetyTests(unittest.TestCase):
         with rasterio.open(self.out) as src:
             np.testing.assert_array_equal(src.read(1), arr)
         self.assertEqual(json.loads(Path(str(self.out)+'.format.json').read_text())['verdict'], 'negative')
+
+    def test_visible_catalogue_mask_is_pixel_exact(self):
+        labels = np.zeros((8, 8), dtype=np.float32); labels[2, 3] = 1
+        with rasterio.open(self.labels, 'r+') as dst:
+            dst.write(labels, 1)
+        self.stage(np.full((8, 8), .25, dtype=np.float32))
+        with rasterio.open(self.out) as src:
+            values = src.read(1)
+        self.assertEqual(values[2, 3], 0)
+        self.assertEqual(values[2, 4], .25)
+        self.assertEqual(int((values == 0).sum()), 1)
 
     def test_nonfinite_and_range_not_binarized(self):
         for bad in [float('nan'), float('inf'), -float('inf'), -1, 1.1]:

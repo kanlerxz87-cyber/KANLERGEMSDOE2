@@ -1,54 +1,93 @@
 #!/usr/bin/env python3
-"""Metric-only adapter for four independent OOF maps and a frozen baseline.
+"""Guarded CLI for the single shared SegmentHoldout evaluator (no private metric).
 
-Uses the pinned whole-component SegmentHoldout, not the legacy E1 evaluator.
-This CLI cannot prove training/feature provenance from final maps, and explicitly
-cannot promote them. Caller must supply fold-local generation receipts separately.
+The CLI consumes already constructed independent fold predictions. It cannot
+establish from arrays alone that a model or a catalogue-derived feature was
+trained using only fold.visible. Its outputs are diagnostics, not promotion.
 """
+from __future__ import annotations
+
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import sys
+
 import numpy as np
 import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'vendor/template/src'))
-from gems.holdout import SegmentHoldout
+sys.path.insert(0, str(ROOT / "vendor/template/src"))
+from gems.holdout import SegmentHoldout  # noqa: E402
+if __package__:
+    from .registry_guard import require_candidate_generation_allowed
+    from .restore_competition_data import sha256_file
+else:
+    from registry_guard import require_candidate_generation_allowed
+    from restore_competition_data import sha256_file
+
+LABELS_SHA = "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
+
+
+def load_predictions(directory: Path, count: int):
+    return [np.load(directory / f"fold{index}.npy", allow_pickle=False) for index in range(count)]
 
 
 def main():
     if len(sys.argv) == 1:
-        print('BLOCKED: explicit independent fold predictions and a frozen baseline are required; no legacy run is authorized', file=sys.stderr)
+        print("BLOCKED: literal registry stop; independent fold predictions, canaries and a frozen baseline are required.", file=sys.stderr)
         raise SystemExit(2)
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--candidate', type=Path, nargs=4, required=True, help='NW NE SW SE binary .npy maps')
-    p.add_argument('--baseline', type=Path, nargs=4, required=True)
-    p.add_argument('--template', type=Path, default=ROOT / 'data/sample_submission.tif')
-    p.add_argument('--labels', type=Path, default=ROOT / 'data/existing_faults.tif')
-    p.add_argument('--out', type=Path, required=True)
+    p.add_argument("--predictions", type=Path, required=True, help="directory of fold0.npy ... fold3.npy")
+    p.add_argument("--baseline", type=Path, required=True, help="same-fold baseline predictions")
+    p.add_argument("--baseline-id", required=True)
+    p.add_argument("--features", type=Path, required=True, help="JSON list of label-free feature paths and SHA-256 hashes")
+    p.add_argument("--data-dir", type=Path, default=ROOT / "data")
+    p.add_argument("--out", type=Path, required=True)
     args = p.parse_args()
-    with rasterio.open(args.template) as sample, rasterio.open(args.labels) as labels:
+    require_candidate_generation_allowed(args.data_dir)
+    if not args.baseline_id.strip():
+        raise ValueError("A frozen baseline identity is required")
+    labels_path = args.data_dir / "labels.tif"
+    if sha256_file(labels_path) != LABELS_SHA:
+        raise ValueError("Labels hash mismatch")
+    with rasterio.open(args.data_dir / "sample_submission.tif") as sample, rasterio.open(labels_path) as labels:
         if (sample.shape, sample.crs, sample.transform) != (labels.shape, labels.crs, labels.transform) or labels.count != 1:
-            p.error('Catalogue and template grids must match')
-        if sample.crs is None or sample.crs.to_epsg() != 32611 or tuple(sample.transform)[:6] != (100., 0., 243350., 0., -100., 4508550.):
-            p.error('Shared 300 m evaluator requires the competition 100 m UTM grid')
-        footprint = np.isfinite(sample.read(1)) & (sample.read_masks(1) > 0)
-        truth = (labels.read(1) > 0) & (labels.read_masks(1) > 0) & footprint
-    context = SegmentHoldout(footprint, truth, buffer_px=15)
-    candidate = [np.load(f, mmap_mode='r', allow_pickle=False) for f in args.candidate]
-    baseline = [np.load(f, mmap_mode='r', allow_pickle=False) for f in args.baseline]
-    report = {'candidate': context.summarize(candidate), 'baseline': context.summarize(baseline),
-              'paired': context.compare_paired(candidate, baseline), 'authorized_to_submit': False,
-              'fold_local_features_verified': False,
-              'limitation': 'Metric calculation only; input maps do not prove fold-local generation, canaries, or novelty.',
-              'inputs': {str(f): hashlib.sha256(f.read_bytes()).hexdigest() for f in args.candidate + args.baseline + [args.template, args.labels]},
-              'template_pins_sha256': hashlib.sha256((ROOT / 'vendor/template/pins.json').read_bytes()).hexdigest()}
+            raise ValueError("Labels and sample grids differ")
+        foot = np.isfinite(sample.read(1))
+        truth = labels.read(1) > 0
+    context = SegmentHoldout(foot, truth, buffer_px=15)
+    specs = json.loads(args.features.read_text())
+    if not isinstance(specs, list) or not specs:
+        raise ValueError("Every actual model feature needs a canary specification")
+    features = {}
+    for spec in specs:
+        # A global static array may be used only for genuinely catalogue-independent
+        # features. Catalogue-derived features require fold-local canaries and are
+        # intentionally rejected here rather than accidentally tested globally.
+        if spec.get("label_free") is not True or not spec.get("name") or spec["name"] in features:
+            raise ValueError("Features must have distinct names and explicitly be label-free")
+        path = Path(spec["path"])
+        if sha256_file(path) != spec.get("sha256"):
+            raise ValueError(f"Feature hash mismatch: {path}")
+        features[spec["name"]] = np.load(path, mmap_mode="r", allow_pickle=False)
+    canaries = context.canary(features)
+    output = {"canaries": canaries, "authorized_to_submit": False,
+              "provenance_warning": "CLI cannot independently certify fold-local model construction or complete registry coverage."}
+    if canaries["passed"]:
+        candidate = load_predictions(args.predictions, len(context.folds))
+        baseline = load_predictions(args.baseline, len(context.folds))
+        output["holdout"] = context.summarize(candidate)
+        output["baseline"] = {"id": args.baseline_id, **context.summarize(baseline)}
+        output["paired_comparison"] = context.compare_paired(candidate, baseline)
+    else:
+        output["stop"] = "At least one feature-alone AUC exceeded 0.90; no holdout score calculated."
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
-    print(json.dumps(report, indent=2, allow_nan=False))
+    args.out.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
+    if not canaries["passed"]:
+        raise SystemExit(1)
+    print(json.dumps(output, indent=2, allow_nan=False))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -48,7 +48,7 @@ def page(title: str, description: str, prefix: str, active: str, body: str) -> s
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="{esc(description)}"><title>{esc(title)} · GEMS Fault Lab</title>
 <link rel="stylesheet" href="{prefix}docs/assets/site.css"><script defer src="{prefix}docs/assets/site.js"></script></head>
-<body>{header(prefix, active)}<main id="main">{body}</main>{footer(prefix)}</body></html>\n'''
+<body>{header(prefix, active)}<main id="main"><section class="content"><div class="shell"><div class="notice"><strong>Updated registry stop · no submission approved</strong><p>A separately verified registered continuous raster has positive support at every mirrored-footprint pixel. Under the current literal positive-pixel convention, every nonempty candidate fails the 70% overlap rule. The K2 lattice bound below remains a separate historical result. <a href="{prefix}docs/index.html">Read the current decision desk and witness →</a></p></div></div></section>{body}</main>{footer(prefix)}</body></html>\n'''
 
 
 def site_table(audit: dict, prefix: str) -> str:

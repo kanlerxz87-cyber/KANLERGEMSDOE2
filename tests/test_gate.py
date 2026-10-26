@@ -2,7 +2,7 @@ import unittest
 from scripts.promotion_gate import check
 class GateTests(unittest.TestCase):
     def valid(self):
-        return dict(lane='assigned',registry_complete=True,surface=dict(max_abs_rank_correlation=.2,max_overlap_3px=.2),dots=dict(max_abs_rank_correlation=.2,max_overlap_3px=.2),max_feature_alone_auc=.7,holdout=dict(label='HOLDOUT-DTI',evaluator_version='test-only',withheld_positives=100,dti=.2,ci95=[.18,.22],fold_local_features=True,baseline_id='test-baseline',paired_improvement_ci95=[.001,.01]),validator={k:True for k in ['no_nan_inside_footprint','range_0_1','crs_match','shape_match','transform_match','single_band']},raster_sha256='a'*64,submission_name='test',note='test')
+        return dict(lane='assigned',registry_complete=True,surface=dict(max_abs_rank_correlation=.2,max_overlap_3px=.2),dots=dict(max_abs_rank_correlation=.2,max_overlap_3px=.2),max_feature_alone_auc=.7,holdout=dict(label='HOLDOUT-DTI',evaluator_version='test-only',withheld_positives=100,dti=.2,ci95=[.18,.22],fold_local_features=True,baseline_id='test-baseline',paired_improvement_ci95=[.001,.01]),validator={k:True for k in ['no_nan_inside_footprint','range_0_1','crs_match','shape_match','transform_match','single_band','dtype_float32','unmasked_inside_footprint','no_external_dependencies','candidate_unchanged_during_audit','template_unchanged_during_audit']},raster_sha256='a'*64,submission_name='test',note='test')
     def test_empty(self): self.assertEqual(check({})['verdict'],'negative')
     def test_promotion_is_not_slot_authorization(self):
         r=check(self.valid());self.assertTrue(r['eligible_for_selector']);self.assertFalse(r['authorized_to_submit'])

@@ -29,6 +29,8 @@ def validate(path, template):
         finite = bool(np.isfinite(a).all())
         checks = {
             'tif_extension_and_driver': path.suffix.lower() == '.tif' and r.driver == 'GTiff',
+            'single_band': r.count == 1,
+            'dtype_float32': r.dtypes == ('float32',),
             'single_band_float32': r.count == 1 and r.dtypes == ('float32',),
             'template_single_band': t.count == 1,
             'crs_matches': r.crs is not None and r.crs == t.crs,

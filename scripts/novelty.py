@@ -1,8 +1,9 @@
 """Literal surface/dot uniqueness against a verified, finite registry snapshot.
 
-This module checks novelty only; the upstream template supplies the evaluator and
-GeoTIFF writer. It never changes thresholds for dense baselines or treats a hash
-change as scientific novelty. The snapshot cannot cover private/future rasters.
+Historical H1 diagnostic only, not the current shared-template promotion gate.
+The H1 lane is stopped and cannot be resumed. This module never authorizes a
+submission; a snapshot cannot cover private/future rasters. The active desk
+uses vendor/template/src/gems/novelty.py and the fail-closed registry guard.
 """
 from __future__ import annotations
 
@@ -146,12 +147,14 @@ def compare(candidate: np.ndarray, footprint: np.ndarray, template_file: Path,
                "warped_nearest_to_template": not aligned}
         rows.append(row)
         if (rho is not None and abs(rho) > 0.90) or overlap > 0.70:
-            return {"stage": stage, "passed": False, "stop_reason": "DUPLICATE_LANE",
+            return {"stage": stage, "passed": False, "authorized_to_submit": False,
+                    "scope": "historical snapshot diagnostic only, not the current promotion gate", "stop_reason": "DUPLICATE_LANE",
                     "trigger": row, "checked_unique_byte_rasters": len(rows),
                     "snapshot_entries": len(entries), "refs": registry["refs"], "rows": rows}
     incomplete = [r for r in rows if r["rho"] is None or r["inside_footprint_nonfinite"]
                   or r["inside_footprint_out_of_range"] or r["warped_nearest_to_template"]]
-    return {"stage": stage, "passed": not incomplete,
+    return {"stage": stage, "passed": not incomplete, "authorized_to_submit": False,
+            "scope": "historical snapshot diagnostic only, not the current promotion gate",
             "stop_reason": "INCOMPLETE_REGISTRY_COMPARISON" if incomplete else None,
             "incomplete_count": len(incomplete),
             "checked_unique_byte_rasters": len(rows), "snapshot_entries": len(entries),

@@ -1,81 +1,84 @@
 {
-  "hypothesis": "Research queue leader (unassigned): coherent cross-scarp displacement of K/Th/U texture could reveal unmapped structures; not implemented.",
-  "mechanism": "Patch translation consistency along cached LiDAR scarp orientation, rather than gradient strength or reuse of champion dots.",
-  "non_fault_mimic": "Erosional truncation, lithologic contacts, irrigation boundaries and radiometric survey seams.",
+  "hypothesis": "Cross-scarp radiometric texture displacement can reveal a previously unmapped fault; proposed, not run.",
+  "mechanism": "Compare repeated signed offsets of GeoDAWN K/Th/U textures across a LiDAR-defined scarp; no new surface was constructed.",
+  "named_non_fault_mimic": "Erosional truncation, lithologic contacts, and survey seams can imitate matching texture offsets.",
   "lane": null,
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": "gems-segment-pooled-v1",
-    "value": null,
+    "evaluator_version": "gems-segment-pooled-v1 (not run in this session)",
     "dti": null,
-    "ci95": null,
+    "value": null,
+    "withheld_positives": null,
     "n_withheld_positive_pixels": null,
-    "reason": "No detector evaluated. Whole-component masks cached; no assigned lane or frozen fold-local current-best predictions."
+    "ci95": null,
+    "fold_local_features": false,
+    "baseline_id": null,
+    "paired_improvement_ci95": null,
+    "reason": "Literal all-registry duplicate stop and no identifiable assigned lane; no new candidate or holdout generated."
   },
-  "diagnostics": {
-    "label": "LEAKAGE-CANARY AUC (not a DTI or organizer score)",
-    "evaluator_version": "gems-segment-pooled-v1",
-    "raw_channels": 39,
-    "validity_masks": 39,
-    "max_two_polarity_fold_or_pooled_auc": 0.6297168688888889,
-    "passed": true,
-    "context_withheld_positives": 60988,
-    "limitation": "Only raw cached channels and missingness tested; transforms and fitted features require new fold-local canaries.",
-    "evidence": "evidence/raw_feature_canaries.json"
+  "registry_complete": false,
+  "surface": {
+    "max_abs_rank_correlation": null,
+    "max_overlap_3px": null,
+    "status": "not computed; no new surface"
   },
-  "data": {
-    "peer_mirror_restored": true,
-    "grid_and_hash_audit_passed": true,
-    "organizer_authenticated": false,
-    "report": "evidence/data_preparation.json",
-    "fold_masks": "evidence/segment_folds.json"
+  "dots": {
+    "max_abs_rank_correlation": null,
+    "max_overlap_3px": null,
+    "status": "not computed; no new candidate dots"
   },
   "registry": {
-    "scope": "nine historical priority champions only; NOT full registry",
-    "surface_check": "not run; no candidate surface",
-    "final_dot_directed_pairs": 72,
-    "duplicate_gate_hits": 72,
-    "champion_vs_GEMSDOE36": {
-      "a": "GEMSDOE32",
-      "b": "GEMSDOE36",
-      "spearman_rho": 0.9843213108530009,
-      "fraction_a_dots_within_3px_of_b": 1.0,
-      "duplicate_gate": true,
-      "decoded_pixels_equal_inside_footprint": false
+    "scope": "Two pinned counterexamples plus the separate nine-reference historical audit; not a complete registry comparison.",
+    "support_convention": "finite positive pixel (>0) inside sample footprint; candidate-directional Euclidean <=3 px",
+    "universal_duplicate_witness": {
+      "source": "https://github.com/buffedlizard55-lab/GEMSDOE48/blob/268ec599f51c517cc3485da077c24d83af5be81d/docs/downloads/gemsdoe48-h58-continuous-pignistic-20261008T175914Z-e58.tif",
+      "sha256": "59ef8e7d8374e228bc1e41376f03fc67dd5b8a5e6804885a1ae802f399140b89",
+      "positive_every_footprint_pixel": true,
+      "prior_e1_rho": 0.05137405798629811,
+      "prior_e1_overlap_3px": 1.0
     },
-    "inherited_archived_E1_lattice_audit": "evidence/parallel-e1-lattice-audit-20261026.json"
+    "prior_e1_lattice_overlap_3px": 0.9931215807085568,
+    "prior_e1_lattice_rho": 6.246371257604841e-05
   },
+  "max_feature_alone_auc": null,
   "raster_sha256": null,
-  "validator_output": {
-    "candidate": "not generated; not validated",
+  "validator": {
     "no_nan_inside_footprint": null,
     "range_0_1": null,
     "crs_match": null,
     "shape_match": null,
     "transform_match": null,
     "single_band": null,
-    "historical_audit": "research/raster_audit.json; nine references only, not a candidate approval"
+    "dtype_float32": null,
+    "unmasked_inside_footprint": null,
+    "no_external_dependencies": null,
+    "candidate_unchanged_during_audit": null,
+    "template_unchanged_during_audit": null
+  },
+  "validator_output": {
+    "candidate": "not generated; no candidate bytes to validate",
+    "prior_e1_format": "historical format-only receipt in quarantine, not authorization"
   },
   "submission_name": null,
-  "note": "Negative: data restored and raw canaries pass; no assigned lane, complete registry or frozen best. No candidate or slot.",
+  "note": "No submission: literal registry support blocks every nonempty candidate; no new TIFF or competition slot used.",
   "verdict": "negative",
   "ok_to_download_and_submit": false,
   "experiments_used": 0,
-  "competition_slots_used": 0,
   "integration_review": {
     "prior_main": "80d3c57",
     "prior_blindbasin_authorization": "withdrawn",
-    "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
+    "reason": "Synthetic inputs, placeholder canary, random pseudo-CIs and hard-coded promotion did not substantiate evidence."
+  },
+  "prior_e1_review": {
+    "authorization": "withdrawn",
+    "reason": "Literal registry witness proves final-dot duplication; previous OOF splits did not hide whole components and fixed-map hide/recover used full-catalogue pruning. Results and projection are quarantined."
   },
   "blockers": [
-    "No exclusive method paragraph was supplied; do not self-assign a concurrent scientific lane.",
-    "No complete frozen surface/final-dot registry; nine historical champions alone cannot certify novelty.",
-    "No comparable current-best predictions rebuilt fold-locally on the frozen whole-component split.",
-    "Raw-feature canaries are not model/transform canaries or holdout performance.",
-    "Peer hashes prove integrity, not official origin; authenticate sample and external-data permissions before a real slot.",
-    "No organizer submission-page receipt or authenticated remaining weekly cap.",
-    "Parallel peers have conflicting template pins; active adapters now use the unchanged vendor/template only.",
-    "Concurrent K2 audit records an unavoidable >70% lattice overlap at its 37,654-dot budget; its lane is stopped. Do not exempt the lattice or retune to evade the stop."
-  ],
-  "shared_tool_scope": "These raw canaries use pinned GEMSDOE24 gems-segment-pooled-v1, not the GEMSDOE33 evaluator implicated by the separate K2 defect receipt."
+    "Literal positive-support definition makes the registry overlap gate unsatisfiable for any nonempty candidate",
+    "No identifiable exclusive method paragraph",
+    "No authenticated organizer submission receipt for historical scores",
+    "No full frozen registry or comparable fold-local current-best baseline",
+    "Core input mirrors are hash verified, not organizer authenticated",
+    "No authenticated competition account or remaining-weekly-slot status"
+  ]
 }

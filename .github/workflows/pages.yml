@@ -20,21 +20,22 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-      - run: pip install -r requirements.txt
+          cache-dependency-path: requirements-lock.txt
+      - run: pip install -r requirements-lock.txt
       - run: python -m compileall -q scripts tests vendor/template/src
       - run: python scripts/run_tests.py
       - run: python -m pytest -q
       - run: node tests/test_feed.js
       - run: node --test tests/test_leaderboard_script.cjs
-      - name: Observe source revisions (not leaderboard scores)
-        if: github.event_name != 'pull_request'
-        # Publish unavailable sources as unavailable; never reuse an old PASS.
-        continue-on-error: true
-        run: python scripts/check_source_freshness.py --out docs/source_freshness.json
       - run: python scripts/build_site.py
       - run: python scripts/build_k2_site.py --check
       - run: python scripts/check_site.py
-      - name: Stage the built public dashboard and evidence
+      - run: git diff --exit-code -- docs research/run_card.json
+      - name: Observe GitHub source revisions (not leaderboard scores)
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: python scripts/check_source_freshness.py --out docs/source_freshness.json
+      - name: Stage tested public dashboards and evidence
         if: github.event_name != 'pull_request'
         run: |
           mkdir -p _site/docs _site/evidence
