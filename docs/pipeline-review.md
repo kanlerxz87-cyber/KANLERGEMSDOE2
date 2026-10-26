@@ -60,3 +60,13 @@ all three required primary rasters absent. This is an expected blocker result,
 not a successful data restoration. The inherited historical-raster audit was not
 rerun. The installed dependencies and synthetic safety contracts do not validate
 any candidate against hidden faults.
+
+### Concurrent-main integration
+
+Merged `origin/main` at `4ff7887` on the fixed Arena branch. Retained its additional
+external-data hypothesis/source-screen documents and dated official-page observation
+record. These records were produced by the concurrent session, not independently
+re-fetched here. Preserved this safety review's negative audit run card and research
+writer restrictions. Removed the obsolete hyphenated run-card alias as main did;
+canonical `run_card.json` remains linked. No inherited observation is a project
+submission receipt or a new experiment.
