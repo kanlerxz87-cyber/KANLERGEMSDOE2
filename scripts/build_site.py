@@ -1,57 +1,128 @@
-"""Build an auditable, static executive summary; no unvalidated submission links."""
-import html, json, pathlib, shutil
-ROOT=pathlib.Path(__file__).resolve().parents[1]
-SCORES={24:'0.2477',25:'0.2600',27:'0.2449',28:'0.2710',30:'0.2600',31:'0.2708',32:'0.2778',33:'0.2632',36:'0.2750'}
-def build():
-    docs=ROOT/'docs'; docs.mkdir(exist_ok=True)
-    audit=json.loads((ROOT/'research/raster_audit.json').read_text()); manifest=json.loads((ROOT/'research/raster_manifest.json').read_text())
-    reportmap={r['site']:r for r in audit['format_reports']}
-    rows=[];details=[]
-    for r in manifest:
-        site=r['site']; n=int(site.removeprefix('GEMSDOE')); f=reportmap[site]
-        comparisons=[p for p in audit['directed_pairs'] if p['a']==site]
-        maxrho=max(p['spearman_rho'] for p in comparisons); maxov=max(p['fraction_a_dots_within_3px_of_b'] for p in comparisons)
-        same=[p['b'] for p in comparisons if p['decoded_pixels_equal_inside_footprint']]
-        rows.append(f'<tr><th><a href="#s{n}">{site}</a></th><td>{SCORES[n]}<small>Unverified owner report</small></td><td>Unavailable<small>No comparable HOLDOUT-DTI + CI</small></td><td><a href="{html.escape(r["url"])}">{html.escape(pathlib.Path(r["path"]).name)}</a><small>Historical source · education only</small></td><td><b class="bad">NO</b><small>Fails overlap gate</small></td><td>Do not submit</td></tr>')
-        details.append(f'<article id="s{n}"><h3>{site}</h3><p>Highest historical result in the supplied list: <strong>{SCORES[n]} — unverified owner report</strong>. Not an organizer-confirmed receipt, not a prediction for a new upload.</p><p>RASTER-AUDIT: {f["positive_pixels"]:,} positive pixels; strict whole-grid format {"PASS" if f["format_valid"] else "FAIL"}. Maximum Spearman correlation to the other eight references: {maxrho:.4f}; maximum directional overlap within 3 pixels: {maxov:.2%}. {"Pixel-identical in the footprint to "+", ".join(same)+"." if same else "Not pixel-identical to the other eight selected references; still fails the near-duplicate gate."}</p><p><strong>Decision: no eligible new file.</strong> This historical file has already been submitted according to the owner. No comparable current holdout-best or receipt proves that another file on this site is superior.</p><details><summary>Exact raster provenance</summary><p class="mono">SHA-256: {r["sha256"]}</p><p><a href="{html.escape(r["url"])}">Pinned source</a>; validation and all directional comparisons are in the downloadable audit.</p></details></article>')
-    card={
-      'hypothesis':'Research lead only: persistent ECOSTRESS L2 surface-temperature anomalies may help locate concealed geothermal-fluid conduits; no candidate was implemented or tested.',
-      'mechanism':'Scene-normalized temperature residuals and repeated-observation persistence may expose shallow fluid upflow associated with an unmapped fault, even without a preserved scarp.',
-      'non_fault_mimic':'Solar/topographic illumination, soil moisture and vegetation stress, lithologic emissivity, wildfire, mining, and irrigation.',
-      'holdout':{'label':'HOLDOUT-DTI','evaluator_version':'shared evaluator pinned; not run on a candidate','value':None,'n_withheld_positive_pixels':None,'ci95':None,'reason':'No exclusive method lane; competition labels/features and fold-local cache are absent; no frozen comparable current best.'},
-      'registry':{'scope':'nine historical priority champions only; NOT full registry','surface_check':'not run; no candidate surface','final_dot_directed_pairs':len(audit['directed_pairs']),'duplicate_gate_hits':sum(p['duplicate_gate'] for p in audit['directed_pairs']),'champion_vs_GEMSDOE36':next(p for p in audit['directed_pairs'] if p['a']=='GEMSDOE32' and p['b']=='GEMSDOE36')},
-      'raster_sha256':None,
-      'validator_output':{'candidate':'not generated; not validated','historical_files':len(audit['format_reports']),'historical_format_passes':sum(r['format_valid'] for r in audit['format_reports']),'scope':'Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated.'},
-      'submission_name':None,'note':'Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.',
-      'verdict':'negative','ok_to_download_and_submit':False,'experiments_used':0,
-      'integration_review':{'prior_main':'80d3c57','prior_blindbasin_authorization':'withdrawn','reason':'Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine.'},
-      'blockers':['Missing exclusive method paragraph','Shared-template ambiguity between peer repositories','No organizer receipts','No complete frozen registry surface set','No competition training labels/features, fold-local cache, or comparable holdout-best restored','Competition data page redirects to login; no authenticated DrivenData session','Public leaderboard snapshot at 2026-10-26 21:52:09 UTC showed #1 0.4437; not a project score or submission receipt']}
-    (ROOT/'research/run_card.json').write_text(json.dumps(card,indent=2)+'\n')
-    (ROOT/'evidence').mkdir(exist_ok=True)
-    (ROOT/'evidence/run_card.json').write_text(json.dumps(card,indent=2)+'\n')
-    for file in ['raster_audit.json','raster_manifest.json','source_manifest.json','run_card.json','hypotheses.md','external-data-candidate-review-20261026.md']:
-        shutil.copyfile(ROOT/'research'/file,docs/file)
-    shutil.copyfile(ROOT/'evidence/official-page-check-20261026.json',docs/'official-page-check-20261026.json')
-    shutil.copyfile(ROOT/'evidence/run_card_e1_xg_hgb.json',docs/'run_card_e1_xg_hgb.json')
-    e1=json.loads((ROOT/'evidence/run_card_e1_xg_hgb.json').read_text())
-    e1_body=f'''<header><a href="index.html">← Decision desk</a><h1>E1 XG-HGB: quarantined negative result</h1><p class="lead">This historic experiment is retained for audit, not as an eligible download or recommended submission.</p></header><section class="alert"><h2>DO NOT SUBMIT · NO DOWNLOAD</h2><p>The raster is quarantined under <code>research/quarantine/prior-docs/downloads/</code>. This page deliberately exposes no TIFF or ZIP link. The run card verdict is <strong>negative</strong>; promotion is not authorized.</p></section><section><h2>Recorded evidence (not independently reproduced in this review)</h2><ul><li>Quadrant OOF HOLDOUT-DTI: {e1['holdout_dti']['primary_quadrant_oof']['E1']:.5f}; recorded 95% fold-bootstrap interval {e1['holdout_dti']['primary_quadrant_oof']['ci95_fold_bootstrap_4folds'][0]:.5f}–{e1['holdout_dti']['primary_quadrant_oof']['ci95_fold_bootstrap_4folds'][1]:.5f}; {e1['holdout_dti']['primary_quadrant_oof']['n_withheld_positives']:,} withheld positives.</li><li>SGMC off-catalogue HOLDOUT-DTI: {e1['holdout_dti']['sgmc_off_catalogue']['E1_raw']:.5f} vs the recorded champion {e1['holdout_dti']['sgmc_off_catalogue']['champion_raw']:.5f}.</li><li>Run-card verdict is negative. The SGMC-based score projection is not a score and is omitted here.</li><li>Recorded novelty metrics against nine focus-site references: max |Spearman| {e1['correlation_overlap_vs_registry']['max_abs_surface_spearman']:.4f}; max directional 3-pixel dot overlap {e1['correlation_overlap_vs_registry']['max_dot_overlap_3px_frac']:.1%}. This is not a complete-registry certificate.</li><li>Recorded raster SHA-256: <code>{e1['raster_sha256']}</code>.</li></ul><p>These figures are transcribed from the linked JSON run card and have not been independently reproduced during the 2026-10-26 review. They do not supersede the project's current negative selector decision.</p><p><a href="run_card_e1_xg_hgb.json">Open the preserved run card (JSON)</a>. The TIFF receipt and original artifacts remain in the research quarantine only.</p></section>'''
-    (docs/'lane-e1-xg-hgb.html').write_text(page('E1 XG-HGB negative result',e1_body))
-    for generated_md in [docs/'hypotheses.md', docs/'external-data-candidate-review-20261026.md']:
-        text=generated_md.read_text()
-        text=text.replace('../evidence/official-page-check-20261026.json','official-page-check-20261026.json')
-        generated_md.write_text(text)
-    content='''<header><span class="eyebrow">KANLERGEMS · EVIDENCE FIRST</span><h1>Submission decision desk</h1><p class="lead">Nine priority sites. One clear answer about what is safe to submit.</p><p>Audit snapshot · 26 October 2026 UTC · <a href="executive-summary.html">How to submit</a> · <a href="hypotheses.md">Research queue</a></p></header>
-<section class="alert"><span class="eyebrow">CURRENT VERDICT · NEGATIVE</span><h2>No new TIFF is approved for submission.</h2><p>Do not upload the historical champions again. All selected references fail the required near-duplicate gate against one another. No new candidate has passed the holdout, surface-novelty and selector gates. A valid file format alone is not approval.</p><a class="button" href="run_card.json" download>Download decision + blockers (JSON)</a> <a class="button secondary" href="raster_audit.json" download>Download raster audit</a><p>No dummy TIFF or renamed historical copy is offered as a competition submission.</p></section>
-<div class="stats"><section><strong>9 / 9</strong><span>Historical files format-valid</span></section><section><strong>72 / 72</strong><span>Directed comparisons fail novelty</span></section><section><strong>0</strong><span>New experiments / competition slots used</span></section></div>
-<section class="alert"><h2>Prior authorization withdrawn</h2><p>Concurrent main contained a blind-basin TIFF marked approved. Review found synthetic geological inputs, placeholder canary values, random-draw confidence intervals and a hard-coded selector. That approval is withdrawn. Original files are preserved in the repository quarantine, not published as submission downloads.</p></section><section><h2>Executive comparison</h2><p>The values below are <strong>UNVERIFIED OWNER REPORTS</strong> supplied in the prompt, not ORGANIZER-CONFIRMED receipts. Estimates are unavailable: no defensible conversion from a local holdout to a leaderboard score exists here. Historical source links are for learning, not new submission downloads.</p><div class="scroll"><table><thead><tr><th>Site</th><th>Historical result</th><th>Estimated new result</th><th>Historical file source</th><th>Unique by protocol?</th><th>Upload decision</th></tr></thead><tbody>'''+''.join(rows)+'''</tbody></table></div></section>
-<section><h2>Why did the reported 0.2778 lead these sites?</h2><p>GEMSDOE32's historical H33 B=2 file has 37,654 positive pixels in the decoded raster. Its peer README describes a thinning-and-catalogue-flank-pruning lineage. Sparse placement can reduce redundant predictions, and removing low-credit known-fault flanks can improve the precision/coverage tradeoff under a distance-weighted metric. This is a plausible explanation, <strong>not causal proof</strong>: hidden truth and organizer receipts linking those exact bytes to the reported result are unavailable.</p><p>Neither geological novelty nor a physical vent discovery follows from a leaderboard result. The target here is fault prediction; geothermal relevance is a scientific motivation, not the directly validated target. The prompt-supplied 0.3195 and 0.4413 claims conflict and are not verified as this project's scores. The organizer's public leaderboard was fetched at 2026-10-26 21:52:09 UTC and showed #1 at 0.4437; that is a public-board snapshot, not this project's score or a submission receipt.</p><p><strong>New finding:</strong> GEMSDOE25 and GEMSDOE30 are pixel-identical inside the footprint. Different hashes, compression, metadata or filenames are not geological novelty. GEMSDOE32 vs GEMSDOE36 has rank correlation 0.9843 and directional three-pixel overlap 100%. The strict stop rule therefore rules out recycling this champion family.</p></section>
-<section><h2>Site-by-site decisions</h2><div class="cards">'''+''.join(details)+'''</div></section>
-<section><h2>Research priorities, not promised scores</h2><ol><li>Cross-scarp radiometric texture displacement — medium/high cost.</li><li>Along-strike signed magnetic-step change points — medium cost.</li><li>Consistent drainage offsets — high cost; official raw data obtainability unverified.</li><li>Paired radiometric alteration shoulders — medium cost; conceptual overlap with earlier flank methods needs review.</li></ol><p>These are untested proposals, not assigned parallel lanes. <a href="hypotheses.md">Read the in-repo hypothesis slate</a>.</p><p>A separate official-source screen found cataloged ECOSTRESS and ASTER acquisitions intersecting the approximate competition bounds, and ranked ECOSTRESS thermal persistence, ASTER alteration spectra, and Landsat temperature persistence as further research candidates. No binary imagery was downloaded and none has a holdout result. OPERA/DISP-S1 was excluded as non-novel because GEMSDOE36 already explored it. <a href="external-data-candidate-review-20261026.md">Read the three-candidate source review</a> · <a href="official-page-check-20261026.json">dated source-check receipt</a>.</p><p>No performance estimates are invented.</p></section>
-<section><h2>Sources & limitations</h2><ul><li><a href="source_manifest.json">44 pinned text-source snapshots: provenance manifest</a> — peer assertions are not organizer certification.</li><li><a href="raster_manifest.json">Nine raster hashes and pinned sources</a> · <a href="raster_audit.json">All measurements</a>.</li><li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference implementation</a> retrieved through GitHub; CPU-only training is supported.</li><li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official task / metric</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Leaderboard</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Data / rules</a>.</li><li><a href="external-data-candidate-review-20261026.md">Official-source candidate review</a> · <a href="official-page-check-20261026.json">Timestamped public-page and CMR receipt</a>.</li></ul><p>The public leaderboard was fetched at 2026-10-26 21:52:09 UTC and showed #1 at 0.4437. This is a dated organizer public-board observation, not our score or a submission-page receipt. The competition data page still redirects to login; no authenticated DrivenData session, weekly-cap page, or training labels/features were available. NASA/USGS catalog metadata were checked, but no external binary scene or license-specific challenge permission was verified. This is a static snapshot, not an automated live feed. The nine-reference audit is not a full-registry certificate.</p><p>Shared GEMSDOE24 tools are vendored byte-for-byte using the peer GEMSDOE36 pins, without a private evaluator fork. Peers name competing templates; lane/template authority must be resolved before experimental results are compared.</p></section>'''
-    (docs/'index.html').write_text(page('Executive summary',content))
-    guide='''<header><a href="index.html">← Decision desk</a><h1>How a submission becomes eligible</h1><p class="lead">Automated evidence first. Portal upload only after the separate selector approves.</p></header><section class="alert"><h2>Current status: DO NOT SUBMIT</h2><p>No new TIFF passed all required gates. No weekly slot was used. Historical files are not substitutes for a new validated candidate.</p></section><section><h2>Release checklist</h2><ol><li>Confirm the exclusive method lane and canonical shared template. Freeze input hashes, full novelty registry, holdout folds and current best.</li><li>Use whole-component buffered hide-and-recover. Construct every catalogue-derived feature from visible faults only; apply pixel-exact visible masking. Run one-feature leakage AUC canaries; investigate any value above 0.90.</li><li>Beat the frozen holdout best with pooled DTI and a positive paired 95% CI. Publish evaluator version, withheld-positive count, uncertainty, feature canaries and fold receipts. A holdout value is not a leaderboard estimate.</li><li>Pass both pre-placement surface and final-dot comparisons against the complete registry: stop if rank correlation exceeds 0.90 or directional overlap within 3 pixels exceeds 70%.</li><li>Write a single-band TIFF using the shared writer and template. Prefer a whole-grid-finite [0,1] variant. Validate CRS, dimensions and geotransform against the authenticated competition sample; hash the exact upload bytes.</li><li>Only the separate selector may promote. Confirm the competition rules and remaining weekly cap on the authenticated submission page. An automated format PASS cannot authorize upload.</li></ol></section><section><h2>Fixing “Predicted values must be in range [0, 1]”</h2><p>NaN, infinity, negative nodata sentinels, or out-of-range values may cause rejection. Inspect raw pixel values, not display colors. Our strict validator rejects all nonfinite and out-of-range cells across the whole grid; it does not silently clip model errors. Use the shared writer's zero-outside mode after validating actual in-footprint model predictions. Reopen and validate the written TIFF before release.</p><pre>python scripts/validate_raster.py candidate.tif data/sample_submission.tif</pre><p>Validation exit code zero means format-valid only. It does not verify novelty, hidden score, or upload eligibility.</p></section><section><h2>After selector approval</h2><ol><li>Download the exact TIFF named in the approved run card and compare its SHA-256.</li><li>Use a distinct model-derived name; keep its explanatory note at most 140 characters. Do not rename a previous prediction and call it unique.</li><li>On the official submission page, choose the TIFF (or a ZIP containing only that TIFF), paste the note, and submit within the confirmed cap.</li><li>Save the organizer receipt with submission ID, exact file hash and result. Only then use the label ORGANIZER-CONFIRMED.</li></ol><p>Portal interaction requires an authenticated account and is not performed by this project. No unverified score, paper, or receipt is fabricated.</p></section>'''
-    (docs/'executive-summary.html').write_text(page('Submission guide',guide))
+#!/usr/bin/env python3
+"""Build the evidence-linked Pages site without inventing an approved TIFF."""
+from __future__ import annotations
 
-def page(title,content):
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+title+' · KANLERGEMS</title><link rel="stylesheet" href="style.css"></head><body><main>'+content+'</main><footer>KANLERGEMS · Maximize P(Win) through reproducible evidence. Own the outcome, including negative results.</footer></body></html>\n'
-if __name__=='__main__':build()
+from html import escape
+import json
+from pathlib import Path
+import shutil
+
+ROOT = Path(__file__).resolve().parents[1]
+SCORES = {24: "0.2477", 25: "0.2600", 27: "0.2449", 28: "0.2710", 30: "0.2600", 31: "0.2708", 32: "0.2778", 33: "0.2632", 36: "0.2750"}
+
+
+def page(title: str, content: str) -> str:
+    return ('<!doctype html><html lang="en"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            f'<title>{escape(title)} · KANLERGEMS</title><link rel="stylesheet" href="style.css">'
+            '</head><body><main>' + content +
+            '</main><footer>KANLERGEMS · Maximize P(Win) through evidence. Own the outcome, including negative results.</footer></body></html>\n')
+
+
+def build() -> None:
+    docs = ROOT / "docs"
+    docs.mkdir(exist_ok=True)
+    audit = json.loads((ROOT / "research/raster_audit.json").read_text())
+    manifest = json.loads((ROOT / "research/raster_manifest.json").read_text())
+    card = json.loads((ROOT / "research/run_card.json").read_text())
+    e1 = json.loads((ROOT / "evidence/e1_reaudit_20261026.json").read_text())
+    board = json.loads((ROOT / "evidence/official-page-check-20261026.json").read_text())
+    board_score = board["public_leaderboard"]["rank_1"]["public_score"]
+    board_time = escape(board["retrieved_utc"])
+    reports = {r["site"]: r for r in audit["format_reports"]}
+    rows, details, focus_data = [], [], []
+    for record in manifest:
+        site = record["site"]
+        number = int(site.removeprefix("GEMSDOE"))
+        report = reports[site]
+        comparisons = [p for p in audit["directed_pairs"] if p["a"] == site]
+        max_rho = max(p["spearman_rho"] for p in comparisons if p["spearman_rho"] is not None)
+        max_overlap = max(p["fraction_a_dots_within_3px_of_b"] for p in comparisons if p["fraction_a_dots_within_3px_of_b"] is not None)
+        same = [p["b"] for p in comparisons if p["decoded_pixels_equal_inside_footprint"]]
+        link = escape(record["url"], quote=True)
+        filename = escape(Path(record["path"]).name)
+        focus_data.append({"site": site, "historical_file": Path(record["path"]).name,
+                           "historical_sha256": record["sha256"], "historical_source_url": record["url"],
+                           "owner_reported_score_unverified": float(SCORES[number]),
+                           "new_candidate_file": None, "new_candidate_score": None,
+                           "maximum_rank_correlation_vs_other_selected_references": max_rho,
+                           "maximum_directional_overlap_within_3px": max_overlap,
+                           "identical_selected_reference_sites": same,
+                           "historical_duplicate_gate": any(p["duplicate_gate"] for p in comparisons),
+                           "decision": "DO NOT SUBMIT"})
+        rows.append(
+            f'<tr><th><a href="#s{number}">{site}</a></th>'
+            f'<td>{SCORES[number]}<small>Unverified owner report</small></td>'
+            '<td><strong>None eligible</strong><small>No new validated file</small></td>'
+            '<td>Unavailable<small>No defensible leaderboard estimate</small></td>'
+            '<td><b class="bad">NO</b><small>Historical file fails overlap gate</small></td>'
+            f'<td><a href="{link}">{filename}</a><small>Historical source · learning only</small></td>'
+            '<td class="bad"><strong>DO NOT SUBMIT</strong></td></tr>'
+        )
+        equal_text = ("Pixel-identical within the footprint to " + ", ".join(same) + ".") if same else "Not pixel-identical to the other eight selected references, but still fails near-duplicate screening."
+        details.append(
+            f'<article id="s{number}"><h3>{site}</h3>'
+            f'<p>Highest historical value supplied by the owner: <strong>{SCORES[number]}</strong> '
+            '(unverified owner report, not a submission-page receipt).</p>'
+            f'<p>RASTER-AUDIT: {report["positive_pixels"]:,} positive pixels; whole-grid range and grid check '
+            f'{"PASS" if report["strict_whole_grid_range_and_grid_valid"] else "FAIL"}. '
+            f'Maximum Spearman correlation against the other eight references: {max_rho:.4f}; '
+            f'maximum candidate-directional overlap within 3 pixels: {max_overlap:.2%}. {escape(equal_text)}</p>'
+            '<p><strong>No new eligible file.</strong> The referenced artifact is historical; a different name or compression is not a new strategy.</p>'
+            f'<details><summary>Exact raster provenance</summary><p class="mono">SHA-256: {record["sha256"]}</p>'
+            f'<p><a href="{link}">Pinned historical source</a> · <a href="raster_audit.json">All directional comparisons</a></p></details></article>'
+        )
+    (docs / "focus_sites.json").write_text(json.dumps({
+        "label_note": "Scores are unverified owner reports; comparisons cover only nine selected historical rasters. No new file or score is approved.",
+        "source": "raster_audit.json", "sites": focus_data}, indent=2, allow_nan=False) + "\n")
+    geo = e1["calibration_geometry"]
+    overlap = e1["max_candidate_overlap_3px"]
+    source_files = ["raster_audit.json", "raster_manifest.json", "source_manifest.json", "run_card.json", "hypotheses.md", "source_register.md", "input_pins.json", "registry_scope.json", "external-data-candidate-review-20261026.md"]
+    for file in source_files:
+        shutil.copyfile(ROOT / "research" / file, docs / file)
+    for file in ("official-page-check-20261026.json", "e1_reaudit_20261026.json", "h33_lineage_20261026.json"):
+        shutil.copyfile(ROOT / "evidence" / file, docs / file)
+    (ROOT / "evidence/run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n")
+
+    content = f'''<header><span class="eyebrow">KANLERGEMS · EVIDENCE FIRST</span>
+<h1>Submission decision desk</h1><p class="lead">Nine priority sites, one clear answer about what is safe to submit.</p>
+<p><a href="executive-summary.html">How to submit</a> · <a href="hypotheses.md">Research slate</a> · <a href="source_register.md">Official sources</a></p>
+<p>Organizer public-board snapshot: <strong>{board_score:.4f}</strong> at {board_time} · not this project's score; may be stale. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">View the current official board</a>.</p></header>
+<section class="alert"><span class="eyebrow">CURRENT VERDICT · NEGATIVE</span><h2>No new TIFF is approved for submission.</h2>
+<p><strong>Do not upload a historical file or the inherited E1 raster.</strong> A valid-looking TIFF is not enough: the inherited candidate fails the literal uniqueness rule, its earlier holdout evidence is withdrawn, and no new method has passed the required gates.</p>
+<a class="button" href="run_card.json" download>Download decision card (JSON)</a><a class="button secondary" href="e1_reaudit_20261026.json" download>Download duplicate audit</a>
+<p>No renamed copy, dummy file or unvalidated score estimate is offered as a competition submission.</p></section>
+<div class="stats"><section><strong>{overlap:.2%}</strong><span>RASTER-AUDIT · inherited E1 overlap with registered lattice</span></section>
+<section><strong>{sum(r['strict_whole_grid_range_and_grid_valid'] for r in audit['format_reports'])} / {len(audit['format_reports'])}</strong><span>RASTER-AUDIT · historical whole-grid range + grid checks</span></section>
+<section><strong>0</strong><span>New experiments or competition slots used this review</span></section></div>
+<section><h2>Executive comparison</h2><p>Historical values are <strong>unverified owner reports</strong>, not organizer-confirmed submission receipts. There is no reliable estimate for a new upload. Historical links are for learning only; all selected files fail the stated near-duplicate rule against one another.</p>
+<div class="scroll"><table><thead><tr><th>Site</th><th>Historical result</th><th>File to submit</th><th>Estimated new score</th><th>Unique?</th><th>Historical reference</th><th>Decision</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></section>
+<section class="alert"><h2>Why the previous E1 result was stopped</h2><p>The corrected, shared Euclidean check finds <strong>{overlap:.2%}</strong> of E1 dots within 3 pixels of an included calibration lattice, above the literal 70% stop. Its previous audit excluded that lattice and used Manhattan rather than Euclidean dilation. E1's pre-placement surface is unavailable, so its surface uniqueness cannot be reconstructed.</p>
+<p>The prior quadrant split did not hide whole connected fault components, and its fixed-mask analysis used a model trained on the full catalogue. Its holdout and projected leaderboard claims are therefore withdrawn. <a href="lane-e1-xg-hgb.html">Read the corrected audit →</a></p>
+<p>The lattice covers {geo['footprint_3px_coverage']:.2%} of the footprint within 3 pixels. Any raster with at least {geo['minimum_dot_count_for_forced_overlap_above_70_percent']:,} positive pixels necessarily exceeds the 70% rule against it; this is a geometric conflict in the protocol, not proof of geological copying. We do not exempt the lattice or reposition dots to game the test.</p></section>
+<section><h2>Why the reported GEMSDOE32 result may have led</h2><p>RASTER-AUDIT: the selected GEMSDOE32 H33 B=2 raster is exactly the selected GEMSDOE31 raster after removing 2,545 of 40,199 dots within two Euclidean pixels of the peer-mirrored known catalogue; no dots were added. <a href="h33_lineage_20261026.json">Inspect the lineage audit →</a></p><p>The official distance-tolerant metric can reward nonredundant coverage while penalizing false-positive mass, making this a plausible mechanism—not a causal proof. The exact score-to-file receipts and hidden truth are unavailable, and the competition asks for predictions of all faults. No result here establishes that a new strategy will beat the reported value or the current public leader.</p>
+<p>GEMSDOE25 and GEMSDOE30 are pixel-identical in the footprint. GEMSDOE32 and GEMSDOE36 have a high overlap as well; a filename or compressed-byte change is not scientific novelty. <a href="source_register.md">Read the evidence and sources →</a></p></section>
+<section><h2>Site-by-site reference audit</h2><div class="cards">{''.join(details)}</div></section>
+<section><h2>Research and next steps</h2><p>Four ranked geological hypotheses include cross-scarp K/Th texture displacement and persistent thermal residuals. They are not established discoveries or new scores. Related magnetic-profile work exists in GEMSDOE30; remaining novelty is unverified. <a href="hypotheses.md">Read the ranked slate →</a></p>
+<p>Hash-pinned peer mirrors of the 19-band input, catalogue, sample and derived layers were restored locally. They are not authenticated organizer files; the shared prepared feature cache, full registry, explicit lane and comparable fold-local best remain absent. The peer sample contains known-fault ones despite the official page describing a total-fault-absence example; only its grid and footprint are used.</p>
+<p>The public leaderboard value above is a dated static observation, not a live feed or upload receipt. No automated organizer monitoring is performed; the authenticated weekly allowance remains unknown.</p></section>
+<section><h2>Sources &amp; audit trail</h2><ul><li><a href="source_register.md">Official-source register</a> · <a href="input_pins.json">Mirror input pins</a> · <a href="registry_scope.json">Incomplete registry scope</a>.</li>
+<li><a href="raster_manifest.json">Nine pinned raster sources</a> · <a href="raster_audit.json">72 directed historical comparisons</a> · <a href="h33_lineage_20261026.json">H33 lineage audit</a> · <a href="e1_reaudit_20261026.json">E1 corrected audit</a>.</li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem and metric</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Official rules PDF</a> · <a href="https://github.com/drivendataorg/gems-prize-reference-solution">Organizer reference code</a>.</li></ul><p>All geoscientific mechanisms are hypotheses until tested; fault prediction is not proof of a geothermal vent.</p></section>'''
+    (docs / "index.html").write_text(page("Executive summary", content))
+
+    guide = '''<header><a href="index.html">← Decision desk</a><h1>How to make a submission</h1><p class="lead">Automated evidence first; a separate selector must approve any real slot.</p></header>
+<section class="alert"><h2>Current status: DO NOT SUBMIT</h2><p>There is no new approved TIFF. Do not upload a historical reference or the quarantined E1 file. No competition slot was used in this review.</p></section>
+<section><h2>1. Generate and automatically verify</h2><ol><li>Establish one exclusive method lane; use verified inputs and the pinned shared evaluator and writer. Freeze the complete parallel registry and a reproducible, fold-local current-best baseline.</li><li>Run a holdout canary for every actual feature; flag AUC above 0.90. Hide entire fault components with a buffer, compute catalogue-based features from visible faults only, mask those pixels exactly, and report pooled HOLDOUT-DTI, evaluator version, withheld-positive count and 95% CI.</li><li>Check the candidate surface before placing dots, then the final dots against the complete registry. Stop on a rank correlation over 0.90 or candidate-directional overlap over 70% within 3 pixels. No calibration exemption is authorized here.</li><li>Use the shared writer to produce a float32 single-band GeoTIFF with finite predictions in [0,1] inside the footprint and exact CRS, dimensions and transform. The public format says null/NaN outside bounds; our conservative check uses the template footprint. Authenticate the sample and resolve that interpretation before release.</li><li>Run the separate selector after scientific and format gates pass. The official rules PDF stated three submissions per week at this audit; the current account allowance and any changes must be checked on the authenticated page. A format PASS does not authorize a slot.</li></ol></section>
+<section><h2>2. Resolve the reported range error</h2><p>Out-of-range predictions, nonfinite in-footprint values, unmasked nodata sentinels, or a portal-specific NaN interpretation are possible causes; the rejected file was not supplied, so the cause is unknown. Do not silently clip or claim a format check guarantees portal acceptance.</p><pre>python scripts/validate_raster.py candidate.tif data/sample_submission.tif</pre><p>The validator reports published-format checks and a separate whole-grid-finite diagnostic. It never approves submission and the local sample is currently a peer mirror, not organizer-authenticated.</p></section>
+<section><h2>3. Only after selector approval</h2><ol><li>Download the exact approved TIFF and verify the SHA-256 against its run card. Use its distinct name and note of at most 140 characters.</li><li>On <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData</a>, enroll, open Submit → Make new submission, choose the TIFF (or a ZIP containing one TIFF), and enter the note.</li><li>Save the organizer submission-page receipt and tie it to the exact uploaded hash. Only such a receipt can establish an organizer-confirmed result for this project.</li><li>Follow the <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">official rules</a>: disclose generative-AI use as required and retain reproducible code, source licenses and documentation. The official prize process includes an expert review; local raster validation itself is automated.</li></ol></section>'''
+    for name in ("executive-summary.html", "how-to-submit.html", "submission.html"):
+        (docs / name).write_text(page("Submission guide", guide))
+    e1_page = f'''<header><a href="index.html">← Decision desk</a><h1>E1 XG-HGB: duplicate stop</h1><p class="lead">A previous result, preserved for audit. It is not an eligible download or a recommended submission.</p></header>
+<section class="alert"><h2>DO NOT SUBMIT · NO DOWNLOAD</h2><p>Exact candidate-directional Euclidean overlap with the registered calibration lattice: <strong>{overlap:.2%}</strong> (limit: 70%). The previous surface is unavailable; its pre-placement test cannot be reconstructed. The registry checked here is incomplete.</p></section>
+<section><h2>What changed</h2><ul><li>The earlier nine-site comparison excluded a calibration reference and used Manhattan rather than Euclidean dilation. Its novelty pass is withdrawn.</li><li>Quadrant blocking does not hide whole components crossing a boundary. The prior fixed-mask analysis also used a globally trained model. Those holdout claims and the SGMC-anchored projection are withdrawn.</li><li>The raster has finite [0,1] values and matches the peer template's CRS, shape and transform, but fails this project's conservative outside-footprint null/NaN check. Actual portal acceptance is unknown.</li><li>The lattice's 3-pixel neighborhood covers {geo['footprint_3px_coverage']:.2%} of the footprint. A budget of at least {geo['minimum_dot_count_for_forced_overlap_above_70_percent']:,} positive pixels is mathematically forced to fail the strict overlap rule against this reference.</li></ul><p><a href="e1_reaudit_20261026.json">Open corrected machine-readable audit</a> · <a href="run_card.json">Current run card</a></p></section>'''
+    (docs / "lane-e1-xg-hgb.html").write_text(page("E1 corrected audit", e1_page))
+
+
+if __name__ == "__main__":
+    build()

@@ -1,22 +1,37 @@
 {
-  "scope": "nine historical references only, not full registry; final dots only; no candidate surface tested",
+  "scope": "Nine historical references only; not full registry; final dots only, not new candidate surfaces.",
+  "format_note": "Whole-grid range/grid is separate from the published outside-footprint null/NaN requirement; template is a peer mirror.",
   "footprint_pixels": 5167373,
   "format_reports": [
     {
       "site": "GEMSDOE24",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE24.tif",
+      "path": "data/registry/g24_best.tif",
       "sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -31,24 +46,39 @@
         4508550.0
       ],
       "positive_pixels": 60069,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE25",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE25.tif",
+      "path": "data/registry/g25_best.tif",
       "sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -63,24 +93,39 @@
         4508550.0
       ],
       "positive_pixels": 44090,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE27",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE27.tif",
+      "path": "data/registry/g27_best.tif",
       "sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -95,24 +140,39 @@
         4508550.0
       ],
       "positive_pixels": 61328,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE28",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE28.tif",
+      "path": "data/registry/g28_best.tif",
       "sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -127,24 +187,39 @@
         4508550.0
       ],
       "positive_pixels": 37660,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE30",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE30.tif",
+      "path": "data/registry/g30_best.tif",
       "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -159,24 +234,39 @@
         4508550.0
       ],
       "positive_pixels": 44090,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE31",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE31.tif",
+      "path": "data/registry/g31_best.tif",
       "sha256": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -191,24 +281,39 @@
         4508550.0
       ],
       "positive_pixels": 40199,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE32",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE32.tif",
+      "path": "data/registry/g32_champion.tif",
       "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -223,24 +328,39 @@
         4508550.0
       ],
       "positive_pixels": 37654,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE33",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE33.tif",
+      "path": "data/registry/g33_best.tif",
       "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -255,24 +375,39 @@
         4508550.0
       ],
       "positive_pixels": 41865,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     },
     {
       "site": "GEMSDOE36",
-      "path": "/home/user/KANLERGEMSDOE2/data/registry/GEMSDOE36.tif",
+      "path": "data/registry/g36_best.tif",
       "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
       "checks": {
+        "template_single_band": true,
+        "template_nonempty_footprint": true,
         "single_band": true,
+        "float32": true,
         "crs_matches": true,
         "shape_matches": true,
         "transform_matches": true,
+        "finite_inside_footprint": true,
+        "unmasked_inside_footprint": true,
+        "values_in_0_1_inside_footprint": true,
+        "outside_footprint_null_or_nan": false,
+        "no_inf_whole_grid": true,
         "no_nan_or_inf_whole_grid": true,
         "values_in_0_1_whole_grid": true
       },
-      "format_valid": true,
+      "format_valid": false,
+      "strict_whole_grid_range_and_grid_valid": true,
+      "all_outside_values_nan": false,
+      "portal_acceptance": "unknown; no organizer submission-page receipt",
+      "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+      "template_provenance": "not authenticated by this validator",
       "ok_to_submit": false,
-      "authorization": "format only; holdout + novelty + selector still required",
+      "authorization": "format only; holdout, complete novelty and a separate selector are required",
       "crs": "EPSG:32611",
       "shape": [
         3730,
@@ -287,6 +422,7 @@
         4508550.0
       ],
       "positive_pixels": 38854,
+      "footprint_pixels": 5167373,
       "finite_min": 0.0,
       "finite_max": 1.0
     }
@@ -295,7 +431,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.5758539684449848,
+      "spearman_rho": 0.5758539684472468,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -303,7 +439,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.9895603022773295,
+      "spearman_rho": 0.9895603022798769,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -311,7 +447,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.5305834380522648,
+      "spearman_rho": 0.5305834380507907,
       "fraction_a_dots_within_3px_of_b": 0.9347916562619654,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -319,7 +455,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.5758539684449848,
+      "spearman_rho": 0.5758539684472468,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -327,7 +463,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.5464471996581121,
+      "spearman_rho": 0.5464471996617785,
       "fraction_a_dots_within_3px_of_b": 0.9407847641878506,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -335,7 +471,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.5323675249041377,
+      "spearman_rho": 0.5323675249055413,
       "fraction_a_dots_within_3px_of_b": 0.88476585260284,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -343,7 +479,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.5654109319628734,
+      "spearman_rho": 0.5654109319617475,
       "fraction_a_dots_within_3px_of_b": 0.9623932477650702,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -351,7 +487,7 @@
     {
       "a": "GEMSDOE24",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.5238726737066427,
+      "spearman_rho": 0.5238726737072152,
       "fraction_a_dots_within_3px_of_b": 0.8856148762256738,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -359,7 +495,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5758539684449848,
+      "spearman_rho": 0.5758539684472468,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -367,7 +503,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5697740201717256,
+      "spearman_rho": 0.5697740201702203,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -375,7 +511,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.6810381814871533,
+      "spearman_rho": 0.6810381814854582,
       "fraction_a_dots_within_3px_of_b": 0.9318212746654571,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -391,7 +527,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.9544929397120658,
+      "spearman_rho": 0.9544929397149491,
       "fraction_a_dots_within_3px_of_b": 0.937151281469721,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -399,7 +535,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.9235552787929444,
+      "spearman_rho": 0.9235552787942342,
       "fraction_a_dots_within_3px_of_b": 0.8817192107053754,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -407,7 +543,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.8096037696275064,
+      "spearman_rho": 0.8096037696278265,
       "fraction_a_dots_within_3px_of_b": 0.9605806305284645,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -415,7 +551,7 @@
     {
       "a": "GEMSDOE25",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.9090384722838479,
+      "spearman_rho": 0.9090384722855394,
       "fraction_a_dots_within_3px_of_b": 0.8826491267861193,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -423,7 +559,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.9895603022773295,
+      "spearman_rho": 0.9895603022798769,
       "fraction_a_dots_within_3px_of_b": 0.9801884946517089,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -431,7 +567,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.5697740201717256,
+      "spearman_rho": 0.5697740201702203,
       "fraction_a_dots_within_3px_of_b": 0.9801558831202714,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -439,7 +575,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.5249809941387721,
+      "spearman_rho": 0.5249809941397139,
       "fraction_a_dots_within_3px_of_b": 0.9161557526741456,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -447,7 +583,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.5697740201717256,
+      "spearman_rho": 0.5697740201702203,
       "fraction_a_dots_within_3px_of_b": 0.9801558831202714,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -455,7 +591,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.5406765719409046,
+      "spearman_rho": 0.5406765719423554,
       "fraction_a_dots_within_3px_of_b": 0.9220910513957735,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -463,7 +599,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.5267469064435856,
+      "spearman_rho": 0.5267469064413987,
       "fraction_a_dots_within_3px_of_b": 0.8671895382207149,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -471,7 +607,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.5594428364432391,
+      "spearman_rho": 0.559442836441213,
       "fraction_a_dots_within_3px_of_b": 0.9432885468301592,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -479,7 +615,7 @@
     {
       "a": "GEMSDOE27",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.5183562822454842,
+      "spearman_rho": 0.5183562822460547,
       "fraction_a_dots_within_3px_of_b": 0.8680374380380903,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -487,7 +623,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5305834380522648,
+      "spearman_rho": 0.5305834380507907,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -495,7 +631,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.6810381814871533,
+      "spearman_rho": 0.6810381814854582,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -503,7 +639,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5249809941387721,
+      "spearman_rho": 0.5249809941397139,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -511,7 +647,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.6810381814871533,
+      "spearman_rho": 0.6810381814854582,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -519,7 +655,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.7137007043581226,
+      "spearman_rho": 0.7137007043610298,
       "fraction_a_dots_within_3px_of_b": 0.9975570897503983,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -527,7 +663,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.6948043434432286,
+      "spearman_rho": 0.6948043434426743,
       "fraction_a_dots_within_3px_of_b": 0.9547265002655337,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -535,7 +671,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.6929178820464398,
+      "spearman_rho": 0.6929178820444476,
       "fraction_a_dots_within_3px_of_b": 0.9984067976633032,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -543,7 +679,7 @@
     {
       "a": "GEMSDOE28",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.6838404118648075,
+      "spearman_rho": 0.6838404118627942,
       "fraction_a_dots_within_3px_of_b": 0.9552044609665428,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -551,7 +687,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5758539684449848,
+      "spearman_rho": 0.5758539684472468,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -567,7 +703,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5697740201717256,
+      "spearman_rho": 0.5697740201702203,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -575,7 +711,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.6810381814871533,
+      "spearman_rho": 0.6810381814854582,
       "fraction_a_dots_within_3px_of_b": 0.9318212746654571,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -583,7 +719,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.9544929397120658,
+      "spearman_rho": 0.9544929397149491,
       "fraction_a_dots_within_3px_of_b": 0.937151281469721,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -591,7 +727,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.9235552787929444,
+      "spearman_rho": 0.9235552787942342,
       "fraction_a_dots_within_3px_of_b": 0.8817192107053754,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -599,7 +735,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.8096037696275064,
+      "spearman_rho": 0.8096037696278265,
       "fraction_a_dots_within_3px_of_b": 0.9605806305284645,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -607,7 +743,7 @@
     {
       "a": "GEMSDOE30",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.9090384722838479,
+      "spearman_rho": 0.9090384722855394,
       "fraction_a_dots_within_3px_of_b": 0.8826491267861193,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -615,7 +751,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5464471996581121,
+      "spearman_rho": 0.5464471996617785,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -623,7 +759,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.9544929397120657,
+      "spearman_rho": 0.9544929397149491,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -631,7 +767,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5406765719409047,
+      "spearman_rho": 0.5406765719423554,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -639,7 +775,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.7137007043581225,
+      "spearman_rho": 0.7137007043610298,
       "fraction_a_dots_within_3px_of_b": 0.9956217816363591,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -647,7 +783,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.9544929397120657,
+      "spearman_rho": 0.9544929397149491,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -655,7 +791,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.967587333932081,
+      "spearman_rho": 0.967587333930221,
       "fraction_a_dots_within_3px_of_b": 0.9539043259782581,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -663,7 +799,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.8193151114671618,
+      "spearman_rho": 0.8193151114704522,
       "fraction_a_dots_within_3px_of_b": 0.9990547028533048,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -671,7 +807,7 @@
     {
       "a": "GEMSDOE31",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.9524016524466069,
+      "spearman_rho": 0.9524016524474157,
       "fraction_a_dots_within_3px_of_b": 0.9544018507923082,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -679,7 +815,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5323675249041377,
+      "spearman_rho": 0.5323675249055413,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -687,7 +823,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.9235552787929444,
+      "spearman_rho": 0.9235552787942342,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -695,7 +831,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5267469064435856,
+      "spearman_rho": 0.5267469064413987,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -703,7 +839,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.6948043434432286,
+      "spearman_rho": 0.6948043434426743,
       "fraction_a_dots_within_3px_of_b": 0.9987517926382323,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -711,7 +847,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.9235552787929444,
+      "spearman_rho": 0.9235552787942342,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -719,7 +855,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.9675873339320809,
+      "spearman_rho": 0.967587333930221,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -727,7 +863,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.7946790316005948,
+      "spearman_rho": 0.7946790315990967,
       "fraction_a_dots_within_3px_of_b": 0.9998406543793488,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -735,7 +871,7 @@
     {
       "a": "GEMSDOE32",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.9843213108530009,
+      "spearman_rho": 0.98432131085482,
       "fraction_a_dots_within_3px_of_b": 1.0,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -743,7 +879,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5654109319628733,
+      "spearman_rho": 0.5654109319617475,
       "fraction_a_dots_within_3px_of_b": 0.9970619849516302,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -751,7 +887,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.8096037696275062,
+      "spearman_rho": 0.8096037696278265,
       "fraction_a_dots_within_3px_of_b": 0.997038098650424,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -759,7 +895,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5594428364432391,
+      "spearman_rho": 0.559442836441213,
       "fraction_a_dots_within_3px_of_b": 0.9970858712528365,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -767,7 +903,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.6929178820464398,
+      "spearman_rho": 0.6929178820444476,
       "fraction_a_dots_within_3px_of_b": 0.9705004180102711,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -775,7 +911,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.8096037696275062,
+      "spearman_rho": 0.8096037696278265,
       "fraction_a_dots_within_3px_of_b": 0.997038098650424,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -783,7 +919,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.819315111467162,
+      "spearman_rho": 0.8193151114704522,
       "fraction_a_dots_within_3px_of_b": 0.9747999522273976,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -791,7 +927,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.7946790316005947,
+      "spearman_rho": 0.7946790315990967,
       "fraction_a_dots_within_3px_of_b": 0.9264301922847247,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -799,7 +935,7 @@
     {
       "a": "GEMSDOE33",
       "b": "GEMSDOE36",
-      "spearman_rho": 0.7821595800140791,
+      "spearman_rho": 0.7821595800155599,
       "fraction_a_dots_within_3px_of_b": 0.9271228950197062,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -807,7 +943,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE24",
-      "spearman_rho": 0.5238726737066427,
+      "spearman_rho": 0.5238726737072152,
       "fraction_a_dots_within_3px_of_b": 0.9756781798527822,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -815,7 +951,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE25",
-      "spearman_rho": 0.9090384722838479,
+      "spearman_rho": 0.9090384722855394,
       "fraction_a_dots_within_3px_of_b": 0.9749832707057189,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -823,7 +959,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE27",
-      "spearman_rho": 0.5183562822454842,
+      "spearman_rho": 0.5183562822460547,
       "fraction_a_dots_within_3px_of_b": 0.9757811293560509,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -831,7 +967,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE28",
-      "spearman_rho": 0.6838404118648075,
+      "spearman_rho": 0.6838404118627942,
       "fraction_a_dots_within_3px_of_b": 0.9731301796468832,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -839,7 +975,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE30",
-      "spearman_rho": 0.9090384722838479,
+      "spearman_rho": 0.9090384722855394,
       "fraction_a_dots_within_3px_of_b": 0.9749832707057189,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -847,7 +983,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE31",
-      "spearman_rho": 0.9524016524466068,
+      "spearman_rho": 0.9524016524474157,
       "fraction_a_dots_within_3px_of_b": 0.9745714726926442,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -855,7 +991,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE32",
-      "spearman_rho": 0.9843213108530009,
+      "spearman_rho": 0.98432131085482,
       "fraction_a_dots_within_3px_of_b": 0.9740309878004839,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false
@@ -863,7 +999,7 @@
     {
       "a": "GEMSDOE36",
       "b": "GEMSDOE33",
-      "spearman_rho": 0.7821595800140791,
+      "spearman_rho": 0.7821595800155599,
       "fraction_a_dots_within_3px_of_b": 0.9750347454573531,
       "duplicate_gate": true,
       "decoded_pixels_equal_inside_footprint": false

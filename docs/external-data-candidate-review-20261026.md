@@ -1,16 +1,16 @@
 # External-data candidate review — 2026-10-26
 
-**Status:** research-only. No exclusive method paragraph/lane was present in the request or current primary decision card. No new experiment, submission TIFF, or weekly slot is authorized by this note. The project's current negative run card remains authoritative.
+**Status:** research-only, a dated earlier source review. No exclusive method paragraph/lane was present in the request or current primary decision card. No new experiment, submission TIFF, or weekly slot is authorized by this note. Since the initial review, the 19-band raster, labels and example grid have been restored from SHA-pinned peer mirrors into ignored local storage; they are not authenticated organizer downloads. The shared prepared cache, full registry and comparable fold-local baseline remain unavailable. The current negative [run card](run_card.json) and [ranked slate](hypotheses.md) supersede this memo's earlier ranking.
 
 ## What changed after the initial branch checkout
 
-While resolving the branch's PR conflict, `origin/main` had advanced with the evidence-first project and a prior negative decision. The integrated tree has the shared evaluator/writer and pinned historical audit tools, nine historical registry rasters, and several derived external layers. It does **not** contain `training_features.tif`, competition labels, the sample submission, a fold-local feature cache, or frozen comparable current-best predictions. The official DrivenData data page redirects to its login. The canonical template authority is still recorded as ambiguous between peer projects. Therefore the top scientific hypothesis below cannot be run on the required local holdout from this checkout.
+While resolving the branch's PR conflict, `origin/main` had advanced with the evidence-first project and a prior negative decision. At the time of this earlier check, the integrated tree had the shared evaluator/writer and pinned historical audit tools, nine historical registry rasters, and several derived external layers, but did not yet have `training_features.tif`, labels or the sample submission. The official DrivenData data page redirects to login. Those three files were later restored from public peer mirrors and checked against their pins, but remain unverified as organizer downloads. A prepared fold-local feature cache and frozen comparable current-best predictions are still absent. The historical template contract among peer projects is not completely consistent; this project pins GEMSDOE24 byte-for-byte. The proposals below therefore remain unvalidated.
 
-Do not rely on the initial stale-branch claim that no shared scripts or raster data existed. Conversely, the presence of historical TIFs and derived context rasters is not the missing labelled training stack and is not permission to bypass the lane/holdout gate.
+Do not rely on the initial stale-branch claim that no shared scripts or raster data existed. Conversely, even the now-restored peer-mirrored training stack and historical TIFFs are not permission to bypass the lane, fold-local holdout or uniqueness gates.
 
 ## Official-source checks made in this review
 
-The machine-readable receipts are in [`evidence/official-page-check-20261026.json`](official-page-check-20261026.json).
+The machine-readable receipts are in [`evidence/official-page-check-20261026.json`](../evidence/official-page-check-20261026.json).
 
 - The official [DrivenData problem page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) was fetched. It states the target is geological faults; known public labels are incomplete; the metric is distance-weighted Tversky with alpha 0.2, beta 0.8 and a 300 m triangular kernel; and submissions are single-band float32 GeoTIFFs on the EPSG:32611, 100 m grid, with values in [0,1] and null/NaN outside the bounds.
 - The official competition data URL redirected to a login form. No private competition file was accessed.
@@ -34,7 +34,7 @@ A targeted search of the nine requested repositories did not find these sensor/p
 
 ## Why no top-candidate holdout ran
 
-The chosen research lead is ECOSTRESS only as a *qualitative proposal*. The exact task is fault discovery, not surface-temperature anomaly detection. To run the required experiment we still need the competition feature/label inputs and sample grid, a fold-safe feature pipeline, and the current holdout-best predictions; we must also resolve which pinned shared template is canonical. Existing external context layers and historical reference TIFs do not supply those items. The source data would also need a file-level quality/rights check before use. Running a different local evaluator, using the unmasked public catalogue, or fabricating a score would violate the requested protocol.
+This earlier memo chose ECOSTRESS only as a *qualitative proposal*; the [current slate](hypotheses.md) also considers a lower-cost cached-radiometric comparison and explains its overlap with previous work. The exact task is fault discovery, not surface-temperature anomaly detection. The 19-band features, labels and sample grid have since been restored from pinned peers, not authenticated organizers. A fold-safe prepared feature pipeline, complete registry and current holdout-best predictions are still missing, and no single lane is assigned. ECOSTRESS imagery would also need a file-level quality/rights check before use. Running a different local evaluator, using the unmasked public catalogue, or fabricating a score would violate the requested protocol.
 
 No HOLDOUT-DTI, withheld-positive count, CI, leakage AUC, candidate raster hash, final-dot comparison, or format-validation output exists for these ideas. They remain **negative/unvalidated proposals**. Do not choose a slot or download a TIF based on this note.
 

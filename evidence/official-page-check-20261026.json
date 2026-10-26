@@ -22,9 +22,18 @@
     "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
     "status": "fetched",
     "evidence_label": "ORGANIZER PUBLIC LEADERBOARD SNAPSHOT; not a project submission-page receipt",
-    "rank_1": {"participant": "xiaofanhu", "public_score": 0.4437},
-    "rank_2": {"participant": "cfld__", "public_score": 0.3916},
-    "rank_3": {"participant": "Batik Shirt Brothers", "public_score": 0.3904},
+    "rank_1": {
+      "participant": "xiaofanhu",
+      "public_score": 0.4437
+    },
+    "rank_2": {
+      "participant": "cfld__",
+      "public_score": 0.3916
+    },
+    "rank_3": {
+      "participant": "Batik Shirt Brothers",
+      "public_score": 0.3904
+    },
     "note": "Time-varying public scores; do not treat as a project HOLDOUT-DTI, local prediction, or upload receipt. This supersedes the prompt's stale 0.3195 claim as a description of the fetched public leaderboard, not as the project target score."
   },
   "official_data_sources": [
@@ -39,7 +48,12 @@
       "aoi_query_result": {
         "hit_count": 64943,
         "sample_granule": "ECOv002_L2T_LSTE_00117_003_11SNB_20180714T064434_0712_01",
-        "sample_granule_bbox": [-117.00022763545476, 36.95184463131866, -115.75110082996015, 37.947589571562965],
+        "sample_granule_bbox": [
+          -117.00022763545476,
+          36.95184463131866,
+          -115.75110082996015,
+          37.947589571562965
+        ],
         "status": "A cataloged granule intersects the approximate competition bbox; binary retrieval and QC not performed."
       }
     },
@@ -71,7 +85,7 @@
   "limitations": [
     "No NASA/USGS data files were downloaded or committed.",
     "CMR catalog intersection does not guarantee all scenes, usable quality, unauthenticated direct download, or competition license compatibility.",
-    "No feature-alone leakage test or spatial holdout ran; the training labels/features and frozen current-best folds are absent.",
+    "At the time of the 21:52 UTC source check no feature-alone leakage test or spatial holdout had run, and local training labels/features were absent. Peer-mirrored inputs were later restored; the frozen current-best folds are still absent.",
     "The configured selector/weekly-cap page and any project submission receipt were not accessed."
   ]
 }

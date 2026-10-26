@@ -1,53 +1,84 @@
 {
-  "hypothesis": "Research lead only: persistent ECOSTRESS L2 surface-temperature anomalies may help locate concealed geothermal-fluid conduits; no candidate was implemented or tested.",
-  "mechanism": "Scene-normalized temperature residuals and repeated-observation persistence may expose shallow fluid upflow associated with an unmapped fault, even without a preserved scarp.",
-  "non_fault_mimic": "Solar/topographic illumination, soil moisture and vegetation stress, lithologic emissivity, wildfire, mining, and irrigation.",
+  "hypothesis": "Retrospective E1 audit: coincident magnetic\u2013gravity boundaries and topographic scarp features might recover faults missed by the public catalogue.",
+  "mechanism": "Assess the inherited E1 model\u2019s raster, fold protocol and literal registry overlap; do not rerun or alter that stopped candidate.",
+  "non_fault_mimic": "Lithologic contacts, drainage, roads and survey-processing artifacts can mimic coincident geophysical boundaries and scarps.",
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": "shared evaluator pinned; not run on a candidate",
+    "evaluator_version": null,
     "value": null,
     "n_withheld_positive_pixels": null,
     "ci95": null,
-    "reason": "No exclusive method lane; competition labels/features and fold-local cache are absent; no frozen comparable current best."
+    "reason": "Inherited E1 results are withdrawn: quadrant splits can retain parts of hidden components and the fixed-mask evaluation uses a globally fitted model. No valid new holdout was run."
   },
   "registry": {
-    "scope": "nine historical priority champions only; NOT full registry",
-    "surface_check": "not run; no candidate surface",
-    "final_dot_directed_pairs": 72,
-    "duplicate_gate_hits": 72,
-    "champion_vs_GEMSDOE36": {
-      "a": "GEMSDOE32",
-      "b": "GEMSDOE36",
-      "spearman_rho": 0.9843213108530009,
-      "fraction_a_dots_within_3px_of_b": 1.0,
-      "duplicate_gate": true,
-      "decoded_pixels_equal_inside_footprint": false
+    "scope": "Nine historical priority rasters plus one calibration lattice; NOT the complete parallel registry.",
+    "surface_check": "UNAVAILABLE: inherited continuous score surface not preserved; cannot retroactively verify pre-placement.",
+    "registry_complete": false,
+    "checked_final_rasters": 10,
+    "calibration_raster_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "calibration_spearman_full_footprint": 6.246371257197083e-05,
+    "candidate_fraction_within_3px": 0.9931215807085568,
+    "duplicate_stop": true,
+    "calibration_geometry": {
+      "is_space_filling_calibration_control": true,
+      "footprint_3px_covered_pixels": 5160724,
+      "footprint_3px_uncovered_pixels": 6649,
+      "footprint_3px_coverage": 0.9987132726822701,
+      "coverage_threshold": 0.7,
+      "pigeonhole_min_overlap_for_candidate_size": 0.8234184947150369,
+      "minimum_dot_count_for_forced_overlap_above_70_percent": 22164,
+      "reason": "At most U uncovered cells can be chosen, so overlap >= max(0, 1-U/K); strict >0.70 when 3K > 10U."
     }
   },
-  "raster_sha256": null,
+  "raster_sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
+  "raster_status": "Inherited E1 raster, quarantined; NOT newly generated in this session.",
+  "new_raster_sha256": null,
   "validator_output": {
-    "candidate": "not generated; not validated",
-    "historical_files": 9,
-    "historical_format_passes": 9,
-    "scope": "Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated."
+    "single_band": true,
+    "float32": true,
+    "no_nan_or_inf_inside_footprint": true,
+    "values_in_0_1_inside_footprint": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "outside_footprint_null_or_nan_conservative_check": false,
+    "strict_whole_grid_range_and_grid_valid": true,
+    "template_organizer_authenticated": false,
+    "portal_acceptance": "unknown"
   },
-  "submission_name": null,
-  "note": "Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.",
+  "submission_name": "KANLER-E1-XG-HGB-37654D-7AB68C3EFD (retired; not a new submission)",
+  "note": "Retired E1; duplicate versus calibration lattice. Research audit only; not a new submission.",
   "verdict": "negative",
   "ok_to_download_and_submit": false,
   "experiments_used": 0,
+  "competition_slots_used": 0,
   "integration_review": {
     "prior_main": "80d3c57",
     "prior_blindbasin_authorization": "withdrawn",
     "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
   },
   "blockers": [
-    "Missing exclusive method paragraph",
-    "Shared-template ambiguity between peer repositories",
-    "No organizer receipts",
-    "No complete frozen registry surface set",
-    "No competition training labels/features, fold-local cache, or comparable holdout-best restored",
-    "Competition data page redirects to login; no authenticated DrivenData session",
-    "Public leaderboard snapshot at 2026-10-26 21:52:09 UTC showed #1 0.4437; not a project score or submission receipt"
-  ]
+    "No exclusive method paragraph was supplied.",
+    "Literal registry overlap stop; the calibration lattice cannot be excluded under the requested rule.",
+    "Complete parallel registry and pre-placement E1 surface are unavailable.",
+    "The peer-mirrored data are restored and hash-verified but not organizer-authenticated; the shared prepared feature cache and comparable fold-local current best are absent.",
+    "No project organizer receipt, authenticated submission page or remaining weekly allowance was accessed."
+  ],
+  "validator": {
+    "no_nan_inside_footprint": true,
+    "range_0_1": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "single_band": true,
+    "float32": true,
+    "outside_footprint_null_or_nan": false
+  },
+  "registry_complete": false,
+  "lane": null,
+  "surface": {},
+  "dots": {
+    "max_abs_rank_correlation": 0.023030326765274747,
+    "max_overlap_3px": 0.9931215807085568
+  }
 }

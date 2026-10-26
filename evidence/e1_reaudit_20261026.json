@@ -1,0 +1,161 @@
+{
+  "audit_version": "e1-shared-novelty-reaudit-v1",
+  "scope": "Nine historical priority rasters plus one calibration lattice; NOT the complete parallel registry.",
+  "candidate": "research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif",
+  "candidate_sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
+  "surface_check": "UNAVAILABLE: inherited continuous score surface not preserved; cannot retroactively verify pre-placement.",
+  "registry_complete": false,
+  "rank_scope": "Exact Spearman on all footprint pixels; binary candidate ranks are affine to the tied ranks.",
+  "overlap_scope": "All positive E1 pixels, Euclidean distance <= 3 pixels, candidate to reference.",
+  "reference_comparisons": [
+    {
+      "id": "GEMSDOE24",
+      "reference_sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
+      "spearman_full_footprint": 0.022698113822836038,
+      "candidate_fraction_within_3px": 0.4161045307271472,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE25",
+      "reference_sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/af2b6f2543e5422a7e917638b70e038e6fd91cad/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
+      "spearman_full_footprint": 0.01963547859112418,
+      "candidate_fraction_within_3px": 0.40022308386891164,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE27",
+      "reference_sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/bef7ae8e8f63b69d299c9214c75988c8f5055f9c/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
+      "spearman_full_footprint": 0.023030326765274747,
+      "candidate_fraction_within_3px": 0.4295692356721729,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE28",
+      "reference_sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/2c839d10f57ec9b074829e93c84bc39935f52896/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
+      "spearman_full_footprint": 0.019810734612230308,
+      "candidate_fraction_within_3px": 0.36506081691188186,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE30",
+      "reference_sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/9c0d637c0171407196b61b780444bc772ce75438/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "spearman_full_footprint": 0.01963547859112418,
+      "candidate_fraction_within_3px": 0.40022308386891164,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE31",
+      "reference_sha256": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
+      "spearman_full_footprint": 0.02129032107524752,
+      "candidate_fraction_within_3px": 0.3698943007383014,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE32",
+      "reference_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "spearman_full_footprint": 0.02248872558350881,
+      "candidate_fraction_within_3px": 0.3386360014872258,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE33",
+      "reference_sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "spearman_full_footprint": 0.020608420876370524,
+      "candidate_fraction_within_3px": 0.3829075264248154,
+      "duplicate": false
+    },
+    {
+      "id": "GEMSDOE36",
+      "reference_sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b90418f852615aa0974cf9a53b92fa569ed133fc/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "spearman_full_footprint": 0.022464118808347103,
+      "candidate_fraction_within_3px": 0.34304456365857544,
+      "duplicate": false
+    },
+    {
+      "id": "calibration_lattice_s5",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "spearman_full_footprint": 6.246371257197083e-05,
+      "candidate_fraction_within_3px": 0.9931215807085568,
+      "duplicate": true
+    }
+  ],
+  "max_abs_spearman": 0.023030326765274747,
+  "max_candidate_overlap_3px": 0.9931215807085568,
+  "literal_duplicate_detected": true,
+  "calibration_geometry": {
+    "is_space_filling_calibration_control": true,
+    "footprint_3px_covered_pixels": 5160724,
+    "footprint_3px_uncovered_pixels": 6649,
+    "footprint_3px_coverage": 0.9987132726822701,
+    "coverage_threshold": 0.7,
+    "pigeonhole_min_overlap_for_candidate_size": 0.8234184947150369,
+    "minimum_dot_count_for_forced_overlap_above_70_percent": 22164,
+    "reason": "At most U uncovered cells can be chosen, so overlap >= max(0, 1-U/K); strict >0.70 when 3K > 10U."
+  },
+  "validator": {
+    "path": "research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif",
+    "sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "checks": {
+      "template_single_band": true,
+      "template_nonempty_footprint": true,
+      "single_band": true,
+      "float32": true,
+      "crs_matches": true,
+      "shape_matches": true,
+      "transform_matches": true,
+      "finite_inside_footprint": true,
+      "unmasked_inside_footprint": true,
+      "values_in_0_1_inside_footprint": true,
+      "outside_footprint_null_or_nan": false,
+      "no_inf_whole_grid": true,
+      "no_nan_or_inf_whole_grid": true,
+      "values_in_0_1_whole_grid": true
+    },
+    "format_valid": false,
+    "strict_whole_grid_range_and_grid_valid": true,
+    "all_outside_values_nan": false,
+    "portal_acceptance": "unknown; no organizer submission-page receipt",
+    "format_policy": "Conservatively require null/NaN outside the peer template's finite footprint. The public page says outside bounds; whether that means every footprint hole is not independently confirmed.",
+    "template_provenance": "not authenticated by this validator",
+    "ok_to_submit": false,
+    "authorization": "format only; holdout, complete novelty and a separate selector are required",
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "positive_pixels": 37654,
+    "footprint_pixels": 5167373,
+    "finite_min": 0.0,
+    "finite_max": 1.0
+  },
+  "legacy_claims_withdrawn": [
+    "The inherited E1 quadrant procedure does not hide whole connected components across fold boundaries.",
+    "Its fixed-mask hide-and-recover analysis scores a globally fitted model trained on the full catalogue; it is not independent holdout evidence.",
+    "Its recorded canary sampled the full catalogue rather than fold-local withheld positives.",
+    "Its nine-site novelty audit used Manhattan dilation, excluded the lattice, and occurred after placement.",
+    "The SGMC-anchored leaderboard projection is not a measured score and has no validated calibration."
+  ],
+  "experiments_run_in_this_reaudit": 0,
+  "verdict": "negative",
+  "ok_to_download_and_submit": false
+}

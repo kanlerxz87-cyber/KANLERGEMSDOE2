@@ -1,5 +1,7 @@
 {
   "verdict": "negative",
+  "schema_checks_passed": false,
+  "independent_evidence_verified": false,
   "eligible_for_selector": false,
   "authorized_to_submit": false,
   "errors": [
@@ -7,7 +9,6 @@
     "Registry coverage unverified",
     "surface.max_abs_rank_correlation: missing, invalid, or duplicate",
     "surface.max_overlap_3px: missing, invalid, or duplicate",
-    "dots.max_abs_rank_correlation: missing, invalid, or duplicate",
     "dots.max_overlap_3px: missing, invalid, or duplicate",
     "Leakage canary absent or failed",
     "Missing versioned holdout evidence",
@@ -15,14 +16,7 @@
     "Missing or invalid holdout 95% CI",
     "Missing fold-local feature evidence or baseline identity",
     "No positive paired 95% CI against current holdout best",
-    "Validator missing/failed: no_nan_inside_footprint",
-    "Validator missing/failed: range_0_1",
-    "Validator missing/failed: crs_match",
-    "Validator missing/failed: shape_match",
-    "Validator missing/failed: transform_match",
-    "Validator missing/failed: single_band",
-    "Missing raster SHA256",
-    "Invalid name/note"
+    "Validator missing/failed: outside_footprint_null_or_nan"
   ],
   "ok_to_submit": false,
   "slot_approved": false,

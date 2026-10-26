@@ -1,0 +1,17 @@
+# Three review passes — 26 October 2026
+
+## 1. Implement and test the evidence-first pipeline
+
+Restored SHA-pinned peer-mirrored core data and derived layers without adding large bytes to Git; documented the organizer-sample discrepancy. Rebuilt the site and negative run card, quarantined the old E1 code and claims, reran the exact calibration-inclusive Euclidean duplicate audit, and added a reproducible GEMSDOE31 → GEMSDOE32 lineage audit. Added synthetic checks for saved-raster format, research-only writing, pre-placement and final-dot comparisons, whole-component holdout and feature-alone canaries. The shared template's byte pins are tested. No model experiment, novel competition TIFF, or competition slot was used by this review.
+
+## 2. Adversarial bug and scientific review
+
+Found and repaired weaknesses in this session's adapters: bind final-dot receipts to the exact pre-placement surface, registry manifest **and** template hash; reject empty/undefined correlations, outside-footprint dots, invalid masks and unverified complete-registry scope; avoid overwriting a raster or stale receipt. The writer stops before any output while independent full-registry completeness is unavailable. The structural promotion gate cannot promote based on unchecked JSON booleans. Independently compared the shared binary DTI implementation with its exact implementation and tied/nonbinary Spearman against SciPy. The organizer's outside-"bounds" wording versus footprint holes remains uncertain and portal acceptance is not claimed. The written scorer is diagnostic only; it cannot prove how fold-specific model predictions or catalogue features were constructed.
+
+Reviewed concurrent project instructions and removed a draft automated organizer-leaderboard refresh before integration. The public score shown is a dated, manually observed snapshot; the site does not automatically scrape or monitor the organizer. Public GitHub source revision monitoring, if present in the integrated project, is a separate fact and does not establish scores.
+
+## 3. Requirements, reproducibility and source pass
+
+The nine-site table marks owner scores as unverified and offers no submission raster or invented estimate. The H33 raster relationship is measured, while its leaderboard mechanism is explicitly hypothetical and no claim of a winning score is made. Hypotheses have named confounders and source/availability limits. E1's 99.31% registered-lattice overlap requires a stop, and the lattice pigeonhole obstruction is stated with its assumptions; the scope remains incomplete. The format-only validator never authorizes upload, the candidate card is negative, and no manual raster inspection is substituted for automated checks. Restored sample and labels remain unauthenticated, and the full registry, lane assignment, frozen comparable best, remaining slot allowance and score-to-hash organizer receipts are unavailable.
+
+Before merging concurrent work, `scripts/run_tests.py` collected and passed 54 offline tests; active source compiled; static-site generation was deterministic; local HTML/JSON routes returned 200; and `git diff --check` was clean. Re-run all relevant tests after integrating the concurrently advanced main branch. A released TIFF and actual score improvement remain unachieved, not silently satisfied.

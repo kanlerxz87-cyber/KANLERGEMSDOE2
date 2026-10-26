@@ -76,7 +76,8 @@ class EvidenceTests(unittest.TestCase):
     def test_negative_card_has_no_upload(self):
         c=json.loads((ROOT/'research/run_card.json').read_text())
         self.assertEqual(c['verdict'],'negative');self.assertFalse(c['ok_to_download_and_submit'])
-        self.assertIsNone(c['raster_sha256']);self.assertIsNone(c['holdout']['value'])
+        self.assertIsNotNone(c['raster_sha256']);self.assertIsNone(c['new_raster_sha256'])
+        self.assertIn('quarantined', c['raster_status']);self.assertIsNone(c['holdout']['value'])
         self.assertLessEqual(len(c['note']),140)
     def test_site_does_not_offer_fake_tiff(self):
         self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
@@ -84,7 +85,8 @@ class EvidenceTests(unittest.TestCase):
     def test_audit_claim_matches_pair_records(self):
         d=json.loads((ROOT/'research/raster_audit.json').read_text())
         self.assertEqual(len(d['format_reports']),9)
-        self.assertTrue(all(r['format_valid'] for r in d['format_reports']))
+        self.assertTrue(all(r['strict_whole_grid_range_and_grid_valid'] for r in d['format_reports']))
+        self.assertTrue(all(not r['format_valid'] for r in d['format_reports']))
         self.assertEqual(len(d['directed_pairs']),72)
         self.assertTrue(all(p['duplicate_gate'] for p in d['directed_pairs']))
 

@@ -1,0 +1,35 @@
+{
+  "audit_version": "h33-lineage-v1",
+  "scope": "These exact two selected peer rasters and peer-mirrored known catalogue; no organizer receipt.",
+  "inputs_sha256": {
+    "sample": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "catalogue": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "base": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
+    "champion": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9"
+  },
+  "base": "GEMSDOE31 selected historical raster",
+  "champion": "GEMSDOE32 selected H33 B2 historical raster",
+  "comparison": {
+    "base_positive_pixels": 40199,
+    "champion_positive_pixels": 37654,
+    "removed_pixels": 2545,
+    "added_pixels": 0,
+    "removed_within_2px_of_catalogue": 2545,
+    "base_within_2px_of_catalogue": 2545,
+    "difference_from_exact_2px_catalogue_prune": 0,
+    "equals_exact_2px_pruned_base": true,
+    "removed_at_exact_known_fault_pixels": 0,
+    "removed_at_1px": 0,
+    "removed_at_sqrt_2px": 1201,
+    "removed_at_2px": 1344,
+    "distance": "Euclidean pixel-center distance on the 100 m grid; <= 2 pixels inclusive"
+  },
+  "reported_scores": {
+    "GEMSDOE31": 0.2708,
+    "GEMSDOE32": 0.2778,
+    "label": "Unverified owner reports; no organizer score-to-hash receipts found."
+  },
+  "interpretation": "Exact raster lineage does not establish that pruning caused the reported score difference; hidden truth and matching organizer receipts are unavailable.",
+  "experiments_run": 0,
+  "ok_to_submit": false
+}
