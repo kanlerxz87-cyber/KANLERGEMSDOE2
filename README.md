@@ -73,3 +73,8 @@ See [three-pass review](research/review.md) for the defects found and verificati
 ## Concurrent-main integration warning
 
 Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin TIFF. Code review found synthetic layers, a placeholder leakage canary, random-draw confidence intervals, a hard-coded selector, and a waived full-registry stop rule. Its authorization is withdrawn; the original code, numerical assertions and TIFFs are preserved under `research/quarantine/`, outside Pages. The current decision card supersedes those historical claims. This is a newly discovered integration issue, not evidence that those unsupported holdout figures were reproduced.
+
+---
+
+## Parallel lane E1 XG-HGB — merged as negative deliverable (2026-10-26)
+A separate lane (supervised 47-channel HistGradientBoosting incl. magnetic×gravity cross-gradient boundary; spacing≥3 px, B=2) was merged after main's evidence-first restructure. Its TIF now lives at `research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif` (quarantine = research only, consistent with this README's DO NOT SUBMIT decision). Results: quadrant-OOF HOLDOUT-DTI 0.1252 [0.097,0.157] (56,464 withheld), canary max AUC 0.580, uniqueness vs 9 focus bests max |ρ| 0.089 / max 3-px overlap 40.9%, format PASS — but SGMC HOLDOUT-DTI 0.0752 vs champion 0.0961, MODEL ESTIMATE ~0.22 < 0.2778 → **verdict negative; do not submit**. Lane page: `docs/lane-e1-xg-hgb.html`; card: `evidence/run_card_e1_xg_hgb.json`. This does not change the current decision above.
