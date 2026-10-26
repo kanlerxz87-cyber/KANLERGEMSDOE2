@@ -1,0 +1,50 @@
+{
+  "evidence_class": "REGISTRY-AUDIT (geometric measurements, not scores)",
+  "protocol": "literal >=0? No: positive means >0; candidate-directional Euclidean distance <=3 px; duplicate when overlap >0.70 or rho >0.90",
+  "sample_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "prior_candidate_sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
+  "prior_candidate": "E1 XG-HGB; archived, not a current submission",
+  "references": {
+    "continuous_gemsdoe48": {
+      "filename": "gemsdoe48-h58-continuous-pignistic-20261008T175914Z-e58.tif",
+      "sha256": "59ef8e7d8374e228bc1e41376f03fc67dd5b8a5e6804885a1ae802f399140b89",
+      "source": "https://github.com/buffedlizard55-lab/GEMSDOE48/blob/268ec599f51c517cc3485da077c24d83af5be81d/docs/downloads/gemsdoe48-h58-continuous-pignistic-20261008T175914Z-e58.tif",
+      "registry_evidence": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/registry/shared_registry_57_snapshot.json",
+      "support_definition": "finite value > 0 inside the sample footprint",
+      "radius_px": 3.0,
+      "footprint_pixels": 5167373,
+      "reference_positive_pixels": 5167373,
+      "reference_positive_every_footprint_pixel": true,
+      "footprint_within_radius_fraction": 1.0,
+      "candidate_positive_pixels": 37654,
+      "candidate_positive_outside_footprint": 0,
+      "candidate_within_radius_fraction": 1.0,
+      "full_footprint_spearman": 0.05137405798629811,
+      "candidate_fails_literal_rule": true,
+      "universal_nonempty_candidate_blocker": true
+    },
+    "calibration_lattice": {
+      "filename": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "source": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "registry_evidence": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/registry/shared_registry_57_pin.json",
+      "support_definition": "finite value > 0 inside the sample footprint",
+      "radius_px": 3.0,
+      "footprint_pixels": 5167373,
+      "reference_positive_pixels": 206895,
+      "reference_positive_every_footprint_pixel": false,
+      "footprint_within_radius_fraction": 0.9987132726822701,
+      "candidate_positive_pixels": 37654,
+      "candidate_positive_outside_footprint": 0,
+      "candidate_within_radius_fraction": 0.9931215807085568,
+      "full_footprint_spearman": 6.246371257604841e-05,
+      "candidate_fails_literal_rule": true,
+      "universal_nonempty_candidate_blocker": false
+    }
+  },
+  "surface_check": "not run: no new surface; universal support witness stops this lane before construction",
+  "proof": "The registered continuous raster is strictly positive at every footprint pixel. Under the shared >0 support convention, each possible nonempty in-footprint dot lies on a registered positive pixel, so directional overlap is 1.0 regardless of model or placement. A semantic change to which rasters have dots is a protocol change, not an automatic exception.",
+  "candidate_generation_permitted_under_literal_rule": false,
+  "prior_e1_authorization": "withdrawn: literal final-dot duplicate; prior surface and holdout evidence not independently validated",
+  "registry_scope": "Two pinned counterexamples; no claim that the full registry was downloaded or exhaustively compared."
+}

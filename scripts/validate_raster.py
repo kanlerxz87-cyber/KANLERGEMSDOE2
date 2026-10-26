@@ -7,8 +7,12 @@ import rasterio
 def validate(path, template):
     with rasterio.open(template) as t, rasterio.open(path) as r:
         a=r.read(1)
+        sample = t.read(1)
         checks={
+            'template_single_band':t.count==1,
+            'template_has_footprint':bool(np.isfinite(sample).any()),
             'single_band':r.count==1,
+            'dtype_float32':r.dtypes == ('float32',),
             'crs_matches':r.crs is not None and r.crs==t.crs,
             'shape_matches':r.shape==t.shape,
             'transform_matches':r.transform==t.transform,

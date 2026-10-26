@@ -15,8 +15,10 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
+      - run: python -m compileall -q scripts vendor/template/src
       - run: python scripts/run_tests.py
       - run: python scripts/build_site.py
+      - run: git diff --exit-code -- docs research/run_card.json
   deploy:
     if: github.event_name != 'pull_request'
     needs: test

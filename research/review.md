@@ -1,38 +1,28 @@
-# Three-pass verification — 2026-10-26
+# Three-pass review — 26 October 2026
 
-## Pass 1: implement and verify
+Scope: evidence and publication review on `arena/658622c8-kanlergemsdoe2`, starting at `5211ac0`. No exclusive geological lane was identifiable in the request. No new geological experiment, detector surface, competition raster or weekly slot was used. The requested high-scoring TIFF remains unmet; negative evidence is the responsible result.
 
-- Inspected the entire initial checkout: only README, no previously built pipeline.
-- Retrieved recursive trees for all nine priority peer repositories and the organizer reference repository; retained 44 pinned text blobs with SHA-256 provenance.
-- Restored nine historical rasters for educational audit, the mirrored sample/catalogue, and seven byte-identical shared-tool files. No competition upload, detector experiment, or new TIFF generation.
-- Executed 72 directed final-raster comparisons on the sample footprint; all fail the literal novelty gate. All nine historical finite variants pass strict range/grid checks. Two are footprint-pixel-identical.
-- Added static executive summary and submission subpage, research proposals, run card, reproducible restoration/comparison scripts and CI.
+## Pass 1 — implement and independently verify
 
-## Pass 2: defects and edge cases fixed
+- Read the nine priority sites, selected raster manifests, competing shared-template pins, historical E1 code and the organizer's published metric/format. Official data login and score-to-byte receipts were unavailable. Obtained public source descriptions and a dated public leaderboard observation, not an authenticated receipt.
+- Restored pinned public-peer mirrors of the 19-band training stack, labels, known faults and sample. Checked exact SHA-256 and the template grid. The sample's positive cells equal the labels; its values are unsuitable as features or hidden truth and do not match the official sample's described absence example. Peer hashes are not organizer authentication.
+- Re-ran the 9-file historical audit: all format checks pass; 72/72 directed pairs exceed at least one near-duplicate gate. This does not cover candidate surfaces or the complete registry.
+- Located the GEMSDOE31 shared-registry snapshot, downloaded and SHA-verified the registered GEMSDOE48 continuous raster plus the calibration lattice. The former is positive at every one of 5,167,373 finite sample cells; the prior 37,654-dot E1 artifact has 100% overlap with it and 99.312% overlap with the lattice. Under the shared `finite & >0` definition, the first finding proves every nonempty in-footprint candidate fails the literal overlap gate. High lattice area coverage alone would not prove a universal stop for arbitrarily sparse dots.
+- Quarantined previous E1 scripts, duplicate evaluator and reports. Withdrew its uniqueness, holdout-comparison and projected-live-score assertions. Its OOF split did not hide whole connected segments, and its fixed-map hide/recover analysis used a full-catalogue-pruned map. The old TIFF is retained only as retrospective evidence.
+- Preregistered four physical research hypotheses without running them. Updated the executive desk, submission guide, source register, current negative run card and fail-closed candidate adapters. Shared-template changes and their upstream/local hashes are documented in [template-fixes.md](template-fixes.md).
 
-- GitHub contents API returns empty content for some larger files. Initial template restoration stopped on a checksum mismatch rather than accepting empty data. Added a Git-blob fallback and empty-payload rejection; restored template hash then matched exactly. This was a transport issue, not evidence that upstream data bytes were wrong.
-- Initial source links used blob SHA in the commit position. Corrected to pinned tree revision URLs; blob API and content hashes remain separately recorded.
-- Closed an initially unclosed validator file handle exposed by test ResourceWarnings.
-- Tested NaN, both infinities, negative nodata sentinel, negative/above-one probabilities, shape/CRS/transform mismatch, multiband input, empty novelty masks/support, shifted duplicates and nonduplicate supports.
-- Tested shared writer's explicit invalid-input rejection and round-trip output. No silent sanitization introduced.
-- Enforced that format validation never itself authorizes submission. All negative run-card fields use null, not invented numbers.
+## Pass 2 — edge cases and corrective changes
 
-## Pass 3: requirement and scientific integrity recheck
+- Corrected the shared isolated marginal-credit helper to `alpha * current_DTI` under its explicitly limited assumptions. Added both-sides-of-threshold algebra tests; the DTI scorer itself is unchanged.
+- Corrected the shared novelty checker to require aligned grid/CRS/transform, fail on empty or undefined reference support, and retain literal all-registry gating even if a reference is diagnosed as a calibration control. Tests include Euclidean boundary, full-support proof, high-coverage counterexample, invalid support, rank and grid mismatches.
+- Strictly validate reopened outputs as one float32 band, exact mirrored grid and finite [0,1] over the entire array. This is a conservative local format check, not proof of official null-mask compliance or organizer acceptance. The actual file behind the user's portal error is unavailable.
+- Fail candidate adapters closed if the continuous witness is missing, corrupted or decisive. Full-registry and model-training provenance cannot be inferred from self-reported JSON. The selector checks the witness independently and never grants a slot.
+- Secured codeload restoration against archive traversal, links, duplicates, missing members, hash errors and output-path traversal. Synthetic failure tests confirm existing files are not replaced on a group integrity failure. A full fresh-directory restore downloaded and verified all four core files plus both witnesses; the data-readiness and universal-witness audits passed again. Removed only this session's verified temporary assembly parts and fresh-restore test directory.
+- Converted prior pytest-only submission checks into unittest-discoverable historical-format checks. Added synthetic tests for restoration, site links/conflict markers, guard, selector, validator, metric and novelty.
 
-- Per-site historical filenames/results are distinguished from new-file eligibility. No estimate, official receipt, high-scoring candidate or full-registry novelty certificate is invented.
-- No method paragraph was supplied. Four candidate mechanisms are explicitly untested proposals, not claims of exclusive/global novelty. Official new-data obtainability remains unverified, especially raw drainage inputs.
-- The nine historical rasters share substantial support. The literal stop-on-duplicate protocol precludes recycling them. No random displacement, metadata change, or renamed copy is offered as a new submission.
-- Shared evaluator/writer hashes tested byte-for-byte; synthetic contract fixture checks whole components hidden everywhere. Synthetic tests are not scientific HOLDOUT-DTI results.
-- Sources unavailable under the network allowlist are clearly marked unverified, not described as researched. Conflicting leaderboard claims remain unresolved.
-- The README is an explicit condensed operating brief, not a claim to preserve the full repeated user prompt verbatim.
-- This deliverable does NOT fulfill the requested unique high-scoring competition TIFF: no such file passed the prerequisites, and publishing a fake approved download would violate the stronger protocol. Remaining work is recorded in README and run card.
+## Pass 3 — requirements and integrity recheck
 
-Verification: 16 automated tests passed locally. Actual nine-raster audit was rerun after restoration; SHA-256 data and all comparisons are committed. File-format PASS is not organizer acceptance or scientific validation. Pages publishing and PR merge are checked separately through GitHub.
-
-## Integration re-review (concurrent main)
-
-Main changed after the initial checkout. Resolved conflicts while preserving prior files under `research/quarantine/`. Inspected generator, canary, evaluator and selector line-by-line: synthetic layers, placeholder AUC, normally distributed pseudo-CIs and hard-coded authorization cannot substantiate the prior promotion. Removed these paths from the active/published pipeline, withdrew the old positive card, retained original bytes privately in Git and replaced the selector with a call to the existing fail-closed gate. Added dependency installation to the inherited Pages workflow and removed its build-error-masking shell fallback. Legacy submission URLs now clearly withdraw authorization. This integration adds prior gate tests to the test suite; final test count is recorded by the CI run rather than the earlier 16-test baseline.
-
-Final integrated verification: 29 automated tests pass locally (16 audit/format/shared-contract tests, 9 inherited fail-closed gate tests, 4 integration safety regressions). Source snapshots and quarantined originals retain their bytes. The original concurrent README is archived as well, so withdrawn claims remain traceable. Local links in active HTML resolve. The downloader and data preparer now fail rather than declaring readiness with missing training data or synthetic masks. The Pages description no longer claims an approved validated submission.
-
-CI found one packaging defect not visible in a populated workspace: the unanchored `data/` ignore excluded the official reference snapshot's empty `data/.gitkeep`, which is included in the provenance manifest. Scoped the ignore to root `/data/`, tracked the marker, and verified all 29 tests against a clean `git archive` checkout. Added machine-readable CI failure annotations without swallowing errors.
+- A valid TIFF is not automatically unique, holdout-winning or upload-approved. Current run-card score/CI/withheld count, candidate SHA and validator results are null because there is no new candidate. The prior owner's 0.2778 and the dated 0.4437 public leaderboard value are clearly labelled with their different provenance.
+- No evidence supports a numeric leaderboard prediction for a new hypothesis. Competing peer template authority, full current registry, complete fold-local baseline, authentic official sample, remaining weekly allowance and a method-lane assignment remain unresolved. These limitations are explicit in README and the guide.
+- Software fixtures are not geological experiments. The local test runner reports its actual test count; full scientific and organizer confirmation are not claimed. Site tests check published pages for conflict markers, broken relative links and unapproved TIFFs.
+- Final work must preserve evidence independently added on concurrent main, pass the combined CI checks and be merged only if GitHub permits it. See the current PR/check history for the actual merge outcome.

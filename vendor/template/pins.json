@@ -1,11 +1,13 @@
 {
-  "description": "Shared template vendored BYTE-FOR-BYTE (no private fork). tests/test_template_pins.py fails closed if any byte changes.",
+  "description": "Single shared GEMSDOE24 template with documented local corrections. Pins retain upstream and local SHA-256; no alternate active evaluator.",
   "template": "GEMSDOE24 gems package (SegmentHoldout evaluator gems-segment-pooled-v1, strict writer, format validator, registry novelty)",
-  "why_this_template": "GEMSDOE28 evidence/shared_template_contract.json names GEMSDOE24@bddb55fc as the shared template; fc2bc6f is its current HEAD and only ADDS compare_paired() and canary input validation (diff verified 2026-10-25). metric/submission/validator/submission_writer hashes equal the GEMSDOE28 contract pins (c024510d, 380ef4c7, a5176d6e, 552621e4).",
+  "why_this_template": "GEMSDOE28 shared_template_contract names GEMSDOE24; competing GEMSDOE31 pins 57GEMSDOE. GEMSDOE24 is the locally selected canonical template, with documented patches; authority across peer sessions is unresolved.",
   "competing_template_irregularity": "GEMSDOE31 registry/shared_template.json pins a different template (57GEMSDOE@822a0ce5). Logged as IR-36-17.",
   "known_template_issues_reported_not_forked": [
     "gems.submission.make_note enforces a 200-character limit; the owner protocol requires <= 140. GEMSDOE36 does not call make_note and enforces <= 140 in scripts/build_h36_submission.py.",
-    "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant)."
+    "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant).",
+    "Local canonical metric.py correction: isolated break-even helper must be alpha*current_DTI when alpha+beta=1; upstream alpha*s/(1-alpha*s) is not generally valid. See research/template-fixes.md. The actual DTI metric was not changed.",
+    "Local canonical novelty.py correction: fail closed for empty/undefined references, require matching CRS/transform/shape/bands, and preserve literal gating even when controls are classified diagnostically. See research/template-fixes.md."
   ],
   "files": [
     {
@@ -31,9 +33,11 @@
       "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
       "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
       "upstream_path": "src/gems/metric.py",
-      "sha256": "c024510de39746c9390e5bbf5c1d1b639a9ee895017a38fab4b609f0f2c33e48",
+      "sha256": "1e93b062e717e186936b3df4d123241bd5d4e8f0e79edb371a9c8d41f25e37d6",
       "bytes": 9544,
-      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/metric.py"
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/metric.py",
+      "upstream_sha256": "c024510de39746c9390e5bbf5c1d1b639a9ee895017a38fab4b609f0f2c33e48",
+      "local_patch": "Correct the isolated marginal inclusion threshold to alpha*DTI when alpha+beta=1; add bounds validation. No DTI scoring changes."
     },
     {
       "local": "src/gems/submission.py",
@@ -58,9 +62,11 @@
       "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
       "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
       "upstream_path": "src/gems/novelty.py",
-      "sha256": "0bfd40199fb00041446eb70368dbb7023f681a260073b41478629cbdc23d26c9",
+      "sha256": "1db61574775e089f85bbd0fd93b32997d4d8ada76e964353d167b77eceb4c2ad",
       "bytes": 15388,
-      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/novelty.py"
+      "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/novelty.py",
+      "upstream_sha256": "0bfd40199fb00041446eb70368dbb7023f681a260073b41478629cbdc23d26c9",
+      "local_patch": "Fail closed on undefined/empty supports and mismatched grids; optional control classes never waive literal pass; require template_path."
     },
     {
       "local": "scripts/submission_writer.py",
