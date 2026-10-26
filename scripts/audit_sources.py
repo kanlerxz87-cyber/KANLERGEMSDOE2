@@ -1,36 +1,38 @@
-"""Snapshot public repository evidence through authenticated gh; no data downloads."""
-import base64
-import concurrent.futures
-import json
-from pathlib import Path
-import subprocess
+"""Fetch pinned GitHub evidence; no leaderboard claims are inferred from peer files."""
+import base64, concurrent.futures, datetime, hashlib, json, pathlib, urllib.request
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 
-ROOT = Path(__file__).resolve().parents[1]
-SITES = [24,25,27,28,30,31,32,33,36]
+def get(url):
+    with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent':'KANLERGEMS-audit'}), timeout=45) as r:
+        return json.load(r)
 
-def api(path):
-    return json.loads(subprocess.check_output(['gh','api',path], text=True))
+def fetch(item):
+    repo, node = item
+    target = ROOT / 'research/snapshots' / repo / node['path']
+    target.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        data = base64.b64decode(get(node['url'])['content'])
+        target.write_bytes(data)
+        return {'repo':repo,'path':node['path'],'git_blob':node['sha'],'sha256':hashlib.sha256(data).hexdigest(),'source':f'https://github.com/{"drivendataorg" if repo == "gems-prize-reference-solution" else "buffedlizard55-lab"}/{repo}/blob/{node["sha"]}/{node["path"]}', 'blob_api':node['url'],'status':'retrieved'}
+    except Exception as e:
+        return {'repo':repo,'path':node['path'],'status':'failed','error':str(e)}
 
-def audit(site):
-    repo = f'buffedlizard55-lab/GEMSDOE{site}'
-    commit = api(f'repos/{repo}/commits/main')['sha']
-    tree = api(f'repos/{repo}/git/trees/{commit}?recursive=1')
-    folder = ROOT / 'docs/evidence' / f'GEMSDOE{site}'
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder/'tree.json').write_text(json.dumps(tree, indent=2)+'\n')
-    paths = ['README.md','docs/index.html']
-    records=[]
-    for entry in tree['tree']:
-        path=entry['path']
-        if entry['type']=='blob' and entry.get('size',0)<150000 and (path in paths or path.endswith(('evaluate_holdout.py','submission_writer.py'))):
-            blob=api(f"repos/{repo}/git/blobs/{entry['sha']}")
-            target=folder/path
-            target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_bytes(base64.b64decode(blob['content']))
-            records.append({'path':path,'git_blob_sha':entry['sha'],'url':f'https://github.com/{repo}/blob/{commit}/{path}'})
-    return {'site':site,'commit':commit,'tree_truncated':tree.get('truncated'), 'files':records}
-
-if __name__=='__main__':
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        results=list(pool.map(audit,SITES))
-    (ROOT/'docs/evidence/index.json').write_text(json.dumps({'retrieved':'2026-10-26','repositories':results},indent=2)+'\n')
+def main():
+    tasks=[]
+    for p in sorted((ROOT/'research/snapshots').glob('*-tree.json')):
+        repo=p.name.removesuffix('-tree.json'); tree=json.loads(p.read_text())
+        for n in tree['tree']:
+            path=n['path']
+            selected=path in ['README.md','registry/data_manifest.json','registry/live_scores.json','scripts/evaluate_holdout.py','evaluate_holdout.py','scripts/submission_writer.py','submission_writer.py','registry/template_pins.json']
+            selected |= repo=='gems-prize-reference-solution' and n['type']=='blob'
+            selected |= repo=='GEMSDOE32' and path in ['registry/submission_build.json','evidence/h33_holdout.json','evidence/h33_submission_bundles.json','registry/current_status.json']
+            if selected and n['type']=='blob' and n.get('size',0)<300000: tasks.append((repo,n))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=12) as ex: results=list(ex.map(fetch,tasks))
+    # Browser source URLs use the pinned tree revision, not a blob hash as a commit.
+    for r in results:
+        tree=json.loads((ROOT/'research/snapshots'/f'{r["repo"]}-tree.json').read_text())
+        owner='drivendataorg' if r['repo']=='gems-prize-reference-solution' else 'buffedlizard55-lab'
+        r['source']=f'https://github.com/{owner}/{r["repo"]}/blob/{tree["sha"]}/{r["path"]}'
+    (ROOT/'research/source_manifest.json').write_text(json.dumps({'retrieved_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'files':results},indent=2)+'\n')
+    print('Retrieved',sum(r['status']=='retrieved' for r in results),'of',len(results))
+if __name__=='__main__': main()

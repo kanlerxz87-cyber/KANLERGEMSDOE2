@@ -1,7 +1,7 @@
 import json, pathlib, numpy as np, rasterio
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def test_lane_tif_range_and_grid():
-    tif=ROOT/"docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif"
+    tif=ROOT/"research/quarantine/prior-docs/downloads/kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif"
     assert tif.exists()
     with rasterio.open(tif) as d:
         a=d.read(1); assert d.count==1 and d.dtypes[0]=="float32" and str(d.crs)=="EPSG:32611" and d.shape==(3730,3292)
