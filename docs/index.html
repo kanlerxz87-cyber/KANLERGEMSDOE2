@@ -57,6 +57,7 @@
       <a href="#executive">Executive Summary</a>
       <a href="how-to-submit.html">How to Submit</a>
       <a href="research/hypotheses.html">Hypotheses</a>
+      <a href="evidence/">Evidence Audit (9-site)</a>
       <a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub</a>
     </nav>
   </div>
@@ -66,7 +67,7 @@
   <section class="hero">
     <div class="kicker">U.S. DOE Geologic Enhanced Mapping System (GEMS) Prize · Walker Lane Blind-Fault Discovery · No human inspector</div>
     <h1>One unique GeoTIFF that beats the H19-5 lidar-scarp lineage on the mechanism that matters for <em>hidden</em> geothermal faults.</h1>
-    <p class="sub">The 0.2778 champion (GEMSDOE32 H33-2-B2) won by pruning catalogue-proximal dots — proof that the catalogue itself is the bias to beat. This site ships a <strong>blind-basin</strong> submission that scores where lidar-scarp detectors cannot: under Quaternary alluvium, at the conductive-base + gravity edge, tied to real GDR #1391 vents. Every number is gated by code, not opinion.</p>
+    <p class="sub">The 0.2778 champion (GEMSDOE32 H33-2-B2) won by pruning catalogue-proximal dots — proof that the catalogue itself is the bias to beat. This site ships a <strong>blind-basin</strong> submission that scores where lidar-scarp detectors cannot: under Quaternary alluvium, at the conductive-base + gravity edge, tied to real GDR #1391 vents. Every number is gated by code, not opinion. <a href="evidence/">Full 9-site evidence-first audit preserved from parallel session →</a></p>
   </section>
 
   <!-- AUTHORIZED SUBMISSION GATE -->
@@ -99,7 +100,7 @@
           <strong>How to submit (30 seconds):</strong> DrivenData → Competition #306 → <em>Submit</em> → <em>Make new submission</em> → Choose this <code class="mono">.tif</code> (or the <code class="mono">.zip</code> containing exactly one <code class="mono">.tif</code>) → Paste the note above → <em>Create</em>. This repo never contacts DrivenData; the upload is manual and quota-checked by the portal. See <a href="how-to-submit.html">full how-to with screenshots checklist</a>.
         </div>
         <div class="meta">
-          Validator receipt: <a href="../evidence/download_audit.json">download_audit.json</a> · Run card: <a href="../evidence/run_card.json">run_card.json</a> · Generation diag: <a href="../evidence/generation_diag_v2.json">generation_diag_v2.json</a> · Selector: <a href="../evidence/selector_decision.json">selector_decision.json</a>
+          Validator receipt: <a href="../evidence/download_audit.json">download_audit.json</a> · Run card: <a href="../evidence/run_card.json">run_card.json</a> · Generation diag: <a href="../evidence/generation_diag_v2.json">generation_diag_v2.json</a> · Selector: <a href="../evidence/selector_decision.json">selector_decision.json</a> · <a href="evidence/">9-site evidence audit (parallel session) →</a>
         </div>
       </div>
       <div class="card">
@@ -231,7 +232,7 @@
       </tbody>
     </table>
     </div>
-    <p class="meta">Historical scores are preserved owner claims, not ORGANIZER-CONFIRMED and not forecasts. The only ORGANIZER-CONFIRMED scores live on <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData leaderboard</a> (current high 0.4413 per prompt; our PROJECTION 0.334 is a local model forecast, not a leaderboard claim). No file in this table except our last row is authorized to spend a weekly slot — all 9 historical champions have been submitted and belong to the exhausted H19-5 ridge clone cluster (IR-42-UNIQ-01).</p>
+    <p class="meta">Historical scores are preserved owner claims, not ORGANIZER-CONFIRMED and not forecasts. The only ORGANIZER-CONFIRMED scores live on <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData leaderboard</a> (current high 0.4413 per prompt; our PROJECTION 0.334 is a local model forecast, not a leaderboard claim). No file in this table except our last row is authorized to spend a weekly slot — all 9 historical champions have been submitted and belong to the exhausted H19-5 ridge clone cluster (IR-42-UNIQ-01). Full pinned audit snapshots from parallel session in <a href="evidence/">docs/evidence/</a>.</p>
     <details>
       <summary>How the “estimated leaderboard score” is computed (and why we label it PROJECTION)</summary>
       <p>We do not invent leaderboard scores. We fit a simple anchor-inversion model on the 26 live-scored submissions that have both a holdout and a live score in their published audit JSONs: <code class="mono">live ≈ 1.98·holdout + 0.052 (R²=0.71, in-family LOO RMSE ±0.038)</code>. For our candidate (holdout 0.1427) that gives 0.334. Cross-family transfer (ridge → blind-basin) is unproven, so the error bar is larger; we report it as PROJECTION, never as a score. The holdout itself (0.1427 vs control 0.1332, paired +0.0094 CI not crossing zero) is the gating evidence.</p>
@@ -296,7 +297,7 @@
   <footer class="footer">
     <div>KANLERGEMSDOE2 · Independent DOE GEMS Prize entry · Code MIT · Data under competition + source licenses · Not affiliated with DOE/DrivenData/NLR.</div>
     <div>Current leaderboard high (per prompt): 0.4413 — our PROJECTION 0.334 is a forecast, not a claim to have beaten it. The only true score is ORGANIZER-CONFIRMED on your submission receipt.</div>
-    <div style="margin-top:6px">Built 2026-10-26T21:39Z · Content ID 2858780e · Evaluator GEMSDOE32-HIDE-RECOVER-v3.0 / gems-segment-pooled-v1 · Template EPSG:32611 3730×3292 100m · Validator 13/13 PASS · No human inspector in critical path.</div>
+    <div style="margin-top:6px">Built 2026-10-26T21:40Z · Content ID 2858780e · Evaluator GEMSDOE32-HIDE-RECOVER-v3.0 / gems-segment-pooled-v1 · Template EPSG:32611 3730×3292 100m · Validator 13/13 PASS · No human inspector in critical path. Evidence-first audit preserved in <a href="evidence/">docs/evidence/</a> (parallel session).</div>
   </footer>
 </main>
 </body>
