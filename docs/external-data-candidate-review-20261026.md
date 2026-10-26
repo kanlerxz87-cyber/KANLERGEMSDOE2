@@ -10,7 +10,7 @@ Do not rely on the initial stale-branch claim that no shared scripts or raster d
 
 ## Official-source checks made in this review
 
-The machine-readable receipts are in [`evidence/official-page-check-20261026.json`](../evidence/official-page-check-20261026.json).
+The machine-readable receipts are in [`evidence/official-page-check-20261026.json`](official-page-check-20261026.json).
 
 - The official [DrivenData problem page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) was fetched. It states the target is geological faults; known public labels are incomplete; the metric is distance-weighted Tversky with alpha 0.2, beta 0.8 and a 300 m triangular kernel; and submissions are single-band float32 GeoTIFFs on the EPSG:32611, 100 m grid, with values in [0,1] and null/NaN outside the bounds.
 - The official competition data URL redirected to a login form. No private competition file was accessed.
