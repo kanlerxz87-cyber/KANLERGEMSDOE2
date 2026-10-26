@@ -24,7 +24,7 @@
 - The nine historical rasters share substantial support. The literal stop-on-duplicate protocol precludes recycling them. No random displacement, metadata change, or renamed copy is offered as a new submission.
 - Shared evaluator/writer hashes tested byte-for-byte; synthetic contract fixture checks whole components hidden everywhere. Synthetic tests are not scientific HOLDOUT-DTI results.
 - Sources unavailable under the network allowlist are clearly marked unverified, not described as researched. Conflicting leaderboard claims remain unresolved.
-- The README is an explicit condensed operating brief, not a claim to preserve the full repeated user prompt verbatim.
+- The README's operational brief is concise; a verbatim original-prompt appendix was added in a later follow-up so session startup has both current safety state and full project context.
 - This deliverable does NOT fulfill the requested unique high-scoring competition TIFF: no such file passed the prerequisites, and publishing a fake approved download would violate the stronger protocol. Remaining work is recorded in README and run card.
 
 Verification: 16 automated tests passed locally. Actual nine-raster audit was rerun after restoration; SHA-256 data and all comparisons are committed. File-format PASS is not organizer acceptance or scientific validation. Pages publishing and PR merge are checked separately through GitHub.
