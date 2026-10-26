@@ -1,0 +1,16 @@
+{
+  "hypothesis": "No experiment: assigned single-method lane absent from prompt",
+  "mechanism": "Pending lane assignment; research hypotheses are not executed candidates",
+  "non_fault_mimic": "Lithological contacts and fluvial terraces can mimic structural edges",
+  "lane": null,
+  "holdout": {"label": "HOLDOUT-DTI", "evaluator_version": null, "withheld_positives": null, "dti": null, "ci95": null},
+  "registry_complete": false,
+  "surface": {"max_abs_rank_correlation": null, "max_overlap_3px": null},
+  "dots": {"max_abs_rank_correlation": null, "max_overlap_3px": null},
+  "raster_sha256": null,
+  "validator": {"status": "NOT_RUN_NO_RASTER", "no_nan_inside_footprint": null, "range_0_1": null, "crs_match": null, "shape_match": null, "transform_match": null, "single_band": null},
+  "submission_name": null,
+  "note": "No raster generated: lane, shared data/cache and complete registry unavailable locally. No submission slot used.",
+  "experiments_run": 0,
+  "verdict": "negative"
+}

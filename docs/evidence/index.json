@@ -1,0 +1,238 @@
+{
+  "retrieved": "2026-10-26",
+  "repositories": [
+    {
+      "site": 24,
+      "commit": "7ab1c8f77f0b4b8644e3929403a0dab65838b008",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "scripts/evaluate_holdout.py",
+          "git_blob_sha": "c880b0576c3bc0bdf6657c5671e47cf7d5c40e71",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/scripts/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/submission_writer.py",
+          "git_blob_sha": "f5c5d2384a884f2928ec18368577c06a126a6852",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/scripts/submission_writer.py"
+        }
+      ]
+    },
+    {
+      "site": 25,
+      "commit": "af2b6f2543e5422a7e917638b70e038e6fd91cad",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "88350127063e774eb58d9c7e646e7d78d33df247",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/af2b6f2543e5422a7e917638b70e038e6fd91cad/docs/index.html"
+        }
+      ]
+    },
+    {
+      "site": 27,
+      "commit": "bef7ae8e8f63b69d299c9214c75988c8f5055f9c",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "3a168122b5e6bcd5d41c149adf3d89bd472ff840",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/bef7ae8e8f63b69d299c9214c75988c8f5055f9c/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "efb75b6650d4a5ffed9199b30ee6538c31373259",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/bef7ae8e8f63b69d299c9214c75988c8f5055f9c/docs/index.html"
+        }
+      ]
+    },
+    {
+      "site": 28,
+      "commit": "2c839d10f57ec9b074829e93c84bc39935f52896",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "1979fb56c345f2f5b020dacf9eae85b507b1a854",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/2c839d10f57ec9b074829e93c84bc39935f52896/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "0c9a2100e7b17388cb3857f08e795e13366da0ff",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/2c839d10f57ec9b074829e93c84bc39935f52896/docs/index.html"
+        }
+      ]
+    },
+    {
+      "site": 30,
+      "commit": "9c0d637c0171407196b61b780444bc772ce75438",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "bef375416cb29f515401034957c38b8727e1d4ef",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/9c0d637c0171407196b61b780444bc772ce75438/docs/index.html"
+        }
+      ]
+    },
+    {
+      "site": 31,
+      "commit": "2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "1b347517e2090f3b9bc286892cf9ccfb5e9dc103",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "3a95da4d27fcb38021264143e1dcda6c246d6a05",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/docs/index.html"
+        },
+        {
+          "path": "scripts/evaluate_holdout.py",
+          "git_blob_sha": "bcc573675c6acdc4e369ad592d835bbfee64fe84",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/scripts/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/submission_writer.py",
+          "git_blob_sha": "7c4498580e992d69947aba08ec6d44e985697d29",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/scripts/submission_writer.py"
+        },
+        {
+          "path": "vendor/gems57/evaluate_holdout.py",
+          "git_blob_sha": "9c65eb9de1468fecfc909d9b2c1348bed52f67ca",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/vendor/gems57/evaluate_holdout.py"
+        },
+        {
+          "path": "vendor/gems57/submission_writer.py",
+          "git_blob_sha": "5a04a2b0d5d4137f0aad39d862889ef1b92198ea",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/vendor/gems57/submission_writer.py"
+        },
+        {
+          "path": "vendor/template57/test_evaluate_holdout.py",
+          "git_blob_sha": "3e63938a79a7f4adb73d21ea578a7fabbda04c6e",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2/vendor/template57/test_evaluate_holdout.py"
+        }
+      ]
+    },
+    {
+      "site": 32,
+      "commit": "07806249f4ed3efe70b4fbf866183c32392b7853",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "95166dd3f33ef1df1b0c4dc0f990153918137d09",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "706899e48e05f09c8afd8774b5b3768bb6161bcf",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/docs/index.html"
+        },
+        {
+          "path": "scripts/evaluate_holdout.py",
+          "git_blob_sha": "7773e40cda724395a323e54da4f607b0e9e59a2e",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/scripts/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/submission_writer.py",
+          "git_blob_sha": "c3cc5cf23056d46e577c00ecec39a6f01c771260",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/scripts/submission_writer.py"
+        },
+        {
+          "path": "vendor/gems57/evaluate_holdout.py",
+          "git_blob_sha": "9c65eb9de1468fecfc909d9b2c1348bed52f67ca",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/vendor/gems57/evaluate_holdout.py"
+        },
+        {
+          "path": "vendor/gems57/submission_writer.py",
+          "git_blob_sha": "5a04a2b0d5d4137f0aad39d862889ef1b92198ea",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/vendor/gems57/submission_writer.py"
+        },
+        {
+          "path": "vendor/template57/test_evaluate_holdout.py",
+          "git_blob_sha": "3e63938a79a7f4adb73d21ea578a7fabbda04c6e",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/07806249f4ed3efe70b4fbf866183c32392b7853/vendor/template57/test_evaluate_holdout.py"
+        }
+      ]
+    },
+    {
+      "site": 33,
+      "commit": "1d99d73fe14d9a87126ffca2db52c69336d6099b",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "f7b6f3938d442fc76c53e9e00e0d54e72d880fd0",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "c042b2b384cd62d2f980dddfa3b2d5778f413b3b",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/docs/index.html"
+        },
+        {
+          "path": "evaluate_holdout.py",
+          "git_blob_sha": "26a879dfc6648ff1326d4bb9a7bf7c38c6161d13",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/evaluate_holdout.py",
+          "git_blob_sha": "80472c07999b8163b8f4fd377e4d374abf32986b",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/scripts/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/submission_writer.py",
+          "git_blob_sha": "6f26b561d209f2f879939ed2d2ebd360eacf402a",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/scripts/submission_writer.py"
+        },
+        {
+          "path": "submission_writer.py",
+          "git_blob_sha": "977456c9d4d93561da6961aa2da486c71686f4af",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/submission_writer.py"
+        },
+        {
+          "path": "vendor/gems57/evaluate_holdout.py",
+          "git_blob_sha": "9c65eb9de1468fecfc909d9b2c1348bed52f67ca",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/vendor/gems57/evaluate_holdout.py"
+        },
+        {
+          "path": "vendor/gems57/submission_writer.py",
+          "git_blob_sha": "5a04a2b0d5d4137f0aad39d862889ef1b92198ea",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/1d99d73fe14d9a87126ffca2db52c69336d6099b/vendor/gems57/submission_writer.py"
+        }
+      ]
+    },
+    {
+      "site": 36,
+      "commit": "b90418f852615aa0974cf9a53b92fa569ed133fc",
+      "tree_truncated": false,
+      "files": [
+        {
+          "path": "README.md",
+          "git_blob_sha": "9e15699da6bdd0a731095132568aefc85483dbb8",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b90418f852615aa0974cf9a53b92fa569ed133fc/README.md"
+        },
+        {
+          "path": "docs/index.html",
+          "git_blob_sha": "4d89edff7ffd340d518a6844b14d246d2150c2a3",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b90418f852615aa0974cf9a53b92fa569ed133fc/docs/index.html"
+        },
+        {
+          "path": "scripts/evaluate_holdout.py",
+          "git_blob_sha": "c99c7e591c3b8a9a839f4ee78ea45b0424d7dc42",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b90418f852615aa0974cf9a53b92fa569ed133fc/scripts/evaluate_holdout.py"
+        },
+        {
+          "path": "scripts/submission_writer.py",
+          "git_blob_sha": "cf146cc8bbd8d2bf839ad9e9aa0f458665037453",
+          "url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/b90418f852615aa0974cf9a53b92fa569ed133fc/scripts/submission_writer.py"
+        }
+      ]
+    }
+  ]
+}
