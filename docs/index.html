@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Auditable GEMS fault-mapping research and submission readiness review">
+  <title>KANLERGEMSDOE2 — GEMS Research Review</title>
+  <style>
+    :root{color-scheme:light;--ink:#17252c;--muted:#5a6a72;--paper:#f4f7f5;--card:#fff;--line:#dce5e1;--green:#0d6854;--green2:#e5f4ee;--red:#9b2d28;--redbg:#fff0ed;--amber:#825216;--amberbg:#fff5dc;--blue:#eaf2f7;--shadow:0 10px 28px #18352c12}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}a{color:#075f87;text-underline-offset:3px}a:hover{color:#043d58}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}.hero{background:#123b35;color:white;padding:52px 0 36px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;font-weight:700;color:#bde9d8}.hero h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.06;max-width:850px;margin:.55rem 0 1rem}.hero p{max-width:770px;color:#d4e5df;margin:0}.stamp{display:inline-flex;gap:9px;align-items:center;margin-top:24px;padding:10px 15px;border:1px solid #ffbcb0;border-radius:999px;background:#692c29;color:#fff;font-weight:800;letter-spacing:.02em}.stamp span{font-size:1.15rem}.content{padding:28px 0 70px}.alert{display:grid;grid-template-columns:auto 1fr;gap:14px;background:var(--redbg);border:1px solid #efc3bd;border-left:6px solid var(--red);border-radius:12px;padding:19px 22px;box-shadow:var(--shadow)}.alert b{color:var(--red)}.alert .icon{font-size:1.55rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:19px;box-shadow:var(--shadow)}.card h2,.card h3{margin:.1rem 0 .55rem}.card p{margin:.2rem 0;color:var(--muted)}.label{font-size:.74rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.big{font-size:1.3rem;font-weight:800}.section{margin:28px 0}.section h2{font-size:1.5rem;margin-bottom:.5rem}.tablebox{overflow:auto;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:900px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#edf3f0;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}td code{font-size:.82rem;overflow-wrap:anywhere}.status-no{font-weight:800;color:var(--red)}.status-check{font-weight:800;color:var(--amber)}.note{font-size:.92rem;color:var(--muted)}.sources{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.sources a{font-weight:700}.pill{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--amberbg);color:var(--amber);font-size:.78rem;font-weight:800}.cta{display:inline-block;padding:12px 17px;border-radius:8px;background:var(--green);color:white;font-weight:800;text-decoration:none}.cta:hover{background:#074c3d;color:white}.footer{border-top:1px solid var(--line);padding-top:20px;margin-top:42px;color:var(--muted);font-size:.9rem}ul{padding-left:1.2rem}li{margin:.35rem 0}.banner{background:var(--green2);border:1px solid #c2e0d3;padding:16px 18px;border-radius:10px}.banner strong{color:var(--green)}@media(max-width:780px){.grid{grid-template-columns:1fr}.sources{grid-template-columns:1fr}.hero{padding:36px 0 28px}.wrap{width:min(100% - 24px,1160px)}}
+  </style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">DOE GEMS · research and submission readiness</div>
+    <h1>Evidence first.<br>Unique faults, not duplicate files.</h1>
+    <p>A short, auditable status page for the GEMS fault-mapping project. Historical scores are separated from holdout results, and no file is advertised as submit-ready without passing the science, uniqueness, and format gates.</p>
+    <div class="stamp"><span>⛔</span> NO APPROVED TIFF — DO NOT SUBMIT</div>
+  </div>
+</header>
+<main class="wrap content">
+  <div class="alert" role="alert">
+    <div class="icon">⛔</div>
+    <div><b>Download / submission gate: NO.</b> This repository has no competition feature/label inputs, shared feature cache, holdout evaluator, or submission writer. No new TIFF was generated. The official competition data page redirects to login. There is no file below to download or submit.</div>
+  </div>
+  <div class="grid">
+    <section class="card"><div class="label">Highest historical focus-site claim</div><div class="big">GEMSDOE32 · 0.2778</div><p><span class="pill">Unverified owner report</span> No submission-page receipt tying that number to the exact raster bytes was available.</p></section>
+    <section class="card"><div class="label">New candidate score</div><div class="big">Not estimated</div><p>No valid <code>HOLDOUT-DTI</code> was run. A projection is not a score, so no numeric estimate is shown.</p></section>
+    <section class="card"><div class="label">Uniqueness audit</div><div class="big">All 36 pairs fail</div><p>Each of the nine historical focus-site winners overlaps every other by more than 70% of dots within 3 pixels.</p></section>
+  </div>
+  <section class="section">
+    <h2>Executive summary: the nine focus sites</h2>
+    <p>The values below reproduce the supplied historical list and the upstream artifact audit. They are <strong>owner-reported historical values, not organizer-confirmed receipts</strong>. The new-file estimate is unavailable for every row. Old TIFFs are shown for audit only and must not be re-submitted.</p>
+    <div class="tablebox"><table>
+      <thead><tr><th>Site</th><th>Historical high artifact</th><th>Historical value*</th><th>New estimate (HOLDOUT-DTI)</th><th>Unique vs other eight?</th><th>Download / submit?</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE24/">GEMSDOE24</a></td><td><code>h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan</code></td><td>0.2477</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE25/">GEMSDOE25</a></td><td><code>dotted-h19-5-d2-8-20261002-e56ea318af89-nan</code></td><td>0.2600</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE27/">GEMSDOE27</a></td><td><code>topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan</code></td><td>0.2449</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/">GEMSDOE28</a></td><td><code>h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan</code></td><td>0.2710</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE30/">GEMSDOE30</a></td><td><code>d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca</code></td><td>0.2600</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE31/docs/">GEMSDOE31</a></td><td><code>h27-4-solo-d28-20261004-8acb75e1-nan</code></td><td>0.2708</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html">GEMSDOE32</a></td><td><code>h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros</code></td><td>0.2778</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE33/">GEMSDOE33</a></td><td><code>h33d-analog-tip-stepover-r30-20261004-cb490425926e</code></td><td>0.2632</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+        <tr><td><a href="https://buffedlizard55-lab.github.io/GEMSDOE36/docs/">GEMSDOE36</a></td><td><code>anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros</code></td><td>0.2750</td><td>Not run</td><td class="status-no">No</td><td class="status-no">No new TIFF</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">* Historical values are unverified owner reports, not <code>ORGANIZER-CONFIRMED</code> submission receipts and not <code>HOLDOUT-DTI</code>. The full evidence, methodology, source links, and per-site analysis are in the <a href="EXECUTIVE_SUMMARY.md">executive summary report</a>. The computed pairwise raster audit is available as <a href="data/focus-site-raster-audit.json">machine-readable evidence</a>.</p>
+  </section>
+  <section class="section banner">
+    <strong>Why the 0.2778 entry may have ranked highest within this historical set:</strong> its documented lineage is a sparse candidate ridge network with thinning and pruning near the existing fault catalogue. Under the official distance-weighted metric, removing low-credit prediction mass can reduce false-positive cost while nearby predictions retain partial credit. This is plausible, not a proven cause: the exact portal receipt and hidden truth are unavailable here, and no new candidate has been evaluated.
+  </section>
+  <section class="section">
+    <h2>Next research candidates</h2>
+    <ul>
+      <li><strong>ECOSTRESS L2 land-surface temperature persistence</strong> — independent thermal evidence; NASA catalog contains a granule intersecting the approximate competition bounds. Actual download and QA review are not yet complete.</li>
+      <li><strong>ASTER spectral alteration</strong> — distinct VNIR/SWIR/TIR mineral evidence; a cataloged intersecting granule exists, but calibration and suitability remain untested.</li>
+      <li><strong>Landsat Collection 2 surface-temperature persistence</strong> — official global data source; a target-area scene query remains outstanding.</li>
+    </ul>
+    <p>These are ranked research hypotheses, not score projections. The top candidate must pass the prescribed buffered whole-segment holdout, feature-alone leakage canary, and registry uniqueness check before any selector or competition slot is considered.</p>
+    <a class="cta" href="EXECUTIVE_SUMMARY.md">Read the complete report and run card</a>
+  </section>
+  <section class="section">
+    <h2>Official sources</h2>
+    <div class="sources">
+      <div class="card"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem, metric & submission format</a><p>Official task description and GeoTIFF requirements.</p></div>
+      <div class="card"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Current public leaderboard</a><p>Time-varying official leaderboard; retrieved for the review.</p></div>
+      <div class="card"><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a><p>Official airborne magnetic, radiometric, and related lidar data release.</p></div>
+      <div class="card"><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Organizer reference solution</a><p>Public U-Net benchmark source code.</p></div>
+    </div>
+  </section>
+  <footer class="footer">Review date 2026-10-26 UTC. This page is a static snapshot, not an automatic live score feed. No local competition data or candidate TIFF is included. <a href="../README.md">Project charter</a>.</footer>
+</main>
+</body>
+</html>
