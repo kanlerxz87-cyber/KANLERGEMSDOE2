@@ -11,7 +11,7 @@ The largest nine-site historical claim in the owner's brief is GEMSDOE32 B2, **0
 ## Standing operating instructions — read at the start of every session
 
 * The objective is a genuinely new, high-performing, scientifically grounded geothermal-fault prediction—not a renamed or perturbed copy. **Maximize P(Win); own the outcome.**
-* Read the full original request preserved below, the current [hypothesis slate](docs/research/hypotheses.md), [run card](evidence/run-card.json), and [irregularities](docs/research/irregularities.md). Respect the single-lane, three-experiment/two-hour and literal registry-overlap stop rules. Negative results are deliverables.
+* Read the standing request transcription below, the current [hypothesis slate](docs/research/hypotheses.md), [run card](evidence/run-card.json), and [irregularities](docs/research/irregularities.md). Respect the single-lane, three-experiment/two-hour and literal registry-overlap stop rules. Negative results are deliverables.
 * Before another authorized lane: rank 3–5 specific hypotheses; freeze one; use the shared pinned feature stack, evaluator and writer; run single-feature leakage canaries; hide whole fault segments with a buffer; use only visible faults to construct catalogue features; mask visible faults pixel-exactly; report pooled HOLDOUT-DTI, evaluator, withheld positives and spatial 95% CI. Check surface and final-dot uniqueness against the full registry. Fix the documented shared-evaluator defects upstream before using that helper. Do not spend a weekly slot without a comparable holdout win and a separate selector.
 * A score is organizer-confirmed only with a submission-page receipt. A forecast is not a score; owner statements remain unverified claims. A local holdout is a mapped-fault proxy, not private-ground-truth performance. Missing evidence must remain unknown, never a passing zero.
 * Validate the exact saved GeoTIFF and distinguish local format validity, scientific merit, uniqueness, portal acceptance and slot approval. Never silently clip invalid values or assume a particular outside-footprint encoding caused the reported range error.
@@ -34,7 +34,7 @@ To audit an existing research TIFF's format only, see the [submission guide](doc
 
 ## Original standing request (owner-provided; historical claims below are not verification)
 
-The following is transcribed as the project brief, with trailing whitespace normalized. Any numbers, assumptions, instructions and links in the quoted request retain their original context and must be checked against the current evidence; none becomes organizer-confirmed merely by appearing here.
+The following is a transcription of the project brief with trailing whitespace normalized, not a byte-verified verbatim record. A parallel transcription differs on the GEMSDOE61 URL (`/61GEMSDOE/` versus `/61GEMSDOE/docs/index.html`) and the GEMSDOE69 filename prefix (`gems69` versus `h69`); both versions are retained in [the parallel snapshot](PARALLEL-README-f5d1675.md). Claims and links in the request must be checked against current evidence; none becomes organizer-confirmed merely by appearing here.
 
 <details>
 <summary>Expand the full request</summary>
@@ -776,6 +776,24 @@ h33d-analog-tip-stepover-r30-20261004-cb490425926e: 0.2632
 [https://buffedlizard55-lab.github.io/GEMSDOE36/docs/](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/)
 
 anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros: 0.2750
+
+....
+
+[https://kanlerxz87-cyber.github.io/KANLERGEMSDOE3/docs/index.html](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE3/docs/index.html)
+
+:
+
+....
+
+[https://kanlerxz87-cyber.github.io/KANLERGEMSDOE1/](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE1/)
+
+:
+
+....
+
+[https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/)
+
+:
 
 ....
 
