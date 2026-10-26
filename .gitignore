@@ -8,7 +8,8 @@ __pycache__/
 .cache/
 build/
 dist/
-data/
+/data/
+!docs/data/
 submissions/*.tif
 submissions/*.zip
 *.partial.npy
