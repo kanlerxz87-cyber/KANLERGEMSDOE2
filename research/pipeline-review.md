@@ -1,3 +1,5 @@
+> Historical safety review. The 2026-10-26 continuation subsequently restored pinned core data and audited raw canaries; see `continuation-review-20261026.md` and the current run card. Its quarantine/publication restrictions remain active.
+
 # Follow-up pipeline review — 26 October 2026 UTC
 
 ## Decision

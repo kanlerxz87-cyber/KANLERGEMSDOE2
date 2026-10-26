@@ -1,0 +1,70 @@
+{
+  "evaluator_version": "gems-segment-pooled-v1",
+  "buffer_px": 15,
+  "mask_hash_encoding": "SHA256 of C-order np.packbits bool raster; shape specified below",
+  "shape": [
+    3730,
+    3292
+  ],
+  "folds": [
+    {
+      "id": 0,
+      "name": "NW",
+      "n_withheld_positives": 10165,
+      "hidden_component_count": 691,
+      "n_training_pixels": 3960137,
+      "masks": {
+        "valid": "88c86aafb1fb011932f59d84f8c688a3e5ea397c1e637645ce1912cf357fd393",
+        "train": "39fdd5d750da2a014ee182033ccf81b9487ddf081abef882067c604305684028",
+        "visible": "14e308f0746d6d1ddd0fc2203b855ce8f63552477dd2c791eec198d2053854c2",
+        "truth": "29e519d5d6996e15dfe258ee887a2f7e0ce6a4c81b92286be4e67a217291beb7"
+      }
+    },
+    {
+      "id": 1,
+      "name": "NE_LidarGapHeavy",
+      "n_withheld_positives": 12511,
+      "hidden_component_count": 705,
+      "n_training_pixels": 3718896,
+      "masks": {
+        "valid": "1ab6711c7390f55c85dbdf6bfe2a7f12097ba1115e0a947ba91e8a8cd9b8b88d",
+        "train": "a6f1922bded063d33a429bdfaa594ae990eb28e92312a247ba3a94a88d7a6c13",
+        "visible": "585ae4b7a5273df7c6ed21e4b0bab7c0e143ce25454af4e1e19bf5560d96a920",
+        "truth": "08a3fdd5d27beaafe9d9fc59b84be5764b3f52a8ee75ef747579fde576b22b73"
+      }
+    },
+    {
+      "id": 2,
+      "name": "SW",
+      "n_withheld_positives": 20534,
+      "hidden_component_count": 1183,
+      "n_training_pixels": 3660307,
+      "masks": {
+        "valid": "4d60d80156c3c2abe51719b89ae593f914d1b905afb238bc0cad9b9d01f0db63",
+        "train": "f6c3419cb788d96ff169a9663d523924f32e54859bc2117a1eeb77927eff84d2",
+        "visible": "189542a6bceab71fa0ec17e4ad9d59e2fc49ab0d315b93581702fc82aa247e6f",
+        "truth": "a26062b65b592fbd7409bc7688acbbf26a13c852067a1814ffba0390216191ca"
+      }
+    },
+    {
+      "id": 3,
+      "name": "SE",
+      "n_withheld_positives": 17778,
+      "hidden_component_count": 779,
+      "n_training_pixels": 3964562,
+      "masks": {
+        "valid": "2593071f68152b033337145ddc9272116d099e2daf5bbe9abff2fa451adcded6",
+        "train": "defe990a9fe182127bf5715ad8e6b984462a6771aafb09e8e4dce4b639958228",
+        "visible": "c02f95624b7656f2e8a074a1f655c8709bfa288df537d649b839b65b345aed9f",
+        "truth": "21f26e377b6629cd40cb5105be69b8bbff48ed63e7a610d2d21eca813e3624f7"
+      }
+    }
+  ],
+  "template_pins_sha256": "08b0a18bf82c17b431852b35cf8ba14596b1647540151bc1e81f615a081b1ed9",
+  "input_sha256": {
+    "sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "existing_faults.tif": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
+  },
+  "frozen_best_available": false,
+  "hypothesis_experiments_used": 0
+}

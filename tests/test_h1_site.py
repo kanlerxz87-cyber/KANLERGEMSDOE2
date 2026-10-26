@@ -29,7 +29,7 @@ class SiteParser(HTMLParser):
 
 
 def test_static_site_has_real_sections_and_resolvable_local_links():
-    parser = SiteParser(); parser.feed((ROOT / 'docs/index.html').read_text())
+    parser = SiteParser(); parser.feed((ROOT / 'docs/h1-audit.html').read_text())
     assert parser.rows == 9
     assert {'top', 'decision', 'evidence', 'history', 'method', 'next'} <= parser.ids
     for link in parser.links:
@@ -57,7 +57,7 @@ def test_stopped_lane_guard_exits_before_work():
 
 
 def test_nine_historical_links_and_claims_match_audit():
-    text = (ROOT / 'docs/index.html').read_text()
+    text = (ROOT / 'docs/h1-audit.html').read_text()
     audit = json.loads((ROOT / 'docs/data/focus-audit.json').read_text())
     assert len(audit['sites']) == 9
     for entry in audit['sites']:

@@ -2,7 +2,7 @@
 
 **DO NOT SUBMIT. No new GeoTIFF was generated in this H1 lane, no holdout DTI was calculated, and no competition slot was used.** No file in the combined repository is approved for upload. This preregistered H1 feasibility probe failed the required pre-placement novelty gate: **74.9758%** of its positive surface cells lay within three pixels of a registered GEMSDOE32 raster, above the **70%** limit. The scan stopped at that witness after 306 distinct-byte comparisons; it did not establish uniqueness against the rest. A negative result is a deliverable, not a reason to evade the stop.
 
-**Dashboard:** [GitHub Pages](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [run card](docs/data/run-card.json) · [nine-site audit](knowledge/03_site_by_site_2026-10-26.md) · [scientific findings and sources](knowledge/02_findings_and_sources_2026-10-26.md) · [upload contract](knowledge/05_upload_contract.md)
+**Dashboard:** [GitHub Pages](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [H1 report](docs/h1-audit.html) · [run card](docs/data/run-card.json) · [nine-site audit](knowledge/03_site_by_site_2026-10-26.md) · [scientific findings and sources](knowledge/02_findings_and_sources_2026-10-26.md) · [upload contract](knowledge/05_upload_contract.md)
 
 ## The decision in a minute
 
@@ -14,7 +14,7 @@
 
 ## Project charter / prompt to reread each session
 
-One concurrent main-branch transcription of the original prompt is reproduced at the end of this README with trailing whitespace normalized. Another transcription differs in two historical links or filenames; both are preserved here and in `research/concurrent-k2/README.md` (with earlier snapshots in `PARALLEL-README-f5d1675.md` and `PARALLEL-README-20261026.md`). Neither can be verified as byte-exact from the condensed session context. The following is a concise requirements reconstruction; re-read both before changing science or submission status:
+One concurrent main-branch transcription of the original prompt is reproduced at the end of this README with trailing whitespace normalized. Another transcription differs in two historical links or filenames; both are preserved here and in `research/concurrent-k2/README.md` (with earlier snapshots in `PARALLEL-README-f5d1675.md` and `PARALLEL-README-20261026.md`). The later data-restoration version is preserved in `research/session-history/README-after-data-restoration.md`. Neither can be verified as byte-exact from the condensed session context. The following is a concise requirements reconstruction; re-read both before changing science or submission status:
 
 > Review the DOE GEMS geothermal-fault competition using official sources and an auditable site-by-site executive analysis of GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36. Explain the owner-reported 0.2778 GEMSDOE32 result and assess whether it can be beaten. Generate an independently unique, valid, high-performing GeoTIFF only if the scientific, format and uniqueness gates pass; no human inspection should be required. Never copy an old submission except for educational analysis. State clearly whether submission is permitted. Use trusted free data and automatically obtain and prepare inputs where possible; disclose any authentication or format blocker. Build a clean GitHub Pages report with live-or-dated evidence, clear sources and download/submit instructions. Perform three review/fix passes, and create a PR and merge to main when permitted.
 >
@@ -36,18 +36,22 @@ The protocol refers to an assigned single method paragraph, but none was identif
 Prerequisites: Python 3.11, `git`, `curl`, `tar`, `sha256sum` and `gh`; enough disk (at least 5 GB, more for features), network access to GitHub/PyPI and, for large registries, sufficient GitHub API quota. The research data are excluded from Git. We used Linux, two CPU cores and ~3.8 GiB RAM. No GPU is required for the audit; the organizer reference offers a CPU environment.
 
 ```bash
-# Restore pinned shared template, locally pinned owner-mirror data, current registry
-# cache and historical registry lock; independently verify Git blob identities.
-bash scripts/download_competition_data.sh
+# Restore the latest continuation's pinned mirror into ignored data/ (no submission).
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
+PYTHON=.venv/bin/python bash scripts/download_competition_data.sh
 
-# Optional: also build the upstream shared 35-channel cached feature stack (~1.7 GB).
-bash scripts/download_competition_data.sh --build-stack
+# Optional: restore H1's historical registry lock and shared template cache;
+# --build-stack also builds its upstream 35-channel feature stack (~1.7 GB).
+bash scripts/bootstrap_template.sh --build-stack
 
 # Run fast offline tests and the shared-tool synthetic defect diagnostic.
 .venv/bin/python -m pytest -q
 .venv/bin/python scripts/reproduce_template_defect.py
 
 # Serve the static dashboard locally.
+# A safe Pages-like public staging directory is built in the Pages workflow.
+# For the H1 report alone, serve docs/ and open /h1-audit.html.
 python3 -m http.server 8000 --bind 0.0.0.0 --directory docs
 ```
 
@@ -74,7 +78,7 @@ The owner-mirrored sample matches the mirrored training labels rather than the a
 
 ## Integration of parallel work on main
 
-Other sessions merged independent evidence while this lane was running, including the K2-SCALE geometric stop and its [separate research dashboard](index.html). Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The K2 geometry stop and distinct run card are preserved under `docs/research/` and `evidence/run-card.json`. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
+Other sessions merged independent evidence while this lane was running, including the K2-SCALE geometric stop, the [separate root dashboard](index.html), and a [data-readiness continuation](research/continuation-review-20261026.md) that restored peer-mirror inputs and audited raw-feature canaries without training a model. Their source snapshots, safety reviews and quarantined research TIFFs are preserved under `research/`; none is approved for submission. The K2 geometry stop and distinct run card are preserved under `docs/research/` and `evidence/run-card.json`. The legacy E1 record was withdrawn and is not reproducible here; its old reported metrics are not verified evidence. The earlier audit and pipeline safety tests remain in place. This H1 lane is separate: one negative feasibility experiment, no candidate TIFF or slot. The previous main README and conflicting data-entrypoint implementations are preserved in `research/concurrent-main-snapshot/`, and its earlier generated dashboard is available as a dated historical archive. No claim from an archived page overrides the current decision or the written organizer format.
 
 ## Original Prompt Specification
 

@@ -1,0 +1,98 @@
+{
+  "checked_utc": "2026-10-26T22:04:17.380923+00:00",
+  "method": "git ls-remote HEAD; read-only",
+  "scope": "Repository revision monitor, NOT live competition scores, complete registry, or refreshed scientific evidence.",
+  "repositories": [
+    {
+      "site": "GEMSDOE24",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE24",
+      "audited_tree_revision": "7ab1c8f77f0b4b8644e3929403a0dab65838b008",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "a433b430b74b813a9118ebd4ec438b12cbc69f46",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE25",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE25",
+      "audited_tree_revision": "af2b6f2543e5422a7e917638b70e038e6fd91cad",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "c04766ff224f879d7204d2e6c45bffd8c7f01966",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE27",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE27",
+      "audited_tree_revision": "bef7ae8e8f63b69d299c9214c75988c8f5055f9c",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "21687996529d4e3bcb83e7d8ac56fa29864acf97",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE28",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE28",
+      "audited_tree_revision": "2c839d10f57ec9b074829e93c84bc39935f52896",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "ec1d501fd12c8dee9dc062726003639dec9382ff",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE30",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE30",
+      "audited_tree_revision": "9c0d637c0171407196b61b780444bc772ce75438",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "9c0d637c0171407196b61b780444bc772ce75438",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE31",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE31",
+      "audited_tree_revision": "2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "e14b466b88601149e30ed8decb2fa753ca040beb",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE32",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE32",
+      "audited_tree_revision": "07806249f4ed3efe70b4fbf866183c32392b7853",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "400b60d4a6d99f425ee90504e6c4552227556dd1",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE33",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE33",
+      "audited_tree_revision": "1d99d73fe14d9a87126ffca2db52c69336d6099b",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "efa438d3104893c3e8aedf3817ac22167b1c681a",
+      "changed_since_previous_observation": null
+    },
+    {
+      "site": "GEMSDOE36",
+      "repository": "https://github.com/buffedlizard55-lab/GEMSDOE36",
+      "audited_tree_revision": "b90418f852615aa0974cf9a53b92fa569ed133fc",
+      "historical_evidence_refreshed": false,
+      "organizer_scores_checked": false,
+      "status": "observed",
+      "head_commit": "79ddf4aa6fd5fa93887345f4bffeb6edd9d76401",
+      "changed_since_previous_observation": null
+    }
+  ],
+  "all_reachable": true
+}

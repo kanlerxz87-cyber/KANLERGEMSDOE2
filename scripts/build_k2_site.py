@@ -23,7 +23,8 @@ def header(prefix: str, active: str) -> str:
              ('Executive summary', prefix + 'docs/k2-executive-summary.html', 'executive'),
              ('How to submit', prefix + 'docs/k2-how-to-submit.html', 'guide'),
              ('Research', prefix + 'docs/k2-research.html', 'research'),
-             ('H1 audit', prefix + 'docs/index.html', 'h1')]
+             ('Data audit', prefix + 'docs/index.html', 'data'),
+             ('H1 audit', prefix + 'docs/h1-audit.html', 'h1')]
     nav = ''.join(f'<a href="{href}" class="{("active" if key == active else "")}"'
                   + (' aria-current="page"' if key == active else '') + f'>{label}</a>'
                   for label, href, key in links)
@@ -91,6 +92,7 @@ def home(audit: dict, geom: dict, heads: dict) -> str:
 <h2>No candidate is cleared.</h2><p>K2-SCALE stopped before placement: this lane produced no TIFF, holdout result or competition upload. Other parallel artifacts remain quarantined.</p>
 <div class="panel-stats"><div class="panel-row"><span>K2 candidate file</span><strong>None generated</strong></div><div class="panel-row"><span>K2 holdout DTI / CI</span><strong>Not measured</strong></div><div class="panel-row"><span>Mandatory overlap</span><strong>At least {minimum:.2f}%*</strong></div></div>
 <a class="decision-link" href="docs/k2-research.html#geometry">Why the lane stopped <span class="arrow">→</span></a></aside></div></section>
+<section class="section-sm"><div class="shell"><div class="notice"><strong>Data restoration update — no candidate approval</strong><p>A parallel continuation restored the pinned training mirror and audited raw-channel canaries. This does not change the K2 duplicate stop or authorize a submission. <a href="docs/index.html">Open the current data and pipeline decision desk →</a></p></div></div></section>
 <section class="section-sm"><div class="shell"><div class="cards">
 <article class="card metric-card"><span class="metric-number">01 / DOWNLOAD</span><h3>New submission</h3><div class="metric-value danger">Unavailable</div><p>No unique candidate was written after the duplicate stop.</p></article>
 <article class="card metric-card"><span class="metric-number">02 / PERFORMANCE</span><h3>Leaderboard estimate</h3><div class="metric-value">Not estimable</div><p>Hidden labels and score-to-file receipts are unavailable.</p></article>

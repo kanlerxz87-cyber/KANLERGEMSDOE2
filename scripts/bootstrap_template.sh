@@ -32,7 +32,7 @@ mv .cache/audit/lattice.tif.partial .cache/audit/lattice.tif
 .venv/bin/python scripts/verify_registry_snapshot.py --manifest data/registry-lock.json
 .venv/bin/python scripts/audit_priority.py
 if [[ "${1:-}" == "--build-stack" ]]; then
-  .venv/bin/python scripts/prepare_data.py
+  .venv/bin/python scripts/build_shared_stack.py
 elif [[ $# -ne 0 ]]; then
   echo 'Use no arguments or --build-stack.' >&2; exit 2
 fi

@@ -1,60 +1,82 @@
 #!/usr/bin/env python3
-"""Stage a research TIFF through the byte-pinned shared writer. NEVER publish/approve it."""
+"""Strict research-artifact adapter around the unchanged shared template writer.
+
+Never silently thresholds or clips model outputs. Never publishes to docs/ and
+never authorizes a competition slot. The separate selector owns promotion.
+"""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
 import sys
+import tempfile
+
+import numpy as np
+import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'vendor/template/src'))
+SHARED_WRITER = ROOT / 'vendor/template/src/gems/submission.py'
 sys.path.insert(0, str(ROOT))
-import numpy as np
-from gems.submission import write_submission
+sys.path.insert(0, str(ROOT / 'vendor/template/src'))
+from gems.submission import write_submission, zip_single
 from scripts.validate_raster import validate
 
 
-def stage(prediction, template, out, *, name, note):
-    """Preserve probabilities; reject invalid inputs, paths and accidental overwrites.
-
-    Staging does not test novelty, holdout improvement or eligibility. Deliberately
-    only writes to ignored data/candidates, never a Pages download directory.
-    """
+def write_candidate(predictions, template, output, *, name, note):
+    template, output = Path(template), Path(output)
     if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', name):
-        raise ValueError('Use a nonempty alphanumeric submission slug (max 80 characters)')
+        raise ValueError('Name must be a safe model identifier (1–80 characters)')
     if not isinstance(note, str) or not note.strip() or len(note) > 140:
         raise ValueError('A nonempty note of at most 140 characters is required')
-    out = Path(out).resolve()
-    staging = (ROOT / 'data/candidates').resolve()
-    if not out.is_relative_to(staging) or out.suffix != '.tif':
-        raise ValueError('Research TIFF must be inside data/candidates with suffix .tif')
-    receipt_path = Path(str(out) + '.format.json')
-    if out.exists() or receipt_path.exists():
-        raise FileExistsError('Refusing to overwrite TIFF or format report')
-    # Shared writer validates the actual probabilities; never threshold NaN/Inf
-    # into apparently valid binary dots or clip out-of-range model output.
-    write_submission(prediction, template, out, outside='zero')
-    report = validate(out, template)
-    report.update(submission_name=name, note=note, verdict='negative',
-                  eligible_for_selector=False, ok_to_download_and_submit=False,
-                  scope='Research staging and format only; no scientific or uniqueness validation')
-    receipt_path.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
-    if not report['format_valid']:
-        raise ValueError('Staged TIFF failed format checks; see format report')
-    return report
+    output = output.resolve()
+    staging = ROOT.resolve() / 'data/candidates'
+    if output.suffix != '.tif' or not output.is_relative_to(staging):
+        raise ValueError('Write research TIFFs only inside ignored data/candidates; no symlink escapes or publication')
+    a = np.asarray(predictions)
+    if a.ndim != 2 or not np.isfinite(a).all() or ((a < 0) | (a > 1)).any():
+        raise ValueError('Raw predictions must be finite and in [0,1]; no implicit clipping or thresholding')
+    if any(p.exists() for p in (output, Path(str(output) + '.format.json'), output.with_suffix('.zip'))):
+        raise FileExistsError('Refusing to overwrite an existing candidate')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=output.parent) as temp:
+        staged = Path(temp) / output.name
+        write_submission(a, template, staged, outside='zero')
+        receipt = validate(staged, template)
+        if not receipt['format_valid']:
+            raise ValueError('Written artifact failed strict format validation')
+        staged.replace(output)
+    receipt.update(path=str(output), submission_name=name, note=note, note_chars=len(note),
+                   scope='FORMAT ONLY; scientific novelty and holdout eligibility NOT evaluated',
+                   unique_submission=None, authorized_to_submit=False, verdict='negative',
+                   ok_to_download_and_submit=False, eligible_for_selector=False,
+                   writer='vendor/template/src/gems/submission.py',
+                   writer_sha256=hashlib.sha256(SHARED_WRITER.read_bytes()).hexdigest())
+    Path(str(output) + '.format.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')
+    zip_single(output)
+    return receipt
+
+
+# Backward-compatible safe staging API; both paths enforce the same restrictions.
+stage = write_candidate
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--prediction', type=Path, required=True, help='2D probabilities .npy; not silently binarized')
-    parser.add_argument('--template', type=Path, required=True)
-    parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--name', required=True)
-    parser.add_argument('--note', required=True)
-    args = parser.parse_args()
-    report = stage(np.load(args.prediction, allow_pickle=False), args.template,
-                   args.out, name=args.name, note=args.note)
-    print(json.dumps(report, indent=2, allow_nan=False))
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('prediction', type=Path)
+    p.add_argument('output', type=Path)
+    p.add_argument('--template', type=Path, default=ROOT / 'data/sample_submission.tif')
+    p.add_argument('--name', required=True)
+    p.add_argument('--note', required=True)
+    args = p.parse_args()
+    if args.prediction.suffix == '.npy':
+        a = np.load(args.prediction, allow_pickle=False)
+    else:
+        with rasterio.open(args.prediction) as src, rasterio.open(args.template) as template:
+            if (src.count, src.shape, src.crs, src.transform) != (1, template.shape, template.crs, template.transform):
+                p.error('Prediction raster must match the template grid and be single-band')
+            a = src.read(1)
+    print(json.dumps(write_candidate(a, args.template, args.output, name=args.name, note=args.note), indent=2))
 
 
 if __name__ == '__main__':
