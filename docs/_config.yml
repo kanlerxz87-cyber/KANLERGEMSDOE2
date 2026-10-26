@@ -1,6 +1,2 @@
-title: KANLERGEMSDOE2 — DOE GEMS Fault Discovery
-description: DOE GEMS Prize #306 — Unique, validated GeoTIFF submission with automated gates (no human inspector)
-theme: minima
-plugins: [jekyll-relative-links]
-relative_links:
-  enabled: true
+title: KANLERGEMSDOE2 — Evidence-first submission audit
+description: Nine-site raster audit and submission decision. No new TIFF is currently approved.

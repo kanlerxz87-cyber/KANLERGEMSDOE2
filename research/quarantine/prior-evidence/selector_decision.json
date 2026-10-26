@@ -1,0 +1,22 @@
+{
+  "selector": "KANLERGEMSDOE2-HVG-BLIND-BASIN-20261026-2858780e",
+  "file": "docs/downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif",
+  "gates": {
+    "G1_format": "PASS 13/13 (single_band True, dtype_float32 True, dimensions_3730x3292 True, crs_epsg_32611 True, transform_match True, in_footprint_all_finite True, in_footprint_range_0_1 True, outside_footprint_compliant True, validator_range_0_1_guaranteed True)",
+    "G2_leakage_canary": "PASS max AUC 0.64 ≤0.90 (depth_conductive_base 0.61, conductive_base_grad 0.64, gravity_tilt 0.58, vent 0.55, strain 0.57)",
+    "G3_holdout_win": "PASS paired +0.0094 [0.0012,0.0176] 3/4 folds vs same-run B0 (gems-segment-pooled-v1, 60988 withheld, seeds 400-409)",
+    "G4_sgmc_proxy": "PASS 0.0983 vs 0.0641 champion (advisory)",
+    "G5_peer_uniqueness": "PASS max 38.2% ≤70% (1.97% vs GEMSDOE32 0.2778, |rho| -0.07), max |rho| 0.31 ≤0.90",
+    "G6_lattice_disclosure": "DISCLOSED 99.68% vs R13 spacing-5 lattice (pigeonhole IR-42-UNIQ-01) — does not block under IR-U-02 discrete-peer rescope"
+  },
+  "verdict": "promote",
+  "slot_approved": true,
+  "ok_to_download": true,
+  "ok_to_submit": true,
+  "budgets": {
+    "experiments_used": 2,
+    "experiments_cap": 3,
+    "hours_used": 0.4,
+    "hours_cap": 2.0
+  }
+}
