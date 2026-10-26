@@ -34,3 +34,18 @@ Scope: active branch `arena/b5b715a7-kanlergemsdoe2`, starting at `5211ac0`, the
 ## Still required
 
 The next scientific run needs an exclusive method paragraph, complete frozen surface/dot registry, and comparable baseline predictions generated fold-locally on the same whole-component split. Raw-channel canaries do not replace transformed-feature/model canaries. Official-origin/permission verification and an authenticated selector/weekly-cap check remain necessary before a real slot. Peer mirror integrity is not organizer authentication. No new approved TIFF, HOLDOUT-DTI result, reliable leaderboard estimate, or receipt exists for this continuation.
+
+## Concurrent-main integration recheck
+
+Before PR #12 could merge, main advanced through PRs #7, #8 and #9. Integrated
+`af1b44b` without weakening its quarantine or publication restrictions. Preserved
+the full original-prompt appendix added by concurrent main in README. Kept its
+legacy-command blocking and retired-result removal, and added compatibility for
+its safe `stage(...)` API. Research writes are now restricted to ignored
+`data/candidates`, including resolved-path/symlink escape checks; they cannot
+publish into arbitrary directories. The explicit fold-array metric CLI remains
+metric-only; an argument-free legacy call fails closed. The two independent
+historical code archives remain for traceability; no retired scientific assertion
+is republished. Final integrated suite: **54 tests pass**, including all concurrent
+safety regressions. Clean-index tests/build/link validation were rerun after this
+integration. No new detector or competition slot was added during resolution.

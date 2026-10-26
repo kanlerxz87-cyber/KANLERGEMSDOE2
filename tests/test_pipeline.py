@@ -76,7 +76,10 @@ class PipelineTests(unittest.TestCase):
                                dtype='float32', crs='EPSG:32611', transform=from_origin(1000, 2000, 100, 100)) as dst:
                 dst.write(np.zeros((8, 8), np.float32), 1)
             values = np.full((8, 8), .27, np.float32)
-            output = root / 'candidate.tif'
+            patcher = patch('submission_writer.ROOT', root)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+            output = root / 'data/candidates/candidate.tif'
             receipt = write_candidate(values, sample, output, name='software-fixture', note='Synthetic unit test only')
             self.assertTrue(receipt['format_valid'])
             self.assertFalse(receipt['authorized_to_submit'])
@@ -86,10 +89,10 @@ class PipelineTests(unittest.TestCase):
             with self.assertRaises(FileExistsError): write_candidate(values, sample, output, name='a', note='b')
             for value in (float('nan'), float('inf'), -.01, 1.01):
                 bad = values.copy(); bad[0, 0] = value
-                with self.assertRaises(ValueError): write_candidate(bad, sample, root / 'bad.tif', name='a', note='b')
+                with self.assertRaises(ValueError): write_candidate(bad, sample, root / 'data/candidates/bad.tif', name='a', note='b')
             with self.assertRaises(ValueError): write_candidate(values, sample, ROOT / 'docs/unapproved.tif', name='a', note='b')
-            with self.assertRaises(ValueError): write_candidate(values, sample, root / 'bad.tif', name='../bad', note='b')
-            with self.assertRaises(ValueError): write_candidate(values, sample, root / 'bad.tif', name='a', note='x' * 141)
+            with self.assertRaises(ValueError): write_candidate(values, sample, root / 'data/candidates/bad.tif', name='../bad', note='b')
+            with self.assertRaises(ValueError): write_candidate(values, sample, root / 'data/candidates/bad.tif', name='a', note='x' * 141)
 
     def test_current_published_links_resolve(self):
         from check_site import check as check_links

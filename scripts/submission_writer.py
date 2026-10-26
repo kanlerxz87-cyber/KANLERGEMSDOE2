@@ -16,23 +16,27 @@ import numpy as np
 import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_WRITER = ROOT / 'vendor/template/src/gems/submission.py'
+sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'vendor/template/src'))
 from gems.submission import write_submission, zip_single
-from validate_raster import validate
+from scripts.validate_raster import validate
 
 
 def write_candidate(predictions, template, output, *, name, note):
     template, output = Path(template), Path(output)
-    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,99}', name):
-        raise ValueError('Name must be a safe model identifier (1–100 characters)')
+    if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', name):
+        raise ValueError('Name must be a safe model identifier (1–80 characters)')
     if not isinstance(note, str) or not note.strip() or len(note) > 140:
         raise ValueError('A nonempty note of at most 140 characters is required')
-    if output.suffix.lower() != '.tif' or output.resolve().is_relative_to((ROOT / 'docs').resolve()):
-        raise ValueError('Write research TIFFs outside docs/; publishing requires a separate selector')
+    output = output.resolve()
+    staging = ROOT.resolve() / 'data/candidates'
+    if output.suffix != '.tif' or not output.is_relative_to(staging):
+        raise ValueError('Write research TIFFs only inside ignored data/candidates; no symlink escapes or publication')
     a = np.asarray(predictions)
     if a.ndim != 2 or not np.isfinite(a).all() or ((a < 0) | (a > 1)).any():
         raise ValueError('Raw predictions must be finite and in [0,1]; no implicit clipping or thresholding')
-    if output.exists():
+    if any(p.exists() for p in (output, Path(str(output) + '.format.json'), output.with_suffix('.zip'))):
         raise FileExistsError('Refusing to overwrite an existing candidate')
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=output.parent) as temp:
@@ -44,12 +48,17 @@ def write_candidate(predictions, template, output, *, name, note):
         staged.replace(output)
     receipt.update(path=str(output), submission_name=name, note=note, note_chars=len(note),
                    scope='FORMAT ONLY; scientific novelty and holdout eligibility NOT evaluated',
-                   unique_submission=None, authorized_to_submit=False,
+                   unique_submission=None, authorized_to_submit=False, verdict='negative',
+                   ok_to_download_and_submit=False, eligible_for_selector=False,
                    writer='vendor/template/src/gems/submission.py',
-                   writer_sha256=hashlib.sha256((ROOT / 'vendor/template/src/gems/submission.py').read_bytes()).hexdigest())
-    output.with_suffix('.receipt.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')
+                   writer_sha256=hashlib.sha256(SHARED_WRITER.read_bytes()).hexdigest())
+    Path(str(output) + '.format.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')
     zip_single(output)
     return receipt
+
+
+# Backward-compatible safe staging API; both paths enforce the same restrictions.
+stage = write_candidate
 
 
 def main():

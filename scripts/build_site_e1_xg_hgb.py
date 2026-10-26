@@ -1,11 +1,10 @@
-"""Compatibility entry point for rebuilding the current evidence-first site.
+#!/usr/bin/env python3
+"""Compatibility entry point; the historical E1 page is withdrawn.
 
-The historical E1 page generator contained unresolved conflict markers and
-published a download link for an artifact that is now quarantined. Use the
-main builder, which renders the E1 run card as an explicitly negative,
-research-only record with no TIFF or ZIP download.
+Always regenerate the current fail-closed public site. This intentionally does
+not rebuild any legacy candidate page or restore old download links.
 """
 from build_site import build
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     build()

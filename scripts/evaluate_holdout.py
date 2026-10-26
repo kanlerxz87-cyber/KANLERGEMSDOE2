@@ -19,6 +19,9 @@ from gems.holdout import SegmentHoldout
 
 
 def main():
+    if len(sys.argv) == 1:
+        print('BLOCKED: explicit independent fold predictions and a frozen baseline are required; no legacy run is authorized', file=sys.stderr)
+        raise SystemExit(2)
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--candidate', type=Path, nargs=4, required=True, help='NW NE SW SE binary .npy maps')
     p.add_argument('--baseline', type=Path, nargs=4, required=True)

@@ -10,5 +10,5 @@ class ArchivedSubmissionTests(unittest.TestCase):
         assert (a>0).sum()==37654
         r=json.loads(pathlib.Path(str(tif)+".receipt.json").read_text()); assert r["all_pass"] and r["note_chars"]<=140
     def test_lane_run_card(self):
-        r=json.loads((ROOT/"evidence/run_card_e1_xg_hgb.json").read_text())
+        r=json.loads((ROOT/"research/quarantine/session-5211ac0/evidence/run_card_e1_xg_hgb.json").read_text())
         assert r["verdict"]=="negative" and len(r["submission_note"])<=140 and r["raster_sha256"]
