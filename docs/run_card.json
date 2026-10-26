@@ -1,14 +1,14 @@
 {
-  "hypothesis": "Research lead only: persistent ECOSTRESS L2 surface-temperature anomalies may help locate concealed geothermal-fluid conduits; no candidate was implemented or tested.",
-  "mechanism": "Scene-normalized temperature residuals and repeated-observation persistence may expose shallow fluid upflow associated with an unmapped fault, even without a preserved scarp.",
-  "non_fault_mimic": "Solar/topographic illumination, soil moisture and vegetation stress, lithologic emissivity, wildfire, mining, and irrigation.",
+  "hypothesis": "Historical champions may be variations of the same prediction support, not independent discovery lanes.",
+  "mechanism": "Decode nine pinned historical rasters; compare ranks and directional Euclidean dot distances in the template footprint.",
+  "non_fault_mimic": "Common placement lattice or survey/terrain sampling support can mimic independent geological agreement.",
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": "shared evaluator pinned; not run on a candidate",
+    "evaluator_version": "gems-segment-pooled-v1 (pinned, not run on a candidate)",
     "value": null,
     "n_withheld_positive_pixels": null,
     "ci95": null,
-    "reason": "No exclusive method lane for this review; organizer-authenticated bytes, fold-local cache, and a frozen comparable current best are not established."
+    "reason": "No assigned method lane; no new detector or fold-local feature cache restored; no frozen comparable current best."
   },
   "registry": {
     "scope": "nine historical priority champions only; NOT full registry",
@@ -41,13 +41,15 @@
     "prior_blindbasin_authorization": "withdrawn",
     "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
   },
+  "pipeline_review": "pipeline-review.md",
   "blockers": [
+    "Legacy experiment paths withdrawn; lane-specific shared-template integration still needed",
     "Missing exclusive method paragraph",
     "Shared-template ambiguity between peer repositories",
     "No organizer receipts",
     "No complete frozen registry surface set",
-    "Organizer-authenticated training bytes, fold-local cache, and a comparable holdout-best are not established",
-    "Competition data page redirects to login; no authenticated DrivenData session",
-    "Public leaderboard snapshot at 2026-10-26 21:52:09 UTC showed #1 0.4437; not a project score or submission receipt"
+    "No fold-local cache or comparable holdout-best restored",
+    "Official data origin not authenticated; no DrivenData session",
+    "Contradictory claimed leaderboard bests 0.3195 and 0.4413; neither verified"
   ]
 }

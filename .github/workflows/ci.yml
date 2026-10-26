@@ -1,7 +1,7 @@
 name: Evidence and format checks
 on:
   push:
-    branches: [main, arena/232ecd8d-kanlergemsdoe2]
+    branches: [main, arena/ac781040-kanlergemsdoe2]
   pull_request:
     branches: [main]
 permissions:
@@ -16,6 +16,7 @@ jobs:
           python-version: '3.11'
           cache: pip
       - run: pip install -r requirements.txt
+      - run: python -m compileall -q scripts src
       - run: python scripts/run_tests.py
       - run: python scripts/build_site.py
       - run: git diff --exit-code -- docs research/run_card.json

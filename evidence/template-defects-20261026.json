@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-26T22:05:20.521699+00:00",
+  "checked_utc": "2026-10-26T22:08:32.535273+00:00",
   "scope": "synthetic evaluator regression only; not a feature canary, holdout, candidate or slot approval",
   "shared_commit": "1d99d73fe14d9a87126ffca2db52c69336d6099b",
   "evaluator_version": "GEMSDOE33-HIDE-AND-RECOVER-v1.0",
