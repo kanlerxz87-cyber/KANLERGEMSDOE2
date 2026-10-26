@@ -1,8 +1,9 @@
-name: Audit tests
+name: Evidence and format checks
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,6 +18,10 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-lock.txt
       - run: python -m pip install -r requirements-lock.txt
+      - run: python -m compileall -q scripts src
       - run: python -m pytest -q
+      - run: python scripts/run_tests.py
       - run: node --test tests/test_leaderboard_script.cjs
       - run: bash -n scripts/bootstrap_template.sh scripts/download_competition_data.sh
+      - run: python scripts/build_site.py
+      - run: git diff --exit-code -- docs research/run_card.json evidence/run_card.json

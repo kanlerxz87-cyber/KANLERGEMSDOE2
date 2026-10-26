@@ -2,7 +2,7 @@
 
 ## Current instruction: DO NOT SUBMIT
 
-There is **no new candidate TIFF or ZIP** to download. `docs/data/run-card.json` is the one negative run card, not a submission. Links to other sites' rasters are research references only and fail this checkout's literal novelty comparisons. The following checklist is conditional documentation for a *future* candidate, not authorization to select a slot.
+There is **no approved submission TIFF or ZIP** to download. This H1 lane produced no TIFF; research artifacts from parallel lanes remain quarantined. `docs/data/run-card.json` is the one negative run card, not a submission. Links to other sites' rasters are research references only and fail this checkout's literal novelty comparisons. The following checklist is conditional documentation for a *future* candidate, not authorization to select a slot.
 
 ## What the organizer says
 

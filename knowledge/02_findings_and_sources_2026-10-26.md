@@ -2,7 +2,7 @@
 
 ## Decision
 
-**No file in this checkout is authorized or available for submission.** We attempted one preregistered research probe, used no weekly slot, and stopped at the required pre-placement duplicate check. No candidate TIFF was written; its holdout DTI, CI, hash and file-format validation are therefore **not measured**. The next session must not silently retune or resume this lane.
+**No file in this checkout is authorized for submission.** We attempted one preregistered research probe, used no weekly slot, and stopped at the required pre-placement duplicate check. No candidate TIFF was written; its holdout DTI, CI, hash and file-format validation are therefore **not measured**. The next session must not silently retune or resume this lane.
 
 ## What the competition actually evaluates
 
