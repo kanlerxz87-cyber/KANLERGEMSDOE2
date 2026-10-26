@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-# This restores only the pinned sample/catalogue and educational historical references.
-# It deliberately does NOT claim that the training features or external caches are restored.
-python scripts/restore_audit.py
-if [[ ! -s data/training_features.tif ]]; then
-  echo 'BLOCKED: training_features.tif absent. See pinned peer data manifest; no synthetic fallback is authorized.' >&2
-  exit 1
-fi
-echo 'Training file exists; verify grid, checksum and origin separately with prepare_data.py and the source manifest.'
+# Pinned public peer mirrors, not organizer-authenticated. Large artifacts remain
+# under ignored data/. No credentials, synthetic fallback, or competition upload.
+PYTHON="${PYTHON:-python}"
+"$PYTHON" scripts/restore_core_data.py --include-external
+"$PYTHON" scripts/restore_competition_data.py
+"$PYTHON" scripts/prepare_data.py

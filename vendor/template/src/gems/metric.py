@@ -186,7 +186,18 @@ def dti_score_masked(
 
 
 def marginal_inclusion_threshold(current_dti: float, alpha: float = ALPHA) -> float:
-    return (alpha * current_dti) / (1.0 - alpha * current_dti)
+    """Isolated single-unit-prediction break-even credit when beta = 1 - alpha.
+
+    For one previously uncovered truth pixel, let k be the added TP credit.
+    The added components are (k, 1-k, -k), so the denominator increases by
+    alpha and the DTI improves iff k > alpha * current_dti.  This identity is
+    NOT a general decision rule for overlapping predictions or multiple truths.
+    """
+    if not np.isfinite(current_dti) or not 0 <= current_dti <= 1:
+        raise ValueError("current_dti must be finite and in [0,1]")
+    if not np.isfinite(alpha) or not 0 <= alpha <= 1:
+        raise ValueError("alpha must be finite and in [0,1]")
+    return float(alpha * current_dti)
 
 
 def verify_organizer_worked_example() -> dict[str, float | bool]:

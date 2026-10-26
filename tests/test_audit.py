@@ -74,24 +74,32 @@ class EvidenceTests(unittest.TestCase):
             b=(ROOT/'research/snapshots'/f['repo']/f['path']).read_bytes()
             self.assertEqual(hashlib.sha256(b).hexdigest(),f['sha256'])
     def test_negative_card_has_no_upload(self):
-        # Invariant (updated for EXT lane): a negative card may name a real
-        # research raster, but must never authorize upload; selector agrees.
         c=json.loads((ROOT/'research/run_card.json').read_text())
         self.assertEqual(c['verdict'],'negative');self.assertFalse(c['ok_to_download_and_submit'])
-        note=c.get('submission_note',c.get('note',''))
-        self.assertLessEqual(len(note),140)
-        if c.get('raster_sha256'):
-            sel=json.loads((ROOT/'evidence/selector_decision_ext.json').read_text())
-            self.assertFalse(sel['ok_to_submit']);self.assertFalse(sel['slot_approved'])
-            self.assertEqual(sel['verdict'],'negative')
+        self.assertIsNone(c['raster_sha256']);self.assertIsNone(c['holdout']['value'])
+        self.assertLessEqual(len(c['note']),140)
     def test_site_does_not_offer_fake_tiff(self):
-        # Any published TIF must be the run card's exact raster, presented
-        # with its negative verdict on the front page (never as approved).
-        c=json.loads((ROOT/'research/run_card.json').read_text())
-        index=(ROOT/'docs/index.html').read_text()
-        self.assertIn('OK TO SUBMIT AS AN EXPECTED IMPROVEMENT OVER 0.2778',index)
-        for tif in (ROOT/'docs').rglob('*.tif'):
-            self.assertEqual(hashlib.sha256(tif.read_bytes()).hexdigest(),c['raster_sha256'])
+        self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
+        self.assertIn('No new TIFF is approved', (ROOT/'docs/index.html').read_text())
+
+    def test_withdrawn_pages_cannot_authorize_legacy_candidate(self):
+        docs=ROOT/'docs'
+        page=(docs/'lane-e1-xg-hgb.html').read_text().lower()
+        legacy_builder=(ROOT/'scripts/build_site_e1_xg_hgb.py').read_text().lower()
+        self.assertIn('from build_site import build',legacy_builder)
+        self.assertNotIn('<<<<<<<',legacy_builder)
+        self.assertNotIn('=======',legacy_builder)
+        self.assertNotIn('>>>>>>>',legacy_builder)
+        self.assertIn('do not download or submit',page)
+        self.assertNotIn('authorized submission gate',page)
+        self.assertNotIn('downloads/kanler',page)
+        for stale in ('canaries.json','experiments_oof.json','holdout_template.json',
+                      'run_card_e1_xg_hgb.json','uniqueness_E1.json'):
+            self.assertFalse((docs/stale).exists(),f'stale public evidence remains: {stale}')
+        for html_file in docs.glob('*.html'):
+            text=html_file.read_text().lower()
+            self.assertNotIn('kanlergemsdoe2-blindbasin-vent-gravity',text)
+            self.assertNotIn('all automated gates pass',text)
     def test_audit_claim_matches_pair_records(self):
         d=json.loads((ROOT/'research/raster_audit.json').read_text())
         self.assertEqual(len(d['format_reports']),9)
@@ -128,17 +136,7 @@ class IntegrationSafetyTests(unittest.TestCase):
         self.assertFalse(decision['slot_approved'])
     def test_archived_tiffs_not_published(self):
         self.assertTrue(list((ROOT/'research/quarantine').rglob('*.tif')))
-        # Quarantined artifacts must never appear under docs/; a current-lane
-        # TIF may be published ONLY with a passing validator receipt and a
-        # non-promoting run card (owner requires an obvious download file).
-        quarantined={p.name for p in (ROOT/'research/quarantine').rglob('*.tif')}
-        import json as _json
-        card=_json.loads((ROOT/'evidence/run_card.json').read_text())
-        for tif in (ROOT/'docs').rglob('*.tif'):
-            self.assertNotIn(tif.name,quarantined)
-            receipt=_json.loads(pathlib.Path(str(tif)+'.receipt.json').read_text())
-            self.assertTrue(receipt['all_pass'])
-            self.assertFalse(card['ok_to_download_and_submit'])
+        self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
     def test_active_source_has_no_placeholder_canary(self):
         self.assertFalse((ROOT/'src/features.py').exists())
         self.assertTrue((ROOT/'vendor/template/src/gems/holdout.py').exists())

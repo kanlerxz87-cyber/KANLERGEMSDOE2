@@ -565,6 +565,8 @@ class SegmentHoldout:
             negative = np.flatnonzero(
                 valid & ~fold["visible"] & (distance_transform_edt(~truth) >= 9)
             )
+            if not len(positive) or not len(negative):
+                raise ValueError(f"Canary fold {fold['name']} has no positive or background samples")
             positive = rng.choice(positive, min(len(positive), max_per_class), replace=False)
             negative = rng.choice(negative, min(len(negative), max_per_class), replace=False)
             samples.append((np.r_[positive, negative], len(positive), len(negative)))
@@ -580,6 +582,8 @@ class SegmentHoldout:
                 x = np.where(np.isfinite(x), x, 0)
                 y = np.r_[np.ones(n_positive), np.zeros(n_negative)]
                 auc = float(roc_auc_score(y, x))
+                if not np.isfinite(auc):
+                    raise ValueError(f"Undefined canary AUC for {name!r} in {fold['name']}")
                 details.append(
                     {
                         "fold": fold["name"],
@@ -591,6 +595,8 @@ class SegmentHoldout:
                 values.append(x)
                 labels.append(y)
             auc = float(roc_auc_score(np.concatenate(labels), np.concatenate(values)))
+            if not np.isfinite(auc):
+                raise ValueError(f"Undefined pooled canary AUC for {name!r}")
             suspicious = (
                 max([max(auc, 1 - auc)] + [max(x["auc"], 1 - x["auc"]) for x in details]) > 0.90
             )
@@ -598,6 +604,7 @@ class SegmentHoldout:
         return {
             "diagnostic": "LEAKAGE-CANARY AUC, not a DTI or organizer score",
             "evaluator_version": MTR_EVALUATOR_VERSION,
+            "canary_version": "gems-feature-canary-v1.1-fail-closed",
             "threshold": 0.90,
             "two_polarities_checked": True,
             "passed": not any(x["leakage_suspected"] for x in rows.values()),

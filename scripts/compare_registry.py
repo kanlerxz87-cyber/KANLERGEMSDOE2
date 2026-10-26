@@ -1,5 +1,5 @@
 """Measure historical rank correlation and directional dot overlap, never infer leaderboard performance."""
-import json, pathlib
+import hashlib, json, pathlib
 import numpy as np
 import rasterio
 from scipy.spatial import cKDTree
@@ -23,7 +23,14 @@ def main():
     records=json.loads((ROOT/'research/raster_manifest.json').read_text()); arrays={};reports=[]
     with rasterio.open(ROOT/'data/sample_submission.tif') as src:mask=np.isfinite(src.read(1)) & (src.read_masks(1)>0)
     for r in records:
-        path=ROOT/r['local']; reports.append({'site':r['site'],**validate(path,ROOT/'data/sample_submission.tif')})
+        path=ROOT/r['local']
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=r['sha256']:
+            raise ValueError(f'Historical reference hash mismatch: {path}')
+        report=validate(path,ROOT/'data/sample_submission.tif')
+        if not report['format_valid']:
+            raise ValueError(f'Historical reference failed strict grid/range checks: {path}')
+        report['path'] = r['local']  # portable evidence, not a machine-specific absolute path
+        reports.append({'site':r['site'],**report})
         with rasterio.open(path) as src:arrays[r['site']]=src.read(1)
     pairs=[]
     for a in arrays:
