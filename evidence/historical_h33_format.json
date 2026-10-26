@@ -1,0 +1,36 @@
+{
+  "file": ".cache/template32/.cache/registry/GEMSDOE32/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+  "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "footprint_template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "checks": {
+    "tif_extension_and_driver": true,
+    "single_band": true,
+    "float32": true,
+    "epsg_32611": true,
+    "matching_crs_shape_transform": true,
+    "finite_inside_footprint": true,
+    "inside_in_0_1": true,
+    "zero_outside": true,
+    "whole_array_finite_in_0_1": true
+  },
+  "local_format_pass": true,
+  "outside_mode": "zero",
+  "whole_array_finite": true,
+  "nonfinite_total": 0,
+  "crs": "EPSG:32611",
+  "shape": [
+    3730,
+    3292
+  ],
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "portal_acceptance": null,
+  "ok_to_submit": false,
+  "note": "Local byte validation is not scientific promotion or a portal receipt. The written specification says null/NaN outside; zero-outside acceptance is unresolved."
+}

@@ -1,0 +1,9 @@
+# Local caches and environments are reconstructed from pinned inputs, never committed.
+.cache/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+data/raw/
+data/prepared/
+*.partial
