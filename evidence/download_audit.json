@@ -1,0 +1,48 @@
+[
+  {
+    "file": "docs/downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-nan.tif",
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "transform_match": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_range_0_1": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "outside_footprint_compliant": true,
+      "emitted_positive_pixels": 37654,
+      "in_footprint_finite_pixels": 5167373,
+      "full_grid_finite_pixels": 5167373,
+      "validator_range_0_1_guaranteed": true,
+      "zero_sentinel": true
+    },
+    "all_checks_passed": true,
+    "sha256": "6ec1dc9d0f9bc002dbd25ac486d6cd5e17c6cdf4829e70368cce2077b9d67ceb",
+    "bytes": 161693
+  },
+  {
+    "file": "docs/downloads/kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif",
+    "checks": {
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "transform_match": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_range_0_1": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "outside_footprint_compliant": true,
+      "emitted_positive_pixels": 37654,
+      "in_footprint_finite_pixels": 5167373,
+      "full_grid_finite_pixels": 12279160,
+      "validator_range_0_1_guaranteed": true,
+      "zero_sentinel": true
+    },
+    "all_checks_passed": true,
+    "sha256": "2858780ea1f6729be234dc5e5e0b6e4d1b8f4f9710166a80939b8a3cce1df8f4",
+    "bytes": 120211
+  }
+]

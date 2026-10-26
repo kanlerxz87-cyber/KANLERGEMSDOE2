@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypotheses — KANLERGEMSDOE2</title>
+<style>
+  :root{--bg:#0b1220;--fg:#e2e8f0;--muted:#94a3b8;--accent:#22d3ee;--ok:#22c55e;--card:#1e293b;--border:#334155}
+  body{margin:0;font:16px/1.6 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+  a{color:var(--accent)} .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:10px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .badge{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase}
+  .ok{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+  .no{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+</style>
+</head>
+<body>
+<div class="wrap" style="padding:14px 0"><a href="../index.html">← Executive Summary</a></div>
+<main class="wrap">
+<h1>3–5 Candidate Geological Hypotheses Ranked</h1>
+<p class="card" style="color:#94a3b8">Each entry names: specific layer(s), physical signature (edge/curvature transform), why it should catch catalogue-missing faults, and how it differs from already-implemented. Ranked by expected DTI lift vs implementation cost. Top candidate is shipped; others are pre-registered for next slots. No submission slot is spent without a fold-local HOLDOUT-DTI win with paired 95% CI >0.</p>
+
+<div class="card">
+<h3>How ranking was done</h3>
+<ul>
+  <li><strong>Expected lift</strong> estimated from single-feature HOLDOUT-DTI canaries + published holdouts of analogous lanes in GEMSDOE31/32/36 (labeled HOLDOUT-DTI, not live). <strong>Cost</strong> = external data bulk + compute + catalogue-leakage risk.</li>
+  <li>All use buffered whole-segment hide-and-recover (buffer 6px, pooled DTI α0.2/β0.8/R3) and mask visible faults pixel-exactly. Feature construction uses <em>only</em> visible faults — withheld segments never contribute to the surface before scoring.</li>
+</ul>
+</div>
+
+<table>
+<thead><tr><th>Rank</th><th>Hypothesis & Layers</th><th>Physical signature</th><th>Why catalogue-missing?</th><th>Differs from prior</th><th>Expected lift / Cost</th></tr></thead>
+<tbody>
+<tr style="background:rgba(34,197,94,.08)">
+  <td><span class="badge ok">1 — SHIPPED<br>HVG-BLIND-BASIN</span></td>
+  <td><strong>Blind Basin Hydrothermal Conduit</strong><br>Layers: <em>depth-to-conductive-base</em> (training_features b2), <em>isostatic gravity anomaly + slope</em> (b8/b9), <em>dilatation/shear strain</em> (b5-7), <em>GDR #1391 vent seeds</em> (external free, https://gdr.openei.org/submissions/1391), <em>magnetic TMI vertical slope</em> (b12)</td>
+  <td>Multi-scale Sobel gradient magnitude on conductive-base depth (≥2 m/m transition) × tilt-angle zero-crossing on gravity (Fourgani pseudo-tilt) → edge; Dijkstra least-cost + MST vent connectivity on conductivity/gravity resistance → conduit; fused by CELF 300m max-coverage</td>
+  <td>USGS/INGENIOUS catalogue is scarps-biased (lidar). ~45% of Walker Lane geothermal faults are <em>blind</em> under 100–500 m Q-al cover — no scarp, but they warp the conductive-base and gravity field and feed aligned springs. Vent-anchored graph finds them where scarp detectors are blind.</td>
+  <td>H19-5 lineage (GEMSDOE24/25/27/28/30/32) is lidar-scarp-only; GEMSDOE36/33 vent graphs were <em>unvalidated</em> or without conductive-base. This lane is the first to tie <em>subsurface</em> potential-field edges to <em>validated</em> holdout win (0.1427 vs 0.1332, +7%).</td>
+  <td><strong>+7.1% HOLDOUT-DTI</strong> (3/4 folds); PROJECTION 0.334 ±0.038<br>Cost: <strong>Medium</strong> — GDR #1391 is single CSV, no 1m DEM, CPU-trainable</td>
+</tr>
+<tr>
+  <td>2<br>Next slot</td>
+  <td><strong>Piedmont Junction Crest-Bar (PJC)</strong><br>Layers: <em>1m 3DEP lidar DEM</em> (free via <code>1m_DEM_links.csv</code> + 3DEP bulk https://apps.nationalmap.gov/lidar-explorer/), <em>detrended elevation slope</em> (b3/b4), <em>topographic position index (TPI)</em>, <em>curvature</em></td>
+  <td>Scale-concordance edge: crest vs toe curvature agreement across 10/50/200m windows + slope-break (>8°) + openness valley-bottom suppression → piedmont fault scarp line integral; CELF 300m</td>
+  <td>Catalogue misses low-relief (0.5–3 m) piedmont scarps where alluvium buries bedrock. Human mappers skip them; 1m lidar sees them at multiple scales but 100m GeoDAWN does not.</td>
+  <td>GEMSDOE24 DPRF1 & 27 H31-DRCG touched piedmont but without 1m lidar or multi-scale agreement; H31-X (GEMSDOE31) claimed 0.166 HOLDOUT-DTI on this idea but needs 1m DEM bulk download.</td>
+  <td><strong>+5–9% est.</strong> (GEMSDOE31 H31-X 0.166 vs 0.133) but unconfirmed here<br>Cost: <strong>High</strong> — 3DEP 1m tiles are ~TB bulk, needs tiling + GPU</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><strong>Potassium Alteration Halo (THK)</strong><br>Layers: <em>GeoDAWN radiometric K/Th/U, total count</em> (b17-19, training_features), <em>mag RTP</em> (b10), <em>conductivity</em> (b1)</td>
+  <td>Hydrothermal K-enrichment: K/Th high + Th/U low halo edge (Canny on K/Th ratio) co-located with magnetic low (alteration demagnetization) → alteration lineament</td>
+  <td>Alteration halos are chemically mapped, not morphologically. INGENIOUS focused on structure, not chemistry; vent-proximal halos are uncatalogued but correlate with blind permeability.</td>
+  <td>GEMSDOE30 GDX-1 attempted radiometric fusion but failed holdout (0.119 vs 0.136); GEMSDOE33 RADLIN was duplicate-stopped, not efficacy-tested.</td>
+  <td><strong>+2–6%</strong><br>Cost: <strong>Low</strong> — all layers already in <code>training_features.tif</code></td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><strong>Transtensional Step-Over Breach (TSO)</strong><br>Layers: <em>strain principal axes</em> (b5-7), <em>magnetic lineament orientation</em> (b10-13), <em>detrended elevation</em> (b3)</td>
+  <td>Dilation tendency: resolved normal stress on pre-existing lineament from GNSS strain azimuth → high where 45° to σ3; relay-ramp curvature between en-echelon scarps → breach fault predictor</td>
+  <td>Step-over breach faults are <50 m offset, below mapper resolution but critical for geothermal connectivity between two mapped faults.</td>
+  <td>GEMSDOE33 H33d-analog tip-stepover (0.2632) probed tips geometrically, not with strain mechanics; GEMSDOE36 MTO-36 ortho-contact was negative (0.067).</td>
+  <td><strong>+1–4%</strong><br>Cost: <strong>Low-Medium</strong></td>
+</tr>
+<tr>
+  <td>5 — Negative control</td>
+  <td><strong>Anisotropic Stream Channel (ASC)</strong><br>Layers: <em>1m DEM flow accumulation, channel sinuosity</em></td>
+  <td>Drainage offset / wind-gap alignment along fault — classic geomorphology</td>
+  <td>Channel offsets are mapper-visible, so catalogue already captures them; expecting no lift — useful negative to prove blind-basin specificity.</td>
+  <td>GEMSDOE28 S19-ASCP (0.080 vs 0.141 baseline) already negative; retained as negative control.</td>
+  <td><strong>~ -5% (negative)</strong><br>Cost: Medium</td>
+</tr>
+</tbody>
+</table>
+
+<div class="card">
+<h3>What would be needed to validate #2–5 without new external data?</h3>
+<ul>
+  <li><strong>#2 PJC:</strong> Needs 1m 3DEP DEM tiles for the GeoDAWN footprint. Free & official: <a href="https://apps.nationalmap.gov/lidar-explorer/">USGS 3DEP LidarExplorer</a> + bulk links in <code>1m_DEM_links.csv</code> (competition data) and <a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7">ScienceBase GeoDAWN area</a>. Obtainable via <code>scripts/download_competition_data.sh</code> on unrestricted host; tiled to 100m stack with <code>scripts/prepare_data.py</code>.</li>
+  <li><strong>#3 THK:</strong> No new data — uses bands already in <code>training_features.tif</code>. Validate immediately on holdout.</li>
+  <li><strong>#4 TSO:</strong> No new data — strain already in <code>training_features.tif</code> (dilatation/shear). Needs orientation field derivation (structure tensor).</li>
+  <li>All lanes must pass leakage canary (AUC ≤0.90) before trusting holdout.</li>
+</ul>
+</div>
+
+<p style="color:#94a3b8;font-size:13px">Pre-registration: <a href="../knowledge/preregistration-blindbasin.md">knowledge/preregistration-blindbasin.md</a> · Run card: <a href="../evidence/run_card.json">evidence/run_card.json</a> · Evaluator: GEMSDOE32-HIDE-RECOVER-v3.0 + gems-segment-pooled-v1 (60,988 withheld, 4 folds, 200 blocks, seeds 400–409).</p>
+</main>
+</body>
+</html>

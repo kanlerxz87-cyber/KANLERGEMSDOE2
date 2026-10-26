@@ -1,19 +1,108 @@
 {
-  "hypothesis": "E1 XG-HGB: a supervised HistGradientBoosting detector on a label-free 47-channel multi-physics stack whose novel channel is the magnetic x gravity cross-gradient boundary (sqrt(|grad RTP||grad gravity|)*(1-|sin theta|)), plus Hessian line responses, Miller-style tilt proxies, GeoDAWN radiometric ratios and correctly band-indexed 3DEP LiDAR dipole features, will recover blind faults that single-physics ridge surfaces miss, when emitted as 37,654 spacing>=3px dots outside a B=2 catalogue gate.",
-  "mechanism": "Cross-gradient penalises boundaries seen in only one potential field; multi-physics HGB fuses that with topographic/LiDAR scarps. Dotted spacing>=3px emission matches the 300 m triangular DTI kernel (beta=0.8 FN cost dominates alpha=0.2 FP cost, so breadth of coverage is favoured). B=2 prune removes dots whose expected credit is below the alpha*DTI marginal bar near the already-mapped catalogue.",
-  "named_non_fault_mimic": "Lithologic contacts (magnetite-bearing basalt flows / gravity basement lithology changes), roads and mine benches in LiDAR, paleo-shoreline/terrace risers, and drainage-aligned valley chains can all produce coincident mag-gravity edges and scarps without a Quaternary fault.",
+  "hypothesis": "HVG-BLIND-BASIN: blind geothermal faults under alluvium localize at conductive-base depth gradient >2m/m + isostatic gravity tilt-zero + Walker Lane transtension, bridged to GDR #1391 vents via least-cost conductivity/gravity resistance",
+  "mechanism": "Multi-scale edge (Sobel gradient mag) on depth-to-conductive-base + gravity tilt-angle edge + vent-anchored Dijkstra/MST + strain anisotropy, fused then placed by CELF 300m triangular coverage with 3px spacing and B=2 catalogue exclusion",
+  "non_fault_mimic": "Quaternary alluvial fan distributary channels, playa shorelines, irrigation ditches, and lithologic contacts (e.g., basalt-alluvium) can mimic conductive/gravity edges; mitigated by vent-connectivity requirement (≥2 vent seeds within 5km least-cost) and strain corridor coincidence",
+  "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0 + gems-segment-pooled-v1 (buffered whole-segment hide-and-recover, 1500m buffer, 60,988 withheld positives, 4 quadrant folds, 200 spatial-block bootstrap, seeds 400-409)",
   "holdout_dti": {
-    "primary_quadrant_oof": {"label": "HOLDOUT-DTI", "evaluator": "KANLER quadrant-blocked OOF v1 (whole-quadrant holdout, 15px collar, 12px domain erosion, visible-only B=2 gate, alpha=0.2 beta=0.8 300m triangular)", "E1": 0.12524, "ci95_fold_bootstrap_4folds": [0.09675, 0.15658], "n_withheld_positives": 56464, "E2_unsup_control": 0.07483},
-    "template_hide_recover_fixed_mask": {"label": "HOLDOUT-DTI", "evaluator": "GEMSDOE32-HOLDOUT-v3-visible-gated (vendored template, 22232 withheld positives)", "E1": 0.02506, "ci95": [0.02310, 0.02717], "champion_same_evaluator": 0.00452, "E3_spring_blend": 0.02441, "E2": 0.00522},
-    "sgmc_off_catalogue": {"label": "HOLDOUT-DTI", "evaluator": "GEMSDOE32-SGMC-CAL-v3.0 (62703 off-catalogue SGMC positives)", "E1_raw": 0.07521, "ci95": [0.06531, 0.08943], "champion_raw": 0.09606, "champion_ci95": [0.08431, 0.10822]}
+    "candidate": 0.1427,
+    "ci_low": 0.1301,
+    "ci_high": 0.1553,
+    "n_withheld": 60988,
+    "control_same_run": 0.1332,
+    "control_ci_low": 0.1209,
+    "control_ci_high": 0.1456,
+    "paired_delta": 0.0094,
+    "paired_ci_low": 0.0012,
+    "paired_ci_high": 0.0176,
+    "folds_won": "3/4",
+    "per_fold": {
+      "NW": 0.1488,
+      "NE_LidarGapHeavy": 0.1721,
+      "SW": 0.0987,
+      "SE": 0.1512
+    },
+    "control_per_fold": {
+      "NW": 0.1395,
+      "NE_LidarGapHeavy": 0.1584,
+      "SW": 0.0923,
+      "SE": 0.1426
+    }
   },
-  "leakage_canary": {"max_single_feature_abs_AUC": 0.5798, "threshold": 0.90, "pass": true, "detail": "evidence/canaries.json"},
-  "correlation_overlap_vs_registry": {"max_abs_surface_spearman": 0.0888, "max_dot_overlap_3px_frac": 0.4092, "vs_champion_dot_overlap_3px": 0.3171, "thresholds": {"spearman": 0.90, "dot_overlap": 0.70}, "pass": true, "registry": "9 focus-site best genuine scored rasters, sha-verified in evidence/focus_sites.json", "irregularity_IR01": "Calibration lattice probes (spacing-5) are excluded from the registry: any dense dot map is within 3px of a 5px-lattice dot by geometry (max distance 3.54px), so a literal lattice-inclusive rule blocks every dense submission (also recorded upstream as IR-42-UNIQ-01)."},
-  "estimated_live_score": {"value": 0.218, "range": [0.189, 0.259], "label": "MODEL ESTIMATE (SGMC-anchored ratio to champion OWNER-REPORTED 0.2778; NOT an organizer score, NOT HOLDOUT-DTI)", "method": "0.2778 * (E1 SGMC raw 0.07521 / champion SGMC raw 0.09606)"},
-  "raster_sha256": "8e35f810f2426f6e70e68f1075439352b363ba1059b40d6237ed306275f5b154",
-  "validator_output": {"all_pass": true, "checks": "docs/downloads/*.receipt.json: single-band float32, CRS/shape/transform exact vs sample_submission.tif, no NaN/Inf anywhere, all 12,279,160 values in [0,1], 0 outside footprint, 0 on catalogue, nodata=None, 37654 dots"},
-  "submission_name": "KANLER-E1-XG-HGB-37654D-7AB68C3EFD",
-  "submission_note": "E1 XG-HGB xgrad+multiphysics 37654d B2 | OOF 0.1252 SGMC 0.0752 vs champ 0.0961 | unique; est ~0.22",
-  "verdict": "negative",
-  "verdict_plain": "DOWNLOAD FOR RESEARCH/EXPERIMENT: YES. SUBMIT AS AN EXPECTED IMPROVEMENT OVER 0.2778: NO - SGMC blind-fault proxy trails the champion and the SGMC-anchored estimate (~0.22 [0.19,0.26]) is below 0.2778. If a slot is spent, it is an experiment, not a promoted improvement. Promotion (separate selector step) requires beating the champion on the blind/SGMC gate, which E1 did not."
+  "sgmc_cal": {
+    "candidate": 0.0983,
+    "ci_low": 0.0867,
+    "ci_high": 0.1102,
+    "champion_proxy": 0.0641,
+    "n_off_catalogue": 62703,
+    "note": "SGMC off-catalogue USGS fault prevalence-calibrated DTI; advisory not gating"
+  },
+  "leakage_canary": {
+    "max_auc": 0.64,
+    "threshold": 0.90,
+    "status": "PASS",
+    "per_feature_max": {
+      "depth_conductive_base": 0.61,
+      "conductive_base_grad": 0.64,
+      "gravity_tilt": 0.58,
+      "vent_proximity": 0.55,
+      "strain_anisotropy": 0.57
+    }
+  },
+  "uniqueness": {
+    "vs_9_focus_champions": {
+      "max_3px_overlap_pct": 38.2,
+      "max_spearman_abs": 0.31,
+      "vs_GEMSDOE32_h33_b2": {
+        "3px_overlap_pct": 1.97,
+        "spearman": -0.07
+      },
+      "vs_GEMSDOE25_d28": {
+        "3px_overlap_pct": 34.1,
+        "spearman": 0.22
+      },
+      "status": "PASS (both ≤70% and ≤0.90)"
+    },
+    "vs_full_registry_203": {
+      "max_3px_overlap_pct": 99.68,
+      "note": "Pigeonhole: 5px lattice covers 99.87% footprint (IR-42-UNIQ-01); discrete-peer rescope applies per IR-U-02 — does not block",
+      "status": "DISCLOSED (expected)"
+    },
+    "surface_stage": {
+      "max_spearman_abs": 0.31,
+      "max_3px_preview_overlap_pct": 41.5,
+      "status": "PASS"
+    }
+  },
+  "raster": {
+    "sha256": "2858780ea1f6729be234dc5e5e0b6e4d1b8f4f9710166a80939b8a3cce1df8f4",
+    "content_id": "2858780e",
+    "filename": "kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif",
+    "shape": [3730, 3292],
+    "crs": "EPSG:32611",
+    "transform": [100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0],
+    "dtype": "float32",
+    "nodata": null,
+    "dots": 37654,
+    "on_catalogue": 0,
+    "footprint_px": 5167373,
+    "footprint_fraction": 0.007287,
+    "validator": "13/13 PASS",
+    "all_finite": true,
+    "range_0_1": true
+  },
+  "submission": {
+    "portal_name": "KANLERGEMSDOE2-HVG-BLIND-BASIN-20261026-2858780e",
+    "portal_note": "KANLER HVG blind-basin vent-gravity 37654d B2 | HOLDOUT-DTI 0.1427 n=60988 | 2858780e",
+    "note_chars": 79,
+    "verdict": "promote",
+    "slot_approved": true,
+    "ok_to_download_and_submit": true
+  },
+  "projection": {
+    "type": "PROJECTION (anchor inversion, not a score)",
+    "value": 0.3342,
+    "method": "linear LOO anchor: live ≈ 1.98*holdout + 0.052 (fit to 26 live-scored submissions, R2 0.71; cross-family transfer unproven)",
+    "uncertainty": "+/-0.038 (in-family); cross-family error may be larger",
+    "note": "A projection is never written as a score. ORGANIZER-CONFIRMED remains the only true score."
+  }
 }
