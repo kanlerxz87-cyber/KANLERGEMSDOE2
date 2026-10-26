@@ -1,0 +1,44 @@
+{
+  "generated_utc": "2026-10-26T22:50:06.969332+00:00",
+  "method": "Classifier two-sample test (Lopez-Paz & Oquab, ICLR 2017, arXiv:1610.06545) with 10 km block label swaps",
+  "nuisance_families_only": [
+    "block_1",
+    "block_2",
+    "block_3",
+    "block_4",
+    "claim_m",
+    "road_m"
+  ],
+  "labels_first": {
+    "observed_auc": 0.504008,
+    "fold_aucs": [
+      0.509098,
+      0.524638,
+      0.502744,
+      0.479554
+    ],
+    "null_p95": 0.526371,
+    "margin_vs_p95": -0.022363,
+    "raw_p_value": 0.43,
+    "holm_p_value": 0.43
+  },
+  "candidate": {
+    "file": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
+    "sha256": "cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e",
+    "positive_pixels": 37654,
+    "observed_auc": 0.543699,
+    "fold_aucs": [
+      0.527756,
+      0.601741,
+      0.503888,
+      0.541411
+    ],
+    "null_p95": 0.516499,
+    "margin_vs_p95": 0.0272,
+    "raw_p_value": 0.01,
+    "holm_p_value": 0.02,
+    "strict_gate_flagged": false,
+    "strict_gate_passed": true
+  },
+  "delta_observed_auc_vs_raw_catalogue": 0.03969
+}
