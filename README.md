@@ -10,15 +10,16 @@ The original checkout was a 16-byte README, not the trained project described in
 
 - [Executive decision desk](docs/index.html) — per-site table, historical filenames, eligibility, unavailable estimates, provenance.
 - [Submission guide](docs/executive-summary.html) — release gates, range error and upload instructions.
-- [Hypotheses](research/hypotheses.md) — four ranked, untested mechanisms with layers, signatures, non-fault mimics and feasibility.
-- [Run card](research/run_card.json), [raster audit](research/raster_audit.json), [source manifest](research/source_manifest.json).
+- [Hypotheses](research/hypotheses.md) — four ranked, untested in-repo mechanisms with layers, signatures, non-fault mimics and feasibility.
+- [External-data source review](research/external-data-candidate-review-20261026.md) — three remote-sensing hypotheses, official product/catalog checks, limitations and next validation gates.
+- [Run card](research/run_card.json), [raster audit](research/raster_audit.json), [source manifest](research/source_manifest.json), and [official page-check evidence](evidence/official-page-check-20261026.json).
 - Expected Pages address after deployment: https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/
 
 ### Verified local measurements (RASTER-AUDIT, not scores)
 
 All nine selected historical whole-grid-finite rasters match the pinned peer-mirrored sample's CRS, shape and geotransform and contain only finite values in [0,1]. All 72 directed cross-site comparisons fail the requested uniqueness rule (>0.90 rank correlation OR >70% of positive pixels within 3 pixels). GEMSDOE25 and GEMSDOE30 are pixel-identical inside the footprint. GEMSDOE32 vs GEMSDOE36 has rho 0.9843 and 100% directional overlap. This does not certify any surface or the full registry: this audit covers only the selected historical final rasters.
 
-The reported 0.2778 is an **unverified owner report**, not an organizer receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. No reliable new leaderboard estimate exists. The claimed overall best values 0.3195 and 0.4413 conflict and neither is freshly verified.
+The reported 0.2778 is an **unverified owner report**, not an organizer submission receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. The official public leaderboard was separately fetched at 2026-10-26 21:52:09 UTC and showed rank 1 at 0.4437; this is a time-stamped public-board snapshot, not our score or a submission receipt. It supersedes 0.3195 as a description of the public lead at that timestamp; the prompt's 0.4413 is also stale relative to that snapshot. No score estimate for a new local candidate is available. See [official source checks and new-data hypotheses](research/external-data-candidate-review-20261026.md) and the machine-readable [page-check evidence](evidence/official-page-check-20261026.json).
 
 ## Owner's standing project brief (condensed, not a verbatim transcript)
 
@@ -62,7 +63,7 @@ Historical rasters are ignored under `data/`. Committed evidence includes hashes
 ## Limitations and exact next steps
 
 - No exclusive method paragraph, complete registry surface set, frozen best fold predictions or restored feature cache is available locally. Establish those before any experiment; do not perturb an old raster merely to evade novelty.
-- Official DrivenData pages, USGS, NLR PDF, Dropbox and other non-allowlisted sources cannot be fetched from this environment. No authenticated DrivenData session is present. A public hash-pinned mirror is integrity evidence, not authentication of the official origin.
+- This session fetched the public DrivenData problem page, the public leaderboard, and several official NASA/USGS product pages via the page-reading tool; the competition data page still redirects to login. No authenticated DrivenData session is present. The NLR PDF, Dropbox files, binary NASA/USGS scenes, training labels/features and weekly-cap page were not retrieved. A public hash-pinned mirror is integrity evidence, not authentication of the organizer origin.
 - Retrieve features using peer cache manifests once the method lane is known; verify band names, coverage and hashes. GPU is optional, not universally required: the official reference README explicitly supports CPU-only use.
 - Run candidate canaries, pre-placement novelty, fold-local hide-and-recover and paired baseline comparisons. Publish exact CI/count/version and full-registry final-dot checks. If any gate fails, leave submission disabled.
 - An authenticated selector must check rules and remaining weekly allowance. Save the exact-byte receipt after upload. This site never submits on its own.
