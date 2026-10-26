@@ -1,7 +1,7 @@
 name: Evidence and format checks
 on:
   push:
-    branches: [main, arena/232ecd8d-kanlergemsdoe2]
+    branches: [main, arena/9193e7ed-kanlergemsdoe2]
   pull_request:
     branches: [main]
 permissions:
