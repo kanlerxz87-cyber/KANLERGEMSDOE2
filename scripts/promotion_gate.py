@@ -2,11 +2,16 @@
 import math
 
 def check(card):
+    if not isinstance(card,dict):
+        return {'verdict':'negative','eligible_for_selector':False,'authorized_to_submit':False,'errors':['Run card must be an object']}
     errors=[]
+    def section(key):
+        value=card.get(key)
+        return value if isinstance(value,dict) else {}
     if not card.get('lane'): errors.append('Missing assigned method lane')
     if card.get('registry_complete') is not True: errors.append('Registry coverage unverified')
     for stage in ('surface','dots'):
-        values=card.get(stage,{})
+        values=section(stage)
         for name,limit in [('max_abs_rank_correlation',.90),('max_overlap_3px',.70)]:
             value=values.get(name)
             if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or not 0<=value<=limit:
@@ -14,8 +19,8 @@ def check(card):
     auc=card.get('max_feature_alone_auc')
     if isinstance(auc,bool) or not isinstance(auc,(int,float)) or not math.isfinite(auc) or not 0<=auc<=.90:
         errors.append('Leakage canary absent or failed')
-    h=card.get('holdout',{})
-    if h.get('label')!='HOLDOUT-DTI' or not h.get('evaluator_version') or not isinstance(h.get('withheld_positives'),int) or h.get('withheld_positives',0)<=0:
+    h=section('holdout')
+    if h.get('label')!='HOLDOUT-DTI' or not h.get('evaluator_version') or type(h.get('withheld_positives')) is not int or h.get('withheld_positives',0)<=0:
         errors.append('Missing versioned holdout evidence')
     score=h.get('dti')
     interval=h.get('ci95')
@@ -29,7 +34,7 @@ def check(card):
     if not isinstance(ci,list) or len(ci)!=2 or not all(type(v) in (int,float) and math.isfinite(v) for v in ci) or not 0<ci[0]<=ci[1]:
         errors.append('No positive paired 95% CI against current holdout best')
     for key in ('no_nan_inside_footprint','range_0_1','crs_match','shape_match','transform_match','single_band'):
-        if card.get('validator',{}).get(key) is not True: errors.append('Validator missing/failed: '+key)
+        if section('validator').get(key) is not True: errors.append('Validator missing/failed: '+key)
     sha=card.get('raster_sha256','')
     if not isinstance(sha,str) or len(sha)!=64 or any(c not in '0123456789abcdef' for c in sha): errors.append('Missing raster SHA256')
     if not card.get('submission_name') or not isinstance(card.get('note'),str) or len(card.get('note',''))>140: errors.append('Invalid name/note')

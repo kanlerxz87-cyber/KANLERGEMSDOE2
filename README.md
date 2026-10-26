@@ -2,7 +2,30 @@
 
 **Start every session here, then read `research/run_card.json`, `research/hypotheses.md` and the evidence manifests.**
 
-## Current decision — 2026-10-26 UTC
+## Follow-up safety review — 2026-10-26 UTC
+
+**No new submission TIFF is approved.** Reviewed the inherited checkout rather than
+assuming its previous safety claims were complete. Found and withdrew active legacy
+experiment/evaluator paths, a conflicting evaluator import, and a site builder with
+unresolved conflict markers. Replaced the local TIFF writer with a research-only
+adapter to the byte-pinned shared writer: preserve probabilities, reject invalid
+values, never publish to `docs/downloads`, never authorize a submission.
+
+See [three-pass pipeline review](research/pipeline-review.md) for specific findings,
+archived originals, limitations and next-session sequence. The existing four geological
+hypotheses remain preregistered but untested: no exclusive method paragraph, complete
+registry surfaces, or frozen current-best fold predictions were supplied. No new
+leaderboard estimate, scientific experiment or competition slot was used.
+
+Active commands `run_experiments.py`, `build_features.py` and `evaluate_holdout.py`
+now return **BLOCKED** instead of running the incompatible legacy workflow. The
+shared `SegmentHoldout` API remains intact under `vendor/template/src/gems/`;
+implementing a lane-specific fold-local orchestration is still required. The staging
+writer is not a release system. Scikit-learn is installed for safety testing, not
+proof that data preparation/training is ready. This review's tests use synthetic
+contract fixtures only; they do not count as HOLDOUT-DTI experiments.
+
+## Inherited audit decision — 2026-10-26 UTC
 
 **DO NOT SUBMIT. No new submission TIFF is approved or generated in this session.**
 
@@ -19,7 +42,7 @@ The original checkout was a 16-byte README, not the trained project described in
 
 All nine selected historical whole-grid-finite rasters match the pinned peer-mirrored sample's CRS, shape and geotransform and contain only finite values in [0,1]. All 72 directed cross-site comparisons fail the requested uniqueness rule (>0.90 rank correlation OR >70% of positive pixels within 3 pixels). GEMSDOE25 and GEMSDOE30 are pixel-identical inside the footprint. GEMSDOE32 vs GEMSDOE36 has rho 0.9843 and 100% directional overlap. This does not certify any surface or the full registry: this audit covers only the selected historical final rasters.
 
-The reported 0.2778 is an **unverified owner report**, not an organizer submission receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. The official public leaderboard was separately fetched at 2026-10-26 21:52:09 UTC and showed rank 1 at 0.4437; this is a time-stamped public-board snapshot, not our score or a submission receipt. It supersedes 0.3195 as a description of the public lead at that timestamp; the prompt's 0.4413 is also stale relative to that snapshot. No score estimate for a new local candidate is available. See [official source checks and new-data hypotheses](research/external-data-candidate-review-20261026.md) and the machine-readable [page-check evidence](evidence/official-page-check-20261026.json).
+The reported 0.2778 is an **unverified owner report**, not an organizer submission receipt. GEMSDOE32's peer records explicitly say so and mark its newer headline H47 artifact negative. An inherited page-check record reports the official public leaderboard was fetched at 2026-10-26 21:52:09 UTC and showed rank 1 at 0.4437; this is a time-stamped public-board snapshot, not our score or a submission receipt. It supersedes 0.3195 as a description of the public lead at that timestamp; the prompt's 0.4413 is also stale relative to that snapshot. No score estimate for a new local candidate is available. See [official source checks and new-data hypotheses](research/external-data-candidate-review-20261026.md) and the machine-readable [page-check evidence](evidence/official-page-check-20261026.json).
 
 ## Owner's standing project brief (condensed, not a verbatim transcript)
 
@@ -58,12 +81,12 @@ Historical rasters are ignored under `data/`. Committed evidence includes hashes
 
 ### Shared tooling
 
-`vendor/template/` contains unchanged peer code; tests enforce every recorded SHA-256. The canonical choice is provisional: GEMSDOE36 pins GEMSDOE24, while peer evidence says GEMSDOE31 pins 57GEMSDOE. Resolve authority before comparing experiments. Use `gems.holdout.SegmentHoldout` and `gems.submission.write_submission(..., outside='zero')`, not a private metric implementation. The strict local `scripts/validate_raster.py` is an additional range/grid checker, not a competing writer or scientific evaluator. Install `requirements.txt` in the project virtual environment before running any canary or raster checks; the shared `make_note` limit is looser than this protocol, so enforce 140 characters independently.
+`vendor/template/` contains unchanged peer code; tests enforce every recorded SHA-256. The canonical choice is provisional: GEMSDOE36 pins GEMSDOE24, while peer evidence says GEMSDOE31 pins 57GEMSDOE. Resolve authority before comparing experiments. Use `gems.holdout.SegmentHoldout` and `gems.submission.write_submission(..., outside='zero')`, not a private metric implementation. The strict local `scripts/validate_raster.py` is an additional range/grid checker, not a competing writer or scientific evaluator. Shared canary needs scikit-learn; it is now installed, but no scientific canary was run. The shared `make_note` limit is looser than this protocol; enforce 140 characters independently.
 
 ## Limitations and exact next steps
 
 - No exclusive method paragraph, complete registry surface set, frozen best fold predictions or restored feature cache is available locally. Establish those before any experiment; do not perturb an old raster merely to evade novelty.
-- This session fetched the public DrivenData problem page, the public leaderboard, and several official NASA/USGS product pages via the page-reading tool; the competition data page still redirects to login. No authenticated DrivenData session is present. The NLR PDF, Dropbox files, binary NASA/USGS scenes, training labels/features and weekly-cap page were not retrieved. A public hash-pinned mirror is integrity evidence, not authentication of the organizer origin.
+- A concurrent merged session reports fetching the public DrivenData problem page, the public leaderboard, and several official NASA/USGS product pages via the page-reading tool; the competition data page still redirects to login. No authenticated DrivenData session is present. The NLR PDF, Dropbox files, binary NASA/USGS scenes, training labels/features and weekly-cap page were not retrieved. A public hash-pinned mirror is integrity evidence, not authentication of the organizer origin.
 - Retrieve features using peer cache manifests once the method lane is known; verify band names, coverage and hashes. GPU is optional, not universally required: the official reference README explicitly supports CPU-only use.
 - Run candidate canaries, pre-placement novelty, fold-local hide-and-recover and paired baseline comparisons. Publish exact CI/count/version and full-registry final-dot checks. If any gate fails, leave submission disabled.
 - An authenticated selector must check rules and remaining weekly allowance. Save the exact-byte receipt after upload. This site never submits on its own.
@@ -78,4 +101,4 @@ Before merge, main advanced to `80d3c57` with a purportedly approved blind-basin
 ---
 
 ## Legacy E1 record — withdrawn and not reproducible here
-Earlier branch artifacts describe an E1 model and report local holdout, canary, uniqueness and score-projection numbers. Those records do not establish a valid current result under this project's required shared, segment-blocked evaluator: the underlying feature/label inputs and cached outputs are not present in this checkout, and some supporting claims were subsequently found unable to substantiate promotion. Therefore none of those numbers is reported here as a verified HOLDOUT-DTI, projection, or score. The TIFF and old evidence remain only in `research/quarantine/` and `evidence/` for traceability; they are not published as download links and must not be submitted. `docs/lane-e1-xg-hgb.html` is a withdrawal notice retained to prevent stale Pages URLs from appearing to authorize an upload. This withdrawal does not establish any replacement candidate.
+Earlier branch artifacts describe an E1 model and report local holdout, canary, uniqueness and score-projection numbers. Those records do not establish a valid current result under this project's required shared, segment-blocked evaluator: the underlying feature/label inputs and cached outputs are not present in this checkout, and some supporting claims were subsequently found unable to substantiate promotion. Therefore none of those numbers is reported here as a verified HOLDOUT-DTI, projection, or score. The TIFF and old evidence remain only in `research/quarantine/` for traceability; they are not published as download links and must not be submitted. `docs/lane-e1-xg-hgb.html` is a withdrawal notice retained to prevent stale Pages URLs from appearing to authorize an upload. This withdrawal does not establish any replacement candidate.
