@@ -15,6 +15,7 @@ def _nav(active: str) -> str:
     items = [
         ("index.html", "Submission Gate & Run Card"),
         ("executive-summary.html", "9-Site Executive Summary & Guide"),
+        ("submission-table.html", "Per-Site Submission Table"),
         ("research.html", "0.2778 Forensics & Hypotheses"),
         ("irregularities.html", "Irregularities & Next Steps"),
     ]
@@ -57,7 +58,7 @@ def _footer() -> str:
     return """
 <footer>
   <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code> or <code>ORGANIZER-CONFIRMED</code>. Zero manual intervention required.</div>
+  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code>, <code>USER-REPORTED</code> (copied from the prompt listing, no receipt stored) or <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored in this repo yet). Zero manual intervention required.</div>
 </footer>
 """
 
@@ -148,6 +149,7 @@ def main() -> None:
       <a class="btn" href="downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif" download>&#11015; Parallel Lane: KG2-MGHV-EXP-1 (.tif)</a>
       <a class="btn" href="data/status_feed.json" target="_blank" rel="noopener">&#128225; Automated JSON Status Feed</a>
       <a class="btn" href="executive-summary.html">&#128202; Open 9-Site Executive Summary &amp; Submission Guide &rarr;</a>
+      <a class="btn btn-primary" href="submission-table.html">&#128203; Per-Site Table: Which File to Download &rarr;</a>
     </div>
 
     <div style="margin-top:1rem">
@@ -206,7 +208,7 @@ def main() -> None:
     <div class="kpi-card">
       <div class="kpi-label">9-Site Focus Historical Best</div>
       <div class="kpi-val" style="color:#fbbf24">0.2778</div>
-      <div class="kpi-sub"><code>ORGANIZER-CONFIRMED</code> (GEMSDOE32 B=2; Public #5 = <code>0.3195</code>, #1 = <code>0.4413</code>)</div>
+      <div class="kpi-sub"><code>USER-REPORTED</code> (GEMSDOE32 B=2; Public #5 = <code>0.3195</code>, #1 = <code>0.4413</code>)</div>
     </div>
   </section>
 
@@ -254,7 +256,7 @@ def main() -> None:
         <tbody>
           <tr>
             <td><strong>REF</strong><br><span class="tag tag-warn">BASELINE</span></td>
-            <td><strong>GEMSDOE32 Champion (h33-h33-2-b2)</strong><br><span style="color:var(--muted);font-size:0.8rem">Live score: <code>0.2778 ORGANIZER-CONFIRMED</code>; evaluated uncensored (d_visible &gt; 2.0) on identical folds.</span></td>
+            <td><strong>GEMSDOE32 Champion (h33-h33-2-b2)</strong><br><span style="color:var(--muted);font-size:0.8rem">Live score: <code>0.2778 USER-REPORTED</code>; evaluated uncensored (d_visible &gt; 2.0) on identical folds.</span></td>
             <td><code>0.099202</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0860, 0.1127]<br>(Static censored: 0.00451)</span></td>
             <td><code>0.064121</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0567, 0.0716]</span></td>
             <td><code>37,654</code> px<br><span style="color:var(--muted);font-size:0.78rem">100% H19-5 subset</span></td>
@@ -379,7 +381,7 @@ def main() -> None:
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>{s["sha256"][:16]}&hellip;</code> | <code>{s.get("dots", 0):,}</code> dots</span>
         </td>
         <td>
-          <strong><code>{s["live_score"]:.4f}</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>{s["live_score"]:.4f}</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): {hr_str}<br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>{sg_val:.4f}</code></span>
         </td>
         <td>{safe_badge}<br><span style="color:var(--muted);font-size:0.77rem">{_esc(safe_note)}</span></td>
@@ -400,7 +402,7 @@ def main() -> None:
         <tr>
           <td><strong>{_esc(b["id"])}</strong></td>
           <td><code>{_esc(b["architecture"])}</code></td>
-          <td><strong><code>{b["live_score"]:.4f}</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><strong><code>{b["live_score"]:.4f}</code></strong> <code>USER-REPORTED</code></td>
           <td><code>{b.get("dots", 0):,}</code></td>
           <td><code>{b.get("holdout_sgmc_cal_dti", 0.0):.5f}</code> <code>HOLDOUT-DTI</code></td>
           <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>{b.get("frac_within_3px_of_B2", 0.0)*100:.1f}%</code> | LiDAR: <code>{b.get("pct_in_lidar", 0.0):.1f}%</code></span></td>
@@ -463,7 +465,7 @@ def main() -> None:
   <section class="card">
     <h2>Master Multi-Site Submission Table (KANLERGEMSDOE2 + All 9 Focus Sites)</h2>
     <p style="color:var(--muted);margin-top:0">
-      Every score carries its mandatory Protocol Rule 3 label: <code>ORGANIZER-CONFIRMED</code> (live leaderboard receipt) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).
+      Every score carries its mandatory Protocol Rule 3 label: <code>USER-REPORTED</code> (copied from the prompt listing; not a receipt), <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored yet) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).
     </p>
     <div class="table-wrap">
       <table>
@@ -528,7 +530,7 @@ def main() -> None:
           {"".join(f'''
           <tr>
             <td><strong>{_esc(r["site"])}</strong></td>
-            <td><code>{r["live_score"]:.4f}</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>{r["live_score"]:.4f}</code> <code>USER-REPORTED</code></td>
             <td><code>{r["peer_dots"]:,}</code></td>
             <td><strong><code>{r["our_dots_within_3px_of_peer"]:.4f}</code></strong> ({r["our_dots_within_3px_of_peer"]*100:.2f}%)</td>
             <td><code>{r["harmonic_3px_overlap"]:.4f}</code></td>
@@ -611,17 +613,17 @@ def main() -> None:
 <main class="container">
 
   <section class="card">
-    <h2>1. PhD-Level Forensic Analysis: Why &amp; How GEMSDOE32 Scored <code>0.2778</code> (ORGANIZER-CONFIRMED)</h2>
+    <h2>1. PhD-Level Forensic Analysis: Why &amp; How GEMSDOE32 Scored <code>0.2778</code> (USER-REPORTED)</h2>
     <p>
       Under the competition's exact Distance-Weighted Tversky Index (<code>&alpha; = 0.2</code> false-positive weight, <code>&beta; = 0.8</code> false-negative weight, <code>300 m</code> Euclidean triangular kernel, public catalogue faults masked out), any binary prediction raster emitting <code>N</code> off-catalogue dots with weighted true-positive overlap <code>TP_w</code> against a hidden expert fault set of size <code>K</code> obeys the exact identity:
     </p>
     <pre>DTI(N) = TP_w / (0.2 * N + 0.8 * K + 0.8 * (TP_raw - TP_w))   ==&gt;   1 / DTI(N) &approx; (0.8 * K / TP_w) + (0.2 / TP_w) * N</pre>
     <p>
-      Tracing pixel-exact SHA-256 ancestry across the 9 focus sites reveals an unintentional controlled experiment on a <strong>single fixed detector</strong> (<code>19GEMSDOE</code>'s 4-line OOF physical corroboration patch <code>H19-5</code>, <code>121,131</code> positive pixels, live <code>0.1922 ORGANIZER-CONFIRMED</code>):
+      Tracing pixel-exact SHA-256 ancestry across the 9 focus sites reveals an unintentional controlled experiment on a <strong>single fixed detector</strong> (<code>19GEMSDOE</code>'s 4-line OOF physical corroboration patch <code>H19-5</code>, <code>121,131</code> positive pixels, live <code>0.1922 USER-REPORTED</code>):
     </p>
     <ul>
-      <li><strong>Step A &mdash; 300 m Submodular / Poisson-Disk Thinning (<code>0.1922 &rarr; 0.2600 ORGANIZER-CONFIRMED</code>, +0.0678):</strong> Because the 300 m triangular kernel credits every truth pixel within 300 m of <em>any</em> predicted dot via a <code>max</code> operator, dense 1-px ridges pay linear <code>0.2 &times; FP</code> penalty for redundant neighbors. Thinning <code>H19-5</code> at spacing <code>d = 1.5 px</code> (<code>GEMSDOE24</code>, <code>60,069</code> dots &rarr; <code>0.2477</code>) and <code>d = 2.8 px</code> (<code>GEMSDOE25 == GEMSDOE30</code>, <code>44,090</code> dots &rarr; <code>0.2600</code>) cut <code>77,041</code> redundant dots while retaining nearly 100% of 300 m halo coverage.</li>
-      <li><strong>Step B &mdash; Catalogue-Collar Depletion Shadow (<code>0.2600 &rarr; 0.2708 &rarr; 0.2778 ORGANIZER-CONFIRMED</code>, +0.0178):</strong> Deleting dots within <code>d_cat &le; 100 m</code> (<code>GEMSDOE31</code>, <code>40,199</code> dots &rarr; <code>0.2708</code>) and <code>d_cat &le; 200 m</code> (<code>GEMSDOE32 B=2</code>, <code>37,654</code> dots &rarr; <code>0.2778</code>) fits the linear no-recall-loss line <code>1 / DTI(N)</code> with <strong><code>R&sup2; = {inv_f["r_squared"]:.6f}</code></strong>!</li>
+      <li><strong>Step A &mdash; 300 m Submodular / Poisson-Disk Thinning (<code>0.1922 &rarr; 0.2600 USER-REPORTED</code>, +0.0678):</strong> Because the 300 m triangular kernel credits every truth pixel within 300 m of <em>any</em> predicted dot via a <code>max</code> operator, dense 1-px ridges pay linear <code>0.2 &times; FP</code> penalty for redundant neighbors. Thinning <code>H19-5</code> at spacing <code>d = 1.5 px</code> (<code>GEMSDOE24</code>, <code>60,069</code> dots &rarr; <code>0.2477</code>) and <code>d = 2.8 px</code> (<code>GEMSDOE25 == GEMSDOE30</code>, <code>44,090</code> dots &rarr; <code>0.2600</code>) cut <code>77,041</code> redundant dots while retaining nearly 100% of 300 m halo coverage.</li>
+      <li><strong>Step B &mdash; Catalogue-Collar Depletion Shadow (<code>0.2600 &rarr; 0.2708 &rarr; 0.2778 USER-REPORTED</code>, +0.0178):</strong> Deleting dots within <code>d_cat &le; 100 m</code> (<code>GEMSDOE31</code>, <code>40,199</code> dots &rarr; <code>0.2708</code>) and <code>d_cat &le; 200 m</code> (<code>GEMSDOE32 B=2</code>, <code>37,654</code> dots &rarr; <code>0.2778</code>) fits the linear no-recall-loss line <code>1 / DTI(N)</code> with <strong><code>R&sup2; = {inv_f["r_squared"]:.6f}</code></strong>!</li>
     </ul>
     <div class="callout">
       <strong>Exact Inverted Parameters of the Hidden Private Test Set:</strong>
@@ -767,7 +769,7 @@ def main() -> None:
   <section class="card">
     <h2>2. Honest Limitations &amp; Risks</h2>
     <ul>
-      <li><strong>No Live DrivenData Upload Executed From Sandbox:</strong> Outbound network access in this sandbox is restricted to GitHub, PyPI, and npm, and per Parallel-Run Protocol Rule 6 live slot allocation belongs to the human coordinator. While <code>EXP-2</code> beats the <code>0.2778</code> Champion on both Hide-and-Recover (<code>+13.26%</code>, 99.2% bootstrap win prob) and blind SGMC-CAL (<code>+23.07%</code>), its exact <code>ORGANIZER-CONFIRMED</code> live score will only be known once uploaded to DrivenData.</li>
+      <li><strong>No Live DrivenData Upload Executed From Sandbox:</strong> Outbound network access in this sandbox is restricted to GitHub, PyPI, and npm, and per Parallel-Run Protocol Rule 6 live slot allocation belongs to the human coordinator. While <code>EXP-2</code> beats the <code>0.2778</code> Champion on both Hide-and-Recover (<code>+13.26%</code>, 99.2% bootstrap win prob) and blind SGMC-CAL (<code>+23.07%</code>), its exact <code>USER-REPORTED</code> live score will only be known once uploaded to DrivenData.</li>
       <li><strong>24.60% USGS 3DEP 1 m LiDAR Void Swath:</strong> <code>external/lidar_scarp_features_u8.tif</code> covers <code>75.40%</code> of the footprint. Although our zero-mean log-odds residual quarantine prevents LiDAR-void starvation (<code>19.72%</code> of our dots land cleanly in the <code>24.60%</code> non-LiDAR basins), subtle &lt;1 m Holocene scarplets inside that <code>24.60%</code> swath cannot be resolved at 100 m DEM resolution without external 10 m 3DEP or Sentinel-1 InSAR layers.</li>
       <li><strong>3D Listric Dip Variations vs. Uniform 400 m Upward Continuation:</strong> Our Fourier upward-continuation crest-migration operator uses uniform 150 m / 400 m continuation heights weighted by sediment thickness; listric detachments with spatially varying dip (25&deg;&ndash;65&deg;) have residual 100&ndash;200 m horizontal trace uncertainty.</li>
       <li><strong>Phase 2 Distribution Shift:</strong> Phase 2 ($250,000 prize pool) re-scores the single final submission on expert-reviewed fault additions. Because HTCADS targets physical fluid-flow and basement-offset structures rather than catalogue-proximity rings, it is specifically designed for Phase 2 generalization, though regional expert mapping density varies by quadrangle.</li>
@@ -777,7 +779,7 @@ def main() -> None:
   <section class="card">
     <h2>3. Concrete Recommendations for the Next Session</h2>
     <ol>
-      <li><strong>Upload <code>{_esc(tif_name)}</code> to DrivenData &amp; Record Receipt:</strong> Submit the promoted <code>204 KB</code> GeoTIFF using the pre-verified 110-char note and log the returned <code>ORGANIZER-CONFIRMED</code> score to calibrate the empirical slope between <code>GEMSDOE32-HIDE-RECOVER-v3.0</code> / <code>SGMC-CAL-v3.0</code> and the private test set.</li>
+      <li><strong>Upload <code>{_esc(tif_name)}</code> to DrivenData &amp; Record Receipt:</strong> Submit the promoted <code>204 KB</code> GeoTIFF using the pre-verified 110-char note and log the returned leaderboard receipt score to calibrate the empirical slope between <code>GEMSDOE32-HIDE-RECOVER-v3.0</code> / <code>SGMC-CAL-v3.0</code> and the private test set.</li>
       <li><strong>Ingest NASA/JPL OPERA DISP-S1 InSAR (Hypothesis <code>H-K5</code>) Outside Sandbox Allowlist:</strong> On an internet-enabled workstation, fetch public-domain OPERA Sentinel-1 vertical/LOS displacement velocity &amp; seasonal amplitude tiles from ASF DAAC (`https://asf.alaska.edu/datasets/daac/opera/`) to detect completely flat-playa hydraulic-barrier faults across the 24.6% non-LiDAR swath.</li>
       <li><strong>Ingest Seamless 10 m USGS 3DEP DEM (Hypothesis <code>H-K4</code>):</strong> Compute transverse alluvial-fan drainage-azimuth vorticity across the 24.6% 1 m LiDAR void to bridge subtle Walker Lane strike-slip scarplets.</li>
       <li><strong>Depth-Adaptive 3D Dip Inversion:</strong> Replace uniform 400 m FFT upward continuation with locally depth-scaled upward continuation (<code>&Delta;z(x,y) &propto; depth_to_base_surf(x,y)</code>) coupled to strike-aligned steerable active-contour tracing.</li>
@@ -806,7 +808,7 @@ def main() -> None:
         hr_txt = f"Uncensored `{hr_unc:.4f}` (Static `{hr_cens:.4f}`)" if (hr_unc is not None and abs(hr_unc - hr_cens) > 1e-4) else f"`{hr_cens:.4f}`"
         sg_val = s["holdout_sgmc_offcat"]["prevalence_calibrated_dti"]
         md_rows.append(
-            f"| `{s['site']}` | `{fn}` (`{s['sha256'][:12]}...`) | `{s['live_score']:.4f}` `ORGANIZER-CONFIRMED`; Hide-Rec {hr_txt} `HOLDOUT-DTI`; SGMC-CAL `{sg_val:.4f}` `HOLDOUT-DTI` | {safe_txt} | **NOT UNIQUE** (`{s['max_3px_overlap_among_focus9']*100:.1f}%` w/ `{s['closest_focus9_peer']}`) | Historical `H19-5` pruning lineage ({s['lineage_formula']}) |"
+            f"| `{s['site']}` | `{fn}` (`{s['sha256'][:12]}...`) | `{s['live_score']:.4f}` `USER-REPORTED`; Hide-Rec {hr_txt} `HOLDOUT-DTI`; SGMC-CAL `{sg_val:.4f}` `HOLDOUT-DTI` | {safe_txt} | **NOT UNIQUE** (`{s['max_3px_overlap_among_focus9']*100:.1f}%` w/ `{s['closest_focus9_peer']}`) | Historical `H19-5` pruning lineage ({s['lineage_formula']}) |"
         )
 
     exec_md = f"""# Executive Summary & Multi-Site Submission Guide (`KANLERGEMSDOE2`)
@@ -838,7 +840,7 @@ def main() -> None:
 
 ## Why `GEMSDOE32` Scored `0.2778` & Why `KANLERGEMSDOE2` Breaks Out of the `H19-5` Plateau
 
-1. **Exact Tversky Ledger Inversion (`R^2 = 0.9985`)**: Across the `H19-5` collar-pruning chain (`44,090 -> 40,199 -> 37,654` dots scoring `0.2600 -> 0.2708 -> 0.2778` `ORGANIZER-CONFIRMED`), `1 / DTI(N)` is linear in `N` with `R^2 = 0.998523`. That proves the `6,436` removed `0–200 m` catalogue-flank dots contributed `~0` true positives on the private expert test set while revealing `TP_w ≈ 5,151 px` and hidden off-catalogue fault set `K ≈ 13,735 px` (`~0.27%` footprint prevalence).
+1. **Exact Tversky Ledger Inversion (`R^2 = 0.9985`)**: Across the `H19-5` collar-pruning chain (`44,090 -> 40,199 -> 37,654` dots scoring `0.2600 -> 0.2708 -> 0.2778` `USER-REPORTED`), `1 / DTI(N)` is linear in `N` with `R^2 = 0.998523`. That proves the `6,436` removed `0–200 m` catalogue-flank dots contributed `~0` true positives on the private expert test set while revealing `TP_w ≈ 5,151 px` and hidden off-catalogue fault set `K ≈ 13,735 px` (`~0.27%` footprint prevalence).
 2. **Ceiling of Pruning `H19-5`**: Further feature pruning on `H19-5` plateaus near `~0.285–0.295` (`GEMSDOE28` gained `+0.0002`). Reaching public `#5` (`0.3195`) requires `TP_w ≈ 5,917 px` and `#1` (`0.4413`) requires `TP_w ≈ 8,172 px` — mathematically requiring discovery of blind intrabasin, updip range-front, and hydrothermal accommodation faults absent from `H19-5`.
 3. **HTCADS-DualRegime (`EXP-2`) Mechanism**: Couples out-of-quadrant sharp subsurface/geothermal/scarp GBDT + first-principles Multi-Physics Conduit index (FFT 400 m upward-continuation updip gravity migration, Gallardo-Meju cross-gradient, GeoDAWN hydrothermal magnetite destruction & K/Th metasomatism, MT lateral clay-cap edges, hydraulic-upgradient GDR 1391 thermal probes/wells/sinter vents, 100 m scarp-slope/toe-concavity) + coverage-neutral zero-mean contour-orthogonal 1 m LiDAR specialist + purely directional fault-tip/relay propagation + exact 300 m Euclidean CELF submodular allocation.
 """
