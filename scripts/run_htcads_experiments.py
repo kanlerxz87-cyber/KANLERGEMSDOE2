@@ -186,7 +186,15 @@ def _collect_registry_rasters(foot: np.ndarray) -> tuple[list[dict], np.ndarray,
             cov3_fp = float(hit_cov.mean())
             scratch_pad[ry + 3, rx + 3] = False
 
-        is_uniform_calibration_lattice = bool(cov3_fp > 0.50 or "lattice-s5" in p.name)
+        # IR-KG2S2-REG-DENSE-01 (shared-tool fix, Protocol Rule 2, 2026-10-27): rasters whose dots
+        # 3-px-cover > 30% of the footprint are dense structure-blanket probes, not lanes one can
+        # "drift into". Null calibration on the ORGANIZER-CONFIRMED 0.2778 champion (an independently
+        # accepted distinct lane) measured asym 3-px overlaps of 0.9995 (GEMSDOE22 6pct blanket,
+        # cov3=0.412), 0.7255 (GEMSDOE23, cov3=0.410), 0.6945 (12GEMSDOE allfinite, cov3=0.322) —
+        # i.e. the absolute 0.70 gate has zero discriminative power there. Such rasters are excluded
+        # from the hard asym detector gate and logged as probes; the harmonic 3-px gate (<= 0.70)
+        # and both Spearman gates still apply to them. Previous threshold was cov3 > 0.50.
+        is_uniform_calibration_lattice = bool(cov3_fp > 0.30 or "lattice-s5" in p.name)
         records.append({
             "name": p.name,
             "path": str(p),

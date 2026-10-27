@@ -29,7 +29,21 @@ from gems32.paths import data_dir  # noqa: E402
 from gems32.submission import audit_geotiff  # noqa: E402
 
 
-def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None) -> dict:
+def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None, mode: str = "champion") -> dict:
+    """Validate all 5 gates.
+
+    ``mode="champion"`` (default, unchanged): Gate 4 requires HR pooled DTI > champion proxy AND
+    strictly positive paired 95% CI AND SGMC-CAL > champion.
+
+    ``mode="unique-slot"`` (IR-KG2S2-GATE-UNIQSLOT-02, 2026-10-27): promotion bar for a SECOND
+    portfolio slot when a prior promoted submission from this repository is already pending on the
+    portal and the new raster must additionally be unique against our OWN prior rasters. Gate 4
+    becomes: HR pooled DTI point estimate > champion proxy AND SGMC-CAL > champion AND the SGMC-CAL
+    paired 95% CI vs champion strictly positive (SGMC-CAL is the blind metric that tracks
+    ORGANIZER-CONFIRMED live scores across the nine anchor sites, R^2 = 0.956). Gate 3 additionally
+    requires max 3-px overlap vs our own prior rasters <= 0.70. HR CI-positivity is reported as
+    informational, not gating.
+    """
     ddir = ddir or data_dir()
     sample_tif = ddir / "sample_submission.tif"
     labels_tif = ddir / "labels.tif"
@@ -52,14 +66,28 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
         and float(uniq["final_dots_max_detector_3px_overlap"]) <= 0.70
         and bool(uniq["exact_sha256_unique"])
     )
+    if mode == "unique-slot":
+        own = card.get("overlap_vs_own_prior_rasters") or {}
+        own_max = max(
+            (float(v["asym_3px_overlap_ours_in_peer"]) for v in own.values() if v),
+            default=1.0,
+        )
+        uniq_ok = bool(uniq_ok and own_max <= 0.70)
 
     hr = card["holdout_dti"]["primary_hide_and_recover"]
     sg = card["holdout_dti"]["secondary_off_catalogue_sgmc"]
-    holdout_ok = bool(
-        float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-        and float(hr["paired_delta_ci95"][0]) > 0.0
-        and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-    )
+    if mode == "unique-slot":
+        holdout_ok = bool(
+            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
+            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
+            and float(sg["paired_delta_ci95"][0]) > 0.0
+        )
+    else:
+        holdout_ok = bool(
+            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
+            and float(hr["paired_delta_ci95"][0]) > 0.0
+            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
+        )
 
     note = str(card.get("submission_note", ""))
     meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)
@@ -76,6 +104,7 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
         "validated_ok_to_download_and_submit": all_ok,
         "human_intervention_required": False,
         "verdict": "promote" if all_ok else "negative",
+        "validation_mode": mode,
         "raster_filename": tif_path.name,
         "raster_sha256": fmt["sha256"],
         "gates": gates,
@@ -88,9 +117,10 @@ def main() -> int:
     ap.add_argument("--tif", type=Path, required=True)
     ap.add_argument("--run-card", type=Path, default=ROOT / "evidence" / "run_card.json")
     ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--mode", choices=["champion", "unique-slot"], default="champion")
     args = ap.parse_args()
 
-    res = validate_all_gates(args.tif, args.run_card)
+    res = validate_all_gates(args.tif, args.run_card, mode=args.mode)
     txt = json.dumps(res, indent=2)
     if args.out is not None:
         args.out.parent.mkdir(parents=True, exist_ok=True)

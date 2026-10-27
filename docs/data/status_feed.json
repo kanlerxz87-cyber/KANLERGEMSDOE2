@@ -1,6 +1,6 @@
 {
-  "schema": "kanlergemsdoe2.status_feed.v1",
-  "generated_utc": "2026-10-26T23:52:29.447729+00:00",
+  "schema": "kanlergemsdoe2.status_feed.v2",
+  "generated_utc": "2026-10-27T18:12:55.018895+00:00",
   "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
   "validated_ok_to_download_and_submit": true,
   "human_intervention_required": false,
@@ -12,7 +12,76 @@
     "gate_4_holdout_beats_champion": true,
     "gate_5_portal_metadata_le_140": true
   },
-  "promoted_submission": {
+  "session2_promoted_submission": {
+    "status": "SUBMIT THIS (SLOT 2)",
+    "validated_ok_to_download_and_submit": true,
+    "verdict": "promote",
+    "validator_modes_passed": [
+      "champion",
+      "unique-slot"
+    ],
+    "filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "download_path": "downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "zip_path": "downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip",
+    "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+    "zip_sha256": "49a252544e46ba5b71bf618c4701584d38fb3bb645f64c98be2db28a802d3187",
+    "size_bytes": 217858,
+    "emitted_dots": 37654,
+    "portal_note": "KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)",
+    "portal_note_length": 114,
+    "holdout_dti": {
+      "primary_hide_and_recover": {
+        "pooled_dti": 0.125925,
+        "ci95": [
+          0.11288,
+          0.138176
+        ],
+        "champion_02778_same_evaluator": 0.099202,
+        "per_quadrant_dti": {
+          "NW": 0.143788,
+          "NE": 0.102215,
+          "SW": 0.114146,
+          "SE": 0.146328
+        },
+        "paired_delta_vs_0p2778_ref": 0.026723,
+        "paired_delta_ci95": [
+          0.016895,
+          0.03692
+        ],
+        "win_prob_vs_ref": 1.0,
+        "ci95_strictly_positive": true,
+        "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.1129, 0.1382])"
+      },
+      "secondary_off_catalogue_sgmc": {
+        "raw_dti": 0.145918,
+        "sgmc_prevalence_calibrated_dti": 0.09814,
+        "ci95": [
+          0.08842,
+          0.106139
+        ],
+        "champion_02778_same_evaluator": 0.064121,
+        "paired_delta_vs_0p2778_ref": 0.034019,
+        "paired_delta_ci95": [
+          0.023602,
+          0.043168
+        ],
+        "ci95_strictly_positive": true,
+        "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0884, 0.1061])"
+      }
+    },
+    "uniqueness": {
+      "unique_rasters_checked": 1201,
+      "max_3px_overlap_vs_all_detectors": 0.597679,
+      "overlap_3px_vs_0p2778_champion": 0.304881,
+      "max_overlap_vs_own_prior_rasters": 0.397089
+    },
+    "projection_never_a_score": {
+      "fit": "live ~= 4.7154 * SGMC_CAL + -0.0271 (R2=0.9557, 9 ORGANIZER-CONFIRMED anchors)",
+      "projected_live": 0.4356,
+      "extrapolated_outside_anchor_support": true
+    }
+  },
+  "slot1_promoted_submission_pending_on_portal": {
     "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
     "download_path": "downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
     "zip_path": "downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
