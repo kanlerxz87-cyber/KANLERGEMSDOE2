@@ -1,12 +1,9 @@
-"""DrivenData GeoTIFF Submission Builder & Automated 13-Check Range-[0, 1] Validator.
+"""Legacy GeoTIFF builder and local range checks.
 
-Permanently prevents the DrivenData portal error `"Predicted values must be in range [0, 1]"` by:
-1. Sanitizing all float32 `-3.4028235e+38` sentinels, Infs, and NaNs inside the 5,167,373-pixel footprint.
-2. Enforcing `np.clip(pred, 0.0, 1.0)` across all 5,167,373 in-footprint pixels and `pred[labels] = 0.0`.
-3. Encoding outside-footprint cells as `0.0` (`nodata=None`, `-zeros.tif`) so all 12,279,160 / 12,279,160
-   raster cells satisfy `(arr >= 0.0) & (arr <= 1.0)` with zero NaNs anywhere.
-4. Supporting both binary `{0.0, 1.0}` and continuous `[0.0, 1.0]` predictions cleanly (fixes shared-tool
-   bitwise-and bug `IR-SHARED-SOFT-01`).
+A zeros-outside artifact can satisfy a strict whole-array range check, but it
+uses a different exterior convention from the owner mirror sample. The cause
+of the reported portal rejection and organizer acceptance remain unverified.
+Local format checks are not a scientific or weekly-slot authorization.
 """
 
 from __future__ import annotations
@@ -108,7 +105,7 @@ def audit_geotiff(
         "in_footprint_range_0_1": in_foot_in_01,
         "outside_footprint_compliant": out_foot_ok,
         "zero_on_catalogue_leakage": on_catalogue_dots == 0,
-        "validator_range_0_1_guaranteed": full_grid_in_01,
+        "local_range_check_passed": full_grid_in_01,
     }
     all_passed = all(checks.values())
     if not all_passed:

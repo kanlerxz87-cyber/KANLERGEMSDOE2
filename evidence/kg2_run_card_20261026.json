@@ -413,7 +413,9 @@
         "dots_abs_spearman": 0.019894,
         "candidate_within_3px_of_peer": 0.308599
       }
-    }
+    },
+    "literal_all_entries_pass": false,
+    "warning": "Historical competitor-only checks are not the literal registry gate. Prior surface/holdout not independently replayed."
   },
   "raster_sha256": "cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e",
   "zip_artifact": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.zip",
@@ -528,7 +530,8 @@
           "hard_requirement": false
         }
       }
-    }
+    },
+    "upload_authorization": "negative: witness duplicate; no complete registry, independent replay or quota verification"
   },
   "spatial_regime_diagnostics": {
     "min_dist_to_catalogue_px": 2.2361,
@@ -546,7 +549,10 @@
   "experiments_used": 3,
   "budget_max_experiments": 3,
   "ok_to_download": true,
-  "ok_to_submit": true,
+  "ok_to_submit": false,
   "weekly_slot_spent_automatically": false,
-  "verdict": "promote"
+  "verdict": "negative",
+  "superseded_by": "evidence/current_run_card.json",
+  "supersession_notice": "SUPERSEDED 2026-10-27: prior detector-only promotion violated the literal all-registry rule. Research only; do not submit. Current decision: evidence/current_run_card.json.",
+  "historical_verdict_at_creation": "promote"
 }

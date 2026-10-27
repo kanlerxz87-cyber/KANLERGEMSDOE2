@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 import matplotlib
 matplotlib.use("Agg")
@@ -16,6 +20,10 @@ from gems32 import htcads, paths
 
 
 def main() -> None:
+    raise SystemExit("Archived figure/audit generator disabled: historical promotion and forensic claims were retracted. Use scripts/build_site.py and evidence/release_audit_20261027.json.")
+
+
+def _legacy_main_archived() -> None:
     root = Path(__file__).resolve().parents[1]
     ddir = paths.data_dir()
     wdir = paths.work_dir()

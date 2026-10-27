@@ -125,9 +125,16 @@ def main() -> None:
         "storage_root": storage_root,
         "files": results,
     }
-    (ROOT / "data").mkdir(parents=True, exist_ok=True)
-    (ROOT / "data" / "restore_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
-    print(f"Verified {len(results)} files; receipt written to data/restore_receipt.json")
+    # Separate receipts avoid clobbering each other when core/external/scored
+    # restores run concurrently. Bulk inputs and receipts remain untracked.
+    receipt["requested_group"] = args.group
+    receipts = ROOT / "data"
+    receipts.mkdir(parents=True, exist_ok=True)
+    output = receipts / f"restore_receipt_{args.group}.json"
+    tmp = output.with_suffix(".tmp")
+    tmp.write_text(json.dumps(receipt, indent=2) + "\n")
+    tmp.replace(output)
+    print(f"Verified {len(results)} files; receipt written to {output.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

@@ -446,6 +446,11 @@ def project_lli_s3(pred_binary: np.ndarray, foot: np.ndarray, labels: np.ndarray
 
 
 def main() -> int:
+    raise SystemExit("Archived parallel FVCA lane disabled: it is not the assigned HTCADS method and its previous result failed the literal registry rule")
+
+
+def _legacy_main_archived() -> int:
+    """Historical experiment retained for audit only."""
     t0 = time.time()
     EVID.mkdir(parents=True, exist_ok=True)
     meta = json.loads((CACHE / "fvca_stack_meta.json").read_text())

@@ -1,0 +1,25 @@
+{
+  "schema": "kanlergemsdoe2.lattice_null_calibration.v1",
+  "date": "2026-10-27",
+  "question": "Does >70% asymmetric 3-px overlap vs the r13-lattice-s5 registry raster prove lane drift (PR #22 audit, AUDIT_REVIEW_2026-10-27.md finding 1)?",
+  "lattice": {
+    "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "dots": 206895,
+    "footprint_3px_coverage_pct": 99.8713,
+    "registry_flag": "is_space_filling_control=true (registry/comparison_registry.json)"
+  },
+  "asymmetric_3px_overlap_vs_lattice_pct": {
+    "HTCADS_EXP2_promoted": 99.9681,
+    "GEMSDOE32_champion_0p2778": 99.915,
+    "KG2_MGHV_EXP1": 99.5751,
+    "NULL_uniform_random_37654_mean": 99.8724,
+    "NULL_sd": 0.0178
+  },
+  "harmonic_3px_overlap_vs_lattice_pct": {
+    "HTCADS_EXP2_promoted": 22.5767,
+    "GEMSDOE32_champion": 26.1744,
+    "KG2_MGHV_EXP1": 29.6468
+  },
+  "conclusion": "The literal any-raster reading fails every raster ever scored in the fleet, including the 0.2778 champion and uniform-random dot sets, because the calibration lattice covers 99.87% of the footprint by design. It therefore cannot discriminate lane drift. The shared template validator (scripts/validate_submission.py Gate 3) implements the pre-documented null-calibrated/harmonic interpretation (IR-REG-LATTICE-03); rerun 2026-10-27 it passes the promoted file 5/5. Harmonic overlap vs the lattice is 22.6% and max vs competing detectors is 64.91%, both <=70%.",
+  "policy_note_for_selector": "If the owner instead adopts the literal any-registry-raster reading, then no candidate from any site can ever be promoted while the lattice remains in the registry; that policy choice belongs to the selector step (Protocol Rule 6), and is stated explicitly in EXECUTIVE_SUMMARY.md so the decision is visible, not buried."
+}
