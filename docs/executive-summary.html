@@ -12,10 +12,10 @@
   <div class="topbar-inner">
     <div class="brand">
       <span>KANLERGEMSDOE2</span>
-      <span class="brand-badge">VALIDATED: PROMOTE (5/5 GATES)</span>
+      <span class="brand-badge">AUDIT: DO NOT SUBMIT</span>
     </div>
     <nav class="nav-links">
-      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html" class="active">9-Site Executive Summary &amp; Guide</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html" class="active">9-Site Executive Summary &amp; Guide</a><a href="submission-table.html">Per-Site Submission Table</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
     </nav>
   </div>
 </header>
@@ -25,7 +25,7 @@
   <section class="gate-banner">
     <div class="gate-header">
       <div class="status-pill">&#128203; MULTI-SITE SUBMISSION GUIDE &amp; 9-SITE FORENSIC AUDIT</div>
-      <a class="btn btn-primary" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>&#11015; Download KANLERGEMSDOE2 Unique .tif</a>
+      <a class="btn btn-primary" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>&#11015; Candidate GeoTIFF — NOT APPROVED</a>
     </div>
     <h1 style="margin:0.2rem 0 0.5rem;font-size:1.48rem">Executive Summary: Which Files to Download, Exact Scores, &amp; Cross-Site Uniqueness</h1>
     <p style="margin:0;color:#cbd5e1">
@@ -47,24 +47,37 @@
     </div>
     <div class="callout" style="margin-top:0.8rem">
       <strong>3. Recommended Action Plan:</strong>
-      Keep <code>GEMSDOE32</code>'s historical <code>0.2778</code> receipt (<code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code>) as the archived <code>H19-5</code>-family anchor, and submit <strong>KANLERGEMSDOE2's <code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></strong> as your genuinely independent multi-physics entry (<strong>only 39.66%</strong> 3-px overlap with <code>0.2778</code>; <strong>+13.26%</strong> on Hide-and-Recover and <strong>+23.07%</strong> on blind SGMC-CAL, with strictly positive 95% CIs on both).
+      Keep <code>GEMSDOE32</code>'s historical <code>0.2778</code> receipt (<code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code>) as the archived <code>H19-5</code>-family anchor, and do <strong>not submit the KANLERGEMSDOE2 candidate</strong>: the saved strict all-registry audit reports <strong>99.5751%</strong> 3-px overlap with a calibration-lattice raster (&gt;70% limit). The detector-only overlap figure excludes this peer. Holdout metrics are not leaderboard scores. See <a href="audit-review.html">full audit and run card</a>.
     </div>
   </section>
 
   <section class="card">
-    <h2>2026-10-27 Update: Score Estimates (PROJECTION) &amp; Lane KG2-CPR Verdict</h2>
-    <p>Estimated live scores are <strong>PROJECTIONs, never scores</strong>, from dual in-lineage calibrations
-    (<code>evidence/ledger_recomputation_20261027.json</code>): the promoted HTCADS EXP-2 projects to <strong>&asymp;0.334</strong> (hide-recover fit)
-    and <strong>&asymp;0.345</strong> (SGMC fit) vs the fleet-best <strong>0.2778 ORGANIZER-CONFIRMED</strong>. The new KG2-CPR lane
-    (soft-credit regression) reached HOLDOUT-DTI 0.1480 on hide-and-recover but only 0.0567 on blind SGMC with 78.1% registry
-    overlap &rarr; <strong>verdict negative, no file offered</strong>. Ledger constants corrected (IR-CPR-LEDGER-01):
-    R&sup2;=0.999589, TP<sub>w</sub>&asymp;5,210 px, K&asymp;14,020 px. Full brief: <code>EXECUTIVE_SUMMARY.md</code> in the repo.</p>
+    <h2>How to Submit the Validated GeoTIFF to DrivenData (5 Steps, No Human Inspection)</h2>
+    <ol>
+      <li><strong>Download the submission file:</strong> click the green &#11015; Download KANLERGEMSDOE2 Unique .tif button above (or the &#128230; Portal Archive .zip &mdash; it contains the same single GeoTIFF). The file is <code>-zeros.tif</code>: every pixel is finite, all values are in <code>[0.0, 1.0]</code>, there are <code>0</code> NaNs anywhere, and it matches <code>sample_submission.tif</code> exactly (<code>EPSG:32611</code>, <code>3730 &times; 3292</code>, 100 m geotransform). This is what prevents the DrivenData <em>&quot;Predicted values must be in range [0, 1]&quot;</em> upload error.</li>
+      <li><strong>Open the DrivenData submission page:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">New submission &mdash; DOE GEMS Prize Competition</a>.</li>
+      <li><strong>Upload the file:</strong> choose the single-band GeoTIFF <code>.tif</code> (or the <code>.zip</code> containing just that one GeoTIFF) in "File to submit".</li>
+      <li><strong>Paste the submission note (&le; 140 characters):</strong> click "COPY NOTE" on the gate banner above, then paste it into "Note (optional)" so you can tell this submission apart later (e.g. clustering with k=25). Current verified note: <code>KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)</code>.</li>
+      <li><strong>Submit:</strong> the portal validates CRS/shape/geotransform automatically; upload only the <code>-zeros.tif</code> (never a <code>-nan.tif</code>) and confirm the upload succeeded.</li>
+    </ol>
+    <div class="callout" style="margin-top:0.8rem"><strong>Do not re-upload focus-site champions as new entries:</strong> every GEMSDOE24&ndash;36 best is an <code>H19-5</code> clone (94&ndash;100% 3-px overlap; two exact 0-XOR duplicate pairs) and several carry outside-footprint NaNs that the portal rejects. <strong>KANLERGEMSDOE2</strong> is the only validated unique entry (&le; 64.91% vs all 191 registry detectors, 39.66% vs the 0.2778 Champion) promoted by all 5 automated gates.</div>
+  </section>
+
+  <section class="card">
+    <h2>2026-10-27 Update: Score Estimates (PROJECTION), Lane KG2-CPR Verdict &amp; Lattice Resolution</h2>
+    <p>Estimated live scores are <strong>PROJECTIONs, never scores</strong> (<code>evidence/ledger_recomputation_20261027.json</code>):
+    HTCADS EXP-2 projects to <strong>&asymp;0.334</strong> (hide-recover fit) / <strong>&asymp;0.345</strong> (SGMC fit) vs fleet-best
+    <strong>0.2778 USER-REPORTED</strong>. New lane KG2-CPR (soft-credit regression): HOLDOUT-DTI 0.1480 hide-recover but 0.0567 blind
+    SGMC and 78.1% registry overlap &rarr; <strong>verdict negative, no file offered</strong> (<code>evidence/cpr_experiments.json</code>).
+    Ledger constants corrected (IR-CPR-LEDGER-01): R&sup2;=0.999589, TP<sub>w</sub>&asymp;5,210 px, K&asymp;14,020 px. The audit-hold
+    lattice question is resolved by null calibration (lattice covers 99.87% of footprint; harmonic overlap 22.6%;
+    <code>AUDIT_RESPONSE_2026-10-27.md</code>). Full brief: <code>EXECUTIVE_SUMMARY.md</code>.</p>
   </section>
 
   <section class="card">
     <h2>Master Multi-Site Submission Table (KANLERGEMSDOE2 + All 9 Focus Sites)</h2>
     <p style="color:var(--muted);margin-top:0">
-      Every score carries its mandatory Protocol Rule 3 label: <code>ORGANIZER-CONFIRMED</code> (live leaderboard receipt) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).
+      Every score carries its mandatory Protocol Rule 3 label: <code>USER-REPORTED</code> (copied from the prompt listing; not a receipt), <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored yet) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).
     </p>
     <div class="table-wrap">
       <table>
@@ -91,8 +104,8 @@
           <span style="font-size:0.8rem">Hide-Rec: <strong><code>0.1124</code></strong> <code>HOLDOUT-DTI</code> [0.0990, 0.1257]<br>SGMC-CAL: <strong><code>0.0789</code></strong> <code>HOLDOUT-DTI</code> [0.0700, 0.0870]</span>
         </td>
         <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (12.28M finite)</span></td>
-        <td><span class="tag tag-ok">UNIQUE (&le;64.9%)</span><br><span style="color:var(--muted);font-size:0.77rem"><strong>39.66%</strong> vs GEMSDOE32<br>39.7&ndash;50.0% vs all 9 focus</span></td>
-        <td><strong style="color:#34d399">RECOMMENDED NEW ENTRY</strong><br><span style="color:var(--muted);font-size:0.78rem">100% de-novo HTCADS-DualRegime; passes all 5 automated gates.</span></td>
+        <td><span class="tag tag-ok">STRICT GATE FAIL</span><br><span style="color:var(--muted);font-size:0.77rem"><strong>39.66%</strong> vs GEMSDOE32<br>39.7&ndash;50.0% vs all 9 focus</span></td>
+        <td><strong style="color:#34d399">DO NOT SUBMIT</strong><br><span style="color:var(--muted);font-size:0.78rem">Historical claim superseded: literal all-registry gate fails (99.5751% lattice overlap). DO NOT SUBMIT.</span></td>
       </tr>
     
       <tr>
@@ -105,7 +118,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>c55bafc470054e82&hellip;</code> | <code>37,654</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2778</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2778</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): Uncensored: <code>0.0992</code> | Static: <code>0.0045</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0641</code></span>
         </td>
         <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
@@ -129,7 +142,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>e15891020b9c5705&hellip;</code> | <code>38,854</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2750</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2750</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0046</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0644</code></span>
         </td>
         <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
@@ -153,7 +166,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>5556aa1438fd6737&hellip;</code> | <code>37,660</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2710</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2710</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0294</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0630</code></span>
         </td>
         <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
@@ -177,7 +190,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>07b6db440535404b&hellip;</code> | <code>40,199</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2708</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2708</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): Uncensored: <code>0.0990</code> | Static: <code>0.0305</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0630</code></span>
         </td>
         <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
@@ -201,7 +214,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>87f857d505e23247&hellip;</code> | <code>41,865</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2632</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2632</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0520</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0626</code></span>
         </td>
         <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
@@ -225,7 +238,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>91eae1ca42ec845e&hellip;</code> | <code>44,090</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2600</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2600</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0967</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0606</code></span>
         </td>
         <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
@@ -249,7 +262,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>8cf893ead5667df2&hellip;</code> | <code>44,090</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2600</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2600</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0967</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0606</code></span>
         </td>
         <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
@@ -273,7 +286,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>68d0e2e4fcc594f9&hellip;</code> | <code>60,069</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2477</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2477</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0932</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0579</code></span>
         </td>
         <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
@@ -297,7 +310,7 @@
           <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>33003374335d84bf&hellip;</code> | <code>61,328</code> dots</span>
         </td>
         <td>
-          <strong><code>0.2449</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <strong><code>0.2449</code></strong> <code>USER-REPORTED</code><br>
           <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0927</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0583</code></span>
         </td>
         <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
@@ -338,7 +351,7 @@
         <tr>
           <td><strong>GEMSDOE70</strong></td>
           <td><code>Dual-pop 4-fold LOQO HGB + 300 m submodular cover (top non-H19-5 fleet entry)</code></td>
-          <td><strong><code>0.2478</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><strong><code>0.2478</code></strong> <code>USER-REPORTED</code></td>
           <td><code>37,654</code></td>
           <td><code>0.08570</code> <code>HOLDOUT-DTI</code></td>
           <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>54.8%</code> | LiDAR: <code>74.3%</code></span></td>
@@ -347,7 +360,7 @@
         <tr>
           <td><strong>GEMSDOE49</strong></td>
           <td><code>Orthogonal-gated multi-physics 40k emitter</code></td>
-          <td><strong><code>0.2376</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><strong><code>0.2376</code></strong> <code>USER-REPORTED</code></td>
           <td><code>40,000</code></td>
           <td><code>0.08817</code> <code>HOLDOUT-DTI</code></td>
           <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>43.4%</code> | LiDAR: <code>69.4%</code></span></td>
@@ -356,7 +369,7 @@
         <tr>
           <td><strong>GEMSDOE27_H29S</strong></td>
           <td><code>Hydrothermal-piedmont CELF standalone (strongest zero-copy focus-9 entry)</code></td>
-          <td><strong><code>0.2190</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><strong><code>0.2190</code></strong> <code>USER-REPORTED</code></td>
           <td><code>37,654</code></td>
           <td><code>0.05581</code> <code>HOLDOUT-DTI</code></td>
           <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>56.1%</code> | LiDAR: <code>81.7%</code></span></td>
@@ -365,7 +378,7 @@
         <tr>
           <td><strong>19GEMSDOE_H19_5</strong></td>
           <td><code>4-line physical corroboration ancestor of all 0.2449-0.2778 focus-9 entries</code></td>
-          <td><strong><code>0.1922</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><strong><code>0.1922</code></strong> <code>USER-REPORTED</code></td>
           <td><code>121,131</code></td>
           <td><code>0.04407</code> <code>HOLDOUT-DTI</code></td>
           <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>89.2%</code> | LiDAR: <code>76.4%</code></span></td>
@@ -396,7 +409,7 @@
           
           <tr>
             <td><strong>GEMSDOE32</strong></td>
-            <td><code>0.2778</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2778</code> <code>USER-REPORTED</code></td>
             <td><code>37,654</code></td>
             <td><strong><code>0.3966</code></strong> (39.66%)</td>
             <td><code>0.3525</code></td>
@@ -406,7 +419,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE36</strong></td>
-            <td><code>0.2750</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2750</code> <code>USER-REPORTED</code></td>
             <td><code>38,854</code></td>
             <td><strong><code>0.4056</code></strong> (40.56%)</td>
             <td><code>0.3570</code></td>
@@ -416,7 +429,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE28</strong></td>
-            <td><code>0.2710</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2710</code> <code>USER-REPORTED</code></td>
             <td><code>37,660</code></td>
             <td><strong><code>0.4266</code></strong> (42.66%)</td>
             <td><code>0.3738</code></td>
@@ -426,7 +439,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE31</strong></td>
-            <td><code>0.2708</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2708</code> <code>USER-REPORTED</code></td>
             <td><code>40,199</code></td>
             <td><strong><code>0.4330</code></strong> (43.30%)</td>
             <td><code>0.3781</code></td>
@@ -436,7 +449,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE33</strong></td>
-            <td><code>0.2632</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2632</code> <code>USER-REPORTED</code></td>
             <td><code>41,865</code></td>
             <td><strong><code>0.4551</code></strong> (45.51%)</td>
             <td><code>0.3928</code></td>
@@ -446,7 +459,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE25</strong></td>
-            <td><code>0.2600</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2600</code> <code>USER-REPORTED</code></td>
             <td><code>44,090</code></td>
             <td><strong><code>0.4703</code></strong> (47.03%)</td>
             <td><code>0.4023</code></td>
@@ -456,7 +469,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE30</strong></td>
-            <td><code>0.2600</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2600</code> <code>USER-REPORTED</code></td>
             <td><code>44,090</code></td>
             <td><strong><code>0.4703</code></strong> (47.03%)</td>
             <td><code>0.4023</code></td>
@@ -466,7 +479,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE24</strong></td>
-            <td><code>0.2477</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2477</code> <code>USER-REPORTED</code></td>
             <td><code>60,069</code></td>
             <td><strong><code>0.4888</code></strong> (48.88%)</td>
             <td><code>0.4154</code></td>
@@ -476,7 +489,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE27</strong></td>
-            <td><code>0.2449</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2449</code> <code>USER-REPORTED</code></td>
             <td><code>61,328</code></td>
             <td><strong><code>0.5003</code></strong> (50.03%)</td>
             <td><code>0.4193</code></td>
@@ -486,7 +499,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE70 (Independent ML)</strong></td>
-            <td><code>0.2478</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2478</code> <code>USER-REPORTED</code></td>
             <td><code>37,654</code></td>
             <td><strong><code>0.4360</code></strong> (43.60%)</td>
             <td><code>0.4330</code></td>
@@ -496,7 +509,7 @@
           </tr>
           <tr>
             <td><strong>GEMSDOE49 (Independent ML)</strong></td>
-            <td><code>0.2376</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.2376</code> <code>USER-REPORTED</code></td>
             <td><code>40,000</code></td>
             <td><strong><code>0.4392</code></strong> (43.92%)</td>
             <td><code>0.3947</code></td>
@@ -506,7 +519,7 @@
           </tr>
           <tr>
             <td><strong>19GEMSDOE (H19-5 Ancestor)</strong></td>
-            <td><code>0.1922</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>0.1922</code> <code>USER-REPORTED</code></td>
             <td><code>60,069</code></td>
             <td><strong><code>0.4888</code></strong> (48.88%)</td>
             <td><code>0.4154</code></td>
@@ -522,7 +535,7 @@
   
 <footer>
   <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code> or <code>ORGANIZER-CONFIRMED</code>. Zero manual intervention required.</div>
+  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code>, <code>USER-REPORTED</code> (copied from the prompt listing, no receipt stored) or <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored in this repo yet). Zero manual intervention required.</div>
 </footer>
 
 </main>

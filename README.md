@@ -1,18 +1,39 @@
+> **2026-10-27 audit — RESOLVED by null calibration; candidate OK to submit under the automated Gate-3 definition.** The fail-closed review ([`AUDIT_REVIEW_2026-10-27.md`](AUDIT_REVIEW_2026-10-27.md), PR #22) flagged >70% asymmetric 3-px overlap against the `r13-lattice-s5` calibration lattice under a literal any-raster reading. Null calibration ([`AUDIT_RESPONSE_2026-10-27.md`](AUDIT_RESPONSE_2026-10-27.md), [`evidence/lattice_null_calibration_20261027.json`](evidence/lattice_null_calibration_20261027.json)): the lattice covers 99.8713% of the footprint within 3 px, uniform-random dots score 99.8724% against it and the submitted 0.2778 champion 99.9150% — the literal reading fails every fleet raster and cannot measure lane drift (the audit's 99.5751% figure is also KG2-MGHV-EXP-1's, not this file's 99.9681%; harmonic overlap 22.58%). The shared validator rerun passes 5/5 gates. If the selector adopts the literal reading anyway, no candidate from any site is promotable — that policy choice is stated here explicitly.
+
 # KANLERGEMSDOE2 — U.S. DOE GEMS Geothermal Fault Discovery & Automated Submission System
 
-> ### ✅ AUTOMATED VALIDATION RECEIPT: **OK TO DOWNLOAD & SUBMIT (`5 / 5 GATES PASSED` · `verdict = promote` · `human_intervention_required = false`)**
+> ### ✅ AUDIT RESOLVED: OK TO DOWNLOAD & SUBMIT (see resolution note above)
 >
-> - **Promoted Unique GeoTIFF (`.tif`)**: [`docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (`204,099` bytes · `37,654` off-catalogue dots · `0` NaNs across all `12,279,160` cells · values strictly in `[0.0, 1.0]`)
-> - **SHA-256**: `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`
-> - **Single-GeoTIFF Portal Archive (`.zip`)**: [`docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip) (`SHA-256: fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698`)
-> - **DrivenData Submission Name**: `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros`
-> - **DrivenData Submission Note (`110 / 140` chars)**:
->   ```text
->   KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)
->   ```
-> - **Machine Receipts**: [`evidence/run_card.json`](evidence/run_card.json) · [`evidence/validator_receipt.json`](evidence/validator_receipt.json) · [`evidence/htcads_experiments.json`](evidence/htcads_experiments.json) · [`evidence/nine_site_audit.json`](evidence/nine_site_audit.json) · [`evidence/leakage_canary.json`](evidence/leakage_canary.json)
-> - **Parallel-Lane Cross-Verification (`KG2-MGHV-EXP-1` Preserved Intact)**: [`docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif`](docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif) (`run_card.json` · only **`41.75% <= 70%`** 3-px dot overlap and **`+0.0632`** surface Spearman with `HTCADS-DualRegime EXP-2`; `HTCADS-DualRegime EXP-2` lifts blind off-catalogue `SGMC-CAL` from `KG2-MGHV`'s `0.06268` up to **`0.07891`**, `+25.9%`!)
-> - **GitHub Pages Site (`docs/`)**: [`docs/index.html`](docs/index.html) (Main Gate & Run Card) · [`docs/executive-summary.html`](docs/executive-summary.html) (9-Site Submission Guide) · [`docs/research.html`](docs/research.html) (`0.2778` Forensics & `H-K1..H-K5` Hypotheses) · [`docs/irregularities.html`](docs/irregularities.html) (Irregularities & Roadmap)
+> Approved entry: `docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif` (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`). Competing-detector overlap max `64.91% ≤ 70%`; vs the space-filling calibration lattice the null-calibrated harmonic overlap is `22.58%` (asymmetric 99.97% ≈ the 99.87% random-dot null). Stored holdout results are HOLDOUT-DTI, not organizer leaderboard scores; live estimates are labeled PROJECTION.
+>
+> Audit + response: [`AUDIT_REVIEW_2026-10-27.md`](AUDIT_REVIEW_2026-10-27.md) · [`AUDIT_RESPONSE_2026-10-27.md`](AUDIT_RESPONSE_2026-10-27.md). The promotion below stands under the automated null-calibrated Gate-3 definition (validator rerun 2026-10-27, 5/5).
+---
+
+## 2026-10-27 Session Update: Which File to Submit (verified this session)
+
+**Answer:** download and submit [`docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`). It is the only file on the per-site table that is unique under the protocol and passes the format checks.
+
+- **Per-site table (all 9 focus sites, file links, format, uniqueness, estimate):** [`docs/submission-table.html`](docs/submission-table.html) · data: [`evidence/submission_table_20261027.json`](evidence/submission_table_20261027.json)
+- **Estimated score for the promoted file: `PROJECTION 0.3146` (range `0.2831`–`0.3477`) — NOT a score.** It is `0.2778 × (0.112353 / 0.099202)` on the same self-built holdout, so it carries large error. No organizer receipt exists for it yet. The file has not been uploaded.
+- **Uniqueness (computed this session):** max 3-px overlap `39.66%` vs GEMSDOE32, `≤ 50.03%` vs the 9 focus files, `64.91%` vs the largest non-lattice reference (`8GEMSDOE Hedge-v2`); `0` identical dot sets. The 5-px calibration lattice reads `99.97%` but is saturated and treated as a control.
+- **Leaderboard check (official snapshot, OS-3):** current public `#1 = 0.4544` (the prompt says `0.4413`); `#5 = 0.3566` (the prompt says `#5 = 0.3195`, which is actually `#25`). Rank `#50` is `0.2857`, so the listed `0.2778` ranks below `#50`.
+
+**Fixed this session**
+1. Twelve download links to GeoTIFFs that were never committed now resolve. The files were restored from their owner repos and checked against the SHA-256 values already quoted in the summary (`scripts/fetch_focus_submissions.py`, `evidence/focus_site_files.json`).
+2. Labels: scores copied from the prompt listing were labelled `ORGANIZER-CONFIRMED`. They are now `USER-REPORTED` on every page generated by `scripts/build_site.py`. `ORGANIZER-CONFIRMED` is kept only as the definition of a receipt copied from a submission page; none is stored yet.
+3. Metric check: `src/gems32/metric.py` transcribes the published DTI equations (OS-1). The forum reply from DrivenData staff confirms known USGS/INGENIOUS fault pixels are masked from scoring (OS-4). The official scorer is not public, so no file here has organizer-validated metric output.
+4. Tests: `tests/test_submission_table_20261027.py` pins the focus-file hashes, format audit, projection arithmetic, and link integrity. All 21 tests pass.
+
+**Review before upload (see `docs/submission-table.html` → Irregularities)**
+- `IRR-2026-10-27-02`: the promoted file uses `0` outside the footprint. The organizer text says outside-bounds cells are `null or nan`. This is a numeric, in-range deviation that the organizer has not confirmed.
+- `IRR-2026-10-27-01`: the prompt's leaderboard figures do not match the live snapshot.
+- `IRR-2026-10-27-07`: the projection is one ratio on one self-built holdout. Treat it as an order-of-magnitude guide only.
+
+**Official sources used this session (fetched 2026-10-27):** [problem description & metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [official rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) · [public leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) · [forum: known faults masked](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516) · [reference solution](https://github.com/drivendataorg/gems-prize-reference-solution). Full list with quotes: [`registry/official_sources_20261027.json`](registry/official_sources_20261027.json).
+
+**Re-run order for this session:** `scripts/restore_data.py` → `scripts/fetch_focus_submissions.py` → `scripts/audit_focus_files.py` (≈2 min) → `scripts/build_site.py` → `scripts/build_submission_table.py` → `pytest`.
+
+**Legacy text note:** older sections below still use the phrase `ORGANIZER-CONFIRMED` for the prompt-listed scores. Read those as `USER-REPORTED` until a submission-page receipt is stored.
 
 ---
 

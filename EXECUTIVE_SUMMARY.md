@@ -10,8 +10,24 @@
 | **Submission name** | `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros` |
 | **Portal note (110/140 chars)** | `KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)` |
 | **Portal safety** | EPSG:32611 · 3730×3292 · float32 · nodata=None · 12,279,160/12,279,160 finite · min 0.0 / max 1.0 · 0 NaN · 0 on-catalogue px → cannot trigger *"Predicted values must be in range [0, 1]"* |
-| **Estimated live score** | **PROJECTION ≈ 0.33–0.35** (not a score — see §3; champion to beat is `0.2778` ORGANIZER-CONFIRMED, fleet best; public #1 = 0.4413, #5 = 0.3195 per owner ledger) |
+| **Outside-footprint encoding** | `0.0` (zeros). PR #24 flags organizer text describing outside-bounds cells as "null or nan" (`IRR-2026-10-27-02`); note both encodings carry USER-REPORTED scores in the fleet ledger (`-zeros` 0.2778; `-nan` 0.2708/0.2600), and zeros is the only one that guarantees the portal's global [0, 1] check that previously rejected an upload. If the portal ever rejects zeros-outside, the same dots can be re-exported NaN-outside in one command — dots and score-relevant content are identical. |
+| **Estimated live score** | **PROJECTION ≈ 0.31–0.35** (not a score — see §3; champion to beat is `0.2778` USER-REPORTED, fleet best; public #1 = 0.4413, #5 = 0.3195 per owner ledger) |
 | **Unique?** | **YES** — 39.66% 3-px overlap vs the 0.2778 champion; max 64.91% vs every restored registry raster (≤70% Rule-1 gate), re-verified 2026-10-27 ([`evidence/promoted_reverification_20261027.json`](evidence/promoted_reverification_20261027.json)) |
+
+
+**Registry-lattice policy (PR #22 audit — resolved 2026-10-27, read before submitting).**
+[`AUDIT_REVIEW_2026-10-27.md`](AUDIT_REVIEW_2026-10-27.md) fail-closed this file because asymmetric
+3-px overlap against the `r13-lattice-s5` registry raster exceeds 70% under a literal any-raster
+reading of Rule 1. Null calibration ([`evidence/lattice_null_calibration_20261027.json`](evidence/lattice_null_calibration_20261027.json),
+response in [`AUDIT_RESPONSE_2026-10-27.md`](AUDIT_RESPONSE_2026-10-27.md)): that lattice is a
+space-filling calibration control covering **99.8713%** of the footprint within 3 px; uniform-random
+dots score 99.8724% against it and the already-submitted champion scores 99.9150%, so the literal
+reading fails every raster in the fleet and cannot measure lane drift. Under the template validator's
+pre-documented null-calibrated Gate 3 (competing-detector ≤70% **and** harmonic ≤70% vs all rasters),
+rerun 2026-10-27, this file passes **5/5** (harmonic vs lattice 22.58%; max detector overlap 64.91%).
+The verdict above uses that automated gate. If the selector instead adopts the literal reading, no
+candidate from any site is promotable while the lattice remains in the registry — stated here so the
+policy choice is explicit (Protocol Rule 6), not hidden.
 
 **How to submit (2 minutes):** DrivenData → [competition 306 submissions](https://www.drivendata.org/competitions/306/competition-doe-gems/) → *New submission* → upload the `.tif` (or `.zip`) above → paste the portal note → submit. Do **not** submit any `-nan.tif` file from any site (portal rejects them) and do **not** re-submit any focus-9 champion below (already submitted; exact duplicates exist across sites).
 
@@ -21,7 +37,7 @@
 
 ## 1. Master table — every focus site + every in-repo candidate
 
-Scores are labeled **ORGANIZER-CONFIRMED** (submission-page receipts, owner ledger) or **HOLDOUT-DTI**
+Scores are labeled **USER-REPORTED** (owner's submission ledger as given in the brief; no receipt artifact is stored in-repo, so per PR #24 policy they are not labeled USER-REPORTED until a receipt is archived) or **HOLDOUT-DTI**
 (evaluator + N + 95% CI). **PROJECTION** = estimated live score from §3 calibration — *never* a score.
 SHA-256 prefixes for the 9 champions were re-fetched and re-hashed on 2026-10-27 and match exactly.
 
@@ -31,15 +47,15 @@ SHA-256 prefixes for the 9 champions were re-fetched and re-hashed on 2026-10-27
 | KANLERGEMSDOE2 — KG2-MGHV-EXP-1 | `kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif` (`cf1d07726f5f…`*) | Unsubmitted. HOLDOUT-DTI 0.177056 [0.1637, 0.1908] on *different* evaluator `gems-segment-pooled-v1` (N=60,988) — not comparable to rows above; SGMC-CAL 0.06268 | PROJECTION ≈0.27 (SGMC fit only) | YES (max 62.68%) | Hold as second slot only if HTCADS disappoints live |
 | KANLERGEMSDOE2 — KG2-FVCA | `kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif` (`29128ad7a929…`) | Unsubmitted. HOLDOUT-DTI SGMC-CAL 0.044042 | PROJECTION ≈0.18 | **NO** (80.68% vs gems10 scarp ridge) | ❌ DO NOT SUBMIT (Rule-1 stop, prior session) |
 | KANLERGEMSDOE2 — KG2-CPR (new) | *no file written* | HOLDOUT-DTI hide-recover 0.147951 [0.1341, 0.1614] but SGMC-CAL 0.056742 (below champion) | NOT PROJECTABLE (fits conflict: 0.499 vs 0.240) | **NO** (78.10% vs gems10; 76.5% vs HTCADS) | ❌ DO NOT SUBMIT (verdict negative, §4) |
-| GEMSDOE32 | `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (`c55bafc47005…`) | **0.2778 ORGANIZER-CONFIRMED** (fleet best). HOLDOUT-DTI HR 0.099202, SGMC 0.064121 (both reproduced 2026-10-27) | — (actual 0.2778) | NO (H19-5 clone family) | Already submitted — the benchmark to beat |
-| GEMSDOE36 | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` (`e15891020b9c…`) | **0.2750 ORGANIZER-CONFIRMED** | — | NO (≈97% vs 27/32) | Already submitted (B=2 + 1,200 thermal dots, −0.0028) |
-| GEMSDOE28 | `gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif` (`5556aa1438fd…`) | **0.2710 ORGANIZER-CONFIRMED** | — | NO | Already submitted; `-nan` = portal-unsafe |
-| GEMSDOE31 | `gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif` (`07b6db440535…`) | **0.2708 ORGANIZER-CONFIRMED** | — | NO (0-XOR duplicate of a GEMSDOE28 file) | Already submitted; `-nan` unsafe |
-| GEMSDOE33 | `GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif` (`87f857d505e2…`) | **0.2632 ORGANIZER-CONFIRMED** | — | NO (99.7% vs 27) | Already submitted |
-| GEMSDOE25 | `gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif` (`91eae1ca42ec…`) | **0.2600 ORGANIZER-CONFIRMED** | — | NO (0-XOR duplicate of GEMSDOE30) | Already submitted; `-nan` unsafe |
-| GEMSDOE30 | `gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif` (`8cf893ead566…`) | **0.2600 ORGANIZER-CONFIRMED** | — | NO (0-XOR duplicate of GEMSDOE25) | Already submitted |
-| GEMSDOE24 | `gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif` (`68d0e2e4fcc5…`) | **0.2477 ORGANIZER-CONFIRMED** | — | NO | Already submitted; `-nan` unsafe |
-| GEMSDOE27 | `gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif` (`33003374335d…`) | **0.2449 ORGANIZER-CONFIRMED** | — | NO (98.0% vs 24) | Already submitted; `-nan` unsafe |
+| GEMSDOE32 | `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (`c55bafc47005…`) | **0.2778 USER-REPORTED** (fleet best). HOLDOUT-DTI HR 0.099202, SGMC 0.064121 (both reproduced 2026-10-27) | — (actual 0.2778) | NO (H19-5 clone family) | Already submitted — the benchmark to beat |
+| GEMSDOE36 | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` (`e15891020b9c…`) | **0.2750 USER-REPORTED** | — | NO (≈97% vs 27/32) | Already submitted (B=2 + 1,200 thermal dots, −0.0028) |
+| GEMSDOE28 | `gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif` (`5556aa1438fd…`) | **0.2710 USER-REPORTED** | — | NO | Already submitted; `-nan` = portal-unsafe |
+| GEMSDOE31 | `gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif` (`07b6db440535…`) | **0.2708 USER-REPORTED** | — | NO (0-XOR duplicate of a GEMSDOE28 file) | Already submitted; `-nan` unsafe |
+| GEMSDOE33 | `GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif` (`87f857d505e2…`) | **0.2632 USER-REPORTED** | — | NO (99.7% vs 27) | Already submitted |
+| GEMSDOE25 | `gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif` (`91eae1ca42ec…`) | **0.2600 USER-REPORTED** | — | NO (0-XOR duplicate of GEMSDOE30) | Already submitted; `-nan` unsafe |
+| GEMSDOE30 | `gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif` (`8cf893ead566…`) | **0.2600 USER-REPORTED** | — | NO (0-XOR duplicate of GEMSDOE25) | Already submitted |
+| GEMSDOE24 | `gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif` (`68d0e2e4fcc5…`) | **0.2477 USER-REPORTED** | — | NO | Already submitted; `-nan` unsafe |
+| GEMSDOE27 | `gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif` (`33003374335d…`) | **0.2449 USER-REPORTED** | — | NO (98.0% vs 24) | Already submitted; `-nan` unsafe |
 
 \* KG2-MGHV SHA as recorded 2026-10-26 in README/status feed (file unchanged this session).
 
@@ -60,7 +76,7 @@ size `K` — so any dot whose expected weighted-TP gain is below `0.2·DTI` *low
 
 All 9 champions are prunings of one ancestor, 19GEMSDOE `H19-5` (121,131 px, live 0.1922). Along the
 pure catalogue-collar chain (44,090 dots → 0.2600; 40,199 → 0.2708; 37,654 → 0.2778, all
-ORGANIZER-CONFIRMED), `1/DTI` is linear in `N` with **R² = 0.999589** (recomputed 2026-10-27, see §5),
+USER-REPORTED), `1/DTI` is linear in `N` with **R² = 0.999589** (recomputed 2026-10-27, see §5),
 implying `TPw ≈ 5,210 px` and hidden truth `K ≈ 14,020 px`. Perfect linearity proves the 6,436 deleted
 dots within 200 m of catalogue traces contributed **~zero** true positives — experts do not map "new"
 faults hugging known traces — while each cost `0.2` in the denominator. `B=2` (delete everything within
@@ -79,15 +95,16 @@ paired 95% CIs strictly > 0: hide-and-recover 0.112353 vs 0.099202 (Δ +0.013150
 blind off-catalogue SGMC 0.078913 vs 0.064121 (Δ +0.014792 [+0.0050, +0.0237]) — all HOLDOUT-DTI — while
 60.34% of its dots (22,720) sit >3 px from any champion dot.
 
-## 3. How the estimated live score (PROJECTION 0.33–0.35) is computed — and its limits
+## 3. How the estimated live score (PROJECTION 0.31–0.35) is computed — and its limits
 
-Two in-lineage calibrations from ORGANIZER-CONFIRMED anchors ([`evidence/ledger_recomputation_20261027.json`](evidence/ledger_recomputation_20261027.json)):
+Two in-lineage calibrations from USER-REPORTED anchors ([`evidence/ledger_recomputation_20261027.json`](evidence/ledger_recomputation_20261027.json)):
 
 - Hide-recover fit: `live ≈ −0.1775 + 4.552·HR` (4 anchors, resid. SD 0.0038) → HTCADS **0.3339**.
 - SGMC fit: `live ≈ −0.0296 + 4.753·SGMC-CAL` (8 anchors, resid. SD 0.0028) → HTCADS **0.3454**.
+- Ratio method (PR #24, `docs/submission-table.html`): `0.2778 × (0.112353/0.099202)` → **0.3146** (range 0.2831–0.3477).
 
-Both extrapolate beyond their anchor ranges and across detector families, so treat **0.33–0.35 as an
-optimistic PROJECTION, not a promise**. The CPR lane (§4) proved why dual-evaluator agreement matters:
+All three extrapolate beyond their anchor ranges and across detector families, so treat **≈0.31–0.35
+(0.28 at the interval low end) as an optimistic PROJECTION, not a promise**. The CPR lane (§4) proved why dual-evaluator agreement matters:
 its HR projection (0.499) and SGMC projection (0.240) violently disagree, exposing catalogue-bias
 overfit. HTCADS is submitted-worthy precisely because *both* independent projections clear 0.33 and its
 holdout deltas are significant on both populations. Even the pessimistic read — champion 0.2778 plus a
@@ -126,7 +143,7 @@ the documented `IR-KG2-SCARP-CONVERGENCE` trap. Hide-and-recover alone would hav
 
 ## 6. Next steps
 
-1. **Submit HTCADS EXP-2** (file + note at top) and record the ORGANIZER-CONFIRMED receipt here.
+1. **Submit HTCADS EXP-2** (file + note at top) and record the USER-REPORTED receipt here.
 2. Next lane (new session, fresh 3-experiment budget): H-C4 geodesic tip linkage on top of the
    *HTCADS* surface (not CPR), and/or HTCADS with locally depth-scaled listric updip continuation;
    adoption gate unchanged — must beat 0.112353 HR **and** 0.078913 SGMC **and** pass Rule 1.

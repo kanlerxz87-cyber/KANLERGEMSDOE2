@@ -163,5 +163,15 @@
     "champion_hr_reproduced": 0.099202,
     "canary_max_auc": 0.795377,
     "manifest_files_restored": 26
+  },
+  "lattice_gate_resolution_20261027": {
+    "audit": "AUDIT_REVIEW_2026-10-27.md (PR #22)",
+    "response": "AUDIT_RESPONSE_2026-10-27.md",
+    "lattice_footprint_3px_coverage_pct": 99.8713,
+    "null_random_asym_pct": 99.8724,
+    "promoted_asym_vs_lattice_pct": 99.9681,
+    "promoted_harmonic_vs_lattice_pct": 22.5767,
+    "max_competing_detector_overlap": 0.649121,
+    "validator_rerun": "evidence/validator_reverification_20261027.json (5/5 gates, verdict promote)"
   }
 }

@@ -15,7 +15,7 @@
       <span class="brand-badge">VALIDATED: PROMOTE (5/5 GATES)</span>
     </div>
     <nav class="nav-links">
-      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html">9-Site Executive Summary &amp; Guide</a><a href="research.html" class="active">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html">9-Site Executive Summary &amp; Guide</a><a href="submission-table.html">Per-Site Submission Table</a><a href="research.html" class="active">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
     </nav>
   </div>
 </header>
@@ -23,24 +23,24 @@
 <main class="container">
 
   <section class="card">
-    <h2>1. PhD-Level Forensic Analysis: Why &amp; How GEMSDOE32 Scored <code>0.2778</code> (ORGANIZER-CONFIRMED)</h2>
+    <h2>1. PhD-Level Forensic Analysis: Why &amp; How GEMSDOE32 Scored <code>0.2778</code> (USER-REPORTED)</h2>
     <p>
       Under the competition's exact Distance-Weighted Tversky Index (<code>&alpha; = 0.2</code> false-positive weight, <code>&beta; = 0.8</code> false-negative weight, <code>300 m</code> Euclidean triangular kernel, public catalogue faults masked out), any binary prediction raster emitting <code>N</code> off-catalogue dots with weighted true-positive overlap <code>TP_w</code> against a hidden expert fault set of size <code>K</code> obeys the exact identity:
     </p>
     <pre>DTI(N) = TP_w / (0.2 * N + 0.8 * K + 0.8 * (TP_raw - TP_w))   ==&gt;   1 / DTI(N) &approx; (0.8 * K / TP_w) + (0.2 / TP_w) * N</pre>
     <p>
-      Tracing pixel-exact SHA-256 ancestry across the 9 focus sites reveals an unintentional controlled experiment on a <strong>single fixed detector</strong> (<code>19GEMSDOE</code>'s 4-line OOF physical corroboration patch <code>H19-5</code>, <code>121,131</code> positive pixels, live <code>0.1922 ORGANIZER-CONFIRMED</code>):
+      Tracing pixel-exact SHA-256 ancestry across the 9 focus sites reveals an unintentional controlled experiment on a <strong>single fixed detector</strong> (<code>19GEMSDOE</code>'s 4-line OOF physical corroboration patch <code>H19-5</code>, <code>121,131</code> positive pixels, live <code>0.1922 USER-REPORTED</code>):
     </p>
     <ul>
-      <li><strong>Step A &mdash; 300 m Submodular / Poisson-Disk Thinning (<code>0.1922 &rarr; 0.2600 ORGANIZER-CONFIRMED</code>, +0.0678):</strong> Because the 300 m triangular kernel credits every truth pixel within 300 m of <em>any</em> predicted dot via a <code>max</code> operator, dense 1-px ridges pay linear <code>0.2 &times; FP</code> penalty for redundant neighbors. Thinning <code>H19-5</code> at spacing <code>d = 1.5 px</code> (<code>GEMSDOE24</code>, <code>60,069</code> dots &rarr; <code>0.2477</code>) and <code>d = 2.8 px</code> (<code>GEMSDOE25 == GEMSDOE30</code>, <code>44,090</code> dots &rarr; <code>0.2600</code>) cut <code>77,041</code> redundant dots while retaining nearly 100% of 300 m halo coverage.</li>
-      <li><strong>Step B &mdash; Catalogue-Collar Depletion Shadow (<code>0.2600 &rarr; 0.2708 &rarr; 0.2778 ORGANIZER-CONFIRMED</code>, +0.0178):</strong> Deleting dots within <code>d_cat &le; 100 m</code> (<code>GEMSDOE31</code>, <code>40,199</code> dots &rarr; <code>0.2708</code>) and <code>d_cat &le; 200 m</code> (<code>GEMSDOE32 B=2</code>, <code>37,654</code> dots &rarr; <code>0.2778</code>) fits the linear no-recall-loss line <code>1 / DTI(N)</code> with <strong><code>R&sup2; = 0.999623</code></strong>!</li>
+      <li><strong>Step A &mdash; 300 m Submodular / Poisson-Disk Thinning (<code>0.1922 &rarr; 0.2600 USER-REPORTED</code>, +0.0678):</strong> Because the 300 m triangular kernel credits every truth pixel within 300 m of <em>any</em> predicted dot via a <code>max</code> operator, dense 1-px ridges pay linear <code>0.2 &times; FP</code> penalty for redundant neighbors. Thinning <code>H19-5</code> at spacing <code>d = 1.5 px</code> (<code>GEMSDOE24</code>, <code>60,069</code> dots &rarr; <code>0.2477</code>) and <code>d = 2.8 px</code> (<code>GEMSDOE25 == GEMSDOE30</code>, <code>44,090</code> dots &rarr; <code>0.2600</code>) cut <code>77,041</code> redundant dots while retaining nearly 100% of 300 m halo coverage.</li>
+      <li><strong>Step B &mdash; Catalogue-Collar Depletion Shadow (<code>0.2600 &rarr; 0.2708 &rarr; 0.2778 USER-REPORTED</code>, +0.0178):</strong> Deleting dots within <code>d_cat &le; 100 m</code> (<code>GEMSDOE31</code>, <code>40,199</code> dots &rarr; <code>0.2708</code>) and <code>d_cat &le; 200 m</code> (<code>GEMSDOE32 B=2</code>, <code>37,654</code> dots &rarr; <code>0.2778</code>) fits the linear no-recall-loss line <code>1 / DTI(N)</code> with <strong><code>R&sup2; = 0.999589</code></strong>!</li>
     </ul>
     <div class="callout">
       <strong>Exact Inverted Parameters of the Hidden Private Test Set:</strong>
       <ul>
         <li><strong>0&ndash;200 m Catalogue-Flank True Positives &approx; 0:</strong> Trimming <code>6,436</code> dots in <code>0 &lt; d_cat &le; 200 m</code> lost virtually zero true positives on the private expert labels because cartographic digitization offsets and hanging-wall scarp aprons hug mapped traces without representing new unmapped faults.</li>
-        <li><strong>Inferred Weighted Recall of <code>H19-5 (B=2)</code>:</strong> <code>TP_w &approx; 5,210.3 px</code> out of <strong><code>K &approx; 14,019.8 px</code></strong> hidden off-catalogue expert fault pixels (<code>~0.27%</code> footprint prevalence; <code>12,632&ndash;14,020 px</code> across clustering bounds), or <code>~37.5%</code> weighted recall.</li>
-        <li><strong>Why Pruning <code>H19-5</code> Plateaus at ~0.285&ndash;0.295 &amp; How to Reach 0.3195 (#5) and 0.4413 (#1):</strong> Even an unattainable zero-FP oracle restricted to <code>H19-5</code>'s support caps at <code>0.4286</code>, and empirical blind feature pruning (<code>GEMSDOE28</code> <code>40,199 &rarr; 37,660</code> dots) gained only <code>+0.0002</code> (<code>0.2708 &rarr; 0.2710</code>). At <code>N = 37,654</code> dots, reaching public <strong>#5 (<code>0.3195</code>)</strong> requires <strong><code>TP_w &approx; 5,917 px</code></strong> (+14.9% genuinely new recall), and reaching <strong>#1 (<code>0.4413</code>)</strong> requires <strong><code>TP_w &approx; 8,172 px</code></strong> (+58.6% new recall). That mathematically requires discovering <strong>blind intrabasin, updip range-front, and hydrothermal step-over faults</strong> missed by <code>H19-5</code>.</li>
+        <li><strong>Inferred Weighted Recall of <code>H19-5 (B=2)</code>:</strong> <code>TP_w &approx; 5,210.4 px</code> out of <strong><code>K &approx; 14,019.8 px</code></strong> hidden off-catalogue expert fault pixels (<code>~0.27%</code> footprint prevalence; <code>12,632&ndash;14,020 px</code> across clustering bounds), or <code>~37.5%</code> weighted recall.</li>
+        <li><strong>Why Pruning <code>H19-5</code> Plateaus at ~0.285&ndash;0.295 &amp; How to Reach 0.3195 (#5) and 0.4413 (#1):</strong> Even an unattainable zero-FP oracle restricted to <code>H19-5</code>'s support caps at <code>0.4286</code>, and empirical blind feature pruning (<code>GEMSDOE28</code> <code>40,199 &rarr; 37,660</code> dots) gained only <code>+0.0002</code> (<code>0.2708 &rarr; 0.2710</code>). At <code>N = 37,654</code> dots, reaching public <strong>#5 (<code>0.3195</code>)</strong> requires <strong><code>TP_w &approx; 5,990 px</code></strong> (+14.9% genuinely new recall), and reaching <strong>#1 (<code>0.4413</code>)</strong> requires <strong><code>TP_w &approx; 8,273 px</code></strong> (+58.6% new recall). That mathematically requires discovering <strong>blind intrabasin, updip range-front, and hydrothermal step-over faults</strong> missed by <code>H19-5</code>.</li>
       </ul>
     </div>
   </section>
@@ -248,7 +248,7 @@
   
 <footer>
   <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code> or <code>ORGANIZER-CONFIRMED</code>. Zero manual intervention required.</div>
+  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code>, <code>USER-REPORTED</code> (copied from the prompt listing, no receipt stored) or <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored in this repo yet). Zero manual intervention required.</div>
 </footer>
 
 </main>

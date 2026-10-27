@@ -1,4 +1,4 @@
-# Keep workspace and snapshots lightweight (<15 MB); bulk rasters live in GEMS_DATA_DIR or data/ (ignored)
+# Keep workspace and snapshots lightweight (<25 MB incl. focus-site submission GeoTIFFs); bulk rasters live in GEMS_DATA_DIR or data/ (ignored)
 __pycache__/
 *.py[cod]
 .pytest_cache/
