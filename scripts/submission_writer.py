@@ -1,19 +1,11 @@
 #!/usr/bin/env python3
-"""Canonical Protocol Rule 2 submission writer & automated 13-check GeoTIFF validator (`submission_writer.py`).
+"""Shared CLI for the existing strict writer; never authorizes a weekly slot."""
 
-Enforces:
-  - Exact CRS (`EPSG:32611`), shape (`3730 x 3292`), and affine geotransform matching `sample_submission.tif`.
-  - Strictly finite `[0.0, 1.0]` values across all 12,279,160 raster cells (`-zeros.tif`, `nodata=None`),
-    preventing DrivenData's portal error `"Predicted values must be in range [0, 1]"`.
-  - Pixel-exact masking (`0.0`) on known USGS/INGENIOUS catalogue traces (`labels.tif`).
-  - Supports both binary `{0.0, 1.0}` and continuous `[0.0, 1.0]` predictions (`IR-SHARED-SOFT-01` fix).
-"""
 from __future__ import annotations
 
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
@@ -21,70 +13,35 @@ import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-
-from gems32 import submission  # noqa: E402
-from gems32.paths import data_dir  # noqa: E402
-
-
-def write_validated_submission(
-    mask_or_probs: np.ndarray,
-    slug: str,
-    candidate_meta: dict,
-    ddir: Path | None = None,
-    out_dir: Path | None = None,
-    timestamp_tag: str | None = None,
-    prefix: str = "kanlergems2",
-) -> dict:
-    ddir = ddir or data_dir()
-    out_dir = out_dir or (ROOT / "docs" / "downloads")
-    sample_tif = ddir / "sample_submission.tif"
-    labels_tif = ddir / "labels.tif"
-    with rasterio.open(sample_tif) as ds:
-        foot = np.isfinite(ds.read(1))
-    arr_in = np.asarray(mask_or_probs, dtype=np.float32)
-    if arr_in.shape != foot.shape:
-        raise ValueError(f"Expected grid shape {foot.shape}, got {arr_in.shape}")
-    note = str(candidate_meta.get("submission_note", "")).strip()
-    if len(note) > 140:
-        raise ValueError(f"submission_note exceeds 140 characters ({len(note)} chars)")
-    with rasterio.open(labels_tif) as ds:
-        labels = (ds.read(1) > 0) & foot
-    ts = timestamp_tag or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    return submission.write_submission_bundle(
-        mask_or_probs=arr_in,
-        foot=foot,
-        labels=labels,
-        template_tif=sample_tif,
-        out_dir=out_dir,
-        slug=slug,
-        timestamp_tag=ts,
-        candidate_meta=candidate_meta,
-        prefix=prefix,
-    )
+from gems import paths  # noqa: E402
+from gems.submission import check_variants, write_submission  # noqa: E402
 
 
-def main() -> int:
+def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("mask_npy", type=Path, help="Boolean or float .npy array on the 3730x3292 grid")
-    ap.add_argument("--slug", required=True)
-    ap.add_argument("--candidate-id", required=True)
-    ap.add_argument("--note", required=True, help="Short DrivenData portal note (<= 140 chars)")
-    ap.add_argument("--out-dir", type=Path, default=ROOT / "docs" / "downloads")
-    ap.add_argument("--data-dir", type=Path, default=None)
-    args = ap.parse_args()
-
-    arr = np.load(args.mask_npy)
-    meta = {
-        "candidate_id": args.candidate_id,
-        "description": f"Generated via scripts/submission_writer.py for {args.candidate_id}",
-        "submission_note": args.note,
-    }
-    bundle = write_validated_submission(
-        arr, slug=args.slug, candidate_meta=meta, ddir=args.data_dir or data_dir(), out_dir=args.out_dir
+    ap.add_argument("prediction", type=Path, help="2D .npy or aligned single-band .tif")
+    ap.add_argument("output", type=Path)
+    ap.add_argument("--template", type=Path, default=paths.DATA_DIR / "bridge/sample_submission.tif")
+    ap.add_argument(
+        "--outside",
+        choices=("nan", "zero"),
+        default="zero",
+        help="exterior encoding; zero is the strict all-finite upload-safe default",
     )
-    print(json.dumps(bundle, indent=2))
-    return 0
+    args = ap.parse_args()
+    if args.prediction.suffix == ".npy":
+        a = np.load(args.prediction, allow_pickle=False)
+    else:
+        with rasterio.open(args.prediction) as s, rasterio.open(args.template) as t:
+            if (s.shape, s.crs, s.transform, s.count) != (t.shape, t.crs, t.transform, 1):
+                raise SystemExit("Prediction must match the template grid and be single-band")
+            a = s.read(1)
+    p = write_submission(a, args.template, args.output, outside=args.outside)
+    checks = check_variants(p, args.template)
+    print(json.dumps(checks, indent=2))
+    if not checks["format_valid"]:
+        raise SystemExit("Written file failed pinned-grid format validation")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

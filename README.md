@@ -11,6 +11,7 @@
 >   KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)
 >   ```
 > - **Machine Receipts**: [`evidence/run_card.json`](evidence/run_card.json) · [`evidence/validator_receipt.json`](evidence/validator_receipt.json) · [`evidence/htcads_experiments.json`](evidence/htcads_experiments.json) · [`evidence/nine_site_audit.json`](evidence/nine_site_audit.json) · [`evidence/leakage_canary.json`](evidence/leakage_canary.json)
+> - **Parallel-Lane Cross-Verification (`KG2-MGHV-EXP-1` Preserved Intact)**: [`docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif`](docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif) (`run_card.json` · only **`41.75% <= 70%`** 3-px dot overlap and **`+0.0632`** surface Spearman with `HTCADS-DualRegime EXP-2`; `HTCADS-DualRegime EXP-2` lifts blind off-catalogue `SGMC-CAL` from `KG2-MGHV`'s `0.06268` up to **`0.07891`**, `+25.9%`!)
 > - **GitHub Pages Site (`docs/`)**: [`docs/index.html`](docs/index.html) (Main Gate & Run Card) · [`docs/executive-summary.html`](docs/executive-summary.html) (9-Site Submission Guide) · [`docs/research.html`](docs/research.html) (`0.2778` Forensics & `H-K1..H-K5` Hypotheses) · [`docs/irregularities.html`](docs/irregularities.html) (Irregularities & Roadmap)
 
 ---
@@ -111,16 +112,17 @@ Complete table in [`docs/irregularities.html`](docs/irregularities.html):
 ## 5. End-to-End Reproducibility
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/pip install --no-deps -e .
 .venv/bin/python scripts/restore_data.py             # Restore & SHA-256 verify competition + external data
-.venv/bin/python scripts/prepare_data.py             # Build 50-ch stack + verify Rule 4 Leakage Canary (<=0.90)
+.venv/bin/python scripts/prepare_htcads_data.py      # Build 50-ch stack + verify Rule 4 Leakage Canary (<=0.90)
 .venv/bin/python scripts/audit_focus_sites.py        # Recompute 9-site + 92-site forensic audit
 .venv/bin/python scripts/run_htcads_experiments.py   # Run EXP-1..3 + emit GeoTIFF + run 5 automated gates
 .venv/bin/python scripts/validate_submission.py \
   --tif docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif \
   --run-card evidence/run_card.json --out evidence/validator_receipt.json
+.venv/bin/python scripts/evaluate_holdout.py --verify-kg2
 .venv/bin/python scripts/generate_figures.py && .venv/bin/python scripts/build_site.py
-.venv/bin/pytest -q
+.venv/bin/pytest -v
 ```
 
 ---

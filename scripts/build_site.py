@@ -144,7 +144,8 @@ def main() -> None:
     <div class="btn-row">
       <a class="btn btn-primary" href="downloads/{_esc(tif_name)}" download>&#11015; Download Validated GeoTIFF (.tif, {fmt["size_bytes"]//1024} KB)</a>
       <a class="btn" href="downloads/{_esc(zip_name)}" download>&#128230; Download Portal Archive (.zip)</a>
-      <a class="btn" href="downloads/run_card.json" download>&#128196; Download JSON Run Card</a>
+      <a class="btn" href="downloads/htcads_run_card.json" download>&#128196; Download HTCADS Run Card</a>
+      <a class="btn" href="downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif" download>&#11015; Parallel Lane: KG2-MGHV-EXP-1 (.tif)</a>
       <a class="btn" href="data/status_feed.json" target="_blank" rel="noopener">&#128225; Automated JSON Status Feed</a>
       <a class="btn" href="executive-summary.html">&#128202; Open 9-Site Executive Summary &amp; Submission Guide &rarr;</a>
     </div>
@@ -266,6 +267,42 @@ def main() -> None:
     <div class="callout" style="margin-top:1rem">
       <strong>Scientific Ablation Takeaway (Why EXP-2 Promoted &amp; EXP-3 Informative Negative vs. EXP-2):</strong>
       Adding <code>H-K2</code> FFT 400 m upward-continuation updip gravity migration plus the coverage-neutral zero-mean 1 m LiDAR contour-orthogonal scarp specialist (<code>EXP-1 &rarr; EXP-2</code>) lifts Hide-and-Recover from <code>0.108070</code> (paired CI <code>[-0.0021, +0.0193]</code>) to <strong><code>0.112353</code> (paired CI <code>[+0.0019, +0.0250]</code>, 99.2% win rate)</strong> while preserving strong blind SGMC-CAL gain (<code>0.078913</code> vs <code>0.064121</code>). Opening the 145&ndash;200 m inner collar at fault tips in <code>EXP-3</code> still beats the <code>0.2778</code> Champion (<code>0.111597</code>, CI <code>[+0.0013, +0.0238]</code>) but slightly trails <code>EXP-2</code> by <code>-0.00076</code> because 300 m kernel halo credit from <code>d &gt; 200 m</code> already covers the 145&ndash;200 m tip zone without spending extra FP budget.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Parallel-Lane Cross-Verification Inside <code>KANLERGEMSDOE2</code></h2>
+    <p style="color:var(--muted);margin-top:0">
+      Both validated <code>KANLERGEMSDOE2</code> lanes are preserved intact and cross-audited against each other:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lane</th>
+            <th>Validated GeoTIFF &amp; SHA-256</th>
+            <th>Primary Holdout (Strictly Labeled)</th>
+            <th>Blind Off-Catalogue <code>SGMC-CAL v3.0</code></th>
+            <th>Mutual 3-px Overlap &amp; Spearman</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td><strong>HTCADS-DualRegime (EXP-2)</strong><br><span class="tag tag-ok">PROMOTED (DUAL-WIN)</span></td>
+            <td><a href="downloads/{_esc(tif_name)}" download><code>{_esc(tif_name)}</code></a><br><span style="color:var(--muted);font-size:0.78rem">SHA-256: <code>{sha[:20]}&hellip;</code> | 37,654 dots</span></td>
+            <td><code>0.112353</code> <code>HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232, 95% CI [0.0990, 0.1257])</code><br><span style="color:#34d399;font-size:0.78rem"><strong>+13.26%</strong> vs 0.2778 Champ (0.099202), 99.2% win</span></td>
+            <td><strong style="color:#34d399"><code>0.078913</code></strong> <code>HOLDOUT-DTI</code><br><span style="color:#34d399;font-size:0.78rem"><strong>+23.07%</strong> vs 0.2778 Champ (0.064121)</span></td>
+            <td><code>41.75% &le; 70%</code> vs KG2-MGHV<br><code>39.66% &le; 70%</code> vs 0.2778 Champ<br><code>&rho;_surf = +0.0632</code></td>
+          </tr>
+          <tr>
+            <td><strong>KG2-MGHV-EXP-1</strong><br><span class="tag tag-info">PARALLEL PROMOTED LANE</span></td>
+            <td><a href="downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif" download><code>kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif</code></a><br><span style="color:var(--muted);font-size:0.78rem">SHA-256: <code>cf1d07726f5fb838dc75&hellip;</code> | 37,654 dots</span></td>
+            <td><code>0.177056</code> <code>HOLDOUT-DTI (gems-segment-pooled-v1, N=60988, 95% CI [0.1637, 0.1908])</code></td>
+            <td><code>0.062680</code> <code>HOLDOUT-DTI</code><br><span style="color:var(--muted);font-size:0.78rem">(-2.25% vs 0.2778 Champ 0.064121)</span></td>
+            <td><code>29.04% &le; 70%</code> vs HTCADS<br><code>&rho;_dots = +0.0396 &lt; 0.90</code></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 

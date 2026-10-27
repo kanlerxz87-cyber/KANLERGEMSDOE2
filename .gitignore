@@ -1,26 +1,16 @@
-# Python & virtual environments
-.venv/
-venv/
+# Keep workspace and snapshots lightweight (<15 MB); bulk rasters live in GEMS_DATA_DIR or data/ (ignored)
 __pycache__/
 *.py[cod]
-*$py.class
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 *.egg-info/
-dist/
-build/
-
-# Large cached datasets & working intermediates (SHA-256 verified via scripts/restore_data.py)
+.venv/
 .cache/
-data/raw/
-data/bridge/
-data/external/
-*.partial
-*.assembling
-*.npy
-*.npz
-
-# OS & editor files
-.DS_Store
-Thumbs.db
+build/
+dist/
+/data/
+!docs/data/
+submissions/*.tif
+submissions/*.zip
+*.partial.npy
