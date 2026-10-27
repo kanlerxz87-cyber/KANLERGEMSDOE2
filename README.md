@@ -1,19 +1,12 @@
+> **2026-10-27 audit override — DO NOT SUBMIT the currently linked candidate.** The strict all-registry uniqueness check in `evidence/kg2_run_card_20261026.json` reports 99.5751% 3-px overlap against a listed calibration lattice, above the prompt’s 70% limit. Prior green/promote statements exclude that registry raster and are superseded pending resolution. The candidate’s stored holdout DTI is not an organizer score. See [the audit review](AUDIT_REVIEW_2026-10-27.md).
+
 # KANLERGEMSDOE2 — U.S. DOE GEMS Geothermal Fault Discovery & Automated Submission System
 
-> ### ✅ AUTOMATED VALIDATION RECEIPT: **OK TO DOWNLOAD & SUBMIT (`5 / 5 GATES PASSED` · `verdict = promote` · `human_intervention_required = false`)**
+> ### ⛔ AUDIT HOLD: DO NOT DOWNLOAD/SUBMIT AS AN APPROVED ENTRY
 >
-> - **Promoted Unique GeoTIFF (`.tif`)**: [`docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (`204,099` bytes · `37,654` off-catalogue dots · `0` NaNs across all `12,279,160` cells · values strictly in `[0.0, 1.0]`)
-> - **SHA-256**: `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`
-> - **Single-GeoTIFF Portal Archive (`.zip`)**: [`docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip) (`SHA-256: fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698`)
-> - **DrivenData Submission Name**: `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros`
-> - **DrivenData Submission Note (`110 / 140` chars)**:
->   ```text
->   KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)
->   ```
-> - **Machine Receipts**: [`evidence/run_card.json`](evidence/run_card.json) · [`evidence/validator_receipt.json`](evidence/validator_receipt.json) · [`evidence/htcads_experiments.json`](evidence/htcads_experiments.json) · [`evidence/nine_site_audit.json`](evidence/nine_site_audit.json) · [`evidence/leakage_canary.json`](evidence/leakage_canary.json)
-> - **Parallel-Lane Cross-Verification (`KG2-MGHV-EXP-1` Preserved Intact)**: [`docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif`](docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif) (`run_card.json` · only **`41.75% <= 70%`** 3-px dot overlap and **`+0.0632`** surface Spearman with `HTCADS-DualRegime EXP-2`; `HTCADS-DualRegime EXP-2` lifts blind off-catalogue `SGMC-CAL` from `KG2-MGHV`'s `0.06268` up to **`0.07891`**, `+25.9%`!)
-> - **GitHub Pages Site (`docs/`)**: [`docs/index.html`](docs/index.html) (Main Gate & Run Card) · [`docs/executive-summary.html`](docs/executive-summary.html) (9-Site Submission Guide) · [`docs/research.html`](docs/research.html) (`0.2778` Forensics & `H-K1..H-K5` Hypotheses) · [`docs/irregularities.html`](docs/irregularities.html) (Irregularities & Roadmap)
-
+> Candidate file retained for reproducibility only: `docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif` (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`). The strict all-registry comparison reports `99.5751%` overlap with a listed calibration-lattice raster, exceeding the prompt's `70%` cap. The older receipt's detector-only exception is not compliant with the literal rule. Stored holdout results are not organizer leaderboard scores.
+>
+> Full decision and JSON run card: [`AUDIT_REVIEW_2026-10-27.md`](AUDIT_REVIEW_2026-10-27.md). No current TIFF is approved. The prior green promotion text further below is historical and superseded by this audit.
 ---
 
 ## Arena Core Values
