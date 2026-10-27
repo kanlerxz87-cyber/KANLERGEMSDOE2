@@ -1,51 +1,33 @@
-# Standing Project Brief & Parallel-Run Protocol (`KANLERGEMSDOE2`)
+# Standing project brief and parallel-run protocol
 
-> **Epistemic Integrity Note (Zero Hallucinations):** This file preserves the complete standing project brief, 9-site / 92-site audit mandate, Parallel-Run Protocol (Rules 1–6), and Arena Core Values (**Maximize P(Win)** and **Own the Outcome**) governing `kanlerxz87-cyber/KANLERGEMSDOE2`. Read this brief together with `README.md` at the start of every session before writing code or running experiments.
+Read this file and `README.md` at the start of every session, together with the user's current instructions. **This is a condensed record, not a verbatim copy of the complete original prompt.** The current run's hard stop and provenance limitations are documented in `run_card.json` and `evidence/focus_reaudit_20261027.json`.
 
----
+## Arena values
 
-## Core Values
+- **Maximize P(Win):** prioritize defensible scientific improvement and expected benefit per scarce submission slot, not cosmetic changes or duplicated predictions.
+- **Own the Outcome:** verify through shared automated code, preserve negative findings and provenance, fix root causes, and fail closed rather than imply human inspection is a substitute for a gate.
 
-- **Maximize P(Win):** Optimize expected leaderboard and Phase 2 ($250k / $395k expert-reviewed evaluation) return per scarce submission slot. Never burn a weekly slot on cosmetic edits, duplicate `H19-5` clones, or candidates that fail to beat the spatially-blocked holdout benchmark.
-- **Own the Outcome:** Automated code gates — never manual human inspection — verify `[0, 1]` GeoTIFF range safety, zero NaNs, leakage canaries, registry uniqueness, and holdout statistical significance end-to-end. Fix shared template defects at the root and document every irregularity and negative result transparently.
+## Project brief
 
----
+Review the repository and outstanding prior-session work. Study the highest reported submissions from GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36; compare with the wider supplied registry as far as evidence allows. Explain the reported GEMSDOE32 value of 0.2778 and whether it can be beaten, without calling an unverified report or projection an organizer-confirmed result. Research geothermal/fault discovery using verifiable official sources; flag data, licensing and methodological irregularities.
 
-## Standing Project Prompt Record
+The highest urgency is to **generate a unique competition GeoTIFF**, not copy a prior submission except for research, and make its automated submit/not-submit verdict prominent and its download easy to find. Resolve the reported “Predicted values must be in range [0, 1]” error by checking a single-band, float32 raster, grid, CRS, shape, transform, values and NaNs. Verify official format wording, especially outside the bounds; no local test guarantees organizer acceptance. Use a unique filename and a note no longer than 140 characters.
 
-Review the repo and execute any open next steps first.
+Publish an executive-summary website and a table of each priority site, exact historical downloadable file, appropriately labeled score evidence, format status and cross-site uniqueness. Include instructions for a future approved submission, an accessible responsive UI and current, dated source links. Do not imply that historical or negative files are approved.
 
-Focus on the highest-scoring submissions from the following 9 focus sites:
-- `GEMSDOE24`, `GEMSDOE25`, `GEMSDOE27`, `GEMSDOE28`, `GEMSDOE30`, `GEMSDOE31`, `GEMSDOE32`, `GEMSDOE33`, `GEMSDOE36` (and cross-check against all ~65+ listed GEMSDOE sites across the fleet).
+Before implementing, rank three to five untried geological hypotheses by expected improvement and cost, detailing data layers, transforms, physical mechanism, named non-fault mimic, why a fault may be unmapped, differences from the repository and availability/licensing of free official data. Separate an external-data listing from independently verified official bytes. Do not claim the entire external fleet was checked when it was not.
 
-**THE FOLLOWING IS THE HIGHEST URGENCY AND MUST BE FOLLOWED:**
-- **MUST GENERATE A UNIQUE `.TIF` SUBMISSION FOR THE COMPETITION.** Do not copy a previous submission unless it is strictly for learning and forensic baseline comparison.
-- **IT MUST BE OBVIOUS WHETHER IT IS OK TO DOWNLOAD AND SUBMIT THE GENERATED `.TIF` SUBMISSION** at the top of the GitHub Pages site and executive summary subpage, validated automatically in code **without human intervention**.
-- **Fix submission portal error:** `"Predicted values must be in range [0, 1]"` (single-band float32 GeoTIFF matching `sample_submission.tif` CRS `EPSG:32611`, `3730 x 3292` shape, and `100 m` Affine geotransform, with `0` NaNs and all values strictly in `[0, 1]`).
-- Give the submission a **unique filename** and a **short note (`<= 140` characters)** so submissions are never confused.
-- Create an **executive summary subpage** (`docs/executive-summary.html`) as a guide across all sites with an auditable table showing for each site: exact file to download, its score / holdout metric (strictly labeled), portal safety, and whether the file is unique across sites.
+## Parallel-run protocol
 
-### PhD-Level Forensic Analysis & Scientific Hypothesis Mandate
+1. **Lane and hard stop:** stay inside the assigned preregistered method paragraph. If rank correlation with **any** registry raster is greater than 0.90, or more than 70% of candidate dots fall within 3 pixels of **any** registry raster's dots, log a duplicate and stop. Check continuous surfaces before placement and final dots afterward. Unknown or undefined comparisons fail closed. Do not create an implicit control-raster exception.
+2. **Reuse shared infrastructure:** reuse the cached feature stack, `evaluate_holdout.py`, and `submission_writer.py`; correct shared defects in the template, not private forks. Hold out whole fault segments and buffers, derive all catalogue features solely from the visible faults, mask visible faults pixel-exactly, and compute pooled distance-weighted Tversky with α=0.2, β=0.8 and a 300 m triangular kernel.
+3. **Label evidence:** `HOLDOUT-DTI` must state evaluator version, withheld positives and 95% CI; `ORGANIZER-CONFIRMED` must come from a submission-page receipt. A projection is never a score.
+4. **Leakage canary:** evaluate every feature alone; AUC above 0.90 is suspected leakage until disproved.
+5. **One JSON run card:** record hypothesis, mechanism, named non-fault mimic, holdout DTI and CI, registry correlation and overlap, raster SHA-256, actual validator output including NaN/range/CRS/shape/transform, submission name and note, and `promote` or `negative`. Negative results are deliverables.
+6. **Budget and selection:** stop after three experiments or two hours, do not spend a live weekly slot directly, and do not submit a candidate that fails to beat the current comparable holdout best. A separate selector must independently respect the submission-page cap.
 
-1. **Study, analyze, and understand `0.2778`:** Explain why and how `GEMSDOE32` (`https://buffedlizard55-lab.github.io/GEMSDOE32/`, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`: `0.2778` `ORGANIZER-CONFIRMED`) achieved the highest score across the focus sites, and whether/how a new strategy can score higher (`> 0.2778`, targeting `#5 = 0.3195` and public `#1 = 0.4413`).
-2. **Pre-Implementation Hypotheses (3–5 Untried Geological Hypotheses):** Emphasizing scientific discovery of geothermal vents and unmapped faults, propose 3–5 concrete hypotheses before writing model code, specifying for each:
-   - Exact layer(s) involved
-   - Physical fault signature or mathematical transform targeted (plus named non-fault mimic process)
-   - Why it catches faults missing from the USGS/INGENIOUS catalogue rather than already-mapped ones
-   - How it differs from prior implementations across the GEMSDOE fleet
-   - Rank by expected DTI improvement vs. implementation cost, checking free official external data obtainability before proposing as viable.
+Work autonomously and verify facts against trusted sources. Conduct three implementation, review/fix and final accuracy passes; create and merge a pull request to `main` if permitted; report remaining work honestly.
 
-### Parallel-Run Protocol (Strict)
+## Current literal stop
 
-1. **LANE:** Stay inside the single pre-registered method paragraph (`registry/preregistration_htcads.json`). If rank-correlation with any registry raster exceeds `0.90`, or more than `70%` of emitted dots fall within `3 px` of any registry detector raster's dots, log as duplicate and stop. Check BOTH on the continuous surface before placement AND on the final dots.
-2. **REUSE, DON'T REBUILD:** Reuse the template's cached feature stack, `evaluate_holdout.py`, and `submission_writer.py`. Holdout = hide-and-recover: withhold whole fault segments with a buffer, derive every catalogue-based feature only from visible faults, mask visible faults pixel-exactly, and score pooled DTI (`alpha = 0.2`, `beta = 0.8`, `300 m` triangular kernel). Fix shared tool bugs in the template and report them; never keep a private fork.
-3. **LABEL EVERY NUMBER:** Strictly label every metric as `HOLDOUT-DTI (evaluator version, N withheld positives, 95% CI)` or `ORGANIZER-CONFIRMED (copied from submission-page receipt)`. Never write a projection as a score.
-4. **LEAKAGE CANARY:** Test each feature alone on holdout first; single-feature `AUC > 0.90` is leakage until proven otherwise.
-5. **RUN CARD:** Produce one JSON Run Card (`evidence/run_card.json`): `hypothesis`, `mechanism`, `named_non_fault_mimic`, `holdout_dti` + `ci`, `correlation/overlap vs registry`, `raster_sha256`, `validator_output`, `submission_name` + `<=140`-char `note`, and `verdict` (`promote` or `negative` — negative results are valid deliverables).
-6. **BUDGET:** Stop after `3` experiments or `2` hours. Do not directly spend live weekly slots.
-
-### Workflow & Delivery
-
-- Preserve this prompt and Arena Core Values in `README.md` as the starting point for future sessions.
-- Verify every claim, file hash, calculation, and official URL line by line with zero hallucinations; flag any irregularities.
-- Execute **3 verification passes** (Pass 1: complete implementation & verification; Pass 2: review & fix bugs, missing requirements, and edge cases; Pass 3: final accuracy, completeness, and quality check), then open and merge a Pull Request onto `main`.
+All three historical local candidates exceed 99.5% directional dot overlap with the pinned registry lattice. Its 3-pixel coverage also makes the usual 37,654-dot budget mathematically incompatible with the 70% limit. No new candidate, experiment or submission slot was attempted in this session. Do not adjust dots, silently exempt a raster or promote a result unless the protocol owner explicitly resolves the conflict and the independent gates are satisfied.

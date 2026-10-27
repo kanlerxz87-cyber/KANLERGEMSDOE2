@@ -99,10 +99,10 @@ def load_all_stacks() -> tuple[
 ]:
     fp = footprint.load_footprint()
     fp_ids = np.flatnonzero(fp.ravel())
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    template = paths.core_path("sample_submission.tif")
     with rasterio.open(template) as t_ds:
         transform = t_ds.transform
-    with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as l_ds:
+    with rasterio.open(paths.core_path("labels.tif")) as l_ds:
         catalogue = (l_ds.read(1) > 0) & fp
 
     prep_meta = json.loads((paths.DATA_DIR / "prepared/features.json").read_text())
@@ -165,6 +165,9 @@ def load_nuisance(fp_ids: np.ndarray) -> np.ndarray:
 
 
 def run_stage_features_and_canary() -> dict[str, Any]:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("run_kg2_lane")
     t0 = time.monotonic()
     print("[Stage 1] Building/verifying 78-channel feature stack + confounds...", flush=True)
     (
@@ -253,6 +256,9 @@ def run_stage_features_and_canary() -> dict[str, Any]:
 
 
 def run_stage_holdout_experiments(cache_dir: Path) -> dict[str, Any]:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("run_kg2_lane")
     t0 = time.monotonic()
     if not CANARY_JSON.exists():
         run_stage_features_and_canary()
@@ -676,6 +682,9 @@ def run_stage_emit_and_audit(
     registry_local_path: Path,
     arm_override: str | None = None,
 ) -> dict[str, Any]:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("run_kg2_lane")
     t0 = time.monotonic()
     hold = json.loads(HOLDOUT_JSON.read_text())
     canary = json.loads(CANARY_JSON.read_text())
@@ -1071,43 +1080,47 @@ def run_stage_emit_and_audit(
 
 
 def verify_recorded() -> dict[str, Any]:
-    for p in (CANARY_JSON, HOLDOUT_JSON, RUN_CARD_JSON, ROOT_RUN_CARD_JSON, DOCS_RUN_CARD_JSON):
-        if not p.exists():
-            raise SystemExit(f"Missing recorded KG2 artifact: {p}")
-    c1 = json.loads(RUN_CARD_JSON.read_text())
-    c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
-    c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+    """Verify historical bytes while overriding the invalid promotion claim.
 
+    The independent lattice re-audit is recorded separately; this does not
+    replay model fitting, the pre-placement surface, or all registry entries.
+    """
+    c1 = json.loads(RUN_CARD_JSON.read_text())
+    reaudit = json.loads((ROOT / "evidence/focus_reaudit_20261027.json").read_text())
     tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
     zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]
-    if sha256_file(tif_path) != c1["raster_sha256"]:
-        raise SystemExit("Saved GeoTIFF SHA-256 mismatch")
-    if sha256_file(zip_path) != c1["zip_sha256"]:
-        raise SystemExit("Saved ZIP SHA-256 mismatch")
+    if sha256_file(tif_path) != c1["raster_sha256"] or sha256_file(zip_path) != c1["zip_sha256"]:
+        raise SystemExit("Historical GeoTIFF or ZIP SHA-256 mismatch")
     with zipfile.ZipFile(zip_path) as zf:
-        if zf.namelist() != [tif_path.name]:
-            raise SystemExit("ZIP member list mismatch")
-        if hashlib.sha256(zf.read(tif_path.name)).hexdigest() != c1["raster_sha256"]:
-            raise SystemExit("ZIP inner GeoTIFF hash mismatch")
-    if c1["submission_note_length"] > 140 or len(c1["submission_note"]) > 140:
-        raise SystemExit("Submission note exceeds 140 characters")
+        if zf.namelist() != [tif_path.name] or hashlib.sha256(zf.read(tif_path.name)).hexdigest() != c1["raster_sha256"]:
+            raise SystemExit("ZIP must contain exactly the historical GeoTIFF")
+    with rasterio.open(tif_path) as ds:
+        a = ds.read(1)
+        format_ok = bool(ds.count == 1 and ds.dtypes == ("float32",)
+                         and ds.shape == (footprint.HEIGHT, footprint.WIDTH)
+                         and ds.crs == rasterio.crs.CRS.from_string(footprint.CRS)
+                         and ds.transform == footprint.TRANSFORM
+                         and np.isfinite(a).all() and ((a >= 0) & (a <= 1)).all())
+    matches = [r for r in reaudit["previous_local_candidates"] if r["file"] == tif_path.name]
+    if len(matches) != 1 or matches[0]["file_audit"]["sha256"] != c1["raster_sha256"]:
+        raise SystemExit("No matching exact-file re-audit")
+    overlap = matches[0]["lattice_overlap_fraction"]
+    if not format_ok or overlap <= 0.70:
+        raise SystemExit("Format failed or expected duplicate evidence is missing")
+    h = c1["holdout_dti"]
     return {
         "verified": True,
-        "submission_filename": c1["submission_filename"],
+        "verification_scope": "File/ZIP bytes, pinned grid/range and recorded lattice re-audit; no model or surface replay",
+        "submission_filename": tif_path.name,
         "raster_sha256": c1["raster_sha256"],
-        "holdout_dti": c1["holdout_dti"]["dti"],
-        "ci95": c1["holdout_dti"]["ci95"],
-        "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][
-            "post_placement_competing_max_3px_overlap"
-        ],
-        "max_surface_spearman": c1["correlation_overlap_vs_registry"][
-            "pre_placement_surface_max_abs_spearman"
-        ],
-        "ok_to_download": c1["ok_to_download"],
-        "ok_to_submit": c1["ok_to_submit"],
-        "verdict": c1["verdict"],
+        "format_strict_whole_array_0_1": format_ok,
+        "recorded_holdout": {"label": "HOLDOUT-DTI", "evaluator_version": h["evaluator_version"],
+                             "n_withheld_positive_pixels": h["withheld_positive_pixels"],
+                             "dti": h["dti"], "ci95": h["ci95"], "replayed_this_session": False},
+        "lattice_overlap_3px": overlap,
+        "ok_to_download": True,
+        "ok_to_submit": False,
+        "verdict": "negative",
     }
 
 

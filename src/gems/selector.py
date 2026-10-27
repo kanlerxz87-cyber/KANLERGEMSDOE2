@@ -193,7 +193,12 @@ def verify_selector(
                 f"method overlap={overlap}, peer overlap={peer_overlap}",
             )
     except (KeyError, TypeError, ValueError, AttributeError):
-        fail("g4_registry_novelty", "novelty evidence missing or malformed")
+        audited = run_card.get("correlation_overlap_vs_registry", {})
+        overlap = audited.get("final_3px_lattice_overlap_fraction") if isinstance(audited, dict) else None
+        if _number(overlap, 0, 1) and overlap > MAX_DOT_OVERLAP:
+            fail("g4_registry_novelty", f"literal registry duplicate: 3-px overlap={overlap:.6f} > {MAX_DOT_OVERLAP}")
+        else:
+            fail("g4_registry_novelty", "novelty evidence missing or malformed")
 
     # --- G5: exact-file C2ST nuisance audit --------------------------------------
     try:

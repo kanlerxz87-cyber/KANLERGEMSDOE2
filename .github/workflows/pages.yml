@@ -1,15 +1,20 @@
-name: Deploy DOE GEMS Submission Portal to GitHub Pages
+name: Test and publish audited site
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '23 8 * * *'
 permissions:
   contents: read
+  pages: write
+  id-token: write
 concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  group: 'pages'
+  cancel-in-progress: false
 jobs:
-  verify-and-stage:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,29 +22,30 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-      - run: python -m pip install -r requirements.txt
-      - run: pytest -v
-      - run: python scripts/evaluate_holdout.py --verify-kg2
-      - name: Stage root and docs portal including verified GeoTIFF & ZIP
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run synthetic and bundled-artifact tests
+        run: python -m pytest -q
+      - name: Refresh public leaderboard snapshot if reachable
+        if: github.event_name != 'pull_request'
+        run: python scripts/refresh_leaderboard.py || echo 'Public page unavailable or changed; retaining the dated snapshot.'
+      - name: Build fail-closed site
+        run: python scripts/build_site.py
+      - name: Stage static Pages artifact
         run: |
-          mkdir -p _site/docs _site/evidence
-          cp index.html .nojekyll _site/
-          cp -R docs/. _site/docs/
-          cp -R evidence/. _site/evidence/
+          mkdir -p _site
+          cp -R docs/. _site/
+          cp _site/index.html _site/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
   deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: verify-and-stage
-    permissions:
-      pages: write
-      id-token: write
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: test-and-build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/configure-pages@v5
-      - uses: actions/deploy-pages@v4
-        id: deployment
+      - id: deployment
+        uses: actions/deploy-pages@v4

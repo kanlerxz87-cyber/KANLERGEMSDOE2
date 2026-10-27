@@ -21,7 +21,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("prediction", type=Path, help="2D .npy or aligned single-band .tif")
     ap.add_argument("output", type=Path)
-    ap.add_argument("--template", type=Path, default=paths.DATA_DIR / "bridge/sample_submission.tif")
+    ap.add_argument("--template", type=Path, default=paths.core_path("sample_submission.tif"))
     ap.add_argument(
         "--outside",
         choices=("nan", "zero"),

@@ -555,8 +555,11 @@ def render_figures(card: dict[str, Any], fp: np.ndarray, catalogue: np.ndarray) 
 
 
 def main() -> None:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("build_kg2_audits_and_assets")
     fp = footprint.load_footprint()
-    with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as ds:
+    with rasterio.open(paths.core_path("labels.tif")) as ds:
         catalogue = (ds.read(1) > 0) & fp
     card = sync_mechanism_and_sidecars()
     c2st_out = run_c2st_audit(card, fp, catalogue)

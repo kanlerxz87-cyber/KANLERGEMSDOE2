@@ -4175,7 +4175,8 @@
           "dots_abs_spearman": 0.019894,
           "candidate_within_3px_of_peer": 0.308599
         }
-      }
+      },
+      "literal_all_entries_passed": false
     },
     "raster_sha256": "cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e",
     "zip_artifact": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.zip",
@@ -4303,14 +4304,18 @@
     },
     "submission_filename": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
     "submission_name": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14",
-    "submission_note": "KG2-MGHV EXP-1 10m/3m/1m junc+hydro-demag OOF CELF 37654d | HOLDOUT-DTI 0.1771 n=60988 | f5a469e94b14",
-    "submission_note_length": 101,
+    "submission_note": "DO NOT SUBMIT. HOLDOUT-DTI 0.1771, 95% CI [0.1637,0.1908]; gems-segment-pooled-v1 N=60988; not replayed.",
+    "submission_note_length": 104,
     "experiments_used": 3,
     "budget_max_experiments": 3,
     "ok_to_download": true,
-    "ok_to_submit": true,
+    "ok_to_submit": false,
     "weekly_slot_spent_automatically": false,
-    "verdict": "promote"
+    "verdict": "negative",
+    "historical_detector_only_verdict": "promote",
+    "superseded_notice": "Superseded on 2026-10-27: the literal 3-px rule includes the registry lattice; see evidence/focus_reaudit_20261027.json. Historical flags were not a valid slot authorization.",
+    "historical_submission_note": "KG2-MGHV EXP-1 10m/3m/1m junc+hydro-demag OOF CELF 37654d | HOLDOUT-DTI 0.1771 n=60988 | f5a469e94b14"
   },
-  "stage3_elapsed_seconds": 317.33
+  "stage3_elapsed_seconds": 317.33,
+  "superseded_notice": "Superseded on 2026-10-27: the literal 3-px rule includes the registry lattice; see evidence/focus_reaudit_20261027.json. Historical flags were not a valid slot authorization."
 }

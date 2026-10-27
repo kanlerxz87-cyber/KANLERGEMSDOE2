@@ -9,7 +9,7 @@
     "max_wall_hours_allowed": 2.0
   },
   "reference_0p2778_benchmark": {
-    "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 ORGANIZER-CONFIRMED)",
+    "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 UNVERIFIED USER/OWNER REPORT)",
     "holdout_hide_recover_uncensored_dti": 0.099202,
     "holdout_hide_recover_ci95": [
       0.085951,
@@ -644,5 +644,6 @@
       "lidar_ortho_scarp",
       1494.41
     ]
-  ]
+  ],
+  "superseded_notice": "Superseded on 2026-10-27: the literal 3-px rule includes the registry lattice; see evidence/focus_reaudit_20261027.json. Historical flags were not a valid slot authorization."
 }

@@ -23,6 +23,20 @@ REGISTRY_DIR: Path = ROOT / "registry"
 REGISTRY_PATH: Path = REGISTRY_DIR / "submissions.json"
 AUDIT_CLONES: Path = Path(os.environ.get("GEMS_AUDIT_DIR", "/tmp/audit"))
 
-TEMPLATE_PATH: Path = DATA_DIR / "sample_submission.tif"
-LABELS_PATH: Path = DATA_DIR / "labels.tif"
-FEATURES_PATH: Path = DATA_DIR / "training_features.tif"
+def core_path(name: str) -> Path:
+    """Locate a restored core input, accepting the older ``bridge/`` layout.
+
+    The manifest restores core files at the data-directory root. Older
+    workspaces stored the small template and labels in ``bridge/``. Prefer
+    the restored root file and do not silently select an unrelated directory.
+    """
+    if Path(name).name != name:
+        raise ValueError("core input must be a filename, not a path")
+    direct = DATA_DIR / name
+    legacy = DATA_DIR / "bridge" / name
+    return direct if direct.is_file() or not legacy.is_file() else legacy
+
+
+TEMPLATE_PATH: Path = core_path("sample_submission.tif")
+LABELS_PATH: Path = core_path("labels.tif")
+FEATURES_PATH: Path = core_path("training_features.tif")

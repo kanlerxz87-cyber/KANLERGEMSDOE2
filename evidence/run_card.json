@@ -60,7 +60,7 @@
     "pct_in_lidar": 80.28
   },
   "registry_comparison": {
-    "passed": true,
+    "passed": false,
     "unique_rasters_checked": 192,
     "pre_placement_surface_max_abs_spearman": 0.179514,
     "pre_placement_closest_peer": "8GEMSDOE_Hedge-v2_submission.tif",
@@ -163,7 +163,9 @@
         "final_dots_spearman": 0.025855
       }
     ],
-    "exact_sha256_unique": true
+    "exact_sha256_unique": true,
+    "historical_detector_only_passed": true,
+    "literal_lattice_overlap_3px": 0.9996813087586977
   },
   "correlation_overlap_vs_registry": {
     "passed": true,
@@ -280,15 +282,15 @@
   "note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
   "note_length": 110,
   "validator_output": {
-    "validated_ok_to_download_and_submit": true,
+    "validated_ok_to_download_and_submit": false,
     "human_intervention_required": false,
-    "verdict": "promote",
+    "verdict": "negative",
     "raster_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
     "raster_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
     "gates": {
       "gate_1_format_and_range_0_1": true,
       "gate_2_leakage_canary_le_090": true,
-      "gate_3_registry_uniqueness": true,
+      "gate_3_registry_uniqueness": false,
       "gate_4_holdout_beats_champion": true,
       "gate_5_portal_metadata_le_140": true
     },
@@ -341,8 +343,11 @@
         "validator_range_0_1_guaranteed": true
       },
       "all_checks_passed": true
-    }
+    },
+    "superseded_notice": "Superseded on 2026-10-27: the literal 3-px rule includes the registry lattice; see evidence/focus_reaudit_20261027.json. Historical flags were not a valid slot authorization."
   },
-  "ok_to_download_and_submit": true,
-  "verdict": "promote"
+  "ok_to_download_and_submit": false,
+  "verdict": "negative",
+  "historical_detector_only_verdict": "promote",
+  "superseded_notice": "Superseded on 2026-10-27: the literal 3-px rule includes the registry lattice; see evidence/focus_reaudit_20261027.json. Historical flags were not a valid slot authorization."
 }

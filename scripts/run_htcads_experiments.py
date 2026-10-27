@@ -313,6 +313,9 @@ def _check_uniqueness(
 
 
 def main() -> int:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("run_htcads_experiments")
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

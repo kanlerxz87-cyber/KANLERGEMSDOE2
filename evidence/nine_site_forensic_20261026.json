@@ -173,5 +173,6 @@
       "uniqueness_status": "Historical tgc DUPLICATE (98.02% vs GEMSDOE24); H31-1 unique (50.2% vs B2, 59.24% vs KG2)",
       "submission_recommendation": "H31-1 valid alternate in GEMSDOE27, lower projected anchor than KG2"
     }
-  ]
+  ],
+  "superseded_notice": "Historical owner/user reports, not organizer receipts. The old reciprocal fit cannot identify hidden truth or prove removed points were false positives. See focus_reaudit_20261027.json."
 }

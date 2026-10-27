@@ -69,12 +69,13 @@ def test_fvca_canaries_and_cross_lane_72raster_audit() -> None:
     cross = json.loads((ROOT / "evidence" / "cross_lane_72raster_audit.json").read_text(encoding="utf-8"))
     assert cross["non_lattice_detector_rasters_checked"] == 71
     lanes = cross["lanes"]
-    assert lanes["HTCADS-DualRegime-EXP-2"]["passes_72_detector_registry_70pct_gate"] is True
-    assert lanes["HTCADS-DualRegime-EXP-2"]["max_3px_detector_overlap"] <= 0.70
-    assert lanes["KG2-MGHV-EXP-1"]["passes_72_detector_registry_70pct_gate"] is True
-    assert lanes["KG2-MGHV-EXP-1"]["max_3px_detector_overlap"] <= 0.70
-    assert lanes["KG2-FVCA-SUBMOD-EXP-2"]["passes_72_detector_registry_70pct_gate"] is False
-    assert lanes["KG2-FVCA-SUBMOD-EXP-2"]["verdict"] == "negative"
+    for lane in lanes.values():
+        assert lane["verdict"] == "negative"
+        assert lane["ok_to_submit"] is False
+        assert lane["literal_lattice_overlap_3px"] > 0.995
+        assert lane["passes_72_detector_registry_70pct_gate"] is False
+    assert lanes["HTCADS-DualRegime-EXP-2"]["historical_non_lattice_detector_only_pass"] is True
+    assert lanes["KG2-MGHV-EXP-1"]["historical_non_lattice_detector_only_pass"] is True
     assert lanes["KG2-FVCA-SUBMOD-EXP-2"]["max_3px_detector_overlap"] > 0.70
 
 

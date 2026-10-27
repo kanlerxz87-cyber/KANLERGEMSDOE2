@@ -1,12 +1,8 @@
-"""DrivenData GeoTIFF Submission Builder & Automated 13-Check Range-[0, 1] Validator.
+"""Historical GeoTIFF audit helpers.
 
-Permanently prevents the DrivenData portal error `"Predicted values must be in range [0, 1]"` by:
-1. Sanitizing all float32 `-3.4028235e+38` sentinels, Infs, and NaNs inside the 5,167,373-pixel footprint.
-2. Enforcing `np.clip(pred, 0.0, 1.0)` across all 5,167,373 in-footprint pixels and `pred[labels] = 0.0`.
-3. Encoding outside-footprint cells as `0.0` (`nodata=None`, `-zeros.tif`) so all 12,279,160 / 12,279,160
-   raster cells satisfy `(arr >= 0.0) & (arr <= 1.0)` with zero NaNs anywhere.
-4. Supporting both binary `{0.0, 1.0}` and continuous `[0.0, 1.0]` predictions cleanly (fixes shared-tool
-   bitwise-and bug `IR-SHARED-SOFT-01`).
+Whole-array range checks are useful preflight tests, not a guarantee of portal
+acceptance, uniqueness, or organizer format approval. The maintained submission
+writer and fail-closed selector are in ``gems.submission`` and ``gems.selector``.
 """
 
 from __future__ import annotations

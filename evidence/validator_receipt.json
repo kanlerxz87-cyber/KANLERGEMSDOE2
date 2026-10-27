@@ -1,64 +1,119 @@
 {
-  "validated_ok_to_download_and_submit": true,
-  "human_intervention_required": false,
-  "verdict": "promote",
+  "validated_ok_to_download_and_submit": false,
+  "human_inspection_used": false,
+  "verdict": "negative",
   "raster_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
   "raster_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
-  "gates": {
-    "gate_1_format_and_range_0_1": true,
-    "gate_2_leakage_canary_le_090": true,
-    "gate_3_registry_uniqueness": true,
-    "gate_4_holdout_beats_champion": true,
-    "gate_5_portal_metadata_le_140": true
-  },
   "format_audit": {
-    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
-    "size_bytes": 204099,
+    "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "bytes": 204099,
     "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
-    "mode": "zeros",
-    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
-    "crs": "EPSG:32611",
-    "transform": [
-      100.0,
-      0.0,
-      243350.0,
-      0.0,
-      -100.0,
-      4508550.0
-    ],
-    "shape": [
-      3730,
-      3292
-    ],
-    "dtype": "float32",
-    "nodata": null,
-    "nodata_repr": "None",
-    "emitted_positive_pixels": 37654,
-    "emitted_mass": 37654.0,
-    "footprint_fraction": 0.007287,
-    "on_catalogue_positive_pixels": 0,
-    "in_footprint_finite_pixels": 5167373,
-    "nan_inside_footprint": 0,
-    "full_grid_nan_pixels": 0,
-    "in_footprint_min": 0.0,
-    "in_footprint_max": 1.0,
-    "full_grid_finite_pixels": 12279160,
-    "values_in_0_1": true,
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": null,
+    "official_format_compliance_reason": "Not independently determined: official text says outside bounds should be null/NaN; the relationship between those bounds and the mirrored irregular footprint is unclear.",
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
     "checks": {
-      "exact_reference_grid_match": true,
-      "single_band": true,
-      "dtype_float32": true,
-      "dimensions_3730x3292": true,
-      "crs_epsg_32611": true,
-      "in_footprint_all_finite": true,
-      "in_footprint_zero_nan": true,
-      "in_footprint_zero_inf": true,
-      "in_footprint_zero_sentinel": true,
-      "in_footprint_range_0_1": true,
-      "outside_footprint_compliant": true,
-      "zero_on_catalogue_leakage": true,
-      "validator_range_0_1_guaranteed": true
-    },
-    "all_checks_passed": true
-  }
+      "pinned_mirror_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must match the pinned mirror grid and footprint; organizer provenance is not independently authenticated",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside-footprint cells are NaN; the official wording refers to bounds, whose relationship to this irregular footprint is not verified",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the mirrored sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_pinned_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=deflate (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "gates": {
+    "artifact_hash_matches_run_card": true,
+    "artifact_name_matches_run_card": true,
+    "g1_format_strict_0_1": true,
+    "g2_leakage_canary": false,
+    "g3_holdout_beats_recorded_best_and_paired_baseline": false,
+    "g4_registry_novelty": false,
+    "g5_exact_file_c2st": false,
+    "note_at_most_140_chars": true,
+    "budget_and_no_slot_spent": false,
+    "current_account_quota_independently_verified": false,
+    "complete_independent_replay_certificate": false
+  },
+  "reasons": [
+    "g2_leakage_canary: canary evidence missing or malformed",
+    "g3_holdout_beats_recorded_best_and_paired_baseline: holdout evidence malformed",
+    "g4_registry_novelty: literal registry duplicate: 3-px overlap=0.999681 > 0.7",
+    "g5_exact_file_c2st: C2ST evidence missing or malformed",
+    "budget_and_no_slot_spent: budget evidence missing or malformed",
+    "current_account_quota_independently_verified: unknown; no quota verifier/receipt adapter implemented; no human-confirmation exception",
+    "complete_independent_replay_certificate: not implemented; recorded flags and numeric summaries are screening evidence, not an independent promotion certificate"
+  ],
+  "selector_version": "gems-selector-v2-literal-quota-fail-closed",
+  "scope": "Recorded-evidence screening and exact-file validation only; positive authorization is not implemented. Not an organizer score, quota record or acceptance guarantee. The agent never uploads."
 }

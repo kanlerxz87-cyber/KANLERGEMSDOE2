@@ -37,13 +37,13 @@ def write_submission(
     *,
     outside: str = "zero",
 ) -> Path:
-    """Write ``pred_2d`` using the template profile and a portal-safe default.
+    """Write ``pred_2d`` with a matching template, without authorizing upload.
 
-    The default is an all-finite ``0.0`` exterior because some portal validators
-    inspect every stored cell and reject the template's ``NaN`` outside
-    convention as out of range.  Use ``outside="nan"`` only when producing an
-    explicitly labelled compatibility twin; it is never the recommended upload
-    artifact and must fail the strict whole-array preflight diagnostic.
+    The default has an all-finite zero exterior; ``outside="nan"`` makes the
+    alternate exterior explicit. A strict whole-array [0,1] comparison rejects
+    any NaN. The official outside-bounds wording and account acceptance cannot
+    be independently resolved from this local writer; neither variant is a
+    recommendation or guarantee. Scientific and quota gates remain separate.
     """
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
@@ -104,6 +104,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         t_prof = t.profile
         footprint = np.isfinite(t_arr)
         t_crs, t_tr, t_shape = t.crs, t.transform, t.shape
+        t_count, t_dtypes = t.count, t.dtypes
     with rasterio.open(path) as s:
         arr = s.read(1)
         masked = s.read(1, masked=True)
@@ -138,16 +139,18 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         checks[name] = {"pass": bool(ok), "detail": detail, "hard_requirement": hard}
 
     expected_template = (
-        t_crs is not None
+        t_count == 1
+        and t_dtypes == ("float32",)
+        and t_crs is not None
         and t_crs.to_epsg() == 32611
         and t_shape == EXPECTED["shape"]
         and tuple(t_tr)[:6] == EXPECTED["transform"]
         and int(footprint.sum()) == EXPECTED["footprint_pixels"]
     )
     add(
-        "official_template_grid_and_footprint",
+        "pinned_mirror_template_grid_and_footprint",
         expected_template,
-        "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "Template must match the pinned mirror grid and footprint; organizer provenance is not independently authenticated",
     )
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
@@ -168,7 +171,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         add(
             "outside_is_nan_official_text",
             bool(np.isnan(outside).all()),
-            f"{int(np.isnan(outside).sum()):,} of {outside.size:,} outside pixels are NaN",
+            f"{int(np.isnan(outside).sum()):,} of {outside.size:,} outside-footprint cells are NaN; the official wording refers to bounds, whose relationship to this irregular footprint is not verified",
             hard=False,
         )
     else:
@@ -192,7 +195,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "variant_strict_whole_array_no_nan_allowed",
         bool(((arr >= 0) & (arr <= 1)).all()),
-        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the mirrored sample's NaN outside",
         hard=False,
     )
 
@@ -206,7 +209,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         for k in ("driver", "dtype", "nodata", "width", "height", "crs", "transform")
     )
     add(
-        "profile_matches_official_sample",
+        "profile_matches_pinned_sample",
         bool(same_profile),
         f"driver/dtype/nodata/size/crs/transform equal to template; compress={prof.get('compress')} (template {t_prof.get('compress')})",
         hard=False,
@@ -224,8 +227,11 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "submission_authorized": False,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": hard_fail,
-        "official_format_compliant": checks["outside_is_nan_official_text"]["pass"]
-        and not hard_fail,
+        "official_format_compliant": None,
+        "official_format_compliance_reason": (
+            "Not independently determined: official text says outside bounds should be null/NaN; "
+            "the relationship between those bounds and the mirrored irregular footprint is unclear."
+        ),
         "in_footprint_positive_pixels": int((inside > 0).sum()),
         "in_footprint_mass": round(float(np.nansum(inside, dtype=np.float64)), 2)
         if inside.size

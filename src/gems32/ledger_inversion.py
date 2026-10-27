@@ -1,43 +1,14 @@
-"""Live-Ledger Inversion (LLI): estimate the hidden public-truth density by feature stratum from the
-owner-reported live scores of many different rasters, and project the live DTI of a new raster.
+"""Historical experimental ledger model — NOT an organizer score estimator.
 
-Why this instrument exists
---------------------------
-Every local holdout in this repository draws its truth from a published catalogue (USGS/INGENIOUS or
-SGMC).  The organisers mask the catalogue out of scoring and score *new*, expert-mapped faults, so
-those holdouts measure a different population; the repository has documented live counter-examples
-(SGMC-tracing files scoring 0.56-0.65 locally and ~0.05 live).  The only measurements of the hidden
-scoring population are the live scores themselves.  This module turns them into a calibrated model.
-
-Exact identity used
--------------------
-For a prediction field ``p`` (masked to the scored domain = footprint minus catalogue pixels) and a
-hidden binary truth ``g`` with per-pixel inclusion probability ``pi(y)``:
-
-* ``E[TP_w] = sum_y pi(y) * K_p(y)``, with ``K_p(y) = max_x p(x) k(d(x,y))``  (exact, linearity)
-* ``E[|G|]  = sum_y pi(y)``                                                 (exact)
-* ``E[M]    ~ (1/3) sum_y pi(y) * C_p(y)``, with ``C_p(y) = sum_x p(x) k(d(x,y))``
-  (``M = sum_x p(x) max_g k`` is the prediction-side matched mass; the factor 1/3 is the exact ratio
-  of the max to the sum of kernel weights for a straight 1-px truth line through a prediction at
-  distance 0 and is within +-12% for distances 1-2 px.  ``M`` enters the DTI denominator only with
-  weight 0.2, so this approximation moves projected scores by well under 0.002.)
-* ``FP_w = N - M`` with ``N = sum_x p(x)``; ``FN_w = |G| - TP_w``.
-
-With ``pi`` constant on strata ``S_k`` (``pi = lambda_k``) each observed score ``s`` gives one linear
-equation in ``lambda``::
-
-    sum_k lambda_k [A_k (1 - 0.2 s) + 0.2 s B_k - 0.8 s |S_k|] = 0.2 s N
-
-where ``A_k = sum_{y in S_k} K_p(y)`` and ``B_k = (1/3) sum_{y in S_k} C_p(y)``.
-
-Strata are defined only by *features* (distance to catalogue, distance to a reference ridge network,
-slope, LiDAR scarp strength, SGMC proximity) -- never by location -- so a fitted density transfers to
-the private chunks to the extent the feature/truth relation is stationary.  The model is
-``log lambda_k = theta_0 + sum_f theta_f[level_f(k)]`` (log-additive, reference level 0 per factor),
-fitted by bounded least squares on the predicted-vs-observed DTI.  Validation is leave-one-out and
-leave-one-family-out prediction of live scores; projections must quote that empirical error.
-
-Every number this module produces about a new raster is a PROJECTION, not a score.
+This is retained for forensic reproducibility only. It relies on unverified
+owner-reported values, feature-stratum stationarity, and an unvalidated
+approximation to prediction-side nearest-fault credit. The weighted TP, FP and
+hidden prevalence are not identifiable from dot counts and three scores alone.
+The approximation has no established general error bound, especially for
+intersecting or densely sampled fault lines. Model outputs are hypothetical
+projections, never submission scores or grounds for promotion. The old driver
+that used this model is retired; independent receipt and calibration evidence
+would be needed before any future scientific use.
 """
 from __future__ import annotations
 

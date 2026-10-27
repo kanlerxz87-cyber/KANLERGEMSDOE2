@@ -446,6 +446,9 @@ def project_lli_s3(pred_binary: np.ndarray, foot: np.ndarray, labels: np.ndarray
 
 
 def main() -> int:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("run_fvca_experiments")
     t0 = time.time()
     EVID.mkdir(parents=True, exist_ok=True)
     meta = json.loads((CACHE / "fvca_stack_meta.json").read_text())
