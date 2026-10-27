@@ -1,0 +1,119 @@
+{
+  "schema": "kanlergemsdoe2.source_register.v2",
+  "reviewed_utc": "2026-10-27",
+  "verification_policy": "A citation or URL is not proof that a specific artifact or score came from that source. State exactly what was inspected; distinguish official source material from owner mirrors and from user-reported values.",
+  "official_competition_sources": [
+    {
+      "id": "SRC-DD-OVERVIEW",
+      "title": "DrivenData — Geologic Enhanced Mapping System (GEMS) Prize Challenge",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+      "authority": "DrivenData / U.S. Department of Energy",
+      "verification": "Official competition overview located via search during this review; no authenticated submission receipt or private score page was accessed.",
+      "supports": "Challenge purpose and competition structure. It does not authenticate the historical focus-site scores recorded in this repository."
+    },
+    {
+      "id": "SRC-DD-LEADERBOARD",
+      "title": "DrivenData — GEMS Public Leaderboard",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "authority": "DrivenData",
+      "verification": "NOT VERIFIED IN THIS SESSION: no authenticated leaderboard snapshot or submission-page receipt was fetched or archived.",
+      "supports": "Manual review link only. Do not copy owner/mirror claims into ORGANIZER-CONFIRMED fields without an organizer-controlled receipt."
+    },
+    {
+      "id": "SRC-DD-REF-REPO",
+      "title": "Official GEMS Prize Reference Solution",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
+      "pinned_commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+      "notebook_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb",
+      "authority": "DrivenData / reference-solution authors",
+      "verification": "Repository and notebook fetched by GitHub API in this session; notebook parsed locally.",
+      "supports": "The notebook uses alpha=0.2 and beta=0.8 in a Tversky loss. This is loss-weight corroboration only; it does not verify the organizer's scoring implementation, a leaderboard result, or any owner's score claim."
+    }
+  ],
+  "official_geoscience_data_sources": [
+    {
+      "id": "SRC-DOE-GDR-1391",
+      "title": "INGENIOUS — Great Basin Regional Dataset Compilation",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "doi": "https://doi.org/10.15121/1881483",
+      "authority": "DOE Geothermal Data Repository / UNR, GBCGE, NBMG",
+      "license_as_listed": "CC BY 4.0",
+      "verification": "Official record inspected via search. The local CSV/ZIP copies were restored from an owner-controlled mirror and SHA-256 checked against that mirror; official-host bytes were not directly downloaded in this session.",
+      "supports": "The compilation includes regional well/spring temperature and chemistry material and geothermal-feature datasets. Local mirrored CSV has measured-temperature and quartz/chalcedony/Na-K-Ca columns; column-level provenance should be rechecked against the official data dictionary before new modeling.",
+      "important_caveat": "The mirrored dist_known_fault_px column is label-derived and must never be used as a model feature."
+    },
+    {
+      "id": "SRC-USGS-GEODAWN",
+      "title": "GeoDAWN airborne magnetic and radiometric surveys of northwestern Great Basin, Nevada and California",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "doi": "https://doi.org/10.5066/P93LGLVQ",
+      "authority": "U.S. Geological Survey / DOE Geothermal Technologies Office",
+      "verification": "Official USGS data-release record located and reviewed via search. The competition-area raster copies in the workspace are owner-mirror derivatives; this session did not download source grids from USGS.",
+      "supports": "Existence and scope of the official airborne magnetic/radiometric data release."
+    },
+    {
+      "id": "SRC-USGS-3DEP",
+      "title": "USGS 3D Elevation Program — Products and Services",
+      "url": "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services",
+      "download_help_url": "https://www.usgs.gov/faqs/what-lidar-data-and-where-can-i-download-it",
+      "authority": "U.S. Geological Survey",
+      "verification": "Official pages located and reviewed via search. No additional 3DEP tiles were downloaded in this review.",
+      "supports": "Official access pathways and statement that 3DEP products are available free of charge and without use restrictions; does not establish tile coverage for a particular AOI."
+    },
+    {
+      "id": "SRC-USGS-SGMC",
+      "title": "State Geologic Map Compilation (SGMC) geodatabase of the conterminous United States",
+      "url": "https://pubs.usgs.gov/publication/ds1052",
+      "doi": "https://doi.org/10.3133/ds1052",
+      "authority": "U.S. Geological Survey",
+      "verification": "Official publication record located and reviewed via search. The workspace contains an owner-derived fault raster, not the official geodatabase.",
+      "supports": "Official description and citation for the SGMC. Any use as a holdout proxy must retain the stated limitations and avoid using the fault raster as a predictor."
+    },
+    {
+      "id": "SRC-USGS-COMCAT",
+      "title": "USGS ANSS Comprehensive Earthquake Catalog (ComCat) documentation",
+      "url": "https://earthquake.usgs.gov/data/comcat/index.php",
+      "api_documentation_url": "https://earthquake.usgs.gov/fdsnws/event/1/",
+      "authority": "U.S. Geological Survey / ANSS contributing networks",
+      "verification": "Official catalog documentation located and reviewed via search. No event query or event file was downloaded in this review.",
+      "supports": "Catalog fields include event time, hypocenter depth, magnitude, and location/quality metadata. Catalog completeness and location uncertainty vary by network and event."
+    },
+    {
+      "id": "SRC-USGS-LANDSAT-C2",
+      "title": "Landsat Collection 2 Level-2 Surface Reflectance",
+      "url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-reflectance",
+      "data_access_url": "https://earthexplorer.usgs.gov/",
+      "authority": "U.S. Geological Survey / NASA Landsat program",
+      "verification": "Official USGS product and access pages located and reviewed via search. No imagery was downloaded in this review.",
+      "supports": "Atmospherically corrected multispectral surface-reflectance products, including SWIR bands; official collection is available through EarthExplorer."
+    },
+    {
+      "id": "SRC-USGS-WATER-DATA",
+      "title": "USGS Water Data APIs",
+      "url": "https://api.waterdata.usgs.gov/",
+      "api_docs_url": "https://api.waterdata.usgs.gov/docs/",
+      "authority": "U.S. Geological Survey",
+      "verification": "Official modern API hub located and reviewed via search. No AOI query was made in this review.",
+      "supports": "Machine-readable access to USGS water data and monitoring-location metadata. Coverage, parameter availability, and measurement quality must be checked before modeling."
+    }
+  ],
+  "owner_mirror_sources": [
+    {
+      "id": "SRC-FOCUS9-MIRRORS",
+      "repositories": "https://github.com/buffedlizard55-lab/GEMSDOE24 through GEMSDOE36 focus-site repositories; exact repository and file commits are pinned in registry/focus9_site_registry.json.",
+      "authority": "Owner-controlled GitHub mirrors, not DrivenData",
+      "verification": "Nine TIFF bytes were downloaded via GitHub API and matched the tracked SHA-256 values. The historical scores remain user/owner-reported and unverified."
+    },
+    {
+      "id": "SRC-DATA-MANIFEST",
+      "path": "registry/data_manifest.json",
+      "authority": "Owner-controlled mirror manifest",
+      "verification": "Restored file hashes match the manifest. Hashes prove byte integrity against that manifest, not official-source authenticity or organizer approval."
+    }
+  ],
+  "score_policy": {
+    "organizer_confirmed_requires": "An organizer-controlled submission-page receipt or authenticated leaderboard record archived with date, submission identifier, score, and source URL.",
+    "current_status": "No such receipt is stored or verified in this session.",
+    "prohibited_substitution": "An owner-controlled mirror, README, static site, user-provided value, or matching TIFF hash is not an organizer receipt."
+  }
+}

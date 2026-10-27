@@ -30,6 +30,12 @@ def test_fvca_geotiff_and_zip_format_and_negative_verdict() -> None:
     assert card["verdict"] == "negative"
     assert card["ok_to_submit"] is False
     assert card["ok_to_download_and_submit"] is False
+    assert card["status"]["format_safe"] is True
+    assert card["status"]["ok_to_download"] is True
+    assert card["status"]["selector_eligible"] is False
+    assert card["status"]["authorized_to_submit"] is False
+    assert card["lli_s3_projection"]["status"] == "RETRACTED_AND_QUARANTINED"
+    assert "projected_dti" not in card["lli_s3_projection"]
     assert len(card["note"]) <= 140
 
     tif_path = ROOT / card["raster_path"]
@@ -60,6 +66,12 @@ def test_fvca_geotiff_and_zip_format_and_negative_verdict() -> None:
 
 
 def test_fvca_canaries_and_cross_lane_72raster_audit() -> None:
+    experiments = json.loads((ROOT / "evidence" / "fvca_experiments.json").read_text(encoding="utf-8"))
+    assert experiments["status"] == "ARCHIVED_NEGATIVE_RESEARCH_LANE"
+    assert experiments["selector_eligible"] is False
+    assert experiments["authorized_to_submit"] is False
+    assert experiments["lli_s3_projection"]["status"] == "RETRACTED_AND_QUARANTINED"
+
     canaries = json.loads((ROOT / "evidence" / "fvca_canaries.json").read_text(encoding="utf-8"))
     assert canaries["n_features"] == 60
     assert canaries["passed"] is True

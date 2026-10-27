@@ -1,12 +1,10 @@
-"""DrivenData GeoTIFF Submission Builder & Automated 13-Check Range-[0, 1] Validator.
+"""GeoTIFF submission-bundle builder and automated format/range validator.
 
-Permanently prevents the DrivenData portal error `"Predicted values must be in range [0, 1]"` by:
-1. Sanitizing all float32 `-3.4028235e+38` sentinels, Infs, and NaNs inside the 5,167,373-pixel footprint.
-2. Enforcing `np.clip(pred, 0.0, 1.0)` across all 5,167,373 in-footprint pixels and `pred[labels] = 0.0`.
-3. Encoding outside-footprint cells as `0.0` (`nodata=None`, `-zeros.tif`) so all 12,279,160 / 12,279,160
-   raster cells satisfy `(arr >= 0.0) & (arr <= 1.0)` with zero NaNs anywhere.
-4. Supporting both binary `{0.0, 1.0}` and continuous `[0.0, 1.0]` predictions cleanly (fixes shared-tool
-   bitwise-and bug `IR-SHARED-SOFT-01`).
+The validator checks a TIFF against the provided sample grid, full-array [0, 1] range,
+finite values, catalogue exclusion, and the selected output mode. The writer emits a
+single-TIFF ZIP and a receipt. These checks establish artifact safety only; they do not
+establish scientific quality, leaderboard status, selector eligibility, or permission
+to submit through a live competition slot.
 """
 
 from __future__ import annotations
@@ -40,7 +38,7 @@ def audit_geotiff(
     mode: str = "zeros",
     template_tif: Path | None = None,
 ) -> dict:
-    """Strict 13-point DrivenData submission validator audit (zero human intervention required)."""
+    """Return a strict format/range audit; never authorizes a live upload."""
     if mode not in {"zeros", "nan"}:
         raise ValueError("mode must be zeros or nan")
     expected_crs = rasterio.crs.CRS.from_epsg(32611)
@@ -124,6 +122,7 @@ def audit_geotiff(
         "crs": crs_str,
         "transform": list(transform_tuple),
         "shape": [height, width],
+        "count": count,
         "dtype": dtypes[0],
         "nodata": None if nodata_val is None or (isinstance(nodata_val, float) and np.isnan(nodata_val)) else float(nodata_val),
         "nodata_repr": str(nodata_val),

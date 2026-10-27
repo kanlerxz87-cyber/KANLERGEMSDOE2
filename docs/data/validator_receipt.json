@@ -1,0 +1,150 @@
+{
+  "schema": "kanlergemsdoe2.submission_validation.v2",
+  "candidate_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+  "candidate_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+  "status": {
+    "format_validation": "FORMAT_SAFE",
+    "download": "OK_TO_DOWNLOAD",
+    "selector_eligibility": "ELIGIBLE",
+    "submission_authorization": "NOT_AUTHORIZED",
+    "live_slot_selected": false,
+    "upload_performed": false,
+    "organizer_receipt_present": false
+  },
+  "offline_validation_automated": true,
+  "live_submission_requires_separate_user_action": true,
+  "model_run_reproduced_in_this_validation": false,
+  "model_run_branch_recorded": "arena/1868484d-kanlergemsdoe2",
+  "verdict": "promote",
+  "verdict_scope": "Scientific promotion to a separate live-slot selector only; it is not upload authorization.",
+  "gates": {
+    "format_grid_and_full_array_range_0_1": true,
+    "single_tif_zip_bundle_matches_tif": true,
+    "leakage_canary_recorded_auc_le_0_90": true,
+    "registry_uniqueness_recorded_plus_focus9_recomputed": true,
+    "holdout_dti_recorded_positive_paired_ci": true,
+    "submission_name_and_note_le_140_chars": true
+  },
+  "format_audit": {
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "size_bytes": 204099,
+    "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "mode": "zeros",
+    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "count": 1,
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 37654,
+    "emitted_mass": 37654.0,
+    "footprint_fraction": 0.007287,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "nan_inside_footprint": 0,
+    "full_grid_nan_pixels": 0,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "values_in_0_1": true,
+    "checks": {
+      "exact_reference_grid_match": true,
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "zip_audit": {
+    "present": true,
+    "safe_single_tif_bundle": true,
+    "path": "docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
+    "sha256": "fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698",
+    "inner_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "inner_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "inner_hash_matches_tif": true,
+    "members": [
+      "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif"
+    ],
+    "zip_hash_matches_run_card": true
+  },
+  "uniqueness_evidence": {
+    "historical_full_registry_recorded": {
+      "preplacement_surface_max_abs_spearman": 0.179514,
+      "final_dots_max_abs_spearman": 0.073708,
+      "final_dots_max_detector_3px_overlap": 0.649121,
+      "rasters_checked": 192,
+      "status": "RECORDED_IN_FROZEN_RUN_CARD_NOT_RECOMPUTED_HERE"
+    },
+    "focus9_current_audit_path": "evidence/focus9_submission_audit_20261027.json",
+    "focus9_gate_pass": true
+  },
+  "holdout_evidence": {
+    "hide_and_recover": {
+      "pooled_dti": 0.112353,
+      "ci95": [
+        0.098995,
+        0.125743
+      ],
+      "champion_02778_same_evaluator": 0.099202,
+      "per_quadrant_dti": {
+        "NW": 0.143132,
+        "NE": 0.095982,
+        "SW": 0.093681,
+        "SE": 0.124048
+      },
+      "paired_delta_vs_0p2778_ref": 0.01315,
+      "paired_delta_ci95": [
+        0.001893,
+        0.024978
+      ],
+      "win_prob_vs_ref": 0.992,
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.0990, 0.1257])"
+    },
+    "sgmc_off_catalogue": {
+      "raw_dti": 0.118056,
+      "sgmc_prevalence_calibrated_dti": 0.078913,
+      "ci95": [
+        0.070026,
+        0.087012
+      ],
+      "champion_02778_same_evaluator": 0.064121,
+      "paired_delta_vs_0p2778_ref": 0.014792,
+      "paired_delta_ci95": [
+        0.004999,
+        0.023693
+      ],
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0700, 0.0870])"
+    },
+    "status": "RECORDED_IN_FROZEN_RUN_CARD_NOT_RERUN_HERE"
+  },
+  "score_provenance": {
+    "historical_0_2778": "USER/OWNER-REPORTED UNVERIFIED; no organizer receipt stored",
+    "candidate_live_score": null,
+    "note": "HOLDOUT-DTI is not a live leaderboard score or score projection."
+  }
+}

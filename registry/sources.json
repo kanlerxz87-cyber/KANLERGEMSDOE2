@@ -1,100 +1,119 @@
 {
-  "schema": "kanlergemsdoe2.verified_sources.v1",
-  "verified_date_utc": "2026-10-26",
+  "schema": "kanlergemsdoe2.source_register.v2",
+  "reviewed_utc": "2026-10-27",
+  "verification_policy": "A citation or URL is not proof that a specific artifact or score came from that source. State exactly what was inspected; distinguish official source material from owner mirrors and from user-reported values.",
   "official_competition_sources": [
     {
       "id": "SRC-DD-OVERVIEW",
-      "title": "DrivenData DOE GEMS Prize Challenge Overview",
+      "title": "DrivenData — Geologic Enhanced Mapping System (GEMS) Prize Challenge",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
-      "authority": "U.S. Department of Energy Geothermal Technologies Office / DrivenData",
-      "verified_facts": "Two-phase $300,000 challenge ($50k Phase 1 top-5 split; $250k Phase 2 re-scoring the single final submission on expert-expanded labels); 100 m EPSG:32611 grid; Distance-Weighted Tversky Index (alpha=0.2, beta=0.8, 300 m linear decay)."
+      "authority": "DrivenData / U.S. Department of Energy",
+      "verification": "Official competition overview located via search during this review; no authenticated submission receipt or private score page was accessed.",
+      "supports": "Challenge purpose and competition structure. It does not authenticate the historical focus-site scores recorded in this repository."
     },
     {
       "id": "SRC-DD-LEADERBOARD",
-      "title": "DrivenData DOE GEMS Public Leaderboard",
+      "title": "DrivenData — GEMS Public Leaderboard",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
       "authority": "DrivenData",
-      "verified_facts": "Current public Phase 1 reference anchors reported in brief: #1 = 0.4413, #5 = 0.3195."
+      "verification": "NOT VERIFIED IN THIS SESSION: no authenticated leaderboard snapshot or submission-page receipt was fetched or archived.",
+      "supports": "Manual review link only. Do not copy owner/mirror claims into ORGANIZER-CONFIRMED fields without an organizer-controlled receipt."
     },
     {
       "id": "SRC-DD-REF-REPO",
-      "title": "Official GEMS Prize Reference Solution (Prof. John Lipor, Portland State University)",
+      "title": "Official GEMS Prize Reference Solution",
       "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
-      "pinned_commit": "cloned-local-2026-10-26",
-      "authority": "DrivenData / DOE GTO",
-      "verified_facts": "Confirms 19-band training_features.tif order, single-band float32 GTiff output in [0, 1] matching sample_submission.tif grid (3730x3292, EPSG:32611), and Tversky alpha=0.2, beta=0.8."
+      "pinned_commit": "aebe92f7c8a990f0e3443451b7a825d9afd6336b",
+      "notebook_url": "https://github.com/drivendataorg/gems-prize-reference-solution/blob/aebe92f7c8a990f0e3443451b7a825d9afd6336b/unet-mc-cv-reference-solution.ipynb",
+      "authority": "DrivenData / reference-solution authors",
+      "verification": "Repository and notebook fetched by GitHub API in this session; notebook parsed locally.",
+      "supports": "The notebook uses alpha=0.2 and beta=0.8 in a Tversky loss. This is loss-weight corroboration only; it does not verify the organizer's scoring implementation, a leaderboard result, or any owner's score claim."
     }
   ],
   "official_geoscience_data_sources": [
     {
-      "id": "SRC-USGS-GEODAWN",
-      "title": "USGS GeoDAWN Airborne Geophysical & Radiometric Survey (NV/CA)",
-      "url": "https://doi.org/10.5066/P93LGLVQ",
-      "authority": "U.S. Geological Survey",
-      "verified_facts": "Provides airborne magnetic (TMI, TMI_up150) and gamma-ray spectrometry (K, eTh, eU, TC, Th/K, U/K, U/Th) grids across the GeoDAWN Basin-and-Range footprint."
-    },
-    {
       "id": "SRC-DOE-GDR-1391",
-      "title": "Great Basin Center for Geothermal Energy INGENIOUS Regional Dataset (GDR #1391)",
+      "title": "INGENIOUS — Great Basin Regional Dataset Compilation",
       "url": "https://gdr.openei.org/submissions/1391",
       "doi": "https://doi.org/10.15121/1881483",
-      "authority": "DOE Geothermal Data Repository / UNR Nevada Bureau of Mines and Geology",
-      "verified_facts": "Provides regional thermal wells/springs with quartz/chalcedony/Na-K-Ca geothermometers, 2 m shallow temperature probes (F2mDAB above-background residual), volcanic vents, and Quaternary fault attributes."
+      "authority": "DOE Geothermal Data Repository / UNR, GBCGE, NBMG",
+      "license_as_listed": "CC BY 4.0",
+      "verification": "Official record inspected via search. The local CSV/ZIP copies were restored from an owner-controlled mirror and SHA-256 checked against that mirror; official-host bytes were not directly downloaded in this session.",
+      "supports": "The compilation includes regional well/spring temperature and chemistry material and geothermal-feature datasets. Local mirrored CSV has measured-temperature and quartz/chalcedony/Na-K-Ca columns; column-level provenance should be rechecked against the official data dictionary before new modeling.",
+      "important_caveat": "The mirrored dist_known_fault_px column is label-derived and must never be used as a model feature."
     },
     {
-      "id": "SRC-GDR-PALEO",
-      "title": "INGENIOUS Paleo-Geothermal Surface Manifestations (Siliceous Sinter, Travertine, Tufa, Hydrothermal Breccia)",
-      "url": "https://gdr.openei.org/submissions/1391",
-      "authority": "DOE Geothermal Data Repository / NBMG",
-      "verified_facts": "Distinguishes high-temperature siliceous sinter (>180 C deep reservoir indicator) and hydrothermal explosion breccia from lacustrine shoreline tufa mounds (Lake Lahontan non-geothermal mimic)."
+      "id": "SRC-USGS-GEODAWN",
+      "title": "GeoDAWN airborne magnetic and radiometric surveys of northwestern Great Basin, Nevada and California",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "doi": "https://doi.org/10.5066/P93LGLVQ",
+      "authority": "U.S. Geological Survey / DOE Geothermal Technologies Office",
+      "verification": "Official USGS data-release record located and reviewed via search. The competition-area raster copies in the workspace are owner-mirror derivatives; this session did not download source grids from USGS.",
+      "supports": "Existence and scope of the official airborne magnetic/radiometric data release."
     },
     {
       "id": "SRC-USGS-3DEP",
-      "title": "USGS 3D Elevation Program (3DEP) 1 m LiDAR Scarp Derivatives",
-      "url": "https://www.usgs.gov/3d-elevation-program",
+      "title": "USGS 3D Elevation Program — Products and Services",
+      "url": "https://www.usgs.gov/3d-elevation-program/about-3dep-products-services",
+      "download_help_url": "https://www.usgs.gov/faqs/what-lidar-data-and-where-can-i-download-it",
       "authority": "U.S. Geological Survey",
-      "verified_facts": "Provides 1 m LiDAR scarp step height, crest/toe curvature dipole, facing asymmetry, 100 m strike coherence, and strike azimuth over 75.40% of the GEMS footprint (leaving a 24.60% LiDAR-void swath)."
+      "verification": "Official pages located and reviewed via search. No additional 3DEP tiles were downloaded in this review.",
+      "supports": "Official access pathways and statement that 3DEP products are available free of charge and without use restrictions; does not establish tile coverage for a particular AOI."
     },
     {
       "id": "SRC-USGS-SGMC",
-      "title": "USGS State Geologic Map Compilation (SGMC) Fault Traces",
-      "url": "https://doi.org/10.3133/ds1052",
+      "title": "State Geologic Map Compilation (SGMC) geodatabase of the conterminous United States",
+      "url": "https://pubs.usgs.gov/publication/ds1052",
+      "doi": "https://doi.org/10.3133/ds1052",
       "authority": "U.S. Geological Survey",
-      "verified_facts": "Used strictly as an external off-catalogue validation benchmark (GEMSDOE32-SGMC-CAL-v3.0, 62,703 off-catalogue pixels); strictly excluded from HTCADS feature construction and model fitting."
+      "verification": "Official publication record located and reviewed via search. The workspace contains an owner-derived fault raster, not the official geodatabase.",
+      "supports": "Official description and citation for the SGMC. Any use as a holdout proxy must retain the stated limitations and avoid using the fault raster as a predictor."
     },
     {
-      "id": "SRC-SB-HEATFLOW",
-      "title": "USGS ScienceBase Great Basin Heat Flow Points",
-      "url": "https://www.sciencebase.gov/catalog/",
+      "id": "SRC-USGS-COMCAT",
+      "title": "USGS ANSS Comprehensive Earthquake Catalog (ComCat) documentation",
+      "url": "https://earthquake.usgs.gov/data/comcat/index.php",
+      "api_documentation_url": "https://earthquake.usgs.gov/fdsnws/event/1/",
+      "authority": "U.S. Geological Survey / ANSS contributing networks",
+      "verification": "Official catalog documentation located and reviewed via search. No event query or event file was downloaded in this review.",
+      "supports": "Catalog fields include event time, hypocenter depth, magnitude, and location/quality metadata. Catalog completeness and location uncertainty vary by network and event."
+    },
+    {
+      "id": "SRC-USGS-LANDSAT-C2",
+      "title": "Landsat Collection 2 Level-2 Surface Reflectance",
+      "url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-reflectance",
+      "data_access_url": "https://earthexplorer.usgs.gov/",
+      "authority": "U.S. Geological Survey / NASA Landsat program",
+      "verification": "Official USGS product and access pages located and reviewed via search. No imagery was downloaded in this review.",
+      "supports": "Atmospherically corrected multispectral surface-reflectance products, including SWIR bands; official collection is available through EarthExplorer."
+    },
+    {
+      "id": "SRC-USGS-WATER-DATA",
+      "title": "USGS Water Data APIs",
+      "url": "https://api.waterdata.usgs.gov/",
+      "api_docs_url": "https://api.waterdata.usgs.gov/docs/",
       "authority": "U.S. Geological Survey",
-      "verified_facts": "Borehole heat-flow measurements (mW/m^2) across the Great Basin."
+      "verification": "Official modern API hub located and reviewed via search. No AOI query was made in this review.",
+      "supports": "Machine-readable access to USGS water data and monitoring-location metadata. Coverage, parameter availability, and measurement quality must be checked before modeling."
     }
   ],
-  "peer_reviewed_literature": [
+  "owner_mirror_sources": [
     {
-      "id": "LIT-FAULDS- HINDS-2011",
-      "citation": "Faulds, J. E., Coolbaugh, M. F., Blewitt, G., & Henry, C. D. (2004); Faulds, J. E., & Hinz, N. H. (2015). Favorable tectonic and structural settings of geothermal systems in the Great Basin region, western USA: Proxies for discovering blind geothermal systems. Proceedings World Geothermal Congress 2015.",
-      "relevance": "Establishes that ~39% of Great Basin geothermal systems are blind (no surface hot springs) and >75% localize in fault terminations (horsetail splays), dilational step-overs/relay ramps, and fault intersections rather than planar mid-segment range-front fault cores."
+      "id": "SRC-FOCUS9-MIRRORS",
+      "repositories": "https://github.com/buffedlizard55-lab/GEMSDOE24 through GEMSDOE36 focus-site repositories; exact repository and file commits are pinned in registry/focus9_site_registry.json.",
+      "authority": "Owner-controlled GitHub mirrors, not DrivenData",
+      "verification": "Nine TIFF bytes were downloaded via GitHub API and matched the tracked SHA-256 values. The historical scores remain user/owner-reported and unverified."
     },
     {
-      "id": "LIT-GRAUCH-HUDSON-2007",
-      "citation": "Grauch, V. J. S., & Hudson, M. R. (2007). Guides to understanding the aeromagnetic expression of faults in sedimentary basins: Lessons learned from the central Rio Grande rift, New Mexico. Geosphere, 3(6), 596-623; Blakely, R. J. (1995). Potential Theory in Gravity and Magnetic Applications.",
-      "relevance": "Proves that over dipping Basin-and-Range normal faults (dip 50-60 deg), the maximum horizontal gravity gradient (HGM) crest migrates basinward (downdip into the hanging wall) with source depth, whereas upward continuation tracks dip direction and enables updip surface-trace back-projection."
-    },
-    {
-      "id": "LIT-GALLARDO-MEJU-2004",
-      "citation": "Gallardo, L. A., & Meju, M. A. (2004). Joint two-dimensional DC resistivity and seismic travel time inversion with cross-gradients constraints. Journal of Geophysical Research: Solid Earth, 109(B3).",
-      "relevance": "Defines the structural cross-gradient tensor coupling independent physical fields whose co-aligned gradients suppress single-modality lithologic mimics."
-    },
-    {
-      "id": "LIT-COOLBAUGH-KRATT-2007",
-      "citation": "Coolbaugh, M. F., Sladek, C., Faulds, J. E., Zehner, R. E., & Oppliger, G. L. (2007); Kratt, C., Coolbaugh, M., Peppin, B., & Sladek, C. (2010). Shallow 2 m temperature surveys for blind geothermal discovery in the Great Basin. Geothermal Resources Council Transactions.",
-      "relevance": "Demonstrates that shallow 2 m thermal outflow plumes migrate laterally down the hydraulic gradient in basin-fill alluvium from their feeder range-front/piedmont fault conduit."
-    },
-    {
-      "id": "LIT-NEMESHAEV-2020",
-      "citation": "Dinkelbach, W. (1967). On nonlinear fractional programming. Management Science, 13(7), 492-498; Minoux, M. (1978). Accelerated greedy algorithms for maximizing submodular set functions.",
-      "relevance": "Proves exact fractional-linear optimality of binary {0, 1} allocation under expected Distance-Weighted Tversky Index and lazy-greedy CELF submodular cover."
+      "id": "SRC-DATA-MANIFEST",
+      "path": "registry/data_manifest.json",
+      "authority": "Owner-controlled mirror manifest",
+      "verification": "Restored file hashes match the manifest. Hashes prove byte integrity against that manifest, not official-source authenticity or organizer approval."
     }
-  ]
+  ],
+  "score_policy": {
+    "organizer_confirmed_requires": "An organizer-controlled submission-page receipt or authenticated leaderboard record archived with date, submission identifier, score, and source URL.",
+    "current_status": "No such receipt is stored or verified in this session.",
+    "prohibited_substitution": "An owner-controlled mirror, README, static site, user-provided value, or matching TIFF hash is not an organizer receipt."
+  }
 }

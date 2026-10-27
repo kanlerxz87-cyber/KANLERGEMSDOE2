@@ -9,7 +9,7 @@
     "max_wall_hours_allowed": 2.0
   },
   "reference_0p2778_benchmark": {
-    "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 ORGANIZER-CONFIRMED)",
+    "name": "GEMSDOE32 historical value (0.2778 user/owner-reported; not organizer-verified)",
     "holdout_hide_recover_uncensored_dti": 0.099202,
     "holdout_hide_recover_ci95": [
       0.085951,
@@ -19,7 +19,9 @@
     "holdout_sgmc_ci95": [
       0.05673,
       0.071649
-    ]
+    ],
+    "score_provenance": "USER/OWNER-REPORTED UNVERIFIED; no submission-page receipt stored",
+    "interpretation": "The recorded 0.099202 / 0.064121 values are HOLDOUT-DTI results from the stated evaluators, not the historical live score."
   },
   "experiments": [
     {
@@ -644,5 +646,10 @@
       "lidar_ortho_scarp",
       1494.41
     ]
-  ]
+  ],
+  "score_provenance": {
+    "historical_focus_site_values": "USER/OWNER-REPORTED UNVERIFIED",
+    "organizer_receipt_present": false,
+    "note": "The 0.2778 value is not organizer-confirmed in this repository; only recorded holdout metrics are used for internal comparison."
+  }
 }

@@ -546,7 +546,26 @@
   "experiments_used": 3,
   "budget_max_experiments": 3,
   "ok_to_download": true,
-  "ok_to_submit": true,
   "weekly_slot_spent_automatically": false,
-  "verdict": "promote"
+  "verdict": "promote",
+  "experiment_branch": "arena/49a34a70-kanlergemsdoe2",
+  "historical_lane_status": "ARCHIVED_PARALLEL_LANE_NOT_SELECTED_FOR_CURRENT_SUBMISSION",
+  "score_provenance": {
+    "status": "NO_ORGANIZER_RECEIPT_VERIFIED",
+    "note": "No DrivenData submission-page receipt is stored. The evaluator values in this card are HOLDOUT-DTI only; no live score is known."
+  },
+  "status": {
+    "format_safe": true,
+    "ok_to_download": true,
+    "selector_eligible": true,
+    "authorized_to_submit": false,
+    "live_slot_selected": false,
+    "live_submission_performed": false,
+    "organizer_receipt_present": false,
+    "selected_for_current_submission": false
+  },
+  "authorized_to_submit": false,
+  "live_slot_selected": false,
+  "selected_for_current_submission": false,
+  "verdict_scope": "Historical lane scientific gate only; evaluator versions are not comparable with the active HTCADS lane, and this does not select a slot or authorize submission."
 }

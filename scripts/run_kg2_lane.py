@@ -69,8 +69,7 @@ CANARY_JSON = ROOT / "evidence/kg2_canary_20261026.json"
 HOLDOUT_JSON = ROOT / "evidence/kg2_holdout_20261026.json"
 EXPERIMENT_JSON = ROOT / "evidence/kg2_experiment_20261026.json"
 RUN_CARD_JSON = ROOT / "evidence/kg2_run_card_20261026.json"
-ROOT_RUN_CARD_JSON = ROOT / "run_card.json"
-DOCS_RUN_CARD_JSON = ROOT / "docs/data/run_card.json"
+ARCHIVE_DOCS_RUN_CARD_JSON = ROOT / "docs/data/kg2_run_card_20261026.json"
 
 
 def save_json(obj: Any, path: Path) -> None:
@@ -898,8 +897,8 @@ def run_stage_emit_and_audit(
     verdict = "promote" if all_gates_pass else "negative"
 
     note = (
-        f"KG2-MGHV {chosen_arm} 10m/3m/1m junc+hydro-demag OOF CELF {int(pos_mask.sum())}d "
-        f"| HOLDOUT-DTI {win_res['dti']:.4f} n=60988 | {fp_hash12}"
+        f"KG2-MGHV {chosen_arm}; {int(pos_mask.sum()):,} px; "
+        f"HOLDOUT-DTI {win_res['evaluator_version']} (N={win_res['n_withheld_positive_pixels']:,}); {fp_hash12}"
     )
     assert len(note) <= 140, f"Note exceeds 140 chars ({len(note)})"
 
@@ -1006,6 +1005,11 @@ def run_stage_emit_and_audit(
             "paired_delta_ci95": win_paired,
         },
         "organizer_confirmed_score": None,
+        "score_provenance": {
+            "status": "NO_ORGANIZER_RECEIPT_VERIFIED",
+            "historical_focus_site_values_are_user_or_owner_reported": True,
+            "note": "No DrivenData submission-page receipt is stored. HOLDOUT-DTI values below are internal evaluation metrics, not live scores or projections.",
+        },
         "leakage_canary": {
             "passed": canary_gate,
             "threshold_auc": 0.90,
@@ -1042,15 +1046,28 @@ def run_stage_emit_and_audit(
         "submission_note_length": len(note),
         "experiments_used": 3,
         "budget_max_experiments": 3,
+        "status": {
+            "format_safe": format_gate,
+            "ok_to_download": format_gate,
+            "selector_eligible": all_gates_pass,
+            "authorized_to_submit": False,
+            "live_slot_selected": False,
+            "live_submission_performed": False,
+            "organizer_receipt_present": False,
+            "selected_for_current_submission": False,
+        },
         "ok_to_download": format_gate,
-        "ok_to_submit": all_gates_pass,
+        "authorized_to_submit": False,
+        "live_slot_selected": False,
         "weekly_slot_spent_automatically": False,
         "verdict": verdict,
+        "verdict_scope": "Historical lane's scientific gate only; it does not select a slot or authorize a submission.",
     }
 
     save_json(run_card, RUN_CARD_JSON)
-    save_json(run_card, ROOT_RUN_CARD_JSON)
-    save_json(run_card, DOCS_RUN_CARD_JSON)
+    # Keep the parallel lane clearly archived; never overwrite the repository's
+    # canonical active run card or the active site feed from this legacy lane.
+    save_json(run_card, ARCHIVE_DOCS_RUN_CARD_JSON)
     save_json(
         {
             "canary": canary,
@@ -1062,23 +1079,23 @@ def run_stage_emit_and_audit(
         EXPERIMENT_JSON,
     )
     print(
-        f"[Stage 3] COMPLETE! File={zeros_tif.name} | HOLDOUT-DTI={win_res['dti']:.6f} "
+        f"[Stage 3] COMPLETE! File={zeros_tif.name} | "
+        f"HOLDOUT-DTI ({win_res['evaluator_version']}, N={win_res['n_withheld_positive_pixels']})={win_res['dti']:.6f} "
         f"| competing_3px_ov={full_audit['post_placement_competing_max_3px_overlap']:.4f} "
-        f"| ok_to_submit={all_gates_pass} | verdict={verdict}",
+        f"| selector_eligible={all_gates_pass} | authorized_to_submit=False | verdict={verdict}",
         flush=True,
     )
     return run_card
 
 
 def verify_recorded() -> dict[str, Any]:
-    for p in (CANARY_JSON, HOLDOUT_JSON, RUN_CARD_JSON, ROOT_RUN_CARD_JSON, DOCS_RUN_CARD_JSON):
+    for p in (CANARY_JSON, HOLDOUT_JSON, RUN_CARD_JSON, ARCHIVE_DOCS_RUN_CARD_JSON):
         if not p.exists():
             raise SystemExit(f"Missing recorded KG2 artifact: {p}")
     c1 = json.loads(RUN_CARD_JSON.read_text())
-    c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
-    c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+    archive_copy = json.loads(ARCHIVE_DOCS_RUN_CARD_JSON.read_text())
+    if c1 != archive_copy:
+        raise SystemExit("Archived KG2 run-card copies in evidence/ and docs/data/ disagree")
 
     tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
     zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]
@@ -1095,19 +1112,26 @@ def verify_recorded() -> dict[str, Any]:
         raise SystemExit("Submission note exceeds 140 characters")
     return {
         "verified": True,
+        "verification_scope": "Archived artifact/hash integrity only; no experiment, slot selection, or upload.",
+        "lane_id": c1["lane_id"],
         "submission_filename": c1["submission_filename"],
         "raster_sha256": c1["raster_sha256"],
         "holdout_dti": c1["holdout_dti"]["dti"],
-        "ci95": c1["holdout_dti"]["ci95"],
+        "holdout_label": f"HOLDOUT-DTI ({c1['holdout_dti']['evaluator_version']}, N={c1['holdout_dti']['withheld_positive_pixels']} withheld positives, 95% CI {c1['holdout_dti']['ci95']})",
         "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][
             "post_placement_competing_max_3px_overlap"
         ],
         "max_surface_spearman": c1["correlation_overlap_vs_registry"][
             "pre_placement_surface_max_abs_spearman"
         ],
-        "ok_to_download": c1["ok_to_download"],
-        "ok_to_submit": c1["ok_to_submit"],
+        "format_safe": c1["status"]["format_safe"],
+        "ok_to_download": c1["status"]["ok_to_download"],
+        "selector_eligible": c1["status"]["selector_eligible"],
+        "authorized_to_submit": False,
+        "live_slot_selected": False,
+        "live_submission_performed": False,
         "verdict": c1["verdict"],
+        "verdict_scope": c1["verdict_scope"],
     }
 
 
@@ -1126,6 +1150,18 @@ def main() -> None:
     )
     ap.add_argument("--arm-override", choices=("EXP-1", "EXP-2", "EXP-3"), default=None)
     args = ap.parse_args()
+
+    if args.stage != "verify":
+        frozen_card_path = ROOT / "evidence" / "kg2_run_card_20261026.json"
+        if frozen_card_path.exists():
+            frozen_card = json.loads(frozen_card_path.read_text(encoding="utf-8"))
+            used = int(frozen_card.get("experiments_used", 0))
+            limit = int(frozen_card.get("budget_max_experiments", 3))
+            if used >= limit:
+                raise SystemExit(
+                    f"Archived KG2 lane experiment cap exhausted ({used}/{limit}); "
+                    "only --stage verify is permitted."
+                )
 
     if args.stage == "verify":
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))

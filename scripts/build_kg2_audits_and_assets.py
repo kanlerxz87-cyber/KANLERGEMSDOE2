@@ -555,6 +555,11 @@ def render_figures(card: dict[str, Any], fp: np.ndarray, catalogue: np.ndarray) 
 
 
 def main() -> None:
+    raise SystemExit(
+        "Deprecated KG2 audit/asset builder disabled: it republishes withdrawn score-inversion, "
+        "projection, and submission-recommendation fields. Use scripts/build_site.py for the "
+        "current provenance-first portal."
+    )
     fp = footprint.load_footprint()
     with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as ds:
         catalogue = (ds.read(1) > 0) & fp

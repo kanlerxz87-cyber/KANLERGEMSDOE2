@@ -6,10 +6,10 @@
   "protocol_constraints": {
     "max_experiments": 3,
     "max_walltime_seconds": 7200,
-    "max_surface_abs_spearman": 0.90,
-    "max_dots_abs_spearman": 0.90,
-    "max_detector_3px_dot_overlap": 0.70,
-    "max_single_feature_canary_auc": 0.90
+    "max_surface_abs_spearman": 0.9,
+    "max_dots_abs_spearman": 0.9,
+    "max_detector_3px_dot_overlap": 0.7,
+    "max_single_feature_canary_auc": 0.9
   },
   "candidate_hypotheses_ranked": [
     {
@@ -28,9 +28,10 @@
       "physical_signature": "Multi-pillar log-odds synthesis of (P1) updip-projected gravity/magnetic steerable Hessian ridges + Gallardo-Meju cross-gradient cos^2 alignment + Verduzco tilt zero-crossing sharpness, (P2) hydrothermal magnetite-destruction trough -(tmi - TMI_up150) + K-on-Th residual + MT lateral conductivity gradient + up-hydraulic-gradient back-projected thermal/geothermometer plumes gated onto 1D structural ridges, (P3) transtensional strain rate (shearrate * relu(dilaterate)) + 3D slip/dilation tendency + fold-visible anisotropic fault-tip/step-over stress lobes, and (P4) contour-orthogonal asymmetric 1 m LiDAR scarplets centered to zero log-odds excess so the 24.6% non-LiDAR basins suffer zero root-split starvation.",
       "why_catches_unmapped_not_catalogued": "USGS/INGENIOUS mappers digitized tall (>3-5 m) range-front scarps; ~75% of Great Basin geothermal systems are blind (Faulds & Hinz, 2015), hosted on intrabasin step-overs, horse-tail fault tips, and piedmont accommodation zones beneath Holocene alluvium where tall DEM scarps are absent but coincident basement cross-gradient steps, shallow hydrothermal demagnetization/K-alteration, and transtensional dilation localize fluid upflow.",
       "differs_from_prior_repos": "100% de-novo (0 pixel reuse from H19-5/d2.8/B2); eliminates GEMSDOE32 H38's LiDAR coverage starvation via strict E_sub (100% LiDAR-blind) + zero-mean E_surf separation; eliminates GEMSDOE36/24 radial thermal blob dilution via 1D structural ridge gating; replaces isotropic B=2 truncation with anisotropic flank-depleting (d_flank > 2.2 px) / tip-preserving (d_tip > 1.4 px) collar + Dinkelbach marginal-DTI CELF packing.",
-      "expected_dti_improvement": "+0.015 to +0.030 HOLDOUT-DTI on GEMSDOE32-HIDE-RECOVER-v3.0 over 0.2778 Champion proxy (0.0992) AND simultaneous positive gain on blind GEMSDOE32-SGMC-CAL-v3.0 (>0.0641).",
+      "expected_dti_improvement": "PREREGISTERED PROJECTION: +0.015 to +0.030 HOLDOUT-DTI on GEMSDOE32-HIDE-RECOVER-v3.0 relative to the recorded same-evaluator holdout for the raster associated with the USER/OWNER-REPORTED, UNVERIFIED 0.2778 value (HOLDOUT-DTI comparator 0.0992); also require a positive gain on GEMSDOE32-SGMC-CAL-v3.0 relative to its recorded HOLDOUT-DTI comparator (>0.0641).",
       "implementation_cost": "Medium (~5 min CPU end-to-end)",
-      "external_data_obtainable_in_sandbox": true
+      "external_data_obtainable_in_sandbox": true,
+      "expected_dti_improvement_type": "PREREGISTERED PROJECTION — NOT A SCORE"
     },
     {
       "rank": 2,
@@ -38,13 +39,20 @@
       "name": "WUDP — Wavelet/Fourier Multi-Height Upward-Continuation Fault-Dip Plane Projector",
       "selected_for_validation": false,
       "note": "Core Fourier upward-continuation crest-migration vector (z = 0, 150, 400 m) folded directly into Pillar 1 of H-K1 EXP-2.",
-      "layers": ["tmi", "TMI_up150", "rtp", "iso_grav_anom", "depth_to_base_surf"],
+      "layers": [
+        "tmi",
+        "TMI_up150",
+        "rtp",
+        "iso_grav_anom",
+        "depth_to_base_surf"
+      ],
       "physical_signature": "Lateral crest-migration vector across FFT upward-continuation heights to project hanging-wall gravity/magnetic gradient maxima updip onto the sub-alluvial surface fault emergence line.",
       "why_catches_unmapped_not_catalogued": "Range-front and intrabasin normal faults dip 50-65 deg; raw gravity gradient crests sit 0.5-1.5 km basinward over the hanging-wall half-graben, missing the 300 m DTI kernel.",
-      "differs_from_prior_repos": "Replaces GEMSDOE92's uniform topographic upslope shift (0.0255 live) with physical potential-field upward-continuation crest migration.",
+      "differs_from_prior_repos": "Replaces the prior GEMSDOE92 uniform topographic upslope-shift feature with physical potential-field upward-continuation crest migration; any historical score attached to the prior artifact is user/owner-reported and unverified here.",
       "expected_dti_improvement": "+0.005 to +0.012 HOLDOUT-DTI",
       "implementation_cost": "Low-Medium",
-      "external_data_obtainable_in_sandbox": true
+      "external_data_obtainable_in_sandbox": true,
+      "expected_dti_improvement_type": "PREREGISTERED PROJECTION — NOT A SCORE"
     },
     {
       "rank": 3,
@@ -52,41 +60,59 @@
       "name": "MTSE — Magnetotelluric Clay-Cap Lateral Resistivity Boundary & Microseismic Swarm Coupling",
       "selected_for_validation": false,
       "note": "Core lateral conductivity gradient |grad(log1p(cond_surf))| x seismic swarm density folded into Pillar 2/3 of H-K1.",
-      "layers": ["cond_surf", "geod_shearrate", "geod_dilaterate", "deq_n100a15", "ieq_n100a15"],
+      "layers": [
+        "cond_surf",
+        "geod_shearrate",
+        "geod_dilaterate",
+        "deq_n100a15",
+        "ieq_n100a15"
+      ],
       "physical_signature": "Steerable ridge of horizontal log-conductivity gradient co-aligned with basement steps and active microseismic swarm intensity.",
       "why_catches_unmapped_not_catalogued": "Buried creeping hydrothermal fault gouge juxtaposes resistive horst blocks against conductive smectite clay caps without preserving a surface scarp.",
       "differs_from_prior_repos": "Targets lateral conductivity boundaries rather than GEMSDOE26's interior conductivity maxima (playa evaporite mimic).",
       "expected_dti_improvement": "+0.003 to +0.008 HOLDOUT-DTI",
       "implementation_cost": "Low",
-      "external_data_obtainable_in_sandbox": true
+      "external_data_obtainable_in_sandbox": true,
+      "expected_dti_improvement_type": "PREREGISTERED PROJECTION — NOT A SCORE"
     },
     {
       "rank": 4,
       "id": "H-K4",
       "name": "AFDK — Alluvial-Fan Drainage-Azimuth Vorticity & Piedmont Knickzone Tensor",
       "selected_for_validation": false,
-      "layers": ["det_elev", "det_elev_slope", "external/lidar_scarp_features_u8.tif", "USGS 3DEP 1/3 arc-second (10 m) seamless DEM"],
+      "layers": [
+        "det_elev",
+        "det_elev_slope",
+        "external/lidar_scarp_features_u8.tif",
+        "USGS 3DEP 1/3 arc-second (10 m) seamless DEM"
+      ],
       "physical_signature": "Cross-strike vorticity of ephemeral wash channel azimuths and longitudinal stream-profile knickzones along piedmont slope breaks.",
       "why_catches_unmapped_not_catalogued": "Low-slip (<0.05 mm/yr) oblique Walker Lane faults in unconsolidated fanglomerate lose vertical scarps to erosion while preserving aligned channel deflections.",
       "differs_from_prior_repos": "Measures transverse drainage-azimuth rotation rather than vertical scarp step height.",
       "expected_dti_improvement": "+0.002 to +0.006 HOLDOUT-DTI",
       "implementation_cost": "Medium",
       "external_data_obtainable_in_sandbox": false,
-      "official_external_source_needed": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/ (USGS 3DEP 10 m seamless DEM; free public domain, blocked by sandbox outbound host allowlist in this session)"
+      "official_external_source_needed": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/ (USGS 3DEP 10 m seamless DEM; free public domain, blocked by sandbox outbound host allowlist in this session)",
+      "expected_dti_improvement_type": "PREREGISTERED PROJECTION — NOT A SCORE"
     },
     {
       "rank": 5,
       "id": "H-K5",
       "name": "IPGC — OPERA Sentinel-1 InSAR Poroelastic Aquifer-Barrier Phase-Gradient Detector",
       "selected_for_validation": false,
-      "layers": ["NASA/JPL OPERA DISP-S1 North America vertical/LOS surface displacement", "cond_surf", "iso_grav_anom_hg"],
+      "layers": [
+        "NASA/JPL OPERA DISP-S1 North America vertical/LOS surface displacement",
+        "cond_surf",
+        "iso_grav_anom_hg"
+      ],
       "physical_signature": "Sub-200 m horizontal step discontinuities in seasonal poroelastic ground deformation across impermeable fault-gouge aquifer barriers.",
       "why_catches_unmapped_not_catalogued": "Completely blind intrabasin hydraulic-barrier faults beneath flat playas lack both topographic relief and shallow bedrock steps but compartmentalize seasonal aquifer head.",
       "differs_from_prior_repos": "Uses time-series interferometric deformation step edges rather than static long-wavelength GPS strain grids.",
       "expected_dti_improvement": "+0.008 to +0.020 HOLDOUT-DTI",
       "implementation_cost": "High",
       "external_data_obtainable_in_sandbox": false,
-      "official_external_source_needed": "https://asf.alaska.edu/datasets/daac/opera/ (NASA ASF DAAC OPERA DISP-S1; free official public data, blocked by sandbox outbound host allowlist in this session)"
+      "official_external_source_needed": "https://asf.alaska.edu/datasets/daac/opera/ (NASA ASF DAAC OPERA DISP-S1; free official public data, blocked by sandbox outbound host allowlist in this session)",
+      "expected_dti_improvement_type": "PREREGISTERED PROJECTION — NOT A SCORE"
     }
   ],
   "preregistered_experiments": [
@@ -105,5 +131,6 @@
       "name": "HTCADS-DinkelbachAniso (Anisotropic Flank-Depleting d_flank>2.25 / Tip-Preserving d_tip>1.4 Collar + Dinkelbach Marginal-DTI Optimal Allocation)",
       "description": "Applies anisotropic structural collar physics (stripping cross-strike scarp-apron false positives out to 225 m while preserving corroborated along-strike fault-tip propagation zones at 140-225 m) and Dinkelbach marginal expected-DTI break-even stopping around the optimal 36k-39k dot regime."
     }
-  ]
+  ],
+  "post_review_provenance_note": "All expected_dti_improvement fields are preregistration projections only, not measured HOLDOUT-DTI values and not live scores. The historical 0.2778 and any cited cross-site leaderboard values are USER/OWNER-REPORTED and unverified absent an organizer receipt; 0.0992 and 0.0641 are separate same-evaluator HOLDOUT-DTI comparators. H-K1 has three recorded EXP-1..3 runs; H-K2/H-K3 were folded into H-K1; H-K4/H-K5 remain unavailable in the sandbox. No further experiment is authorized under the exhausted three-experiment cap."
 }

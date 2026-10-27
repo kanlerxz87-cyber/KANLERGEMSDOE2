@@ -10,7 +10,7 @@
   "b_collar_px": 2.0,
   "baselines": {
     "BASE_CHAMP_D28_VISB2": {
-      "description": "0.2778 portfolio champion (D2.8) with strictly fold-local d_visible > 2.0",
+      "description": "Fold-local D2.8 visibility baseline derived from an artifact whose 0.2778 value is USER/OWNER-REPORTED and unverified; the HOLDOUT-DTI values below are separate evaluation results.",
       "segment_holdout_v1": {
         "metric_label": "HOLDOUT-DTI",
         "evaluator_version": "gems-segment-pooled-v1",
@@ -388,15 +388,9 @@
     ]
   },
   "lli_s3_projection": {
-    "evidence_class": "PROJECTION \u2014 NOT A SCORE (LLI-S3 calibrated on 111 owner-reported live rasters)",
-    "instrument": "LLI-S3 (GEMSDOE32 ledger_inversion.py)",
-    "projected_dti": 0.07277,
-    "loo_mae": 0.02195,
-    "loo_spearman": 0.92672,
-    "expected_tp_w": 1622.7,
-    "expected_fp_w": 37852.8,
-    "expected_fn_w": 16381.6,
-    "implied_truth_px": 18004.3
+    "status": "RETRACTED_AND_QUARANTINED",
+    "reason": "The live-ledger inversion relied on user/owner-reported score anchors and unvalidated transfer/approximation assumptions. No numerical projection or inferred hidden-set TP/FP/FN quantity is retained as evidence.",
+    "replacement": "No organizer receipt is available; use labeled spatial HOLDOUT-DTI only for internal evidence."
   },
   "artifact": {
     "stem": "kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros",
@@ -683,5 +677,12 @@
         "candidate_dot_overlap_within_3px": 0.33717
       }
     }
-  }
+  },
+  "status": "ARCHIVED_NEGATIVE_RESEARCH_LANE",
+  "organizer_receipt_present": false,
+  "selector_eligible": false,
+  "authorized_to_submit": false,
+  "live_slot_selected": false,
+  "live_submission_performed": false,
+  "status_scope": "The FVCA arm/holdout record is historical research evidence only; no live score or submission authorization is represented."
 }

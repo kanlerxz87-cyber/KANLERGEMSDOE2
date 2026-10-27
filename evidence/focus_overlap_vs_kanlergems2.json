@@ -1,146 +1,16 @@
-[
-  {
-    "site": "GEMSDOE32",
-    "filename": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
-    "live_score": 0.2778,
-    "peer_dots": 37654,
-    "our_dots_within_3px_of_peer": 0.396638,
-    "peer_dots_within_3px_of_ours": 0.317151,
-    "harmonic_3px_overlap": 0.352469,
-    "continuous_surface_spearman": 0.082264,
-    "final_dots_spearman": 0.019412,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE36",
-    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-    "live_score": 0.275,
-    "peer_dots": 38854,
-    "our_dots_within_3px_of_peer": 0.405614,
-    "peer_dots_within_3px_of_ours": 0.318783,
-    "harmonic_3px_overlap": 0.356995,
-    "continuous_surface_spearman": 0.083196,
-    "final_dots_spearman": 0.019698,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE28",
-    "filename": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
-    "live_score": 0.271,
-    "peer_dots": 37660,
-    "our_dots_within_3px_of_peer": 0.426648,
-    "peer_dots_within_3px_of_ours": 0.332661,
-    "harmonic_3px_overlap": 0.373837,
-    "continuous_surface_spearman": 0.084208,
-    "final_dots_spearman": 0.018366,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE31",
-    "filename": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
-    "live_score": 0.2708,
-    "peer_dots": 40199,
-    "our_dots_within_3px_of_peer": 0.433048,
-    "peer_dots_within_3px_of_ours": 0.335556,
-    "harmonic_3px_overlap": 0.378119,
-    "continuous_surface_spearman": 0.08727,
-    "final_dots_spearman": 0.018312,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE33",
-    "filename": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
-    "live_score": 0.2632,
-    "peer_dots": 41865,
-    "our_dots_within_3px_of_peer": 0.455144,
-    "peer_dots_within_3px_of_ours": 0.345468,
-    "harmonic_3px_overlap": 0.392794,
-    "continuous_surface_spearman": 0.08992,
-    "final_dots_spearman": 0.018045,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE25",
-    "filename": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
-    "live_score": 0.26,
-    "peer_dots": 44090,
-    "our_dots_within_3px_of_peer": 0.470255,
-    "peer_dots_within_3px_of_ours": 0.351554,
-    "harmonic_3px_overlap": 0.402332,
-    "continuous_surface_spearman": 0.094646,
-    "final_dots_spearman": 0.016791,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE30",
-    "filename": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
-    "live_score": 0.26,
-    "peer_dots": 44090,
-    "our_dots_within_3px_of_peer": 0.470255,
-    "peer_dots_within_3px_of_ours": 0.351554,
-    "harmonic_3px_overlap": 0.402332,
-    "continuous_surface_spearman": 0.094646,
-    "final_dots_spearman": 0.016791,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE24",
-    "filename": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
-    "live_score": 0.2477,
-    "peer_dots": 60069,
-    "our_dots_within_3px_of_peer": 0.488846,
-    "peer_dots_within_3px_of_ours": 0.361168,
-    "harmonic_3px_overlap": 0.415418,
-    "continuous_surface_spearman": 0.111934,
-    "final_dots_spearman": 0.020575,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE27",
-    "filename": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
-    "live_score": 0.2449,
-    "peer_dots": 61328,
-    "our_dots_within_3px_of_peer": 0.500345,
-    "peer_dots_within_3px_of_ours": 0.360798,
-    "harmonic_3px_overlap": 0.419265,
-    "continuous_surface_spearman": 0.112215,
-    "final_dots_spearman": 0.020971,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE70 (Independent ML)",
-    "filename": "GEMSDOE70__gems70-p5-dual-submod300-oof38k-20261020.tif",
-    "live_score": 0.2478,
-    "peer_dots": 37654,
-    "our_dots_within_3px_of_peer": 0.436049,
-    "peer_dots_within_3px_of_ours": 0.430021,
-    "harmonic_3px_overlap": 0.433014,
-    "continuous_surface_spearman": 0.093133,
-    "final_dots_spearman": 0.025057,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "GEMSDOE49 (Independent ML)",
-    "filename": "GEMSDOE49__gems49-gate_ortho_w0.25-40k-20261006T213721Z-nan.tif",
-    "live_score": 0.2376,
-    "peer_dots": 40000,
-    "our_dots_within_3px_of_peer": 0.439157,
-    "peer_dots_within_3px_of_ours": 0.358425,
-    "harmonic_3px_overlap": 0.394705,
-    "continuous_surface_spearman": 0.074256,
-    "final_dots_spearman": 0.012501,
-    "passes_all_uniqueness_gates_vs_peer": true
-  },
-  {
-    "site": "19GEMSDOE (H19-5 Ancestor)",
-    "filename": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
-    "live_score": 0.1922,
-    "peer_dots": 60069,
-    "our_dots_within_3px_of_peer": 0.488846,
-    "peer_dots_within_3px_of_ours": 0.361168,
-    "harmonic_3px_overlap": 0.415418,
-    "continuous_surface_spearman": 0.111934,
-    "final_dots_spearman": 0.020575,
-    "passes_all_uniqueness_gates_vs_peer": true
-  }
-]
+{
+  "schema": "kanlergemsdoe2.legacy_focus_overlap_retraction.v1",
+  "status": "WITHDRAWN_AND_SUPERSEDED",
+  "notice": "This legacy cross-site comparison is withdrawn. It used a live_score field for user/owner-reported values without storing organizer-controlled score receipts. Its raster similarity diagnostics are independently superseded by evidence/focus9_submission_audit_20261027.json, and the historical score provenance is documented in evidence/nine_site_audit.json.",
+  "organizer_receipt_present": false,
+  "replacement_evidence": [
+    "evidence/nine_site_audit.json",
+    "evidence/focus9_submission_audit_20261027.json",
+    "docs/data/nine_site_audit.csv"
+  ],
+  "limitations": [
+    "Historical user/owner values are not organizer-confirmed scores.",
+    "Similarity metrics are registry-audit diagnostics, not DTI scores.",
+    "No current public or private leaderboard standings are asserted."
+  ]
+}

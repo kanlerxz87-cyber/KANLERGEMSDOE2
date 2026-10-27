@@ -446,6 +446,11 @@ def project_lli_s3(pred_binary: np.ndarray, foot: np.ndarray, labels: np.ndarray
 
 
 def main() -> int:
+    if (EVID / "fvca_experiments.json").exists():
+        raise SystemExit(
+            "FVCA lane already has a frozen experiment record; reruns are disabled. "
+            "The legacy LLI-S3 projection is withdrawn and must not be reproduced."
+        )
     t0 = time.time()
     EVID.mkdir(parents=True, exist_ok=True)
     meta = json.loads((CACHE / "fvca_stack_meta.json").read_text())

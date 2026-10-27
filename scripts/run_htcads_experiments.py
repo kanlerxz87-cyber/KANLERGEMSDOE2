@@ -318,6 +318,17 @@ def main() -> int:
     wdir = work_dir()
     edir = evidence_dir()
 
+    frozen_experiment_path = edir / "htcads_experiments.json"
+    if frozen_experiment_path.exists():
+        frozen = json.loads(frozen_experiment_path.read_text(encoding="utf-8"))
+        used = int(frozen.get("within_protocol_budget", {}).get("experiments_run", len(frozen.get("experiments", []))))
+        limit = int(frozen.get("within_protocol_budget", {}).get("max_experiments_allowed", 3))
+        if used >= limit:
+            raise SystemExit(
+                f"HTCADS experiment cap exhausted ({used}/{limit}); reruns are disabled. "
+                "Use scripts/evaluate_holdout.py only for a separately authorized evaluation."
+            )
+
     canary_path = edir / "leakage_canary.json"
     if not canary_path.exists():
         raise SystemExit("Missing evidence/leakage_canary.json — run scripts/prepare_data.py first.")
@@ -789,8 +800,9 @@ def main() -> int:
     ts_utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     slug = f"htcads-{best_exp['experiment_id'].lower()}-{best_exp['emitted_dots']}dots"
     note_140 = (
-        f"KANLERGEMS2 {best_exp['name']}: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF "
-        f"({best_exp['emitted_dots']} dots, HR={best_exp['holdout_hide_recover']['pooled_dti']:.4f})"
+        f"HTCADS {best_exp['experiment_id']}; {best_exp['emitted_dots']:,} pixels; "
+        f"HOLDOUT-DTI {best_exp['holdout_hide_recover']['evaluator_version']}; "
+        f"N={best_exp['holdout_hide_recover']['n_withheld_positives']:,}"
     )[:140]
 
     dl_dir = downloads_dir()
@@ -841,7 +853,8 @@ def main() -> int:
             "max_wall_hours_allowed": 2.0,
         },
         "reference_0p2778_benchmark": {
-            "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 ORGANIZER-CONFIRMED)",
+            "name": "GEMSDOE32 historical 0.2778 user/owner-reported value (receipt not verified)",
+            "score_provenance": "USER/OWNER-REPORTED UNVERIFIED; no organizer submission receipt stored",
             "holdout_hide_recover_uncensored_dti": round(ref_hr["pooled_dti"], 6),
             "holdout_hide_recover_ci95": [round(ref_hr["ci95_cluster_bootstrap"][0], 6), round(ref_hr["ci95_cluster_bootstrap"][1], 6)],
             "holdout_sgmc_calibrated_dti": round(ref_sg["sgmc_prevalence_calibrated_dti"], 6),
@@ -924,14 +937,22 @@ def main() -> int:
     )
     validator_output = json.loads(val_json_path.read_text(encoding="utf-8"))
     run_card["validator_output"] = validator_output
-    run_card["ok_to_download_and_submit"] = bool(validator_output["validated_ok_to_download_and_submit"])
+    run_card["status"] = validator_output["status"]
     run_card["verdict"] = validator_output["verdict"]
+    run_card["verdict_scope"] = validator_output["verdict_scope"]
+    run_card["ok_to_download"] = validator_output["status"]["download"] == "OK_TO_DOWNLOAD"
+    run_card["authorized_to_submit"] = validator_output["status"]["submission_authorization"] == "AUTHORIZED"
 
     run_card_path.write_text(json.dumps(run_card, indent=2) + "\n", encoding="utf-8")
     (dl_dir / "run_card.json").write_text(json.dumps(run_card, indent=2) + "\n", encoding="utf-8")
 
     print("\n" + "=" * 78)
-    print(f"[HTCADS] FINAL VERDICT: {run_card['verdict'].upper()} | OK TO DOWNLOAD & SUBMIT: {run_card['ok_to_download_and_submit']}")
+    print(
+        f"[HTCADS] FINAL VERDICT: {run_card['verdict'].upper()} | "
+        f"DOWNLOAD: {validator_output['status']['download']} | "
+        f"SELECTOR: {validator_output['status']['selector_eligibility']} | "
+        f"SUBMISSION: {validator_output['status']['submission_authorization']}"
+    )
     print(f"[HTCADS] Selected: {best_exp['experiment_id']} ({best_exp['name']}) -> {tif_name}")
     print(f"[HTCADS] SHA-256 : {tif_sha}")
     print(f"[HTCADS] Note ({len(note_140)}/140 chars): {note_140}")

@@ -41,37 +41,42 @@ def test_tversky_metric_soft_and_binary_equivalence() -> None:
     assert score_soft > 0.05
 
 
-def test_forensic_02778_linear_tversky_inversion() -> None:
-    """Verify exact R^2 > 0.998 linear 1/DTI(N) collar-pruning proof of 0.2778."""
-    n_dots = np.array([44090.0, 40199.0, 37654.0])
-    live_dti = np.array([0.2600, 0.2708, 0.2778])
-    inv = 1.0 / live_dti
-    slope, intercept = np.polyfit(n_dots, inv, 1)
-    pred = intercept + slope * n_dots
-    r2 = 1.0 - float(np.sum((inv - pred) ** 2) / np.sum((inv - inv.mean()) ** 2))
-    assert r2 > 0.998
-    tp_w = 0.2 / slope
-    k_hidden = intercept * tp_w / 0.8
-    assert 5000.0 <= tp_w <= 5300.0
-    assert 13000.0 <= k_hidden <= 14500.0
+def test_02778_provenance_and_non_identifiability() -> None:
+    """Keep the historical 0.2778 claim unverified and reject the old 3-point inversion."""
+    audit = json.loads((ROOT / "evidence" / "nine_site_audit.json").read_text(encoding="utf-8"))
+    claim = audit["gemSdoe32_analysis"]
+    assert claim["reported_score"] == 0.2778
+    assert claim["score_label"].startswith("USER/OWNER-REPORTED UNVERIFIED")
+    assert "not organizer-confirmed" in claim["score_label"]
+    assert any("not identify weighted TP" in item for item in claim["limits"])
+    assert audit["score_provenance"]["organizer_receipt_present"] is False
+    assert not any(key in claim for key in ("inferred_hidden_truth_k_px", "inferred_invariant_tp_w_px"))
 
 
 def test_promoted_geotiff_and_zip_portal_safety() -> None:
-    """Verify Gate 1: promoted GeoTIFF & zip match sample_submission.tif, [0, 1], 0 NaNs, 0 catalogue px."""
+    """Verify artifact safety, selector eligibility, and submission authorization separately."""
     rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
     val = json.loads((ROOT / "evidence" / "validator_receipt.json").read_text(encoding="utf-8"))
 
     assert rc["verdict"] == "promote"
-    assert rc["ok_to_download_and_submit"] is True
-    assert val["validated_ok_to_download_and_submit"] is True
-    assert val["human_intervention_required"] is False
+    assert "separate live-slot selector only" in rc["verdict_scope"]
+    assert "not upload authorization" in rc["verdict_scope"]
+    assert rc["status"]["format_safe"] is True
+    assert rc["status"]["ok_to_download"] is True
+    assert rc["status"]["selector_eligible"] is True
+    assert rc["status"]["authorized_to_submit"] is False
+    assert val["status"]["format_validation"] == "FORMAT_SAFE"
+    assert val["status"]["download"] == "OK_TO_DOWNLOAD"
+    assert val["status"]["selector_eligibility"] == "ELIGIBLE"
+    assert val["status"]["submission_authorization"] == "NOT_AUTHORIZED"
+    assert val["live_submission_requires_separate_user_action"] is True
     assert all(val["gates"].values())
 
     tif_path = ROOT / "docs" / "downloads" / rc["submission_filename"]
     zip_path = ROOT / "docs" / "downloads" / rc["zip_filename"]
     assert tif_path.exists()
     assert zip_path.exists()
-    assert _sha256(tif_path) == rc["raster_sha256"] == val["raster_sha256"]
+    assert _sha256(tif_path) == rc["raster_sha256"] == val["candidate_sha256"]
     assert _sha256(zip_path) == rc["zip_sha256"]
 
     with zipfile.ZipFile(zip_path, "r") as zf:

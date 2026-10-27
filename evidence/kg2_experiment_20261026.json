@@ -4290,7 +4290,13 @@
             "hard_requirement": false
           }
         }
-      }
+      },
+      "validated_ok_to_download_and_submit": false,
+      "submission_authorization": "NOT_AUTHORIZED",
+      "live_slot_selected": false,
+      "live_submission_performed": false,
+      "organizer_receipt_present": false,
+      "verdict_scope": "Historical KG2 artifact decision only; promote to separate selector eligibility is not live-slot selection or submission authorization."
     },
     "spatial_regime_diagnostics": {
       "min_dist_to_catalogue_px": 2.2361,
@@ -4308,9 +4314,24 @@
     "experiments_used": 3,
     "budget_max_experiments": 3,
     "ok_to_download": true,
-    "ok_to_submit": true,
+    "ok_to_submit": false,
     "weekly_slot_spent_automatically": false,
-    "verdict": "promote"
+    "verdict": "promote",
+    "authorized_to_submit": false,
+    "selector_eligible": true,
+    "live_slot_selected": false,
+    "live_submission_performed": false,
+    "organizer_receipt_present": false,
+    "status": {
+      "format_safe": true,
+      "ok_to_download": true,
+      "selector_eligible": true,
+      "authorized_to_submit": false,
+      "live_slot_selected": false,
+      "live_submission_performed": false,
+      "organizer_receipt_present": false
+    },
+    "verdict_scope": "Historical KG2 artifact decision only; promote to separate selector eligibility is not live-slot selection or submission authorization."
   },
   "stage3_elapsed_seconds": 317.33
 }

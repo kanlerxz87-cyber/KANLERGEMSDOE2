@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import subprocess
@@ -18,10 +19,10 @@ from gems import footprint, metric  # noqa: E402
 from gems.validator import sha256_file  # noqa: E402
 
 
-def test_geotiff_strict_competition_compliance_without_human_intervention() -> None:
+def test_geotiff_strict_format_and_range_compliance() -> None:
     card = json.loads((ROOT / "run_card.json").read_text())
     tif_path = ROOT / "docs/downloads" / card["submission_filename"]
-    zip_path = ROOT / "docs/downloads" / card["zip_artifact"]
+    zip_path = ROOT / "docs/downloads" / card["zip_filename"]
     assert tif_path.exists(), f"Missing GeoTIFF: {tif_path}"
     assert zip_path.exists(), f"Missing ZIP: {zip_path}"
     assert sha256_file(tif_path) == card["raster_sha256"]
@@ -59,11 +60,14 @@ def test_geotiff_strict_competition_compliance_without_human_intervention() -> N
     assert hashlib.sha256(raw_bytes).hexdigest() == card["raster_sha256"]
 
 
-def test_run_card_and_parallel_run_protocol_gates() -> None:
-    card = json.loads((ROOT / "run_card.json").read_text())
-    card_ev = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
-    card_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
-    assert card == card_ev == card_docs
+def test_run_cards_and_parallel_run_protocol_gates() -> None:
+    card = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
+    card_docs = json.loads((ROOT / "docs/data/kg2_run_card_20261026.json").read_text())
+    active = json.loads((ROOT / "evidence/run_card.json").read_text())
+    active_root = json.loads((ROOT / "run_card.json").read_text())
+    active_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
+    assert card == card_docs
+    assert active == active_root == active_docs
 
     required = {
         "hypothesis",
@@ -72,18 +76,31 @@ def test_run_card_and_parallel_run_protocol_gates() -> None:
         "holdout_dti",
         "correlation_overlap_vs_registry",
         "raster_sha256",
-        "validator_output",
         "submission_name",
         "submission_note",
         "verdict",
+        "status",
     }
     assert required.issubset(card.keys())
     assert card["verdict"] in {"promote", "negative"}
     assert len(card["submission_note"]) <= 140
     assert card["experiments_used"] <= card["budget_max_experiments"] <= 3
     assert card["weekly_slot_spent_automatically"] is False
+    assert card["status"]["authorized_to_submit"] is False
+    assert card["status"]["live_slot_selected"] is False
+    assert active["status"]["authorized_to_submit"] is False
+    assert active["status"]["ok_to_download"] is True
+    assert active["status"]["selector_eligible"] is True
 
-    # Gate 1: Uniqueness BOTH pre-placement continuous surface AND post-placement final dots
+    # The historical KG2 lane remains separate and cannot claim submission authorization.
+    kg2_legacy = json.loads((ROOT / "evidence/kg2_experiment_20261026.json").read_text())["run_card"]
+    assert kg2_legacy["status"]["selector_eligible"] is True
+    assert kg2_legacy["status"]["authorized_to_submit"] is False
+    assert kg2_legacy["ok_to_submit"] is False
+    assert kg2_legacy["live_slot_selected"] is False
+    assert json.loads((ROOT / "docs/downloads/htcads_run_card.json").read_text()) == active
+
+    # Gate 1: archival full-registry record; current focus-nine final dots are separately rechecked.
     uniq = card["correlation_overlap_vs_registry"]
     assert uniq["rasters_checked"] == 360
     assert uniq["competing_detectors_checked"] == 359
@@ -119,11 +136,22 @@ def test_c2st_ben_david_and_nine_site_receipts() -> None:
     assert bd["source_domain"]["pixels"] + bd["target_domain"]["pixels"] == 5_167_373
     assert bd["empirical_proxy_d_HDeltaH"]["quantile_aligned_10m_dem_and_geophysics"] < 0.1
 
-    nine = json.loads((ROOT / "docs/data/nine_site_summary_20261026.json").read_text())
-    assert len(nine["executive_table"]) == 10
-    for row in nine["executive_table"]:
-        assert len(row["sha256"]) == 64
-        assert "NEVER A SCORE" in row["quarantined_projection"] or "owner-reported" in row["quarantined_projection"]
+    withdrawn = json.loads((ROOT / "docs/data/nine_site_summary_20261026.json").read_text())
+    assert withdrawn["status"] == "SUPERSEDED_AND_WITHDRAWN"
+    assert withdrawn["organizer_receipt_present"] is False
+    assert "withdrawn" in withdrawn["notice"].lower()
+
+    nine = json.loads((ROOT / "evidence/nine_site_audit.json").read_text())
+    assert len(nine["focus_9_sites"]) == 9
+    assert nine["score_provenance"]["organizer_receipt_present"] is False
+    assert all("UNVERIFIED" in row["reported_score_label"] for row in nine["focus_9_sites"])
+    with (ROOT / "docs/data/nine_site_audit.csv").open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 9
+    assert all(row["organizer_receipt_present"] == "false" for row in rows)
+    assert all("UNVERIFIED" in row["score_provenance"] for row in rows)
+    legacy_csv = list(csv.DictReader((ROOT / "docs/data/nine_site_summary_20261026.csv").open(newline="", encoding="utf-8")))
+    assert len(legacy_csv) == 1 and legacy_csv[0]["status"] == "WITHDRAWN"
 
 
 def test_dti_tversky_metric_algebra() -> None:
@@ -138,7 +166,28 @@ def test_dti_tversky_metric_algebra() -> None:
     assert np.isclose(res["dti"], expected, atol=1e-6)
 
 
-def test_evaluate_holdout_cli_verify_kg2() -> None:
+def test_exhausted_experiment_lanes_refuse_reruns() -> None:
+    commands = [
+        ([sys.executable, str(ROOT / "scripts/run_htcads_experiments.py")], "experiment cap exhausted"),
+        ([sys.executable, str(ROOT / "scripts/run_kg2_lane.py"), "--stage", "holdout_experiments"], "experiment cap exhausted"),
+        ([sys.executable, str(ROOT / "scripts/run_fvca_experiments.py")], "reruns are disabled"),
+    ]
+    for command, expected in commands:
+        proc = subprocess.run(command, capture_output=True, text=True, check=False)
+        assert proc.returncode != 0
+        assert expected in (proc.stdout + proc.stderr).lower()
+
+
+def test_evaluate_holdout_requires_explicit_candidate_and_verify_is_read_only() -> None:
+    no_candidate = subprocess.run(
+        [sys.executable, str(ROOT / "scripts/evaluate_holdout.py")],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert no_candidate.returncode == 2
+    assert "candidate" in no_candidate.stderr.lower()
+
     proc = subprocess.run(
         [sys.executable, str(ROOT / "scripts/evaluate_holdout.py"), "--verify-kg2"],
         capture_output=True,
@@ -147,6 +196,10 @@ def test_evaluate_holdout_cli_verify_kg2() -> None:
     )
     out = json.loads(proc.stdout)
     assert out["verified"] is True
+    assert out["verification_scope"].startswith("Read-only integrity verification")
     assert out["ok_to_download"] is True
-    assert out["ok_to_submit"] is True
+    assert out["authorized_to_submit"] is False
+    assert out["live_slot_selected"] is False
+    assert out["live_submission_performed"] is False
+    assert "ok_to_submit" not in out
     assert out["verdict"] == "promote"

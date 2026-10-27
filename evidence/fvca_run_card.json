@@ -68,7 +68,7 @@
       0.18343
     ],
     "fold_local_features": true,
-    "baseline_id": "BASE_CHAMP_D28_VISB2 (0.2778 champion fold-local proxy)",
+    "baseline_id": "BASE_CHAMP_D28_VISB2 (fold-local holdout comparator; 0.2778 is an unverified owner claim, not the holdout score)",
     "baseline_dti": 0.16163,
     "paired_delta_dti": 0.007649,
     "paired_improvement_ci95": [
@@ -163,15 +163,9 @@
     }
   ],
   "lli_s3_projection": {
-    "evidence_class": "PROJECTION \u2014 NOT A SCORE (LLI-S3 calibrated on 111 owner-reported live rasters)",
-    "instrument": "LLI-S3 (GEMSDOE32 ledger_inversion.py)",
-    "projected_dti": 0.07277,
-    "loo_mae": 0.02195,
-    "loo_spearman": 0.92672,
-    "expected_tp_w": 1622.7,
-    "expected_fp_w": 37852.8,
-    "expected_fn_w": 16381.6,
-    "implied_truth_px": 18004.3
+    "status": "RETRACTED_AND_QUARANTINED",
+    "reason": "The live-ledger inversion relied on user/owner-reported score anchors and unvalidated transfer/approximation assumptions. No numerical projection or inferred hidden-set TP/FP/FN quantity is retained as evidence.",
+    "replacement": "No organizer receipt is available; use labeled spatial HOLDOUT-DTI only for internal evidence."
   },
   "validator": {
     "single_band": true,
@@ -205,5 +199,15 @@
       "dots.max_overlap_3px: missing, invalid, or duplicate",
       "No positive paired 95% CI against current holdout best"
     ]
-  }
+  },
+  "status": {
+    "format_safe": true,
+    "ok_to_download": true,
+    "selector_eligible": false,
+    "authorized_to_submit": false,
+    "live_slot_selected": false,
+    "live_submission_performed": false,
+    "organizer_receipt_present": false
+  },
+  "verdict_scope": "Negative research-lane selector result; format validation does not override registry-uniqueness/holdout failures and grants no live authorization."
 }

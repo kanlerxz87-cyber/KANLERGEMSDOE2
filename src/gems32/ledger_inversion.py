@@ -1,43 +1,9 @@
-"""Live-Ledger Inversion (LLI): estimate the hidden public-truth density by feature stratum from the
-owner-reported live scores of many different rasters, and project the live DTI of a new raster.
+"""Deprecated, quarantined exploratory live-ledger inversion.
 
-Why this instrument exists
---------------------------
-Every local holdout in this repository draws its truth from a published catalogue (USGS/INGENIOUS or
-SGMC).  The organisers mask the catalogue out of scoring and score *new*, expert-mapped faults, so
-those holdouts measure a different population; the repository has documented live counter-examples
-(SGMC-tracing files scoring 0.56-0.65 locally and ~0.05 live).  The only measurements of the hidden
-scoring population are the live scores themselves.  This module turns them into a calibrated model.
-
-Exact identity used
--------------------
-For a prediction field ``p`` (masked to the scored domain = footprint minus catalogue pixels) and a
-hidden binary truth ``g`` with per-pixel inclusion probability ``pi(y)``:
-
-* ``E[TP_w] = sum_y pi(y) * K_p(y)``, with ``K_p(y) = max_x p(x) k(d(x,y))``  (exact, linearity)
-* ``E[|G|]  = sum_y pi(y)``                                                 (exact)
-* ``E[M]    ~ (1/3) sum_y pi(y) * C_p(y)``, with ``C_p(y) = sum_x p(x) k(d(x,y))``
-  (``M = sum_x p(x) max_g k`` is the prediction-side matched mass; the factor 1/3 is the exact ratio
-  of the max to the sum of kernel weights for a straight 1-px truth line through a prediction at
-  distance 0 and is within +-12% for distances 1-2 px.  ``M`` enters the DTI denominator only with
-  weight 0.2, so this approximation moves projected scores by well under 0.002.)
-* ``FP_w = N - M`` with ``N = sum_x p(x)``; ``FN_w = |G| - TP_w``.
-
-With ``pi`` constant on strata ``S_k`` (``pi = lambda_k``) each observed score ``s`` gives one linear
-equation in ``lambda``::
-
-    sum_k lambda_k [A_k (1 - 0.2 s) + 0.2 s B_k - 0.8 s |S_k|] = 0.2 s N
-
-where ``A_k = sum_{y in S_k} K_p(y)`` and ``B_k = (1/3) sum_{y in S_k} C_p(y)``.
-
-Strata are defined only by *features* (distance to catalogue, distance to a reference ridge network,
-slope, LiDAR scarp strength, SGMC proximity) -- never by location -- so a fitted density transfers to
-the private chunks to the extent the feature/truth relation is stationary.  The model is
-``log lambda_k = theta_0 + sum_f theta_f[level_f(k)]`` (log-additive, reference level 0 per factor),
-fitted by bounded least squares on the predicted-vs-observed DTI.  Validation is leave-one-out and
-leave-one-family-out prediction of live scores; projections must quote that empirical error.
-
-Every number this module produces about a new raster is a PROJECTION, not a score.
+This module fitted a private-truth model to user/owner-reported scores and made strong
+stationarity/kernel-approximation assumptions that were not independently validated. No
+organizer receipt, score projection, hidden-set estimate, or implied TP/FP/FN result from
+this module is accepted as evidence. The public projection API intentionally raises.
 """
 from __future__ import annotations
 
@@ -152,7 +118,7 @@ def predict_components(A: np.ndarray, B: np.ndarray, N: np.ndarray, sizes: np.nd
 
 def fit(A: np.ndarray, B: np.ndarray, N: np.ndarray, s: np.ndarray, spec: StrataSpec,
         ridge: float = 1e-3, weights: np.ndarray | None = None, theta0: np.ndarray | None = None) -> dict:
-    """Bounded least squares of predicted vs observed live DTI for the log-additive stratum model."""
+    """Legacy fit to unverified owner-reported values; retained only for archival reproducibility."""
     sizes = spec.sizes
     w = np.ones_like(s) if weights is None else np.asarray(weights, float)
     sw = np.sqrt(w)
@@ -196,7 +162,7 @@ def factor_effects(theta: np.ndarray, spec: StrataSpec) -> dict:
 
 
 def loo(A, B, N, s, spec, groups: np.ndarray | None = None, ridge: float = 1e-3, theta0=None) -> dict:
-    """Leave-one-out (or leave-one-group-out) live-score prediction."""
+    """Legacy leave-one-out fit diagnostic; not evidence about organizer scores."""
     n = len(s)
     groups = np.arange(n) if groups is None else np.asarray(groups)
     pred = np.full(n, np.nan)
@@ -214,11 +180,11 @@ def loo(A, B, N, s, spec, groups: np.ndarray | None = None, ridge: float = 1e-3,
 
 
 def project(row: dict, spec: StrataSpec, lam: np.ndarray) -> dict:
-    A = row["A"][None, :]
-    B = row["B"][None, :]
-    N = np.array([row["N"]])
-    c = predict_components(A, B, N, spec.sizes, lam)
-    return {k: (float(v[0]) if isinstance(v, np.ndarray) else float(v)) for k, v in c.items()}
+    """Disabled: legacy ledger-derived estimates are not verified score evidence."""
+    raise RuntimeError(
+        "LLI-S3 score projection disabled: its owner-reported anchors and transfer assumptions "
+        "were not independently validated. Use an organizer receipt or a labeled HOLDOUT-DTI."
+    )
 
 
 # ------------------------------------------------------------------------------------------------
