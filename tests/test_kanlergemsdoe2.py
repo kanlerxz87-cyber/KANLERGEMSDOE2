@@ -57,8 +57,17 @@ def test_forensic_02778_linear_tversky_inversion() -> None:
 
 
 def test_promoted_geotiff_and_zip_portal_safety() -> None:
-    """Verify Gate 1: promoted GeoTIFF & zip match sample_submission.tif, [0, 1], 0 NaNs, 0 catalogue px."""
-    rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
+    """Verify Gate 1 on BOTH the new 2026-10-27 DARP-MT10 GeoTIFF & archived HTCADS GeoTIFF."""
+    rc_new = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
+    val_new = json.loads((ROOT / "evidence" / "darp_validator_receipt_20261027.json").read_text(encoding="utf-8"))
+    assert rc_new["verdict"] == "negative"
+    assert rc_new["ok_to_download_for_research"] is True
+    assert rc_new["ok_to_download_and_submit"] is False
+    assert val_new["validated_ok_to_download_for_research"] is True
+    assert val_new["validated_ok_to_download_and_submit"] is False
+    assert val_new["human_intervention_required"] is False
+
+    rc = json.loads((ROOT / "evidence" / "htcads_run_card_20261026.json").read_text(encoding="utf-8"))
     val = json.loads((ROOT / "evidence" / "validator_receipt.json").read_text(encoding="utf-8"))
 
     assert rc["verdict"] == "promote"
@@ -118,7 +127,7 @@ def test_rule4_leakage_canary_and_rule1_uniqueness_and_rule6_budget() -> None:
     assert canary["total_features_tested"] == 50
     assert canary["max_single_feature_auc"] <= 0.90
 
-    rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
+    rc = json.loads((ROOT / "evidence" / "htcads_run_card_20261026.json").read_text(encoding="utf-8"))
     reg = rc["registry_comparison"]
     assert reg["passed"] is True
     assert reg["unique_rasters_checked"] >= 190
@@ -143,7 +152,7 @@ def test_rule4_leakage_canary_and_rule1_uniqueness_and_rule6_budget() -> None:
 def test_github_pages_and_markdown_integrity() -> None:
     """Verify all HTML pages, local links/assets, README prompt preservation, and Core Values."""
     docs = ROOT / "docs"
-    for page in ["index.html", "executive-summary.html", "research.html", "irregularities.html"]:
+    for page in ["index.html", "executive-summary.html", "submission-table.html", "research.html", "irregularities.html", "audit-review.html"]:
         p = docs / page
         assert p.exists(), f"Missing {page}"
         html_txt = p.read_text(encoding="utf-8")

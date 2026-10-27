@@ -64,12 +64,36 @@ def main():
         help="Verify recorded KG2-MGHV receipts, Run Card, and GeoTIFF/ZIP hashes",
     )
     parser.add_argument(
+        "--verify-darp",
+        action="store_true",
+        help="Verify recorded 2026-10-27 DARP-MT10 unified Run Card, canary, and GeoTIFF/ZIP hashes",
+    )
+    parser.add_argument(
         "--work-dir",
         type=Path,
         default=Path("/tmp/gems_work"),
         help="Scratch directory outside tracked workspace for memmaps",
     )
     args = parser.parse_args()
+    if args.verify_darp:
+        c_root = json.loads((ROOT / "run_card.json").read_text())
+        c_ev = json.loads((ROOT / "evidence/run_card.json").read_text())
+        c_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
+        assert c_root == c_ev == c_docs, "Unified run_card.json mismatch across paths"
+        tif_p = ROOT / "docs/downloads" / c_root["submission_filename"]
+        zip_p = ROOT / "docs/downloads" / c_root["zip_filename"]
+        assert sha256_file(tif_p) == c_root["raster_sha256"], "DARP GeoTIFF hash mismatch"
+        assert sha256_file(zip_p) == c_root["zip_sha256"], "DARP ZIP hash mismatch"
+        print(json.dumps({
+            "verified": True,
+            "lane": "DARP-MT10-20261027",
+            "submission_filename": c_root["submission_filename"],
+            "raster_sha256": c_root["raster_sha256"],
+            "verdict": c_root["verdict"],
+            "ok_to_download_for_research": c_root["ok_to_download_for_research"],
+            "ok_to_download_and_submit": c_root["ok_to_download_and_submit"],
+        }, indent=2))
+        return
     if args.verify_kg2:
         from run_kg2_lane import verify_recorded
 

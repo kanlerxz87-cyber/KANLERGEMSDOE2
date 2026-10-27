@@ -79,6 +79,12 @@ a:hover {
   font-weight: 700;
 }
 
+.brand-badge.neg {
+  background: var(--danger-bg);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.55);
+}
+
 .nav-links {
   display: flex;
   flex-wrap: wrap;
@@ -143,6 +149,11 @@ a:hover {
   text-transform: uppercase;
   background: var(--emerald);
   color: #04130d;
+}
+
+.gate-banner.fail .status-pill {
+  background: var(--danger);
+  color: #ffffff;
 }
 
 .btn-row {

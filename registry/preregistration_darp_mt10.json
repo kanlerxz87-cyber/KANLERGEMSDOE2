@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.1",
+  "lane_id": "KANLERGEMSDOE2-DARP-MT10-20261027",
+  "frozen_at_utc": "2026-10-27T00:10:00Z",
+  "branch": "arena/74efd1af-kanlergemsdoe2",
+  "preregistration_markdown": "knowledge/02_preregistered_hypotheses_kg2_20261027.md",
+  "selected_hypothesis": "H-N1 (DARP-MT10)",
+  "folded_hypotheses": ["H-N2 (CVT-EULER)", "H-N3 (PIED-DINKELBACH)"],
+  "deferred_hypotheses": ["H-N4 (ASTER-SILICA-OH)", "H-N5 (OPERA-INSAR-PORO)"],
+  "ranked_hypotheses_pre_implementation": [
+    {
+      "rank": 1,
+      "id": "H-N1",
+      "title": "Depth-Adaptive Multi-Horizon Updip Potential-Field, Asymmetric MT & Seamless 10m-3m-1m Piedmont Synthesis (DARP-MT10)",
+      "exact_layers": [
+        "training_features.tif Bands 2 (rtp), 11 (iso_grav_anom_vg), 12 (det_elev), 13 (iso_grav_anom), 15 (depth_to_base_surf), 17 (cond_surf), 19 (det_elev_slope)",
+        "dem10/dem10_piedmont_features_u8.tif + external/dem3m_scarp_features_u8.tif + external/lidar_scarp_features_u8.tif (100% footprint coverage across 24.60% 1m-LiDAR void)",
+        "external/usgs_comcat_earthquakes.csv (depth <= 12 km) + external/sb_slip_tendency_in_footprint.csv (10 km smooth Shmin/Aphi only) + external/{usgs,sb,gdr}_heatflow_points.csv"
+      ],
+      "physical_signature_and_transform": "Multi-horizon FFT upward continuation (0, 150, 450, 1000 m) of isostatic gravity & RTP projected updip by delta_x(x,y) = clip(0.55 * Z_b(x,y) * cot(58 deg), 0.5, 6.5) px onto surface emergence, multiplied by signed cross-strike HW-minus-FW MT clay-cap seal asymmetry, seamless 10m+3m+1m contour-orthogonal piedmont scarp break, and 10km dilation tendency x shallow ComCat seismicity.",
+      "why_missing_from_catalogue": "USGS/INGENIOUS Qfaults map subaerial range-front scarps inside 1m LiDAR swaths; concealed piedmont step-over faults under 250-1200 m of alluvial fan gravel or inside the 24.60% 1m-LiDAR void lack continuous airphoto scarps.",
+      "novelty_vs_repo_and_fleet": "Prior HTCADS used fixed 400 m continuation without RTP updip shift, symmetric |nabla log sigma| MT magnitude, zero ComCat seismicity, and zero 10m/3m DEM bridging across the 24.60% 1m-LiDAR void.",
+      "expected_dti_gain_vs_cost": {
+        "expected_holdout_dti_lift": "+0.015 to +0.040 on C-PIED-v1.0; +0.008 to +0.018 target on HIDE-RECOVER (prior hypothesis estimate, not a score)",
+        "compute_cost": "~16 min wall clock on 2 CPU cores / 3.8 GiB RAM"
+      },
+      "obtainable_in_sandbox": true,
+      "official_external_data": "USGS 3DEP 10m/3m/1m DEMs, USGS ComCat ANSS catalog, USGS ScienceBase Great Basin stress/heatflow, DOE GDR #1391 (mirrored & SHA-256 verified in registry/data_manifest.json)."
+    },
+    {
+      "rank": 2,
+      "id": "H-N2",
+      "title": "True Potential-Field Miller-Singh Tilt-Angle Contact Wavenumber & Depth-Consistency Filter (CVT-EULER)",
+      "exact_layers": [
+        "training_features.tif Bands 2 (rtp), 3 (rtp_hd), 11 (iso_grav_anom_vg), 13 (iso_grav_anom), 15 (depth_to_base_surf)"
+      ],
+      "physical_signature_and_transform": "Computes genuine magnetic tilt angle theta_mag = atan2(VVD(rtp), HGM(rtp)) via exact 2D FFT vertical derivative k*F(rtp) (fixing IR-HTCADS-TC-05 Band 6 misuse), extracts Salem et al. (2007) contact wavenumber K_tilt = |nabla theta_mag| peaking at subvertical contacts (z_c = 1/K_tilt), and gates by sediment cover compatibility.",
+      "why_missing_from_catalogue": "Sub-alluvial volcanic/intrusive fault juxtapositions produce zero surface scarp where buried under Holocene wash.",
+      "novelty_vs_repo_and_fleet": "Fixes IR-HTCADS-TC-05 Band 6 terrain-correction misread and aligns magnetic contact wavenumbers with gravity upward-continuation crests (core transform folded into H-N1).",
+      "expected_dti_gain_vs_cost": {
+        "expected_holdout_dti_lift": "+0.004 to +0.010 HOLDOUT-DTI",
+        "compute_cost": "~2 min FFT compute"
+      },
+      "obtainable_in_sandbox": true,
+      "official_external_data": "Derived strictly from USGS GeoDAWN / INGENIOUS potential-field grids in training_features.tif."
+    },
+    {
+      "rank": 3,
+      "id": "H-N3",
+      "title": "Dinkelbach Fractional-Programming Optimal Cardinality & Kinematic Tip-Cone Collar Allocation (PIED-DINKELBACH)",
+      "exact_layers": [
+        "existing_faults.tif (fold-visible catalogue skeleton only)",
+        "Continuous out-of-quadrant fault probability surface p(x,y)"
+      ],
+      "physical_signature_and_transform": "Replaces fixed K = 37,654 dot cap and uniform B = 2.0 px collar with Dinkelbach fractional stopping Delta_cov(e) > 0.2 * DTI* / (1 - 0.8 * DTI*) plus anisotropic tip-cone collar (d_vis > 1.65 px inside |cos(theta - theta_tip)| >= cos(28 deg), d_vis > 2.15 px along strike flanks).",
+      "why_missing_from_catalogue": "Unmapped fault horsetail splay tips and en-echelon relay ramps nucleate 150-250 m ahead of mapped terminations while broad parallel flanks are digitization shadows.",
+      "novelty_vs_repo_and_fleet": "Tested cleanly in DARP-EXP-3 (39,674 dots); exact fractional stopping vs fixed 37,654 dot cap.",
+      "expected_dti_gain_vs_cost": {
+        "expected_holdout_dti_lift": "+0.002 to +0.006 HOLDOUT-DTI",
+        "compute_cost": "~1 min CELF pass"
+      },
+      "obtainable_in_sandbox": true,
+      "official_external_data": "Competition evaluation geometry (OS-1, alpha=0.2, beta=0.8, 300 m kernel)."
+    },
+    {
+      "rank": 4,
+      "id": "H-N4",
+      "title": "ASTER TIR Silica/Chalcedony Sinter & SWIR Al-OH / Clay-Alteration Lineament Mapping",
+      "exact_layers": [
+        "NASA LP DAAC AST_05 / AST_07XT TIR Quartz/Silica Index (B13/B10) and SWIR Al-OH/Kaolinite/Alunite ratios (B4, B6, B7, B8)"
+      ],
+      "physical_signature_and_transform": "Linear argillic clay alteration and opaline/chalcedonic sinter aprons precipitated by paleo- and active boiling geothermal fluids ascending along blind range-bounding and intrabasin faults.",
+      "why_missing_from_catalogue": "Hydrothermal alteration zones without topographic scarp relief are omitted from airphoto Quaternary tectonic fault compilations.",
+      "novelty_vs_repo_and_fleet": "Orthogonal mineralogical spectroscopy beyond airborne K/U/Th radiometrics.",
+      "expected_dti_gain_vs_cost": {
+        "expected_holdout_dti_lift": "+0.006 to +0.015 HOLDOUT-DTI (prior estimate)",
+        "compute_cost": "Medium (~45 min mosaic & cloud-masking)"
+      },
+      "obtainable_in_sandbox": false,
+      "official_external_data": "Blocked in this sandbox by outbound host allowlist (e4ftl01.cr.usgs.gov / earthdata.nasa.gov unreachable; verified empirically)."
+    },
+    {
+      "rank": 5,
+      "id": "H-N5",
+      "title": "NASA/JPL OPERA Sentinel-1 InSAR Poroelastic Groundwater-Barrier Phase-Gradient Edge Detection",
+      "exact_layers": [
+        "NASA ASF DAAC OPERA L3_DISP_S1 secular LOS velocity & seasonal vertical amplitude"
+      ],
+      "physical_signature_and_transform": "Clay-gouge fault cores act as low-permeability hydraulic aquitards across flat Quaternary basins, producing sharp 5-15 mm/yr seasonal InSAR phase-gradient steps across zero-relief playas.",
+      "why_missing_from_catalogue": "Zero-relief basin-interior aquitard faults are invisible to optical imagery and 1 m LiDAR hillshades.",
+      "novelty_vs_repo_and_fleet": "Direct geodetic deformation measurement across the 24.60% 1 m LiDAR void.",
+      "expected_dti_gain_vs_cost": {
+        "expected_holdout_dti_lift": "+0.010 to +0.025 HOLDOUT-DTI (prior estimate)",
+        "compute_cost": "High (~60+ min multi-frame stitching)"
+      },
+      "obtainable_in_sandbox": false,
+      "official_external_data": "Blocked in this sandbox by outbound host allowlist (asf.alaska.edu unreachable; verified empirically)."
+    }
+  ],
+  "named_non_fault_mimics": [
+    "Symmetric interior saline playa brines (Humboldt Sink / Carson Sink) mimicking MT fault-seal anomalies",
+    "Quaternary pluvial Lake Lahontan wave-cut shorelines (~1270 m and ~1330 m elevations) mimicking piedmont fault scarps",
+    "Highway, railroad, and canal earthwork embankments (<= 90 m from TIGER roads) mimicking 1 m / 3 m LiDAR scarps",
+    "High-relief Mesozoic range-crest bedrock thrusts and intact volcanic flow edges mimicking active extensional faults"
+  ],
+  "planned_experiments": [
+    {
+      "id": "DARP-EXP-1",
+      "name": "DARP-SubsurfUpdip-MT-SeismoThermal",
+      "description": "100% topo-scarp-blind depth-adaptive updip gravity/RTP + true tilt wavenumber + asymmetric MT clay-cap baffle + 10km Shmin/Aphi x shallow ComCat + heat-flow/GDR upflow + 300m CELF (37,654 dots, B=2.0 px)"
+    },
+    {
+      "id": "DARP-EXP-2",
+      "name": "DARP-MT10-SeamlessPiedmont-TriRegime",
+      "description": "Full DARP-MT10 fusing seamless 10 m + 3 m + 1 m contour-orthogonal piedmont scarps across 100% of the footprint (bridging the 24.60% 1 m LiDAR void) via Tri-Regime Noisy-OR + 300m CELF (37,654 dots, B=2.0 px)"
+    },
+    {
+      "id": "DARP-EXP-3",
+      "name": "DARP-MT10-Dinkelbach-TipCone",
+      "description": "DARP-MT10 with exact Dinkelbach fractional-programming marginal gain stopping + kinematic tip-cone collar (d_vis > 1.65 px in tip cones, d_vis > 2.15 px on flanks)"
+    }
+  ],
+  "budget": {
+    "max_experiments": 3,
+    "max_wall_hours": 2.0,
+    "live_drivendata_slots_spent": 0
+  },
+  "gates": {
+    "max_single_feature_canary_auc": 0.90,
+    "max_surface_abs_spearman": 0.90,
+    "max_dots_abs_spearman": 0.90,
+    "max_detector_3px_overlap": 0.70,
+    "prior_repo_rasters_locked_in_corpus": [
+      "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+      "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
+      "kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif"
+    ]
+  }
+}

@@ -37,6 +37,7 @@ from gems.novelty import dot_overlap, correlation  # noqa: E402
 from gems32.paths import data_dir  # noqa: E402
 
 FOCUS_RECORDS = ROOT / "evidence" / "focus_site_files.json"
+NEW_DARP = ROOT / "docs" / "downloads" / "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif"
 PROMOTED = ROOT / "docs" / "downloads" / "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif"
 EVIDENCE_OUT = ROOT / "evidence" / "focus_site_audit_20261027.json"
 EXPECTED_CRS = "EPSG:32611"
@@ -68,7 +69,7 @@ def audit_one(path: Path, foot: np.ndarray, labels: np.ndarray) -> dict:
         transform = tuple(round(float(x), 6) for x in s.transform)[:6]
         count = s.count
         dtype = s.dtypes[0]
-        nodata = s.nodata
+        nodata = "NaN" if (s.nodata is not None and np.isnan(s.nodata)) else s.nodata
     in_f = arr[foot]
     out_f = arr[~foot]
     nan_out = int(np.isnan(out_f).sum())
@@ -132,8 +133,11 @@ def main() -> int:
     ddir = data_dir()
     foot, labels = load_footprint_and_labels(ddir)
 
-    # 1) promoted file, 2) every focus-site file fetched by fetch_focus_submissions.py
-    targets = [("KANLERGEMSDOE2 promoted EXP-2", "KANLERGEMSDOE2", PROMOTED, "HOLDOUT-DTI (not a leaderboard score)", None)]
+    # 1) new DARP-MT10 file + archived HTCADS EXP-2 file, 2) every focus-site file fetched by fetch_focus_submissions.py
+    targets = [
+        ("KANLERGEMSDOE2 new DARP-MT10 EXP-1", "KANLERGEMSDOE2", NEW_DARP, "HOLDOUT-DTI (verdict=negative, research-only)", None),
+        ("KANLERGEMSDOE2 promoted EXP-2", "KANLERGEMSDOE2", PROMOTED, "HOLDOUT-DTI (archived prior candidate)", None),
+    ]
     recs = json.loads(FOCUS_RECORDS.read_text())["records"]
     for r in recs:
         if r.get("status") != "downloaded":
@@ -150,10 +154,11 @@ def main() -> int:
                   "file": path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)})
         audits.append(a)
         dots_cache[label] = dots_of(path, foot)
-        if label == targets[0][0]:
+        if label in (targets[0][0], targets[1][0]):
             surf_cache[label] = surface_of(path, foot)
 
-    promo = targets[0][0]
+    new_lbl = targets[0][0]
+    promo = targets[1][0]
     names = [t[0] for t in targets] + [t[0] for t in archive_refs]
     pairs = []
     for i, la in enumerate(names):
@@ -167,27 +172,32 @@ def main() -> int:
                 "exact_dot_identity": exact,
             })
 
-    promo_vs = []
-    for lb in names[1:]:
-        ab = [p for p in pairs if {p["a"], p["b"]} == {promo, lb}][0]
-        cand_in_ref = ab["a_within_3px_of_b"] if ab["a"] == promo else ab["b_within_3px_of_a"]
-        ref_in_cand = ab["b_within_3px_of_a"] if ab["a"] == promo else ab["a_within_3px_of_b"]
-        ov_max = max(cand_in_ref or 0.0, ref_in_cand or 0.0)
-        rho = None
-        if lb.startswith("archive:") or any(t[0] == lb for t in targets[1:]):
+    def _build_vs_all(anchor: str) -> list[dict]:
+        rows = []
+        for lb in names:
+            if lb == anchor:
+                continue
+            ab = [p for p in pairs if {p["a"], p["b"]} == {anchor, lb}][0]
+            cand_in_ref = ab["a_within_3px_of_b"] if ab["a"] == anchor else ab["b_within_3px_of_a"]
+            ref_in_cand = ab["b_within_3px_of_a"] if ab["a"] == anchor else ab["a_within_3px_of_b"]
+            ov_max = max(cand_in_ref or 0.0, ref_in_cand or 0.0)
             path = next(t[2] for t in targets + archive_refs if t[0] == lb)
-            rho = correlation(surf_cache[promo], surface_of(path, foot))
-        promo_vs.append({
-            "against": lb,
-            "promoted_dots_within_3px_of_against": round(float(cand_in_ref), 6) if cand_in_ref is not None else None,
-            "against_dots_within_3px_of_promoted": round(float(ref_in_cand), 6) if ref_in_cand is not None else None,
-            "overlap_3px_max_direction": round(ov_max, 6),
-            "footprint_spearman_rho": None if rho is None else round(float(rho), 6),
-            "exact_dot_identity": ab["exact_dot_identity"],
-            "duplicate_by_protocol_overlap_gt_0p70": bool(ov_max > 0.70),
-            "duplicate_by_protocol_abs_rho_gt_0p90": bool(rho is not None and abs(rho) > 0.90),
-            "note": "space-filling calibration lattice (control, not a detector)" if "lattice" in lb else "",
-        })
+            rho = correlation(surf_cache[anchor], surface_of(path, foot))
+            rows.append({
+                "against": lb,
+                "promoted_dots_within_3px_of_against": round(float(cand_in_ref), 6) if cand_in_ref is not None else None,
+                "against_dots_within_3px_of_promoted": round(float(ref_in_cand), 6) if ref_in_cand is not None else None,
+                "overlap_3px_max_direction": round(ov_max, 6),
+                "footprint_spearman_rho": None if rho is None else round(float(rho), 6),
+                "exact_dot_identity": ab["exact_dot_identity"],
+                "duplicate_by_protocol_overlap_gt_0p70": bool(ov_max > 0.70),
+                "duplicate_by_protocol_abs_rho_gt_0p90": bool(rho is not None and abs(rho) > 0.90),
+                "note": "space-filling calibration lattice (control, not a detector)" if "lattice" in lb else "",
+            })
+        return rows
+
+    new_vs = _build_vs_all(new_lbl)
+    promo_vs = _build_vs_all(promo)
 
     out = {
         "schema": "kanlergemsdoe2.focus_site_audit.v1",
@@ -197,6 +207,7 @@ def main() -> int:
         "duplicate_thresholds": {"abs_spearman_gt": 0.90, "overlap_3px_gt": 0.70},
         "files": audits,
         "pairwise_overlap": pairs,
+        "new_darp_vs_all": new_vs,
         "promoted_vs_all": promo_vs,
         "notes": [
             "Scores in files[] are USER-REPORTED from the prompt listing, not organizer receipts.",

@@ -1077,8 +1077,9 @@ def verify_recorded() -> dict[str, Any]:
     c1 = json.loads(RUN_CARD_JSON.read_text())
     c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
     c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+    c_ev = json.loads((ROOT / "evidence/run_card.json").read_text())
+    if not (c2 == c_ev == c3):
+        raise SystemExit("Active run_card.json copies in root, evidence/, and docs/data/ disagree")
 
     tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
     zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]

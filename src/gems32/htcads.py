@@ -389,11 +389,13 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
     nm = np.hypot(gy_rtp, gx_rtp).astype(np.float32) + 1e-6
     X_sub[:, 7] = _multi_azimuth_worm(_pos_norm_2d(nm, foot), length_px=15, foot=foot)[foot]
 
-    tc_med = float(np.median(tc[foot]))
-    tc_mad = float(np.median(np.abs(tc[foot] - tc_med))) * 1.4826 + 1e-5
-    tc_gy, tc_gx = _grad_yx_f32(gaussian_filter(tc, sigma=1.0, mode="nearest"))
-    tilt_sharp = _pos_norm_2d(np.exp(-np.abs(tc - tc_med) / (0.65 * tc_mad)) * np.hypot(tc_gy, tc_gx), foot)
-    del tc, tc_gy, tc_gx
+    # True Miller & Singh (1994) / Verduzco et al. (2004) magnetic tilt angle theta = arctan2(VG, |grad_h RTP|)
+    # Fixes IR-HTCADS-TC-05 (Band 6 `tc` in training_features.tif is Radiometric Total Count, not tilt angle)
+    del tc
+    mag_tilt = np.arctan2(gaussian_filter(tmi_vg, sigma=1.0, mode="nearest"), nm).astype(np.float32)
+    mt_gy, mt_gx = _grad_yx_f32(mag_tilt)
+    tilt_sharp = _pos_norm_2d(np.exp(-np.abs(mag_tilt) / 0.35) * np.hypot(mt_gy, mt_gx), foot)
+    del mag_tilt, mt_gy, mt_gx
     X_sub[:, 8] = tilt_sharp[foot]
 
     gy_g, gx_g = _grad_yx_f32(gaussian_filter(iso_grav, sigma=1.8, mode="nearest"))

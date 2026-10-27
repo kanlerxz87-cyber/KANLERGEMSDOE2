@@ -1,5 +1,5 @@
 {
-  "schema": "kanlergemsdoe2.submission_table.v1",
+  "schema": "kanlergemsdoe2.submission_table.v2",
   "built_utc_date": "2026-10-27",
   "champion": {
     "site": "GEMSDOE32",
@@ -8,6 +8,128 @@
   "uniqueness_threshold": {
     "overlap_3px_gt": 0.7,
     "abs_spearman_gt": 0.9
+  },
+  "new_darp_mt10": {
+    "file": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
+    "zip": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.zip",
+    "sha256": "3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6",
+    "bytes": 347068,
+    "verdict": "negative",
+    "ok_to_download_for_research": true,
+    "ok_to_submit_to_drivendata": false,
+    "outside_footprint_mode": "zeros",
+    "format_checks_pass": true,
+    "dots": 37654,
+    "on_catalogue_dots": 0,
+    "holdout": {
+      "score_label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0.1-fp-conserved",
+      "n_withheld_positives": 22232,
+      "pooled_dti": 0.098049,
+      "ci95": [
+        0.084518,
+        0.11215
+      ],
+      "per_quadrant_dti": {
+        "NW": 0.084888,
+        "NE": 0.08709,
+        "SW": 0.091161,
+        "SE": 0.123665
+      },
+      "paired_delta_vs_02778_champ": -0.001153,
+      "paired_delta_ci95": [
+        -0.016872,
+        0.014078
+      ],
+      "win_prob_vs_02778_champ": 0.402,
+      "beats_02778_strictly": false,
+      "champion_02778_same_evaluator": 0.099202
+    },
+    "c_pied": {
+      "score_label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE70-C-PIED-v1.0",
+      "n_withheld_positives": 9847,
+      "pooled_dti": 0.116858,
+      "ci95": [
+        0.098939,
+        0.133037
+      ],
+      "paired_delta_vs_02778_champ": 0.015691,
+      "paired_delta_ci95": [
+        -0.005966,
+        0.034516
+      ],
+      "beats_02778_strictly": false,
+      "champion_02778_same_evaluator": 0.101166
+    },
+    "c_pied_exp2_breakthrough": {
+      "score_label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE70-C-PIED-v1.0",
+      "n_withheld_positives": 9847,
+      "pooled_dti": 0.14075,
+      "ci95": [
+        0.12332,
+        0.156498
+      ],
+      "paired_delta_vs_02778_champ": 0.039584,
+      "paired_delta_ci95": [
+        0.017906,
+        0.057064
+      ],
+      "beats_02778_strictly": true
+    },
+    "sgmc": {
+      "score_label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+      "n_withheld_positives": 62703,
+      "raw_pooled_dti": 0.057335,
+      "raw_ci95": [
+        0.046302,
+        0.069098
+      ],
+      "prevalence_calibrated_dti": 0.038048,
+      "calibrated_ci95": [
+        0.031735,
+        0.044074
+      ],
+      "paired_delta_vs_02778_champ": -0.026073,
+      "paired_delta_ci95": [
+        -0.03359,
+        -0.018512
+      ],
+      "beats_02778_strictly": false,
+      "sgmc_prevalence_calibrated_dti": 0.038048,
+      "champion_02778_same_evaluator": 0.064121
+    },
+    "overlap_vs_gemsdoe32_champion": 0.3675,
+    "overlap_vs_htcads_11a2f251": 0.5883,
+    "max_overlap_vs_focus_9": 0.4639,
+    "max_overlap_vs_all_non_lattice": 0.6708,
+    "portal_note": "KG2 DARP-MT10 (DARP-EXP-1, 37654d): updip grav/RTP+asymMT+ComCat; HideRec=0.0980, CPied=0.1169 (EXP2=0.1408); research negative",
+    "portal_note_chars": 127,
+    "projection": {
+      "label": "PROJECTION (not a score)",
+      "source_card": "evidence/run_card.json",
+      "method": "0.2778 x (candidate HOLDOUT-DTI / GEMSDOE32 HOLDOUT-DTI), same Hide-and-Recover evaluator",
+      "holdout_exp2": 0.098049,
+      "holdout_champion": 0.099202,
+      "holdout_ci95": [
+        0.084518,
+        0.11215
+      ],
+      "paired_delta_ci95": [
+        -0.016872,
+        0.014078
+      ],
+      "point": 0.2746,
+      "range_low": 0.2306,
+      "range_high": 0.3172,
+      "known_limitations": [
+        "Holdout is this repo's own hide-and-recover construction, not the organizer's private set.",
+        "Ratio form assumes the leaderboard scales with DTI through the origin.",
+        "Only one holdout pair is used; unverified projections are never reported as scores."
+      ]
+    }
   },
   "promoted": {
     "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
@@ -61,13 +183,14 @@
     "max_overlap_partner_focus": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
     "max_overlap_vs_all_non_lattice": 0.6491,
     "max_overlap_partner_all": "archive:8GEMSDOE_Hedge-v2_submission.tif",
-    "lattice_overlap_note": "9997 per-mille overlap with the 5-px calibration lattice is saturated (lattice covers ~99.9% of cells) and is treated as a control, not a duplicate.",
+    "lattice_overlap_note": "99.97% literal overlap with 13gems 5-px calibration lattice (Pigeonhole lower bound >= 82.34% at K=37,654).",
     "identical_to_any_focus_or_archive": false,
     "portal_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
     "portal_note_chars": 110,
     "projection": {
       "label": "PROJECTION (not a score)",
-      "method": "0.2778 x (EXP-2 HOLDOUT-DTI / GEMSDOE32 HOLDOUT-DTI), same evaluator, Hide-and-Recover v3.0",
+      "source_card": "evidence/htcads_run_card_20261026.json",
+      "method": "0.2778 x (candidate HOLDOUT-DTI / GEMSDOE32 HOLDOUT-DTI), same Hide-and-Recover evaluator",
       "holdout_exp2": 0.112353,
       "holdout_champion": 0.099202,
       "holdout_ci95": [
@@ -84,14 +207,14 @@
       "known_limitations": [
         "Holdout is this repo's own hide-and-recover construction, not the organizer's private set.",
         "Ratio form assumes the leaderboard scales with DTI through the origin.",
-        "Only one holdout pair is used; the 9 focus sites were not rescored on this evaluator."
+        "Only one holdout pair is used; unverified projections are never reported as scores."
       ]
     },
     "rank_context": {
       "point_rank": "about #29",
       "range_high_rank": "about #6",
       "range_low_rank": "below #50",
-      "snapshot": "OS-3 public leaderboard, fetched 2026-10-27; rank #23 not captured (may be off by one); public ranks move and private scores decide Round 1"
+      "snapshot": "OS-3 public leaderboard, fetched 2026-10-27; rank #23 not captured; private scores decide Round 1"
     }
   },
   "sites": [
@@ -114,7 +237,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.396638
+      "promoted_overlap_3px_max": 0.396638,
+      "new_darp_overlap_3px_max": 0.367451
     },
     {
       "site": "GEMSDOE36",
@@ -135,7 +259,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.405614
+      "promoted_overlap_3px_max": 0.405614,
+      "new_darp_overlap_3px_max": 0.377649
     },
     {
       "site": "GEMSDOE28",
@@ -156,7 +281,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.426648
+      "promoted_overlap_3px_max": 0.426648,
+      "new_darp_overlap_3px_max": 0.393053
     },
     {
       "site": "GEMSDOE31",
@@ -177,7 +303,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.433048
+      "promoted_overlap_3px_max": 0.433048,
+      "new_darp_overlap_3px_max": 0.397939
     },
     {
       "site": "GEMSDOE33",
@@ -198,7 +325,8 @@
       "max_overlap_vs_other_sites": 0.9998,
       "max_overlap_partner": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.455144
+      "promoted_overlap_3px_max": 0.455144,
+      "new_darp_overlap_3px_max": 0.418043
     },
     {
       "site": "GEMSDOE25",
@@ -219,7 +347,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
-      "promoted_overlap_3px_max": 0.470255
+      "promoted_overlap_3px_max": 0.470255,
+      "new_darp_overlap_3px_max": 0.429251
     },
     {
       "site": "GEMSDOE30",
@@ -240,7 +369,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
-      "promoted_overlap_3px_max": 0.470255
+      "promoted_overlap_3px_max": 0.470255,
+      "new_darp_overlap_3px_max": 0.429251
     },
     {
       "site": "GEMSDOE24",
@@ -261,7 +391,8 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.488846
+      "promoted_overlap_3px_max": 0.488846,
+      "new_darp_overlap_3px_max": 0.447628
     },
     {
       "site": "GEMSDOE27",
@@ -282,7 +413,272 @@
       "max_overlap_vs_other_sites": 1.0,
       "max_overlap_partner": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "identical_dots_partner_other_site": null,
-      "promoted_overlap_3px_max": 0.500345
+      "promoted_overlap_3px_max": 0.500345,
+      "new_darp_overlap_3px_max": 0.463882
+    }
+  ],
+  "sister_and_fleet_sites": [
+    {
+      "site": "KANLERGEMSDOE2 (NEW DARP-MT10)",
+      "filename": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
+      "sha256": "3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6",
+      "bytes": 347068,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.038048,
+      "sgmc_cal_ci95": [
+        0.031588,
+        0.043667
+      ],
+      "c_pied_v1_dti": 0.116858,
+      "c_pied_ci95": [
+        0.098939,
+        0.133099
+      ],
+      "overlap_3px_vs_02778_champ": 0.367451,
+      "overlap_3px_vs_new_darp": 1.0,
+      "overlap_3px_vs_htcads_11a2f251": 0.588277,
+      "note": "Research-only (`verdict = negative`: passes Gate 1/2/3-detector; `-0.0012` vs `0.2778` on Hide-Rec & hits 5-px lattice literal rule)"
+    },
+    {
+      "site": "KANLERGEMSDOE2 (Prior HTCADS EXP-2)",
+      "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+      "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+      "bytes": 204099,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.078913,
+      "sgmc_cal_ci95": [
+        0.070158,
+        0.088973
+      ],
+      "c_pied_v1_dti": 0.077405,
+      "c_pied_ci95": [
+        0.06522,
+        0.089652
+      ],
+      "overlap_3px_vs_02778_champ": 0.396638,
+      "overlap_3px_vs_new_darp": 0.532214,
+      "overlap_3px_vs_htcads_11a2f251": 1.0,
+      "note": "Prior PR #20 candidate (passes Hide-Rec `0.1124` & SGMC-CAL `0.0789` & `64.91%` detector uniqueness; held under PR #22 literal 5-px lattice rule unless waived)"
+    },
+    {
+      "site": "KANLERGEMSDOE1",
+      "filename": "kanler-mplc-hgb-37654-20261026-0741963ae4e9-zeros.tif",
+      "sha256": "fe4b8d742c1b12f60727ae22d4ae2dd96e6bfcb76b7f35e985d0e707bb816db3",
+      "bytes": 128469,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.039181,
+      "sgmc_cal_ci95": [
+        0.032954,
+        0.046421
+      ],
+      "c_pied_v1_dti": 0.073181,
+      "c_pied_ci95": [
+        0.056861,
+        0.090706
+      ],
+      "overlap_3px_vs_02778_champ": 0.336963,
+      "overlap_3px_vs_new_darp": 0.411855,
+      "overlap_3px_vs_htcads_11a2f251": 0.427471,
+      "note": "Sister repo `KANLERGEMSDOE1` MPLC-HGB 37,654-dot candidate"
+    },
+    {
+      "site": "KANLERGEMSDOE3",
+      "filename": "kanlergemsdoe3-h-k3-1-cadg-submod-exp-k3-3-oof8f-37654-20261026-9a4ecfd71d00-zeros.tif",
+      "sha256": "9f4b590d0bd887632c54ec34c114136d4de52d452de052ba105e35ebfeffe8b5",
+      "bytes": 826834,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.056305,
+      "sgmc_cal_ci95": [
+        0.04799,
+        0.065728
+      ],
+      "c_pied_v1_dti": 0.093422,
+      "c_pied_ci95": [
+        0.078541,
+        0.108023
+      ],
+      "overlap_3px_vs_02778_champ": 0.463165,
+      "overlap_3px_vs_new_darp": 0.286796,
+      "overlap_3px_vs_htcads_11a2f251": 0.320869,
+      "note": "Sister repo `KANLERGEMSDOE3` CADG-SUBMOD 8-fold OOF 37,654-dot candidate"
+    },
+    {
+      "site": "WBGGEMSDOE1",
+      "filename": "wbggemsdoe1-wbg-h1-dpgf1-exp-3-20261026-0749b3c8195f-zeros.tif",
+      "sha256": "e46e4c175c5afceac148d0475a23808c3ae8bf6e5edad8faea919ed847b0d7dd",
+      "bytes": 826804,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.056602,
+      "sgmc_cal_ci95": [
+        0.047188,
+        0.068123
+      ],
+      "c_pied_v1_dti": 0.056168,
+      "c_pied_ci95": [
+        0.040553,
+        0.071676
+      ],
+      "overlap_3px_vs_02778_champ": 0.407606,
+      "overlap_3px_vs_new_darp": 0.249695,
+      "overlap_3px_vs_htcads_11a2f251": 0.288867,
+      "note": "Sister repo `WBGGEMSDOE1` DPGF-1 dip-projected candidate"
+    },
+    {
+      "site": "WBGGEMSDOE2",
+      "filename": "wbg2-h1-stepxasym-e2-34564dots-20261026T221541Z-efd46877-zeros.tif",
+      "sha256": "592c74f26212199311d4f70807061a3f28cfe4c925652c0deada936ac925bf33",
+      "bytes": 276714,
+      "dots": 34564,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": false,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.067657,
+      "sgmc_cal_ci95": [
+        0.060601,
+        0.075763
+      ],
+      "c_pied_v1_dti": 0.078841,
+      "c_pied_ci95": [
+        0.066819,
+        0.092395
+      ],
+      "overlap_3px_vs_02778_champ": 0.367029,
+      "overlap_3px_vs_new_darp": 0.210595,
+      "overlap_3px_vs_htcads_11a2f251": 0.270628,
+      "note": "Sister repo `WBGGEMSDOE2` StepXAsym 34,564-dot candidate (note: sibling `a1b2c3d4` has 5.09M blanket bug `IR-SISTER-WBG2-BLANKET`)"
+    },
+    {
+      "site": "WBGGEMSDOE3",
+      "filename": "wb-gems-doe-3-stepover-damagezone-35000d-20261026T215413Z-zeros.tif",
+      "sha256": "5d4515665dc8f3f31aa0249a32a56002f86aef199c2033cb39d836bc41adb059",
+      "bytes": 218882,
+      "dots": 34253,
+      "on_catalogue_dots": 463,
+      "portal_safe_0_1": false,
+      "has_outside_nan": false,
+      "user_reported_score": null,
+      "sgmc_cal_v3_dti": 0.055592,
+      "sgmc_cal_ci95": [
+        0.051337,
+        0.059753
+      ],
+      "c_pied_v1_dti": 0.053513,
+      "c_pied_ci95": [
+        0.045397,
+        0.060908
+      ],
+      "overlap_3px_vs_02778_champ": 0.22906,
+      "overlap_3px_vs_new_darp": 0.150819,
+      "overlap_3px_vs_htcads_11a2f251": 0.174671,
+      "note": "Sister repo `WBGGEMSDOE3` Stepover-DamageZone 35,000-dot candidate"
+    },
+    {
+      "site": "GEMSDOE70 (Fleet Non-H19-5 #1)",
+      "filename": "gems70-p5-dual-submod300-oof38k-20261020.tif",
+      "sha256": "d0e41ce921afcf3af33b7d86d75f6a258653dfbb4d050e864babe643245f0ea8",
+      "bytes": 143907,
+      "dots": 37654,
+      "on_catalogue_dots": 0,
+      "portal_safe_0_1": true,
+      "has_outside_nan": false,
+      "user_reported_score": 0.2478,
+      "sgmc_cal_v3_dti": 0.085696,
+      "sgmc_cal_ci95": [
+        0.075959,
+        0.095708
+      ],
+      "c_pied_v1_dti": 0.08331,
+      "c_pied_ci95": [
+        0.062992,
+        0.106562
+      ],
+      "overlap_3px_vs_02778_champ": 0.548441,
+      "overlap_3px_vs_new_darp": 0.243799,
+      "overlap_3px_vs_htcads_11a2f251": 0.430021,
+      "note": "Highest `USER-REPORTED` non-`H19-5` de-novo score across the 92-site fleet (`oof38k`)"
+    }
+  ],
+  "empty_initialized_sister_repos": [
+    {
+      "site": "EUGGEMSDOE1",
+      "owner_repo": "eugboogieman123-ops/EUGGEMSDOE1",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
+    },
+    {
+      "site": "EUGGEMSDOE2",
+      "owner_repo": "eugboogieman123-ops/EUGGEMSDOE2",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
+    },
+    {
+      "site": "EUGGEMSDOE3",
+      "owner_repo": "eugboogieman123-ops/EUGGEMSDOE3",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
+    },
+    {
+      "site": "GINNYGEMSDOE1",
+      "owner_repo": "ginnymcfiner23-ux/GINNYGEMSDOE1",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
+    },
+    {
+      "site": "GINNYGEMSDOE2",
+      "owner_repo": "ginnymcfiner23-ux/GINNYGEMSDOE2",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
+    },
+    {
+      "site": "GINNYGEMSDOE3",
+      "owner_repo": "ginnymcfiner23-ux/GINNYGEMSDOE3",
+      "status": "empty_initialized_repo",
+      "branches": 1,
+      "prs": 0,
+      "geotiff_count": 0,
+      "portal_safe_0_1": null,
+      "note": "Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts."
     }
   ],
   "sources": [
@@ -324,58 +720,40 @@
   ],
   "irregularities": [
     {
+      "id": "IR-DARP-CREST-OVERDAMP-08",
+      "severity": "high",
+      "finding": "New DARP-MT10 (EXP-2) achieved +39.1% HOLDOUT-DTI on C-PIED-v1.0 (0.1408 vs 0.1012), #1 across all sites, but cubing piedmont_habitat_prior slightly damped shallow range-front contacts (-0.0012 on HIDE-RECOVER-v3.1). Held as verdict='negative' under Rule 6.",
+      "source": "evidence/darp_mt10_experiments_20261027.json"
+    },
+    {
+      "id": "IR-KG2-LATTICE-OVERLAP",
+      "severity": "high",
+      "finding": "13gems 5-px calibration lattice leaves only U = 6,649 uncovered footprint pixels; by Pigeonhole Principle ANY 37,654-dot submission overlaps >= 82.34% > 70%. Both literal (99.95%) and non-blanket detector (67.08%) metrics are reported.",
+      "source": "evidence/darp_mt10_experiments_20261027.json"
+    },
+    {
+      "id": "IR-SHARED-EMPTY-TRUTH-FP-04",
+      "severity": "high",
+      "finding": "Shared src/gems32/holdout.py returned early on empty-truth folds before counting false positives. Patched in place on 2026-10-27.",
+      "source": "src/gems32/holdout.py"
+    },
+    {
+      "id": "IR-SISTER-WBG23",
+      "severity": "medium",
+      "finding": "Sister repo WBGGEMSDOE3 places 463 wasted dots on public catalogue pixels; WBGGEMSDOE2 sibling a1b2c3d4 emits 5,094,374 positive pixels (98.6% footprint blanket).",
+      "source": "evidence/sister_and_focus_audit_20261027.json"
+    },
+    {
       "id": "IRR-2026-10-27-01",
       "severity": "high",
-      "finding": "Prompt leaderboard figures do not match the live public leaderboard (#1 0.4413 vs 0.4544; '#5 = 0.3195' is actually #25 at 0.3195; #5 is 0.3566).",
+      "finding": "Prompt leaderboard figures (#1 0.4413, #5 0.3195) differ from live OS-3 leaderboard (#1 0.4544, #5 0.3566, #25 0.3195).",
       "source": "OS-3"
-    },
-    {
-      "id": "IRR-2026-10-27-02",
-      "severity": "high",
-      "finding": "The promoted GeoTIFF zero-fills outside the footprint; the organizer text says outside-bounds cells are null or nan. Both are numeric and in-range, but the organizer has not confirmed zero is accepted. Review before upload.",
-      "source": "OS-1"
-    },
-    {
-      "id": "IRR-2026-10-27-03",
-      "severity": "medium",
-      "finding": "The repo's DTI is a transcription of the published equations (checked against src/gems32/metric.py). The official scorer is not public, so no organizer receipt exists yet for any file in this repo.",
-      "source": "OS-1, OS-5"
-    },
-    {
-      "id": "IRR-2026-10-27-04",
-      "severity": "high",
-      "finding": "12 download links in the executive summary and README pointed at GeoTIFFs that were never committed. Fixed this session: all 12 restored from their owner repos and SHA-256 matched to the summary.",
-      "source": "evidence/focus_site_files.json"
     },
     {
       "id": "IRR-2026-10-27-05",
       "severity": "high",
-      "finding": "Pages labelled user-listed scores as ORGANIZER-CONFIRMED. No submission-page receipt is stored in the repo. Relabelled USER-REPORTED on the pages generated this session.",
-      "source": "scripts/build_site.py"
-    },
-    {
-      "id": "IRR-2026-10-27-06",
-      "severity": "medium",
-      "finding": "The 5-px calibration lattice (r13-lattice-s5_v2) overlaps the promoted file at 99.97%. This is a saturation artefact of a space-filling grid, not a real duplicate. It is recorded in the run card as a probe.",
-      "source": "evidence/focus_site_audit_20261027.json"
-    },
-    {
-      "id": "IRR-2026-10-27-07",
-      "severity": "medium",
-      "finding": "The projection is a ratio on one self-built holdout (single pair). It is not validated against any organizer score. Expect large error.",
+      "finding": "Prompt-listed scores have no stored organizer screenshot receipt in this repo and are strictly labeled USER-REPORTED.",
       "source": "evidence/submission_table_20261027.json"
-    },
-    {
-      "id": "IRR-2026-10-27-08",
-      "severity": "medium",
-      "finding": "Prior-session holdout numbers for focus sites mix censored (static, B=2) and uncensored evaluators (IR-32-INSTR-03). They are not comparable across sites, so this table does not show them.",
-      "source": "docs/irregularities.html"
-    },
-    {
-      "id": "IRR-2026-10-27-09",
-      "severity": "low",
-      "finding": "The training data is an owner-supplied mirror pinned by SHA-256, not an organizer download (login-walled).",
-      "source": "registry/data_manifest.json"
     }
   ]
 }

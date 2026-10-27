@@ -293,6 +293,226 @@
       "sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
       "bytes": 10492276,
       "provenance": "Owner-derived Euclidean distance in meters to US Census Bureau TIGER/Line 2024 county road/highway centerlines (official directory: https://www2.census.gov/geo/tiger/TIGER2024/ROADS/, public-domain Census product), projected onto exact EPSG:32611 3730x3292 100 m competition grid. The sibling mirror includes `data/external/audit_sources/tiger_road_receipt.json`; this session did not fetch road files from Census. SHA-256 pins verify the owner mirror, not official-host authenticity."
+    },
+    {
+      "id": "ext_dem10_curv_absmax_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_curv_absmax.f32.npy",
+      "dest": "dem10/dem10_curv_absmax.f32.npy",
+      "bytes": 20669620,
+      "sha256": "58e82f1301032b46b10344b9299b83e6ce5bed1ca83e320f078fa57321bff632",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_curv_absmax.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_hgm200_mean_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_hgm200_mean.f32.npy",
+      "dest": "dem10/dem10_hgm200_mean.f32.npy",
+      "bytes": 20669620,
+      "sha256": "9328f889f4d607f8530840da138741b7431da49d2432b0ab2da110a82984102b",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_hgm200_mean.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_hgm20_max_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_hgm20_max.f32.npy",
+      "dest": "dem10/dem10_hgm20_max.f32.npy",
+      "bytes": 20669620,
+      "sha256": "f58df86b0be3b3dc54affc60dc7d77a95db3dafb9c1267eac4912c5d8e57526b",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_hgm20_max.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_hgm50_max_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_hgm50_max.f32.npy",
+      "dest": "dem10/dem10_hgm50_max.f32.npy",
+      "bytes": 20669620,
+      "sha256": "1cca42538ec0c91951b578136893eb5d90cd1414c45257d2a72ebe80b29f0f40",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_hgm50_max.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_onesided_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_onesided.f32.npy",
+      "dest": "dem10/dem10_onesided.f32.npy",
+      "bytes": 20669620,
+      "sha256": "02d1d241de9534d307f314d0b2f8a857ceb1ce0d099fd7dee8872a83bd0271f8",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_onesided.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_onesided3_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_onesided3.f32.npy",
+      "dest": "dem10/dem10_onesided3.f32.npy",
+      "bytes": 20669620,
+      "sha256": "bca9faf8e0c572ecb1e77b6c94b0cb96c41e824873cb7747e0ece28b531598d2",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_onesided3.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_resid_range_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_resid_range.f32.npy",
+      "dest": "dem10/dem10_resid_range.f32.npy",
+      "bytes": 20669620,
+      "sha256": "bbcf8a462ace31a80964ba8a7ab76fcbcb347deb4f4d2919166b3eda5c721b0c",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_resid_range.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_resid_std_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_resid_std.f32.npy",
+      "dest": "dem10/dem10_resid_std.f32.npy",
+      "bytes": 20669620,
+      "sha256": "50db8caa815cb09cc695ec230f15f41e8e04cd9bef5fc09b07b06aeadd44a86e",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_resid_std.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_slope_max_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_slope_max.f32.npy",
+      "dest": "dem10/dem10_slope_max.f32.npy",
+      "bytes": 20669620,
+      "sha256": "fd46738e9a58a6f40c130c3c70f645525dbfc12d27b6ed149e596e6a379cbfaa",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_slope_max.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_slope_mean_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_slope_mean.f32.npy",
+      "dest": "dem10/dem10_slope_mean.f32.npy",
+      "bytes": 20669620,
+      "sha256": "338b443c441db61120faf36437ec61dfcccaa569c41aa3099ed3accef5a35f95",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_slope_mean.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_slope_std_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_slope_std.f32.npy",
+      "dest": "dem10/dem10_slope_std.f32.npy",
+      "bytes": 20669620,
+      "sha256": "9c15e0e760d8255eb0473821a07cc09e4fe4b40746e6e37278e691f615c0f642",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_slope_std.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_steep_ratio_max_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_steep_ratio_max.f32.npy",
+      "dest": "dem10/dem10_steep_ratio_max.f32.npy",
+      "bytes": 20669620,
+      "sha256": "eaf3d5e24c6769ffb98665e75c9665dbaa16bdb79708900217dca955031e6828",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_steep_ratio_max.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_dem10_valid_frac_f32",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/dem10_valid_frac.f32.npy",
+      "dest": "dem10/dem10_valid_frac.f32.npy",
+      "bytes": 20669620,
+      "sha256": "35d7ef0719bfed93f9aed927afd8c51882283fc7316cab0f8c219c9302b92122",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (dem10_valid_frac.f32.npy) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_manifest",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE10",
+      "ref": "ext/dem10-36343078537",
+      "path": "data/external/dem10/manifest.json",
+      "dest": "dem10/manifest.json",
+      "bytes": 13194,
+      "sha256": "bfb79f39be0737b448b1a3bf5432db168a77d6786240eafdca352e7a87400f0d",
+      "description": "Seamless 10 m USGS 3DEP DEM channel (manifest.json) bridging 100% of the 24.60% 1 m LiDAR void"
+    },
+    {
+      "id": "ext_h52_scarp3m_100m_tif",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE48",
+      "ref": "main",
+      "path": "data/external/h52_scarp3m_100m.tif",
+      "dest": "external/h52_scarp3m_100m.tif",
+      "bytes": 43839078,
+      "sha256": "b5e53d67c3a7d3d1ca44ae04ae1e84d8574857da3fcd5e34ba47276d6c04b923",
+      "description": "USGS 3DEP 3 m scarp multi-band raster/metadata (h52_scarp3m_100m.tif)"
+    },
+    {
+      "id": "ext_h52_scarp3m_100m_json",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE48",
+      "ref": "main",
+      "path": "data/external/h52_scarp3m_100m.json",
+      "dest": "external/h52_scarp3m_100m.json",
+      "bytes": 53897,
+      "sha256": "95d9e65347e097be55530af70d3e289676bc16bbd12f4caee99cd3ca4b55453e",
+      "description": "USGS 3DEP 3 m scarp multi-band raster/metadata (h52_scarp3m_100m.json)"
+    },
+    {
+      "id": "ext_sb_heat_flow",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "ref": "main",
+      "path": "data/external/sb_heat_flow_in_footprint.csv",
+      "dest": "external/sb_heat_flow_in_footprint.csv",
+      "bytes": 909294,
+      "sha256": "9845263e658aeb66a4aeca6e64d995e74f0eb14b89768219ea9d223006dc8baf",
+      "description": "USGS ScienceBase Great Basin conductive heat-flow points in footprint (fixes IR-HTCADS-HFZERO-06)"
+    },
+    {
+      "id": "ext_gb_regional_stress_grid_10km",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE85",
+      "ref": "main",
+      "path": "data/external/gb_regional_stress_grid_10km.csv",
+      "dest": "external/gb_regional_stress_grid_10km.csv",
+      "bytes": 47627,
+      "sha256": "9e01d5de2b6070816513e163a8f34cf19559630d497ef8ddc60b4d18565140ef",
+      "description": "10 km Great Basin regional tectonic stress orientation & regime grid (S_hmin, A_phi)"
+    },
+    {
+      "id": "ext_usgs_comcat_geodawn",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE85",
+      "ref": "main",
+      "path": "data/external/usgs_comcat_geodawn.csv",
+      "dest": "external/usgs_comcat_geodawn.csv",
+      "bytes": 600662,
+      "sha256": "c580226b3b0516653873b87077edb8e164c3545e9bc1e7c764789c52bdd30624",
+      "description": "USGS ANSS ComCat earthquake hypocenters across the GeoDAWN Great Basin footprint"
+    },
+    {
+      "id": "ext_usgs_heat_flow_wells_epsg32611",
+      "group": "external",
+      "repo": "buffedlizard55-lab/GEMSDOE85",
+      "ref": "main",
+      "path": "data/external/usgs_heat_flow_wells_epsg32611.csv",
+      "dest": "external/usgs_heat_flow_wells_epsg32611.csv",
+      "bytes": 139607,
+      "sha256": "9773bf59340e06901b2855d30b1972dc91374a5d344a8324452f9bb69304e370",
+      "description": "USGS Great Basin heat-flow wells projected to EPSG:32611"
     }
   ]
 }

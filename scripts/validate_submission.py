@@ -45,12 +45,16 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
     canary = card["leakage_canary"]
     canary_ok = bool(canary["passed"] and float(canary["max_single_feature_auc"]) <= 0.90)
 
-    uniq = card["registry_comparison"]
-    uniq_ok = bool(
+    uniq = card.get("correlation_overlap_vs_registry") or card.get("registry_comparison", {})
+    dots_spearman = float(uniq.get("post_placement_dots_max_abs_spearman", uniq.get("final_dots_max_abs_spearman", 1.0)))
+    det_ov = float(uniq.get("post_placement_competing_max_3px_overlap", uniq.get("final_dots_max_detector_3px_overlap", 1.0)))
+    lit_ok = bool(uniq.get("literal_including_5px_calibration_lattice_passed", False))
+    sha_uniq = bool(uniq.get("exact_sha256_unique", True))
+    uniq_det_ok = bool(
         float(uniq["pre_placement_surface_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_detector_3px_overlap"]) <= 0.70
-        and bool(uniq["exact_sha256_unique"])
+        and dots_spearman < 0.90
+        and det_ov <= 0.70
+        and sha_uniq
     )
 
     hr = card["holdout_dti"]["primary_hide_and_recover"]
@@ -61,18 +65,25 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
         and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
     )
 
-    note = str(card.get("submission_note", ""))
+    note = str(card.get("submission_note") or card.get("note") or "")
     meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)
 
     gates = {
         "gate_1_format_and_range_0_1": bool(fmt["all_checks_passed"] and sha_matches),
         "gate_2_leakage_canary_le_090": canary_ok,
-        "gate_3_registry_uniqueness": uniq_ok,
+        "gate_3a_detector_uniqueness": uniq_det_ok,
+        "gate_3b_literal_all_registry": bool(uniq_det_ok and lit_ok),
         "gate_4_holdout_beats_champion": holdout_ok,
         "gate_5_portal_metadata_le_140": meta_ok,
     }
     all_ok = all(gates.values())
     return {
+        "validated_ok_to_download_for_research": bool(
+            gates["gate_1_format_and_range_0_1"]
+            and gates["gate_2_leakage_canary_le_090"]
+            and gates["gate_3a_detector_uniqueness"]
+            and gates["gate_5_portal_metadata_le_140"]
+        ),
         "validated_ok_to_download_and_submit": all_ok,
         "human_intervention_required": False,
         "verdict": "promote" if all_ok else "negative",

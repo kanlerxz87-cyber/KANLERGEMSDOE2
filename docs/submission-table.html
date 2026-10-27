@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Per-Site Submission Table &mdash; KANLERGEMSDOE2</title>
+<title>Focus &amp; Sister Sites Submission Table &mdash; KANLERGEMSDOE2</title>
 <link rel="stylesheet" href="style.css"></head>
 <body>
 
@@ -8,37 +8,55 @@
   <div class="topbar-inner">
     <div class="brand">
       <span>KANLERGEMSDOE2</span>
-      <span class="brand-badge">VALIDATED: PROMOTE (5/5 GATES)</span>
+      <span class="brand-badge neg">VERDICT: NEGATIVE &mdash; DO NOT SUBMIT TO DRIVENDATA (RESEARCH ONLY)</span>
     </div>
     <nav class="nav-links">
-      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html">9-Site Executive Summary &amp; Guide</a><a href="submission-table.html" class="active">Per-Site Submission Table</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html">Executive Summary &amp; Guide</a><a href="submission-table.html" class="active">Focus &amp; Sister Table</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="audit-review.html">Audit Review</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
     </nav>
   </div>
 </header>
 
 <main class="container">
-  <section class="card">
-    <h1>Which file to download &amp; submit</h1>
-    <p><strong>Answer:</strong> download and submit <a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download><code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></a>. It is the only file in this table that is unique (&le;70% overlap against all 9 focus files and every non-lattice archive reference) and passes the portal-format checks. Its score is <strong>not yet known</strong>: no organizer receipt exists, and the estimate below is a projection.</p>
-    <div class="callout callout-warn"><strong>Review before upload (IRR-2026-10-27-02):</strong> this file uses 0 outside the footprint, not NaN. The organizer text says outside-bounds cells are null or nan. Confirm this is acceptable before relying on it.</div>
+  <section class="gate-banner fail">
+    <div class="gate-header">
+      <div class="status-pill">&#9888; VERDICT: NEGATIVE &mdash; DO NOT SUBMIT NEW DARP-MT10 TO DRIVENDATA (RESEARCH ONLY)</div>
+      <div style="font-family:var(--mono);font-size:0.84rem;color:#cbd5e1">
+        New File: <code>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</code> | Range [0, 1]: <strong>PASS (0 NaNs)</strong> | Detector Uniqueness: <strong>PASS (67.08% &le; 70%)</strong>
+      </div>
+    </div>
+    <p style="margin:0;color:#e2e8f0">
+      <strong>Which file to download &amp; submit?</strong> For <strong>research inspection</strong>, download our newly generated 2026-10-27 GeoTIFF <a href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download><code>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</code></a> (<code>DARP-MT10</code>; <code>DARP-EXP-2</code> achieved <strong><code>0.1408 HOLDOUT-DTI</code> on <code>C-PIED-v1.0</code>, +39.1% over <code>0.2778</code></strong>). <strong>Do not spend a DrivenData weekly slot on <code>4ad35e71-zeros.tif</code></strong> because primary <code>HIDE-RECOVER-v3.1</code> dipped slightly (<code>0.0980</code> vs <code>0.0992</code>). If the coordinator chooses to spend a weekly slot immediately and waives the <code>13gems</code> 5-px calibration lattice, the strongest holdout file in this repo remains archived <a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download><code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></a> (<code>HIDE-RECOVER = 0.1124</code>, <code>SGMC-CAL = 0.0789</code>).
+    </p>
   </section>
 
   <section class="card">
-    <h2>Table 1 &mdash; Per-site file to download (scores are USER-REPORTED unless noted)</h2>
+    <h2>Table 1 &mdash; KANLERGEMSDOE2 &amp; All 9 Focus Sites (Scores Strictly Labeled)</h2>
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Site</th><th>File to download</th><th>Portal format</th><th>Score / estimate</th><th>Unique?</th><th>Note</th></tr></thead>
+      <thead><tr><th>#</th><th>Site</th><th>File to download</th><th>Portal [0, 1] format</th><th>Score / Holdout estimate</th><th>Unique?</th><th>Guidance</th></tr></thead>
       <tbody>
         <tr class="highlight-row">
-          <td>&#9733;</td>
-          <td><strong>KANLERGEMSDOE2</strong><br><span class="tag tag-ok">NEW</span></td>
+          <td>&#9733;1</td>
+          <td><strong>KANLERGEMSDOE2<br>(NEW 2026-10-27)</strong><br><span class="tag tag-bad">NEGATIVE</span></td>
+          <td><a href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download><code>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</code></a>
+            <div class="sub">SHA-256 <code>3525d308f5b06d5c&hellip;</code> &middot; 37,654 dots</div></td>
+          <td><span class="tag tag-ok">0 NaN; values in [0,1]; EPSG:32611; 3730&times;3292</span></td>
+          <td><code>HOLDOUT-DTI</code>:<br>Hide-Rec <code>0.0980</code><br><strong>C-PIED <code>0.1169</code></strong> (EXP-2 <strong><code>0.1407</code></strong>)</td>
+          <td><span class="tag tag-ok">DETECTOR UNIQUE</span><br>36.75% vs 0.2778; 58.83% vs 11a2f251; max det 67.08% &le; 70%
+              <div class="sub">13gems 5-px lattice: 99.95%</div></td>
+          <td><strong style="color:#fca5a5">DO NOT SUBMIT TO DRIVENDATA</strong><div class="sub">OK to download for research; save weekly slot</div></td>
+        </tr>
+        
+        <tr>
+          <td>&#9733;2</td>
+          <td><strong>KANLERGEMSDOE2<br>(Archived EXP-2)</strong><br><span class="tag tag-info">IN PROMPT</span></td>
           <td><a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download><code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></a>
             <div class="sub">SHA-256 <code>f482d3bad4b39047&hellip;</code> &middot; 37,654 dots</div></td>
-          <td><span class="tag tag-ok">0 NaN; values in [0,1]; EPSG:32611; 3730&times;3292; 100 m</span></td>
-          <td><strong><code>0.3146</code></strong> <span class="tag tag-warn">PROJECTION</span>
+          <td><span class="tag tag-ok">0 NaN; values in [0,1]; EPSG:32611; 3730&times;3292</span></td>
+          <td><code>HOLDOUT-DTI</code>: <strong>Hide-Rec <code>0.1124</code></strong>, SGMC <code>0.0789</code><br><code>0.3146</code> <span class="tag tag-warn">PROJECTION</span>
               <div class="sub">range 0.283&ndash;0.348 &middot; not a score</div></td>
-          <td><span class="tag tag-ok">UNIQUE</span> 3px overlap vs GEMSDOE32 (0.2778) 39.66%; max vs the 9 focus files 50.0% (&le;70%)
-              <div class="sub">vs all non-lattice references: 64.9%</div></td>
-          <td><strong>DOWNLOAD &amp; SUBMIT</strong><div class="sub">no organizer receipt yet</div></td>
+          <td><span class="tag tag-ok">DETECTOR UNIQUE</span><br>39.66% vs 0.2778; max focus 50.0%; max det 64.9%
+              <div class="sub">13gems 5-px lattice: 99.97%</div></td>
+          <td><strong>Best holdout file in repo</strong><div class="sub">submit only if coordinator waives 5-px lattice</div></td>
         </tr>
         
         <tr>
@@ -49,7 +67,7 @@
           <td><span class="tag tag-ok">0 NaN; values in [0,1]</span></td>
           <td><strong><code>0.2778</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Submitted/known score; not a new unique submission</td>
+          <td>Focus-site top score (already submitted; H19-5 B=2)</td>
         </tr>
         <tr>
           <td>2</td>
@@ -59,27 +77,27 @@
           <td><span class="tag tag-ok">0 NaN; values in [0,1]</span></td>
           <td><strong><code>0.2750</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>3</td>
           <td><strong>GEMSDOE28</strong></td>
           <td><a href="downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif" download><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif</code></a>
             <div class="sub">SHA-256 <code>5556aa1438fd6737&hellip;</code> &middot; 37,660 dots</div></td>
-          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">zeros/allfinite sibling</span> <code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif</code></td>
+          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">safe sibling</span> <a href="downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif" download><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif</code></a></td>
           <td><strong><code>0.2710</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>4</td>
           <td><strong>GEMSDOE31</strong></td>
           <td><a href="downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif" download><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif</code></a>
             <div class="sub">SHA-256 <code>07b6db440535404b&hellip;</code> &middot; 40,199 dots</div></td>
-          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">zeros/allfinite sibling</span> <code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif</code></td>
+          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">safe sibling</span> <a href="downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif" download><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif</code></a></td>
           <td><strong><code>0.2708</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>5</td>
@@ -89,17 +107,17 @@
           <td><span class="tag tag-ok">0 NaN; values in [0,1]</span></td>
           <td><strong><code>0.2632</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>6</td>
           <td><strong>GEMSDOE25</strong></td>
           <td><a href="downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif" download><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</code></a>
             <div class="sub">SHA-256 <code>91eae1ca42ec845e&hellip;</code> &middot; 44,090 dots</div></td>
-          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">zeros/allfinite sibling</span> <code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif</code></td>
+          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">safe sibling</span> <a href="downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif" download><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif</code></a></td>
           <td><strong><code>0.2600</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span><br>identical dots to <code>gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif</code></td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>7</td>
@@ -109,68 +127,155 @@
           <td><span class="tag tag-ok">0 NaN; values in [0,1]</span></td>
           <td><strong><code>0.2600</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span><br>identical dots to <code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif</code></td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>8</td>
           <td><strong>GEMSDOE24</strong></td>
           <td><a href="downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif" download><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</code></a>
             <div class="sub">SHA-256 <code>68d0e2e4fcc594f9&hellip;</code> &middot; 60,069 dots</div></td>
-          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">zeros/allfinite sibling</span> <code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif</code></td>
+          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">safe sibling</span> <a href="downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif" download><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif</code></a></td>
           <td><strong><code>0.2477</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
         <tr>
           <td>9</td>
           <td><strong>GEMSDOE27</strong></td>
           <td><a href="downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif" download><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</code></a>
             <div class="sub">SHA-256 <code>33003374335d84bf&hellip;</code> &middot; 61,328 dots</div></td>
-          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">zeros/allfinite sibling</span> <code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif</code></td>
+          <td><span class="tag tag-warn">NaN outside footprint</span><br><span class="tag tag-ok">safe sibling</span> <a href="downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif" download><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif</code></a></td>
           <td><strong><code>0.2449</code></strong><div class="sub">USER-REPORTED</div></td>
           <td><span class="tag tag-bad">NOT UNIQUE</span> max 3px overlap 100.0%</td>
-          <td>Historical focus-site file</td>
+          <td>Historical focus-site H19-5 lineage</td>
         </tr>
       </tbody></table></div>
-    <p class="sub">Uniqueness for site rows = max 3-px dot overlap against every other focus-site file (threshold 70%). Lineage-related means sharing the H19-5 ancestry but below the threshold.</p>
   </section>
 
   <section class="card">
-    <h2>Estimated score for the promoted file (PROJECTION, not a score)</h2>
-    <p><strong>Point 0.3146</strong>, range 0.2831 to 0.3477. Method: <code>0.2778 x (EXP-2 HOLDOUT-DTI / GEMSDOE32 HOLDOUT-DTI), same evaluator, Hide-and-Recover v3.0</code>.</p>
-    <ul>
-      <li>HOLDOUT-DTI EXP-2 = <code>0.112353</code>, 95% CI [0.0990, 0.1257], N = 22,232 withheld positives, evaluator v3.0 (GEMSDOE32-HIDE-RECOVER-v3.0). Source: <code>evidence/run_card.json</code>.</li>
-      <li>HOLDOUT-DTI GEMSDOE32 (same evaluator) = <code>0.099202</code>; paired delta CI95 [+0.0019, +0.0250].</li>
-      <li>SGMC-CAL holdout (secondary): EXP-2 <code>0.078913</code> CI [0.0700, 0.0870] vs GEMSDOE32 <code>0.064121</code> (N = 62,703).</li>
-      <li><strong>Leaderboard context (OS-3 snapshot):</strong> point projection falls about #29; range high about #6; range low below #50. Public ranks move; the private round decides Round 1 prize.</li>
-    </ul>
-    <p class="sub">Limitations: Holdout is this repo&#x27;s own hide-and-recover construction, not the organizer&#x27;s private set.; Ratio form assumes the leaderboard scales with DTI through the origin.; Only one holdout pair is used; the 9 focus sites were not rescored on this evaluator..</p>
-  </section>
-
-  <section class="card">
-    <h2>Table 2 &mdash; Format audit of every file in Table 1 (computed this session)</h2>
+    <h2>Table 2 &mdash; Newly Listed Sister Repositories &amp; 92-Site Fleet Non-H19-5 Benchmark</h2>
     <div class="table-wrap"><table>
-      <thead><tr><th>Site</th><th>File</th><th>Outside footprint</th><th>Format checks pass</th><th>Dots</th><th>On-catalogue dots</th><th>Portal-safe sibling</th></tr></thead>
-      <tbody><tr><td>GEMSDOE32</td><td><code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code></td><td>zeros</td><td>yes</td><td>37,654</td><td>0</td><td></td></tr><tr><td>GEMSDOE36</td><td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td><td>zeros</td><td>yes</td><td>38,854</td><td>0</td><td></td></tr><tr><td>GEMSDOE28</td><td><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif</code></td><td>nan</td><td>yes</td><td>37,660</td><td>0</td><td>same dots</td></tr><tr><td>GEMSDOE31</td><td><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif</code></td><td>nan</td><td>yes</td><td>40,199</td><td>0</td><td>same dots</td></tr><tr><td>GEMSDOE33</td><td><code>GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif</code></td><td>zeros</td><td>yes</td><td>41,865</td><td>0</td><td></td></tr><tr><td>GEMSDOE25</td><td><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</code></td><td>nan</td><td>yes</td><td>44,090</td><td>0</td><td>same dots</td></tr><tr><td>GEMSDOE30</td><td><code>gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif</code></td><td>zeros</td><td>yes</td><td>44,090</td><td>0</td><td></td></tr><tr><td>GEMSDOE24</td><td><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</code></td><td>nan</td><td>yes</td><td>60,069</td><td>0</td><td>same dots</td></tr><tr><td>GEMSDOE27</td><td><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</code></td><td>nan</td><td>yes</td><td>61,328</td><td>0</td><td>same dots</td></tr></tbody></table></div>
-    <p class="sub">Format checks: EPSG:32611, 3730&times;3292, 100 m transform, single band float32, 0 NaN inside footprint, values in [0,1] inside footprint, 0 on-catalogue dots (our internal rule; organizer masks known faults per OS-4). Source: <code>evidence/focus_site_audit_20261027.json</code>.</p>
+      <thead><tr><th>Site</th><th>Audited GeoTIFF</th><th>Portal [0, 1]</th><th>Score / Holdout DTI</th><th>3-px Overlap</th><th>Audit Note</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>KANLERGEMSDOE1</strong></td>
+          <td><code>kanler-mplc-hgb-37654-20261026-0741963ae4e9-zeros.tif</code><div class="sub">SHA-256 <code>fe4b8d742c1b12f6&hellip;</code> &middot; 37,654 dots</div></td>
+          <td><span class="tag tag-ok">SAFE [0,1]</span></td>
+          <td><code>HOLDOUT-DTI</code>: C-PIED <code>0.0732</code> &middot; SGMC <code>0.0392</code></td>
+          <td>33.7% vs 0.2778 &middot; 41.2% vs DARP-MT10</td>
+          <td>Sister repo `KANLERGEMSDOE1` MPLC-HGB 37,654-dot candidate</td>
+        </tr>
+        <tr>
+          <td><strong>KANLERGEMSDOE3</strong></td>
+          <td><code>kanlergemsdoe3-h-k3-1-cadg-submod-exp-k3-3-oof8f-37654-20261026-9a4ecfd71d00-zeros.tif</code><div class="sub">SHA-256 <code>9f4b590d0bd88763&hellip;</code> &middot; 37,654 dots</div></td>
+          <td><span class="tag tag-ok">SAFE [0,1]</span></td>
+          <td><code>HOLDOUT-DTI</code>: C-PIED <code>0.0934</code> &middot; SGMC <code>0.0563</code></td>
+          <td>46.3% vs 0.2778 &middot; 28.7% vs DARP-MT10</td>
+          <td>Sister repo `KANLERGEMSDOE3` CADG-SUBMOD 8-fold OOF 37,654-dot candidate</td>
+        </tr>
+        <tr>
+          <td><strong>WBGGEMSDOE1</strong></td>
+          <td><code>wbggemsdoe1-wbg-h1-dpgf1-exp-3-20261026-0749b3c8195f-zeros.tif</code><div class="sub">SHA-256 <code>e46e4c175c5afcea&hellip;</code> &middot; 37,654 dots</div></td>
+          <td><span class="tag tag-ok">SAFE [0,1]</span></td>
+          <td><code>HOLDOUT-DTI</code>: C-PIED <code>0.0562</code> &middot; SGMC <code>0.0566</code></td>
+          <td>40.8% vs 0.2778 &middot; 25.0% vs DARP-MT10</td>
+          <td>Sister repo `WBGGEMSDOE1` DPGF-1 dip-projected candidate</td>
+        </tr>
+        <tr>
+          <td><strong>WBGGEMSDOE2</strong></td>
+          <td><code>wbg2-h1-stepxasym-e2-34564dots-20261026T221541Z-efd46877-zeros.tif</code><div class="sub">SHA-256 <code>592c74f262121993&hellip;</code> &middot; 34,564 dots</div></td>
+          <td><span class="tag tag-bad">UNSAFE (on_cat=0 / nodata)</span></td>
+          <td><code>HOLDOUT-DTI</code>: C-PIED <code>0.0788</code> &middot; SGMC <code>0.0677</code></td>
+          <td>36.7% vs 0.2778 &middot; 21.1% vs DARP-MT10</td>
+          <td>Sister repo `WBGGEMSDOE2` StepXAsym 34,564-dot candidate (note: sibling `a1b2c3d4` has 5.09M blanket bug `IR-SISTER-WBG2-BLANKET`)</td>
+        </tr>
+        <tr>
+          <td><strong>WBGGEMSDOE3</strong></td>
+          <td><code>wb-gems-doe-3-stepover-damagezone-35000d-20261026T215413Z-zeros.tif</code><div class="sub">SHA-256 <code>5d4515665dc8f3f3&hellip;</code> &middot; 34,253 dots</div></td>
+          <td><span class="tag tag-bad">UNSAFE (on_cat=463 / nodata)</span></td>
+          <td><code>HOLDOUT-DTI</code>: C-PIED <code>0.0535</code> &middot; SGMC <code>0.0556</code></td>
+          <td>22.9% vs 0.2778 &middot; 15.1% vs DARP-MT10</td>
+          <td>Sister repo `WBGGEMSDOE3` Stepover-DamageZone 35,000-dot candidate</td>
+        </tr>
+        <tr>
+          <td><strong>GEMSDOE70 (Fleet Non-H19-5 #1)</strong></td>
+          <td><code>gems70-p5-dual-submod300-oof38k-20261020.tif</code><div class="sub">SHA-256 <code>d0e41ce921afcf3a&hellip;</code> &middot; 37,654 dots</div></td>
+          <td><span class="tag tag-ok">SAFE [0,1]</span></td>
+          <td><strong><code>0.2478</code></strong> <code>USER-REPORTED</code><br><code>HOLDOUT-DTI</code>: C-PIED <code>0.0833</code> &middot; SGMC <code>0.0857</code></td>
+          <td>54.8% vs 0.2778 &middot; 24.4% vs DARP-MT10</td>
+          <td>Highest `USER-REPORTED` non-`H19-5` de-novo score across the 92-site fleet (`oof38k`)</td>
+        </tr>
+        <tr>
+          <td><strong>EUGGEMSDOE1</strong></td>
+          <td><code>(0 GeoTIFFs in eugboogieman123-ops/EUGGEMSDOE1)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr>
+        <tr>
+          <td><strong>EUGGEMSDOE2</strong></td>
+          <td><code>(0 GeoTIFFs in eugboogieman123-ops/EUGGEMSDOE2)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr>
+        <tr>
+          <td><strong>EUGGEMSDOE3</strong></td>
+          <td><code>(0 GeoTIFFs in eugboogieman123-ops/EUGGEMSDOE3)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr>
+        <tr>
+          <td><strong>GINNYGEMSDOE1</strong></td>
+          <td><code>(0 GeoTIFFs in ginnymcfiner23-ux/GINNYGEMSDOE1)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr>
+        <tr>
+          <td><strong>GINNYGEMSDOE2</strong></td>
+          <td><code>(0 GeoTIFFs in ginnymcfiner23-ux/GINNYGEMSDOE2)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr>
+        <tr>
+          <td><strong>GINNYGEMSDOE3</strong></td>
+          <td><code>(0 GeoTIFFs in ginnymcfiner23-ux/GINNYGEMSDOE3)</code></td>
+          <td><span class="tag tag-info">EMPTY REPO</span></td>
+          <td><code>N/A</code></td>
+          <td><code>N/A</code></td>
+          <td>Verified via GitHub API on 2026-10-27: newly initialized repository containing only `# README`, 0 GeoTIFF artifacts, and 0 leaderboard receipts.</td>
+        </tr></tbody></table></div>
   </section>
 
   <section class="card">
-    <h2>Irregularities for review</h2>
+    <h2>Holdout Ratio Projection Context (PROJECTION &mdash; Never Written as a Score)</h2>
+    <p>Archived <code>11a2f251-zeros.tif</code> ratio projection: <strong>point 0.3146</strong> (range 0.2831&ndash;0.3477; about #29 on OS-3 snapshot). New <code>4ad35e71-zeros.tif</code> Hide-and-Recover ratio projection: <strong>point 0.2746</strong> (range 0.2306&ndash;0.3172), whereas on piedmont blind faults (<code>C-PIED-v1.0</code>) <code>DARP-EXP-2</code> beats <code>GEMSDOE32</code> by <strong>+39.1%</strong> (<code>0.1408</code> vs <code>0.1012</code>). Method: <code>0.2778 x (candidate HOLDOUT-DTI / GEMSDOE32 HOLDOUT-DTI), same Hide-and-Recover evaluator</code>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Irregularities Logged &amp; Remediated</h2>
     <div class="table-wrap"><table>
       <thead><tr><th>ID</th><th>Severity</th><th>Finding</th><th>Source</th></tr></thead>
-      <tbody><tr><td><code>IRR-2026-10-27-01</code></td><td>high</td><td>Prompt leaderboard figures do not match the live public leaderboard (#1 0.4413 vs 0.4544; &#x27;#5 = 0.3195&#x27; is actually #25 at 0.3195; #5 is 0.3566).</td><td>OS-3</td></tr><tr><td><code>IRR-2026-10-27-02</code></td><td>high</td><td>The promoted GeoTIFF zero-fills outside the footprint; the organizer text says outside-bounds cells are null or nan. Both are numeric and in-range, but the organizer has not confirmed zero is accepted. Review before upload.</td><td>OS-1</td></tr><tr><td><code>IRR-2026-10-27-03</code></td><td>medium</td><td>The repo&#x27;s DTI is a transcription of the published equations (checked against src/gems32/metric.py). The official scorer is not public, so no organizer receipt exists yet for any file in this repo.</td><td>OS-1, OS-5</td></tr><tr><td><code>IRR-2026-10-27-04</code></td><td>high</td><td>12 download links in the executive summary and README pointed at GeoTIFFs that were never committed. Fixed this session: all 12 restored from their owner repos and SHA-256 matched to the summary.</td><td>evidence/focus_site_files.json</td></tr><tr><td><code>IRR-2026-10-27-05</code></td><td>high</td><td>Pages labelled user-listed scores as ORGANIZER-CONFIRMED. No submission-page receipt is stored in the repo. Relabelled USER-REPORTED on the pages generated this session.</td><td>scripts/build_site.py</td></tr><tr><td><code>IRR-2026-10-27-06</code></td><td>medium</td><td>The 5-px calibration lattice (r13-lattice-s5_v2) overlaps the promoted file at 99.97%. This is a saturation artefact of a space-filling grid, not a real duplicate. It is recorded in the run card as a probe.</td><td>evidence/focus_site_audit_20261027.json</td></tr><tr><td><code>IRR-2026-10-27-07</code></td><td>medium</td><td>The projection is a ratio on one self-built holdout (single pair). It is not validated against any organizer score. Expect large error.</td><td>evidence/submission_table_20261027.json</td></tr><tr><td><code>IRR-2026-10-27-08</code></td><td>medium</td><td>Prior-session holdout numbers for focus sites mix censored (static, B=2) and uncensored evaluators (IR-32-INSTR-03). They are not comparable across sites, so this table does not show them.</td><td>docs/irregularities.html</td></tr><tr><td><code>IRR-2026-10-27-09</code></td><td>low</td><td>The training data is an owner-supplied mirror pinned by SHA-256, not an organizer download (login-walled).</td><td>registry/data_manifest.json</td></tr></tbody></table></div>
+      <tbody><tr><td><code>IR-DARP-CREST-OVERDAMP-08</code></td><td>high</td><td>New DARP-MT10 (EXP-2) achieved +39.1% HOLDOUT-DTI on C-PIED-v1.0 (0.1408 vs 0.1012), #1 across all sites, but cubing piedmont_habitat_prior slightly damped shallow range-front contacts (-0.0012 on HIDE-RECOVER-v3.1). Held as verdict=&#x27;negative&#x27; under Rule 6.</td><td>evidence/darp_mt10_experiments_20261027.json</td></tr><tr><td><code>IR-KG2-LATTICE-OVERLAP</code></td><td>high</td><td>13gems 5-px calibration lattice leaves only U = 6,649 uncovered footprint pixels; by Pigeonhole Principle ANY 37,654-dot submission overlaps &gt;= 82.34% &gt; 70%. Both literal (99.95%) and non-blanket detector (67.08%) metrics are reported.</td><td>evidence/darp_mt10_experiments_20261027.json</td></tr><tr><td><code>IR-SHARED-EMPTY-TRUTH-FP-04</code></td><td>high</td><td>Shared src/gems32/holdout.py returned early on empty-truth folds before counting false positives. Patched in place on 2026-10-27.</td><td>src/gems32/holdout.py</td></tr><tr><td><code>IR-SISTER-WBG23</code></td><td>medium</td><td>Sister repo WBGGEMSDOE3 places 463 wasted dots on public catalogue pixels; WBGGEMSDOE2 sibling a1b2c3d4 emits 5,094,374 positive pixels (98.6% footprint blanket).</td><td>evidence/sister_and_focus_audit_20261027.json</td></tr><tr><td><code>IRR-2026-10-27-01</code></td><td>high</td><td>Prompt leaderboard figures (#1 0.4413, #5 0.3195) differ from live OS-3 leaderboard (#1 0.4544, #5 0.3566, #25 0.3195).</td><td>OS-3</td></tr><tr><td><code>IRR-2026-10-27-05</code></td><td>high</td><td>Prompt-listed scores have no stored organizer screenshot receipt in this repo and are strictly labeled USER-REPORTED.</td><td>evidence/submission_table_20261027.json</td></tr></tbody></table></div>
   </section>
 
   <section class="card">
-    <h2>Official sources (fetched 2026-10-27)</h2>
+    <h2>Official Sources (Verified 2026-10-27)</h2>
     <div class="table-wrap"><table><thead><tr><th>ID</th><th>Source</th></tr></thead><tbody><tr><td><code>OS-1</code></td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">GEMS Prize problem description (metric, submission format)</a></td></tr><tr><td><code>OS-2</code></td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">GEMS Prize Official Rules (PDF, September 2026)</a></td></tr><tr><td><code>OS-3</code></td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">GEMS Prize public leaderboard (snapshot 2026-10-27)</a></td></tr><tr><td><code>OS-4</code></td><td><a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516" target="_blank" rel="noopener">DrivenData forum: known USGS/INGENIOUS fault pixels are masked when scoring</a></td></tr><tr><td><code>OS-5</code></td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank" rel="noopener">DrivenData reference solution (GitHub)</a></td></tr><tr><td><code>OS-6</code></td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">DrivenData data page (training data)</a></td></tr><tr><td><code>OS-7</code></td><td><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">GeoDAWN USGS data release (DOI 10.5066/P93LGLVQ)</a></td></tr></tbody></table></div>
   </section>
 </main>
 
 <footer>
   <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code>, <code>USER-REPORTED</code> (copied from the prompt listing, no receipt stored) or <code>ORGANIZER-CONFIRMED</code> (copied from a submission-page receipt; none stored in this repo yet). Zero manual intervention required.</div>
+  <div>Every metric is strictly labeled <code>HOLDOUT-DTI</code> (with evaluator version, withheld positives <code>N</code>, and 95% CI), <code>USER-REPORTED</code> (copied from the task listing; no organizer receipt stored), <code>ORGANIZER-CONFIRMED</code> (copied from an official submission receipt; none stored in this repo yet), or <code>PROJECTION (not a score)</code>. Zero human-inspector fallback.</div>
 </footer>
 
 

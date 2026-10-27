@@ -11,8 +11,18 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+def _resolve_default_data_dir() -> Path:
+    env = os.environ.get("GEMS_DATA_DIR")
+    if env:
+        return Path(env).expanduser()
+    cache = ROOT / ".cache" / "gems_data"
+    if (cache / "sample_submission.tif").exists() or (cache / "training_features.tif").exists():
+        return cache
+    return ROOT / "data"
+
+
 ROOT: Path = Path(__file__).resolve().parents[2]
-DATA_DIR: Path = Path(os.environ.get("GEMS_DATA_DIR", ROOT / "data"))
+DATA_DIR: Path = _resolve_default_data_dir()
 GROUP_DIR: Path = Path(os.environ.get("GEMS_GROUP_DIR", DATA_DIR / "group_subs"))
 EVIDENCE_DIR: Path = ROOT / "evidence"
 DOCS_DIR: Path = ROOT / "docs"
