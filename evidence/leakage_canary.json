@@ -2,7 +2,7 @@
   "protocol_rule": "Rule 4 Leakage Canary (single-feature holdout AUC <= 0.90)",
   "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0 (draw20 spatially-blocked withheld segments)",
   "threshold": 0.9,
-  "total_features_tested": 50,
+  "total_features_tested": 62,
   "n_withheld_positive_pixels_tested": 11172,
   "n_negative_pixels_tested": 240000,
   "max_single_feature_auc": 0.795377,
@@ -112,6 +112,12 @@
       "oriented_auc": 0.554678
     },
     {
+      "feature": "dem10_junc_concave",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.446659,
+      "oriented_auc": 0.553341
+    },
+    {
       "feature": "piedmont_apron_zone",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.552403,
@@ -160,16 +166,64 @@
       "oriented_auc": 0.539698
     },
     {
-      "feature": "sb_heatflow_excess",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.464369,
-      "oriented_auc": 0.535631
+      "feature": "dem10_steep_subsurf_corrob",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.538812,
+      "oriented_auc": 0.538812
+    },
+    {
+      "feature": "void_bridged_scarp_unified",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.538536,
+      "oriented_auc": 0.538536
+    },
+    {
+      "feature": "dem10_piedmont_relnorm",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.537459,
+      "oriented_auc": 0.537459
+    },
+    {
+      "feature": "listric_updip_worm",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.536821,
+      "oriented_auc": 0.536821
+    },
+    {
+      "feature": "listric_updip_grav",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.536738,
+      "oriented_auc": 0.536738
+    },
+    {
+      "feature": "comcat_updip_swarms",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.527629,
+      "oriented_auc": 0.527629
+    },
+    {
+      "feature": "st_aniso_seamdamped",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.527399,
+      "oriented_auc": 0.527399
     },
     {
       "feature": "base_flexure_curv",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.526121,
       "oriented_auc": 0.526121
+    },
+    {
+      "feature": "sb_heatflow_excess",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.473965,
+      "oriented_auc": 0.526035
+    },
+    {
+      "feature": "hf_borehole_upflow",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.473965,
+      "oriented_auc": 0.526035
     },
     {
       "feature": "grav_hg",
@@ -202,10 +256,22 @@
       "oriented_auc": 0.523514
     },
     {
+      "feature": "dem10_piedmont_worm",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.522275,
+      "oriented_auc": 0.522275
+    },
+    {
       "feature": "mag_tmi_hg",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.520803,
       "oriented_auc": 0.520803
+    },
+    {
+      "feature": "hydro_conduit_coupled",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.520717,
+      "oriented_auc": 0.520717
     },
     {
       "feature": "gallardo_meju_xgrad",
@@ -262,10 +328,10 @@
       "oriented_auc": 0.508707
     },
     {
-      "feature": "hydro_conduit_coupled",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.507504,
-      "oriented_auc": 0.507504
+      "feature": "scarp3m_kinematic_coh",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.508133,
+      "oriented_auc": 0.508133
     },
     {
       "feature": "gdr_geotherm_upgrad",
@@ -308,7 +374,13 @@
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.498078,
       "oriented_auc": 0.501922
+    },
+    {
+      "feature": "blm_epithermal_struct",
+      "group": "ext27_multi_scale_discovery",
+      "raw_auc": 0.500192,
+      "oriented_auc": 0.500192
     }
   ],
-  "elapsed_seconds": 155.75
+  "elapsed_seconds": 17.8
 }

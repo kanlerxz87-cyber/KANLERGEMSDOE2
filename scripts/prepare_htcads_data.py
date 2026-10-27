@@ -18,12 +18,13 @@ def main() -> int:
     t0 = time.time()
     ddir = data_dir()
     wdir = work_dir()
-    print(f"[prepare_data] Building 46-channel label-free HTCADS stack from {ddir} -> {wdir} ...")
+    print(f"[prepare_data] Building 58-channel label-free HTCADS + EXT27 stack from {ddir} -> {wdir} ...")
     stack = htcads.build_static_feature_stack(ddir, wdir)
+    stack["X_ext"] = htcads.build_ext27_feature_stack(ddir, wdir)
     t_feat = time.time() - t0
     print(f"[prepare_data] Feature stack ready in {t_feat:.1f}s (footprint={int(stack['foot'].sum()):,} px).")
 
-    print("[prepare_data] Loading Hide-and-Recover holdout context & running Rule 4 Leakage Canary on all 50 features...")
+    print("[prepare_data] Loading Hide-and-Recover holdout context & running Rule 4 Leakage Canary on all 62 features...")
     ctx = holdout.load_holdout_context(ddir)
     canary = htcads.run_leakage_canary(stack, ctx)
     canary["elapsed_seconds"] = round(time.time() - t0, 2)

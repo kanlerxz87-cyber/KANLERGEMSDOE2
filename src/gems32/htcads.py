@@ -95,6 +95,21 @@ VISIBLE_CAT_FEATURE_NAMES: list[str] = [
     "vis_aniso_prior",
 ]
 
+EXT27_FEATURE_NAMES: list[str] = [
+    "listric_updip_grav",
+    "listric_updip_worm",
+    "st_aniso_seamdamped",
+    "dem10_piedmont_relnorm",
+    "dem10_piedmont_worm",
+    "dem10_junc_concave",
+    "dem10_steep_subsurf_corrob",
+    "scarp3m_kinematic_coh",
+    "hf_borehole_upflow",
+    "comcat_updip_swarms",
+    "blm_epithermal_struct",
+    "void_bridged_scarp_unified",
+]
+
 
 def _grad_yx_f32(arr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Memory-lean float32 central differences (avoids float64 promotion)."""
@@ -335,12 +350,16 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
         if int(meta["n_fp"]) == n_fp and int(meta["n_sub"]) == len(SUBSURF_FEATURE_NAMES):
             X_sub = np.load(sub_path, mmap_mode="r")
             X_lid = np.load(lid_path, mmap_mode="r")
-            return {
+            out = {
                 "foot": foot,
                 "lidar_valid_fp": meta["lidar_valid_fp"].astype(bool),
                 "X_sub": X_sub,
                 "X_lid": X_lid,
             }
+            ext_path = cache_dir / "X_ext27_fp_f32.npy"
+            if ext_path.exists():
+                out["X_ext"] = np.load(ext_path, mmap_mode="r")
+            return out
 
     X_sub = np.lib.format.open_memmap(sub_path, mode="w+", dtype=np.float32, shape=(n_fp, len(SUBSURF_FEATURE_NAMES)))
     X_lid = np.lib.format.open_memmap(lid_path, mode="w+", dtype=np.float32, shape=(n_fp, len(LIDAR_FEATURE_NAMES)))
@@ -704,12 +723,255 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
         n_lid=len(LIDAR_FEATURE_NAMES),
         lidar_valid_fp=lidar_valid[foot].astype(np.uint8),
     )
-    return {
+    out = {
         "foot": foot,
         "lidar_valid_fp": lidar_valid[foot],
         "X_sub": np.load(sub_path, mmap_mode="r"),
         "X_lid": np.load(lid_path, mmap_mode="r"),
     }
+    ext_path = cache_dir / "X_ext27_fp_f32.npy"
+    if ext_path.exists():
+        out["X_ext"] = np.load(ext_path, mmap_mode="r")
+    return out
+
+
+def build_ext27_feature_stack(ddir: Path, cache_dir: Path) -> np.ndarray:
+    """Build or load cached 12-channel 2026-10-27 discovery stack (`X_ext27_fp_f32.npy`, 5,167,373 x 12 float32)."""
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    ext_path = cache_dir / "X_ext27_fp_f32.npy"
+    with rasterio.open(ddir / "sample_submission.tif") as ds:
+        foot = np.isfinite(ds.read(1))
+        transform = ds.transform
+        H, W = ds.height, ds.width
+    n_fp = int(foot.sum())
+
+    if ext_path.exists():
+        arr = np.load(ext_path, mmap_mode="r")
+        if arr.shape == (n_fp, len(EXT27_FEATURE_NAMES)):
+            return arr
+
+    from scipy.ndimage import map_coordinates
+
+    stack = build_static_feature_stack(ddir, cache_dir)
+    X_sub = np.load(cache_dir / "X_subsurf_fp_f32.npy", mmap_mode="r+")
+    X_lid = stack["X_lid"]
+    lidar_valid_fp = stack["lidar_valid_fp"]
+    X_ext = np.lib.format.open_memmap(ext_path, mode="w+", dtype=np.float32, shape=(n_fp, len(EXT27_FEATURE_NAMES)))
+
+    core_inds = None
+
+    def _read_core(src, idx: int) -> np.ndarray:
+        nonlocal core_inds
+        a = src.read(idx).astype(np.float32)
+        valid = foot & np.isfinite(a) & (a > -1e30)
+        filled, core_inds = _fill_outside_with_inds(a, valid, core_inds)
+        return filled
+
+    with rasterio.open(ddir / "training_features.tif") as src:
+        iso_grav = _read_core(src, 13)
+        grav_hg_raw = _read_core(src, 18)
+        rtp = _read_core(src, 2)
+        base_depth = _read_core(src, 15)
+        elev = _read_core(src, 1)
+
+    det_elev = elev - gaussian_filter(elev, sigma=25.0, mode="nearest")
+    ey, ex = _grad_yx_f32(gaussian_filter(det_elev, sigma=5.0, mode="nearest"))
+    en = np.hypot(ey, ex).astype(np.float32) + 1e-6
+    uy_up = (ey / en).astype(np.float32)
+    ux_up = (ex / en).astype(np.float32)
+    del elev, det_elev, ey, ex, en
+
+    bd_pos = np.maximum(base_depth - float(np.percentile(base_depth[foot], 10.0)), 0.0)
+    z_norm = np.clip(bd_pos / (float(np.percentile(bd_pos[foot], 95.0)) + 1e-5), 0.0, 1.5).astype(np.float32)
+    shift_px = (2.8 + 4.2 * z_norm).astype(np.float32)
+    del base_depth, bd_pos
+
+    grav_hg = _pos_norm_2d(grav_hg_raw, foot)
+    grav_r15, _ = _hessian_ridge_and_strike(iso_grav, sigma=1.5, foot=foot)
+    grav_comb = (0.55 * grav_r15 + 0.45 * grav_hg).astype(np.float32)
+    del grav_hg_raw, grav_hg, grav_r15, iso_grav
+
+    yy, xx = np.indices((H, W), dtype=np.float32)
+    listric_up = map_coordinates(grav_comb, [yy - shift_px * uy_up, xx - shift_px * ux_up], order=1, mode="nearest").astype(np.float32)
+    del grav_comb, shift_px
+    listric_up = _pos_norm_2d(listric_up, foot)
+    X_ext[:, 0] = listric_up[foot]
+    X_ext[:, 1] = _multi_azimuth_worm(listric_up, length_px=13, foot=foot)[foot]
+    del listric_up
+    X_ext.flush()
+
+    acq_path = ddir / "external" / "acquisition_block_id_100m.tif"
+    if acq_path.exists():
+        with rasterio.open(acq_path) as ds:
+            acq = ds.read(1).astype(np.float32)
+        ay, ax = _grad_yx_f32(acq)
+        seam_edge = (np.hypot(ay, ax) > 0.01) & foot
+        d_seam = distance_transform_edt(~seam_edge).astype(np.float32)
+        seam_damp = (1.0 - 0.65 * np.exp(-((d_seam / 3.0) ** 2))).astype(np.float32)
+        del acq, ay, ax, seam_edge, d_seam
+    else:
+        seam_damp = np.ones((H, W), dtype=np.float32)
+
+    gy_m, gx_m = _grad_yx_f32(gaussian_filter(rtp, sigma=1.2, mode="nearest"))
+    del rtp
+    jxx = gaussian_filter(gx_m * gx_m, sigma=3.0, mode="nearest")
+    jyy = gaussian_filter(gy_m * gy_m, sigma=3.0, mode="nearest")
+    jxy = gaussian_filter(gx_m * gy_m, sigma=3.0, mode="nearest")
+    del gy_m, gx_m
+    tr = jxx + jyy + 1e-6
+    det = jxx * jyy - jxy * jxy
+    disc = np.sqrt(np.maximum(0.25 * tr * tr - det, 0.0), dtype=np.float32)
+    lam1 = 0.5 * tr + disc
+    lam2 = np.maximum(0.5 * tr - disc, 0.0)
+    coh = ((lam1 - lam2) / (lam1 + lam2 + 1e-6)) ** 2
+    st_aniso = _pos_norm_2d(coh * np.sqrt(lam1) * seam_damp, foot)
+    X_ext[:, 2] = st_aniso[foot]
+    del jxx, jyy, jxy, tr, det, disc, lam1, lam2, coh, st_aniso, seam_damp
+    X_ext.flush()
+
+    dem10_dir = ddir / "dem10"
+    def _load_dem10(name: str) -> np.ndarray:
+        a = np.load(dem10_dir / name).reshape((H, W)).astype(np.float32)
+        v = foot & np.isfinite(a)
+        filled, _ = _fill_outside_with_inds(a, v, None)
+        return filled
+
+    d10_rel = np.maximum(_load_dem10("dem10_resid_range.f32.npy"), 1.5)
+    d10_onesided = _load_dem10("dem10_onesided3.f32.npy")
+    d10_step = _load_dem10("dem10_onesided.f32.npy")
+    d10_hgm = _load_dem10("dem10_hgm20_max.f32.npy")
+    d10_brk = _load_dem10("dem10_hgm50_max.f32.npy")
+    d10_p95 = _load_dem10("dem10_slope_mean.f32.npy")
+    d10_steep = _load_dem10("dem10_steep_ratio_max.f32.npy")
+    d10_tpi = -_load_dem10("dem10_hgm200_mean.f32.npy")
+    d10_prof = _load_dem10("dem10_curv_absmax.f32.npy")
+    d10_plan = _load_dem10("dem10_slope_std.f32.npy")
+
+    pied_scarp_raw = (0.40 * d10_onesided + 0.35 * d10_step + 0.25 * d10_brk) / (np.power(d10_rel, 0.55) + 2.0)
+    pied_scarp = _pos_norm_2d(pied_scarp_raw, foot)
+    X_ext[:, 3] = pied_scarp[foot]
+    X_ext[:, 4] = _multi_azimuth_worm(pied_scarp, length_px=9, foot=foot)[foot]
+
+    junc_raw = np.maximum(-d10_tpi, 0.0) * (0.55 * d10_prof + 0.45 * d10_plan) / (np.power(d10_rel, 0.45) + 2.0)
+    X_ext[:, 5] = _pos_norm_2d(junc_raw, foot)[foot]
+
+    sub_struct_fp = np.maximum.reduce([
+        np.asarray(X_sub[:, 1], dtype=np.float32),
+        np.asarray(X_sub[:, 2], dtype=np.float32),
+        np.asarray(X_sub[:, 4], dtype=np.float32),
+        np.asarray(X_sub[:, 8], dtype=np.float32),
+        np.asarray(X_ext[:, 0], dtype=np.float32),
+    ])
+    sub_struct_2d = np.zeros((H, W), dtype=np.float32)
+    sub_struct_2d[foot] = sub_struct_fp
+    steep_scarp = _pos_norm_2d((0.45 * d10_hgm + 0.30 * d10_p95 + 0.25 * d10_steep) * (0.25 + 0.75 * sub_struct_2d), foot)
+    X_ext[:, 6] = steep_scarp[foot]
+    del d10_rel, d10_onesided, d10_step, d10_hgm, d10_brk, d10_p95, d10_steep, d10_tpi, d10_prof, d10_plan, junc_raw, steep_scarp
+    X_ext.flush()
+
+    with rasterio.open(ddir / "external" / "h52_scarp3m_100m.tif") as ds:
+        s3_p95 = ds.read(1).astype(np.float32)
+        s3_coh = ds.read(3).astype(np.float32)
+        s3_std = ds.read(4).astype(np.float32)
+        s3_v = (ds.read(5) > 0.05) & foot & np.isfinite(s3_p95)
+    s3_raw = np.where(s3_v, np.maximum(s3_p95, 0.0) * np.clip(s3_coh, 0.0, 1.0) * np.exp(-np.clip(s3_std, 0.0, 90.0) / 38.0), 0.0).astype(np.float32)
+    s3_norm = np.zeros((H, W), dtype=np.float32)
+    if s3_v.any():
+        s3_norm[s3_v] = np.clip(s3_raw[s3_v] / (float(np.percentile(s3_raw[s3_v], 99.2)) + 1e-6), 0.0, 1.5)
+    s3_worm = _multi_azimuth_worm(s3_norm, length_px=7, foot=s3_v)
+    X_ext[:, 7] = (0.55 * s3_norm[foot] + 0.45 * s3_worm[foot]).astype(np.float32)
+    del s3_p95, s3_coh, s3_std, s3_raw, s3_worm
+
+    lid_scarp_fp = (0.60 * np.asarray(X_lid[:, 8], dtype=np.float32) + 0.40 * np.asarray(X_lid[:, 7], dtype=np.float32))
+    s3_fp = np.asarray(X_ext[:, 7], dtype=np.float32)
+    d10_fp = (0.60 * np.asarray(X_ext[:, 4], dtype=np.float32) + 0.40 * np.asarray(X_ext[:, 3], dtype=np.float32))
+
+    def _qscale(v: np.ndarray, mask: np.ndarray) -> np.ndarray:
+        p98 = float(np.percentile(v[mask], 98.5)) + 1e-6
+        return np.clip(v / p98, 0.0, 1.5).astype(np.float32)
+
+    lid_q = _qscale(lid_scarp_fp, lidar_valid_fp)
+    s3_q = _qscale(s3_fp, s3_v[foot]) if s3_v.any() else np.zeros(n_fp, dtype=np.float32)
+    d10_q = _qscale(d10_fp, np.ones(n_fp, dtype=bool))
+    unified_fp = np.where(
+        lidar_valid_fp,
+        0.52 * lid_q + 0.24 * s3_q + 0.24 * d10_q,
+        np.where(s3_v[foot], 0.55 * s3_q + 0.45 * d10_q, d10_q),
+    ).astype(np.float32)
+    X_ext[:, 11] = unified_fp
+    del lid_scarp_fp, s3_fp, d10_fp, lid_q, s3_q, d10_q, unified_fp, pied_scarp, s3_norm, s3_v
+    X_ext.flush()
+
+    hf_csv = ddir / "external" / "usgs_heat_flow_wells_epsg32611.csv"
+    hf_grid = np.zeros((H, W), dtype=np.float32)
+    if hf_csv.exists():
+        import csv
+        with hf_csv.open("r", encoding="utf-8", errors="ignore") as f:
+            for row in csv.DictReader(f):
+                try:
+                    x_m = float(row["x_32611"])
+                    y_m = float(row["y_32611"])
+                    hf = float(row["hf"])
+                except Exception:
+                    continue
+                if not np.isfinite(hf) or hf <= 65.0:
+                    continue
+                c_idx, r_idx = ~transform * (x_m, y_m)
+                ri, ci = int(round(r_idx)), int(round(c_idx))
+                if 0 <= ri < H and 0 <= ci < W:
+                    w_hf = float(np.log1p(min(max(hf - 65.0, 0.0), 1500.0)))
+                    if w_hf > hf_grid[ri, ci]:
+                        hf_grid[ri, ci] = w_hf
+    hf_plume = 0.60 * gaussian_filter(hf_grid, sigma=16.0, mode="nearest") + 0.40 * gaussian_filter(hf_grid, sigma=38.0, mode="nearest")
+    hf_up = _pos_norm_2d(hf_plume * (0.20 + 0.80 * sub_struct_2d), foot, q=99.5)
+    X_ext[:, 8] = hf_up[foot]
+    X_sub[:, 35] = _pos_norm_2d(hf_plume, foot, q=99.5)[foot]
+    X_sub.flush()
+    del hf_grid, hf_plume, hf_up
+
+    eq_csv = ddir / "external" / "usgs_comcat_geodawn.csv"
+    eq_grid = np.zeros((H, W), dtype=np.float32)
+    if eq_csv.exists():
+        import csv
+        from pyproj import Transformer
+        tr_ll = Transformer.from_crs("EPSG:4326", "EPSG:32611", always_xy=True)
+        with eq_csv.open("r", encoding="utf-8", errors="ignore") as f:
+            for row in csv.DictReader(f):
+                try:
+                    lat = float(row["latitude"])
+                    lon = float(row["longitude"])
+                    dep = max(float(row.get("depth", 6.0) or 6.0), 1.0)
+                    mag = max(float(row.get("mag", 1.5) or 1.5), 0.5)
+                except Exception:
+                    continue
+                x_m, y_m = tr_ll.transform(lon, lat)
+                c_idx, r_idx = ~transform * (x_m, y_m)
+                ri, ci = int(round(r_idx)), int(round(c_idx))
+                if 0 <= ri < H and 0 <= ci < W:
+                    sh = min(dep * 8.3, 45.0)
+                    ri_u = int(np.clip(round(ri - sh * float(uy_up[ri, ci])), 0, H - 1))
+                    ci_u = int(np.clip(round(ci - sh * float(ux_up[ri, ci])), 0, W - 1))
+                    eq_grid[ri_u, ci_u] += float(1.0 + 0.5 * mag)
+    eq_sm = 0.65 * gaussian_filter(eq_grid, sigma=8.0, mode="nearest") + 0.35 * gaussian_filter(eq_grid, sigma=20.0, mode="nearest")
+    X_ext[:, 9] = _pos_norm_2d(eq_sm * (0.25 + 0.75 * sub_struct_2d), foot, q=99.5)[foot]
+    del eq_grid, eq_sm, uy_up, ux_up
+
+    with rasterio.open(ddir / "external" / "blm_closed_claim_distance_m.tif") as ds:
+        blm_d = ds.read(1).astype(np.float32)
+    blm_prox = np.exp(-np.clip(blm_d, 0.0, 20000.0) / 1600.0).astype(np.float32)
+    alter_fp = np.maximum.reduce([
+        np.asarray(X_sub[:, 14], dtype=np.float32),
+        np.asarray(X_sub[:, 16], dtype=np.float32),
+        np.asarray(X_sub[:, 17], dtype=np.float32),
+        np.asarray(X_sub[:, 18], dtype=np.float32),
+    ])
+    alter_2d = np.zeros((H, W), dtype=np.float32)
+    alter_2d[foot] = alter_fp
+    X_ext[:, 10] = _pos_norm_2d(blm_prox * (0.45 * sub_struct_2d + 0.55 * alter_2d), foot, q=99.5)[foot]
+    del blm_d, blm_prox, alter_fp, alter_2d, sub_struct_2d, sub_struct_fp
+    X_ext.flush()
+    gc.collect()
+    return np.load(ext_path, mmap_mode="r")
 
 
 def compute_visible_catalogue_features(visible_mask: np.ndarray, foot: np.ndarray) -> tuple[np.ndarray, dict[str, np.ndarray]]:
@@ -883,6 +1145,14 @@ def run_leakage_canary(stack: dict, ctx, sample_cap: int = 240_000, seed: int = 
         auc = float(roc_auc_score(y_eval, vals))
         sym_auc = max(auc, 1.0 - auc)
         results.append({"feature": name, "group": "fold_visible_catalogue_only", "raw_auc": round(auc, 6), "oriented_auc": round(sym_auc, 6)})
+
+    X_ext = stack.get("X_ext")
+    if X_ext is not None:
+        for j, name in enumerate(EXT27_FEATURE_NAMES):
+            vals = np.asarray(X_ext[all_idx, j], dtype=np.float32)
+            auc = float(roc_auc_score(y_eval, vals))
+            sym_auc = max(auc, 1.0 - auc)
+            results.append({"feature": name, "group": "ext27_multi_scale_discovery", "raw_auc": round(auc, 6), "oriented_auc": round(sym_auc, 6)})
 
     results.sort(key=lambda r: r["oriented_auc"], reverse=True)
     max_auc = float(results[0]["oriented_auc"])

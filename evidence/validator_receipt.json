@@ -2,8 +2,8 @@
   "validated_ok_to_download_and_submit": true,
   "human_intervention_required": false,
   "verdict": "promote",
-  "raster_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
-  "raster_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+  "raster_filename": "kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros.tif",
+  "raster_sha256": "6f7d6b0e149d763fe1026b86e1dc1a664a6d89c8fa7236012ddd23177b683727",
   "gates": {
     "gate_1_format_and_range_0_1": true,
     "gate_2_leakage_canary_le_090": true,
@@ -12,9 +12,9 @@
     "gate_5_portal_metadata_le_140": true
   },
   "format_audit": {
-    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
-    "size_bytes": 204099,
-    "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "filename": "kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros.tif",
+    "size_bytes": 207802,
+    "sha256": "6f7d6b0e149d763fe1026b86e1dc1a664a6d89c8fa7236012ddd23177b683727",
     "mode": "zeros",
     "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
     "crs": "EPSG:32611",

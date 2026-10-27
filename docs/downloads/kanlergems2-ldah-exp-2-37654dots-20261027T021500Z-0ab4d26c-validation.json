@@ -1,0 +1,64 @@
+{
+  "candidate_id": "LDAH-EXP-2",
+  "slug": "ldah-exp-2-37654dots",
+  "content_digest8": "0ab4d26c",
+  "description": "Balanced Tri-Regime Envelope uniting 58-channel OOF Subsurface/10m-DEM/3m-Scarp Blind Specialist, Updip-Migrated Listric-Piedmont Conduit, Void-Bridged 10 m USGS 3DEP / SGMC Conduit, and 58-Channel Directional Tip/Relay Specialist (w_pied=0.805, beta=0.818, w_tip=1.76, 37,654 dots).",
+  "submission_name": "kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros",
+  "submission_note": "KANLERGEMS2 LDAH-TriRegime-Discovery: 62ch ListricUpdip+10mDEM+3mScarp+HF+ComCat TriRegime CELF (37654 dots, HR=0.1141, SGMC=0.0815)",
+  "submission_note_length": 132,
+  "zeros_tif": {
+    "filename": "kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros.tif",
+    "size_bytes": 207802,
+    "sha256": "6f7d6b0e149d763fe1026b86e1dc1a664a6d89c8fa7236012ddd23177b683727",
+    "mode": "zeros",
+    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 37654,
+    "emitted_mass": 37654.0,
+    "footprint_fraction": 0.007287,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "nan_inside_footprint": 0,
+    "full_grid_nan_pixels": 0,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "values_in_0_1": true,
+    "checks": {
+      "exact_reference_grid_match": true,
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "zeros_zip": {
+    "filename": "kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros.zip",
+    "size_bytes": 173193,
+    "sha256": "b9bfb7481a25f7c14f2cb64ccc7cd1e924f2cc0786b55ce806e2dc6a166d4eb9"
+  }
+}

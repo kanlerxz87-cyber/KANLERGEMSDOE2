@@ -28,9 +28,10 @@ def fetch(repo: str, ref: str, path: str, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".partial")
     try:
+        fetched = False
         if shutil.which("gh"):
             with tmp.open("wb") as out:
-                subprocess.run(
+                res = subprocess.run(
                     [
                         "gh",
                         "api",
@@ -39,17 +40,17 @@ def fetch(repo: str, ref: str, path: str, dest: Path) -> None:
                         "Accept: application/vnd.github.raw",
                     ],
                     stdout=out,
-                    check=True,
+                    stderr=subprocess.DEVNULL,
                 )
-        else:
-            import requests
+            if res.returncode == 0 and tmp.exists() and tmp.stat().st_size > 0:
+                fetched = True
+        if not fetched:
+            import urllib.request
 
             url = f"https://raw.githubusercontent.com/{repo}/{ref}/{path}"
-            with requests.get(url, stream=True, timeout=120) as r:
-                r.raise_for_status()
-                with tmp.open("wb") as out:
-                    for chunk in r.iter_content(1 << 20):
-                        out.write(chunk)
+            req = urllib.request.Request(url, headers={"User-Agent": "KANLERGEMSDOE2-restore/1.0"})
+            with urllib.request.urlopen(req, timeout=120) as resp, tmp.open("wb") as out:
+                shutil.copyfileobj(resp, out, 1 << 20)
         tmp.replace(dest)
     finally:
         tmp.unlink(missing_ok=True)

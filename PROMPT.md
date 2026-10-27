@@ -16,7 +16,7 @@
 Review the repo and execute any open next steps first.
 
 Focus on the highest-scoring submissions from the following 9 focus sites:
-- `GEMSDOE24`, `GEMSDOE25`, `GEMSDOE27`, `GEMSDOE28`, `GEMSDOE30`, `GEMSDOE31`, `GEMSDOE32`, `GEMSDOE33`, `GEMSDOE36` (and cross-check against all ~65+ listed GEMSDOE sites across the fleet).
+- `GEMSDOE24`, `GEMSDOE25`, `GEMSDOE27`, `GEMSDOE28`, `GEMSDOE30`, `GEMSDOE31`, `GEMSDOE32`, `GEMSDOE33`, `GEMSDOE36` (and cross-check against all ~65+ listed GEMSDOE/KANLER/EUG/WBG/GINNY sites across the fleet, including `KANLERGEMSDOE2`: `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros` and `kanlergems2-ldah-exp-2-37654dots-20261027T021500Z-0ab4d26c-zeros`).
 
 **THE FOLLOWING IS THE HIGHEST URGENCY AND MUST BE FOLLOWED:**
 - **MUST GENERATE A UNIQUE `.TIF` SUBMISSION FOR THE COMPETITION.** Do not copy a previous submission unless it is strictly for learning and forensic baseline comparison.
