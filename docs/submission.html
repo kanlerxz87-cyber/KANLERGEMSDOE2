@@ -1,1 +1,83 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Submission withdrawn</title></head><body><h1>DO NOT SUBMIT</h1><p>Previous authorization was withdrawn after validation-integrity review.</p><a href="executive-summary.html">Current submission guide</a> · <a href="index.html">Current decision desk</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Summary &amp; Step-by-Step DrivenData Submission Guide · KANLERGEMSDOE2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Executive Summary &amp; Step-by-Step DrivenData Submission Guide</h1>
+    <p>Automated Pre-Upload Gate Verdict, Exact File Format Contract &amp; DrivenData Portal Walkthrough</p>
+    <nav>
+      <a href="index.html">1. Executive Summary &amp; All-Site Table</a>
+      <a href="executive-summary.html" class="active">2. Step-by-Step DrivenData Submission Guide</a>
+      <a href="run_card.json">3. JSON Run Card</a>
+      <a href="focus_sites.json">4. Focus-Sites JSON</a>
+      <a href="canaries.json">5. 60-Feature Canary JSON</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="verdict-banner">
+    <h2>CURRENT WEEKLY-SLOT RECOMMENDATION: HOLD — DO NOT UPLOAD <code>KG2-H1</code> TO LIVE PORTAL</h2>
+    <p><strong>Is <code>kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif</code> format-valid for DrivenData?</strong> <strong>YES (100% PASS)</strong> — single-band <code>float32</code>, <code>EPSG:32611</code>, <code>3730 &times; 3292</code>, zero NaN/Inf anywhere on disk, all values strictly in <code>[0.0, 1.0]</code>.</p>
+    <p><strong>Should you spend one of your 3 rolling weekly DrivenData slots on it right now?</strong> <strong>NO (<code>verdict = "negative"</code>)</strong> — keep <code>GEMSDOE32</code> (<code>0.2778</code>, already submitted) as your active leaderboard benchmark. Our automated 72-raster portfolio gate caught <code>80.7%</code> 3-px convergence onto <code>10GEMSDOE</code>'s supervised scarp ridge (<code>0.2286</code> live) and a paired 95% CI vs <code>D2.8 vis-B2</code> of <code>[-0.0050, +0.0205]</code>. Only upload a new candidate once automated selector status flips to <code>ok_to_submit = true</code>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Step-by-Step: How to Submit a Promoted Candidate on DrivenData</h2>
+    <p>When a future candidate passes all 5 automated gates (<code>verdict = "promote"</code> and <code>selector_decision.json: ok_to_submit = true</code>), follow these exact steps on DrivenData:</p>
+    <ol>
+      <li><strong>Verify Automated Gate Status Locally (Zero Manual GIS Inspection Needed):</strong>
+        <pre>python scripts/validate_raster.py docs/downloads/&lt;candidate&gt;-zeros.tif data/sample_submission.tif
+python scripts/select_submission.py</pre>
+        Confirm both commands exit <code>0</code> and print <code>"format_valid": true</code> plus (for live slot expenditure) <code>"ok_to_submit": true</code>.</li>
+      <li><strong>Download the Whole-Grid-Finite <code>-zeros.tif</code> (or Single-TIFF <code>.zip</code>):</strong>
+        <ul>
+          <li>Always use the <strong><code>-zeros.tif</code></strong> (or matching <code>-zeros.zip</code> containing solely that single <code>.tif</code> at the archive root), written with <code>outside="zero"</code> and <code>nodata=None</code>.</li>
+          <li><strong>Why <code>-zeros.tif</code> prevents portal rejection:</strong> DrivenData's portal validator enforces <code>"Predicted values must be in range [0, 1]"</code>. Writing <code>0.0</code> outside the active footprint guarantees <code>((a &gt;= 0.0) &amp; (a &lt;= 1.0)).all() == True</code> under every possible GDAL/NumPy reader while scoring identically inside the organizers' masked evaluation footprint.</li>
+        </ul>
+      </li>
+      <li><strong>Open the Official DrivenData Competition Submissions Page:</strong>
+        Navigate to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a> (Initial Competition rolling limit: <strong>3 submissions per rolling 7-day window</strong>; Final Competition limit: 1 submission).</li>
+      <li><strong>Upload File &amp; Paste the &le;140-Character Traceability Note:</strong>
+        <ul>
+          <li>Upload the single <code>.tif</code> (or single-TIFF <code>.zip</code>). Never upload multi-file archives or auxiliary <code>.aux.xml</code> files.</li>
+          <li>Paste the exact Run Card note (&le;140 characters) so every portal entry maps 1-to-1 to a git commit and SHA-256 hash. Current run note (<code>118/140</code> chars):</li>
+        </ul>
+        <pre>KG2-H1 FVCA 60ch geotherm+2m+sinter+TIGER-LiDAR OOF; SegHold=0.1693, HRv3=0.1061; 33.4% ov G32; HOLD: 80.7% ov G10-H25</pre>
+      </li>
+      <li><strong>Record Organizer Receipt to Upgrade Evidence Class:</strong>
+        Once DrivenData finishes scoring, save the timestamp, exact filename, SHA-256, and 4-decimal score from the portal receipt. Only scores backed by a verifiable portal receipt may be labeled <code>ORGANIZER-CONFIRMED</code>.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Current Artifact Technical Verification Sheet (<code>KG2-H1</code> Research Artifact)</h2>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>File Name</th><td><code>kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif</code> (<a href="downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif">.tif</a> · <a href="downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.zip">.zip</a>)</td></tr>
+          <tr><th>GeoTIFF SHA-256</th><td><code>29128ad7a9290d2afb008e944ea20171d2224ba0b77ec81aadc2ce416a13491f</code></td></tr>
+          <tr><th>Single-TIFF ZIP SHA-256</th><td><code>9ca35116c4a08ba6aacbfe15762fd83f3980af2f8a0aada6b26898d5c940e618</code></td></tr>
+          <tr><th>Grid / CRS / Transform</th><td><code>3730 &times; 3292</code> · <code>EPSG:32611</code> · <code>(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</code> · <code>float32</code></td></tr>
+          <tr><th>Whole-Grid Value Range</th><td><code>min = 0.0</code>, <code>max = 1.0</code>, <code>0</code> NaN, <code>0</code> Inf across all <code>12,279,160</code> pixels</td></tr>
+          <tr><th>Active Off-Catalogue Dots</th><td><code>38,500</code> binary dots (<code>0</code> pixels on <code>labels.tif</code>; <code>d_labels &gt; 2.0 px</code>)</td></tr>
+          <tr><th>Automated Selector Verdict</th><td><code>verdict = "negative"</code> · <code>ok_to_submit = false</code> · <code>HOLD / DO NOT SUBMIT TO PORTAL: surface.max_overlap_3px: missing, invalid, or duplicate; dots.max_overlap_3px: missing, invalid, or duplicate; No positive paired 95% CI against current holdout best; Calibrated LLI-S3 projection (0.07277) does not exceed active portfolio champion (0.2778)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <a href="index.html">&larr; Back to Main Executive Summary &amp; All-Site Comparison Table</a>
+  </div>
+</footer>
+</body>
+</html>

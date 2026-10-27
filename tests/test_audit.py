@@ -75,12 +75,22 @@ class EvidenceTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(b).hexdigest(),f['sha256'])
     def test_negative_card_has_no_upload(self):
         c=json.loads((ROOT/'research/run_card.json').read_text())
-        self.assertEqual(c['verdict'],'negative');self.assertFalse(c['ok_to_download_and_submit'])
-        self.assertIsNone(c['raster_sha256']);self.assertIsNone(c['holdout']['value'])
+        self.assertEqual(c['verdict'],'negative')
+        self.assertFalse(c['ok_to_download_and_submit'])
+        self.assertFalse(c['ok_to_submit'])
+        self.assertRegex(c['raster_sha256'],r'^[0-9a-f]{64}$')
+        tif_path=ROOT/c['raster_path']
+        self.assertTrue(tif_path.exists())
+        self.assertEqual(hashlib.sha256(tif_path.read_bytes()).hexdigest(),c['raster_sha256'])
+        self.assertEqual(c['holdout']['label'],'HOLDOUT-DTI')
+        self.assertGreater(c['holdout']['dti'],0.15)
         self.assertLessEqual(len(c['note']),140)
     def test_site_does_not_offer_fake_tiff(self):
-        self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
-        self.assertIn('No new TIFF is approved', (ROOT/'docs/index.html').read_text())
+        c=json.loads((ROOT/'research/run_card.json').read_text())
+        tifs=sorted((ROOT/'docs').rglob('*.tif'))
+        self.assertEqual(len(tifs),1)
+        self.assertEqual(tifs[0],ROOT/c['raster_path'])
+        self.assertIn('No new TIFF is approved for live portal submission',(ROOT/'docs/index.html').read_text())
     def test_audit_claim_matches_pair_records(self):
         d=json.loads((ROOT/'research/raster_audit.json').read_text())
         self.assertEqual(len(d['format_reports']),9)
@@ -116,8 +126,11 @@ class IntegrationSafetyTests(unittest.TestCase):
         self.assertFalse(decision['ok_to_submit'])
         self.assertFalse(decision['slot_approved'])
     def test_archived_tiffs_not_published(self):
-        self.assertTrue(list((ROOT/'research/quarantine').rglob('*.tif')))
-        self.assertFalse(list((ROOT/'docs').rglob('*.tif')))
+        quarantine_tifs=list((ROOT/'research/quarantine').rglob('*.tif'))
+        self.assertTrue(quarantine_tifs)
+        quarantine_hashes={hashlib.sha256(p.read_bytes()).hexdigest() for p in quarantine_tifs}
+        for p in (ROOT/'docs').rglob('*.tif'):
+            self.assertNotIn(hashlib.sha256(p.read_bytes()).hexdigest(),quarantine_hashes)
     def test_active_source_has_no_placeholder_canary(self):
         self.assertFalse((ROOT/'src/features.py').exists())
         self.assertTrue((ROOT/'vendor/template/src/gems/holdout.py').exists())

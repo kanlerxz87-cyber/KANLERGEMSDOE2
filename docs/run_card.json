@@ -1,53 +1,209 @@
 {
-  "hypothesis": "Historical champions may be variations of the same prediction support, not independent discovery lanes.",
-  "mechanism": "Decode nine pinned historical rasters; compare ranks and directional Euclidean dot distances in the template footprint.",
-  "non_fault_mimic": "Common placement lattice or survey/terrain sampling support can mimic independent geological agreement.",
+  "schema": "KANLERGEMSDOE2-RUN-CARD-v2.0",
+  "repository": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "lane": "KG2-H1: FVCA-SUBMOD (Fault-Valve Up-Gradient Hydrothermal Plume Back-Projection + Road-Deconfounded Multi-Scale Tensor + 2-Stage Auto-Context Dual-Learner)",
+  "hypothesis": "KG2-H1: Up-slope hydraulic back-projection (+grad det_elev over 0-600 m and 600-1,800 m) of DOE GDR #1391 2m shallow temperature probes (2,782 stations: F2mDAB, T2m), paleo-geothermal sinter/travertine/tufa vents (281 sites), full silica/cation chemical geothermometers (27,092 wells/springs), and Quaternary volcanic vents (21 sites), fused with K-on-Th potassic alteration, playa-deconfounded MT clay-cap lateral seals, Coulomb dilatancy, TMI-TMI_up150 vertical-continuation residuals, and TIGER road/shoreline-deconfounded 1m 3DEP LiDAR scarps.",
+  "mechanism": "EDT nearest-neighbor border-repaired 60-channel physical + geothermal stack trained strictly out-of-fold on SegmentHoldout (15-px whole-component purge collar, d_visible >= 5 px reliable negatives) via a 2-stage spatial Auto-Context LightGBM + ExtraTrees-GBDT ensemble with exact case-control Bayes posterior calibration and fold-local B=2 collar exclusion (38,500 binary dots).",
+  "non_fault_mimic": "Highway/railroad berms and borrow ditches in 1m LiDAR (mitigated via US Census TIGER road-distance clearance); Pleistocene Lake Lahontan shorelines (mitigated via contour-orthogonality sin^2 factor); down-slope lateral alluvial-fan thermal outflow plumes (inverted up-slope to piedmont/range-front seals); closed-basin evaporative saline playas in cond_surf (stripped via quadratic elev/depth/slope regression); unaltered felsic tuffs in radiometric K (stripped via K-on-Th OLS residual).",
+  "registry_complete": true,
+  "registry_count": 72,
+  "focus9_uniqueness": {
+    "passed": true,
+    "max_abs_rank_correlation": 0.24835,
+    "max_overlap_3px": 0.44738,
+    "vs_g32_champion_overlap_3px": 0.33364,
+    "vs_g32_champion_kernel_spearman": 0.16356
+  },
+  "surface": {
+    "max_abs_rank_correlation": 0.497141,
+    "max_overlap_3px": 0.806805,
+    "competing_method_passed": false
+  },
+  "dots": {
+    "max_abs_rank_correlation": 0.57369,
+    "max_overlap_3px": 0.806805,
+    "max_literal_overlap_with_calibration_lattice_3px": 0.996649,
+    "competing_method_passed": false,
+    "literal_unseparated_passed": false,
+    "exceeding_competing_comparators": [
+      {
+        "registry_id": "gems24_hist:gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00",
+        "file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+        "raw_spearman": 0.08942,
+        "kernel_spearman": 0.46135,
+        "candidate_dot_overlap_within_3px": 0.80681
+      },
+      {
+        "registry_id": "gems24_hist:gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00",
+        "file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+        "raw_spearman": 0.06465,
+        "kernel_spearman": 0.39347,
+        "candidate_dot_overlap_within_3px": 0.75564
+      },
+      {
+        "registry_id": "gems32:gemsdoe32-h45-kernelspacing-37654dots-20261026T163401Z-2fe5944c-zeros",
+        "file": "gemsdoe32-h45-kernelspacing-37654dots-20261026T163401Z-2fe5944c-zeros.tif",
+        "raw_spearman": 0.113,
+        "kernel_spearman": 0.45608,
+        "candidate_dot_overlap_within_3px": 0.73374
+      }
+    ]
+  },
+  "max_feature_alone_auc": 0.629717,
+  "leakage_canary": {
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_features": 60,
+    "threshold": 0.9,
+    "two_polarities_checked": true,
+    "max_feature_alone_auc": 0.629717,
+    "passed": true
+  },
   "holdout": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": "gems-segment-pooled-v1 (pinned, not run on a candidate)",
-    "value": null,
-    "n_withheld_positive_pixels": null,
-    "ci95": null,
-    "reason": "No assigned method lane; no new detector or fold-local feature cache restored; no frozen comparable current best."
-  },
-  "registry": {
-    "scope": "nine historical priority champions only; NOT full registry",
-    "surface_check": "not run; no candidate surface",
-    "final_dot_directed_pairs": 72,
-    "duplicate_gate_hits": 72,
-    "champion_vs_GEMSDOE36": {
-      "a": "GEMSDOE32",
-      "b": "GEMSDOE36",
-      "spearman_rho": 0.9843213108530009,
-      "fraction_a_dots_within_3px_of_b": 1.0,
-      "duplicate_gate": true,
-      "decoded_pixels_equal_inside_footprint": false
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "dti": 0.169279,
+    "ci95": [
+      0.155449,
+      0.18343
+    ],
+    "fold_local_features": true,
+    "baseline_id": "BASE_CHAMP_D28_VISB2 (0.2778 champion fold-local proxy)",
+    "baseline_dti": 0.16163,
+    "paired_delta_dti": 0.007649,
+    "paired_improvement_ci95": [
+      -0.005028,
+      0.02052
+    ],
+    "fold_wins_vs_champion_proxy": "4/4",
+    "paired_vs_prior_e1_baseline": {
+      "baseline_id": "BASE_E1_XGHGB",
+      "baseline_dti": 0.15367,
+      "paired_delta_dti": 0.015609,
+      "paired_ci95": [
+        0.008142,
+        0.023613
+      ],
+      "ci95_strictly_positive": true
     }
   },
-  "raster_sha256": null,
-  "validator_output": {
-    "candidate": "not generated; not validated",
-    "historical_files": 9,
-    "historical_format_passes": 9,
-    "scope": "Single band; whole grid finite and [0,1]; CRS/shape/transform match pinned peer-mirrored sample. Not organizer authenticated."
+  "secondary_holdouts": {
+    "hide_recover_v3": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "withheld_positives": 22232,
+      "exp2_dti": 0.106071,
+      "exp2_ci95": [
+        0.090015,
+        0.121502
+      ],
+      "exp3_celf_dti": 0.106529,
+      "exp3_celf_ci95": [
+        0.089397,
+        0.12324
+      ],
+      "champion_proxy_dti": 0.099202,
+      "paired_delta_vs_champion_proxy": 0.006868,
+      "paired_ci95_vs_champion_proxy": [
+        -0.003589,
+        0.017151
+      ],
+      "paired_ci95_vs_e1": [
+        6.5e-05,
+        0.014938
+      ]
+    },
+    "sgmc_off_catalogue_diagnostic": {
+      "candidate_id": "EXP-2_FVCA-GEOTHERM-OOF-GREEDY",
+      "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+      "score_label": "HOLDOUT-DTI",
+      "n_withheld_positives": 62703,
+      "n_spatial_clusters": 140,
+      "n_bootstrap_reps": 1000,
+      "sgmc_raw_pooled_dti": 0.06669293636437633,
+      "sgmc_raw_ci95": [
+        0.05614721565800327,
+        0.0803495569626255
+      ],
+      "sgmc_prevalence_calibrated_dti": 0.04404150182585449,
+      "sgmc_calibrated_ci95": [
+        0.03784888903820883,
+        0.05155410343016122
+      ]
+    }
   },
-  "submission_name": null,
-  "note": "Negative audit: historical champions fail novelty gates. No new candidate approved; no competition slot used.",
-  "verdict": "negative",
+  "ablation_summary": [
+    {
+      "id": "BASE_E1_XGHGB",
+      "segment_holdout_dti": 0.15367,
+      "hide_recover_v3_dti": 0.098439
+    },
+    {
+      "id": "BASE_CHAMP_D28_VISB2",
+      "segment_holdout_dti": 0.16163,
+      "hide_recover_v3_dti": 0.099202
+    },
+    {
+      "id": "EXP-1",
+      "name": "STRUCT-TENSOR-OOF-GREEDY",
+      "segment_holdout_dti": 0.158138,
+      "hide_recover_v3_dti": 0.099228
+    },
+    {
+      "id": "EXP-2",
+      "name": "FVCA-GEOTHERM-OOF-GREEDY",
+      "segment_holdout_dti": 0.169279,
+      "hide_recover_v3_dti": 0.106071
+    },
+    {
+      "id": "EXP-3",
+      "name": "FVCA-SUBMOD-CELF300",
+      "segment_holdout_dti": 0.16336,
+      "hide_recover_v3_dti": 0.106529
+    }
+  ],
+  "lli_s3_projection": {
+    "evidence_class": "PROJECTION \u2014 NOT A SCORE (LLI-S3 calibrated on 111 owner-reported live rasters)",
+    "instrument": "LLI-S3 (GEMSDOE32 ledger_inversion.py)",
+    "projected_dti": 0.07277,
+    "loo_mae": 0.02195,
+    "loo_spearman": 0.92672,
+    "expected_tp_w": 1622.7,
+    "expected_fp_w": 37852.8,
+    "expected_fn_w": 16381.6,
+    "implied_truth_px": 18004.3
+  },
+  "validator": {
+    "single_band": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true,
+    "no_nan_inside_footprint": true,
+    "range_0_1": true,
+    "format_valid": true,
+    "positive_pixels": 38500,
+    "on_catalogue_pixels": 0,
+    "finite_min": 0.0,
+    "finite_max": 1.0
+  },
+  "raster_path": "docs/downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif",
+  "zip_path": "docs/downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.zip",
+  "raster_sha256": "29128ad7a9290d2afb008e944ea20171d2224ba0b77ec81aadc2ce416a13491f",
+  "zip_sha256": "9ca35116c4a08ba6aacbfe15762fd83f3980af2f8a0aada6b26898d5c940e618",
+  "submission_name": "kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif",
+  "note": "KG2-H1 FVCA 60ch geotherm+2m+sinter+TIGER-LiDAR OOF; SegHold=0.1693, HRv3=0.1061; 33.4% ov G32; HOLD: 80.7% ov G10-H25",
+  "note_length": 118,
+  "ok_to_submit": false,
   "ok_to_download_and_submit": false,
-  "experiments_used": 0,
-  "integration_review": {
-    "prior_main": "80d3c57",
-    "prior_blindbasin_authorization": "withdrawn",
-    "reason": "Synthetic inputs, placeholder AUC, random pseudo-CIs and hard-coded promotion cannot substantiate claimed evidence. Originals retained under research/quarantine."
-  },
-  "blockers": [
-    "Missing exclusive method paragraph",
-    "Shared-template ambiguity between peer repositories",
-    "No organizer receipts",
-    "No complete frozen registry surface set",
-    "No fold-local cache or comparable holdout-best restored",
-    "Official data origin not authenticated; no DrivenData session",
-    "Contradictory claimed leaderboard bests 0.3195 and 0.4413; neither verified"
-  ]
+  "verdict": "negative",
+  "gate_evaluation": {
+    "verdict": "negative",
+    "eligible_for_selector": false,
+    "authorized_to_submit": false,
+    "errors": [
+      "surface.max_overlap_3px: missing, invalid, or duplicate",
+      "dots.max_overlap_3px: missing, invalid, or duplicate",
+      "No positive paired 95% CI against current holdout best"
+    ]
+  }
 }
