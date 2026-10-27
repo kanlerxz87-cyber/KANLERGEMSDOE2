@@ -53,9 +53,14 @@ All estimated live scores are labeled **PROJECTION** with method and caveats
 (0.499 vs 0.240) are published as the canonical warning. Ledger scores from the owner's brief are
 labeled **USER-REPORTED** per PR #24 (no receipt artifact stored in-repo).
 
-## Consistency restored
+## Current repo policy (as merged by PR #25) and the selector decision
 
-Site banner, `docs/data/status_feed.json`, `EXECUTIVE_SUMMARY.md`, and this response now carry one
-verdict: **promote under the automated null-calibrated Gate 3, with the lattice policy caveat in
-plain sight** — replacing the previous state where the site said DO NOT SUBMIT while the status
-feed said promote.
+PR #25 adopted the literal any-registry-raster reading, so the repo's current verdict is
+**NOT OK TO SUBMIT**, and this response does not override it. PR #25 also proves the literal rule is
+combinatorially unsatisfiable at a 37,654-dot budget (≥82.34% of any such raster must fall inside
+the lattice's 3-px neighborhood). The computations above are therefore submitted as the evidence
+base for exactly one selector decision (Protocol Rule 6): adopt the template's null-calibrated /
+harmonic Gate-3 definition (under which the archived candidate passes 5/5, rerun 2026-10-27), or
+keep the literal reading (under which no 37,654-dot candidate from any site can ever be promoted
+while the lattice remains in the registry). Either ruling makes the site, status feed, and summary
+consistent again; until it is made, fail-closed stands.

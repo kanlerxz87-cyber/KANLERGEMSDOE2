@@ -2274,5 +2274,7 @@
         "pigeonhole_min_overlap": 0.8272987012987013
       }
     ]
-  }
+  },
+  "status": "historical_unreplayed_subset; no promotion",
+  "superseded_by": "evidence/release_audit_20261027.json"
 }

@@ -50,10 +50,10 @@ def test_no_cpr_tif_offered_and_promoted_file_unchanged() -> None:
     assert hashlib.sha256(promoted.read_bytes()).hexdigest() == (
         "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb"
     )
+    # Repo policy as merged by PR #25 is fail-closed (literal lattice rule):
+    # the archived candidate's bytes must still match its recorded identity.
     feed = json.loads((ROOT / "docs" / "data" / "status_feed.json").read_text(encoding="utf-8"))
-    assert feed["validated_ok_to_download_and_submit"] is True
-    assert feed["cpr_lane_20261027"]["verdict"] == "negative"
-    assert feed["promoted_submission"]["sha256"] == hashlib.sha256(promoted.read_bytes()).hexdigest()
+    assert feed["research_artifact_sha256"] == hashlib.sha256(promoted.read_bytes()).hexdigest()
 
 
 def test_ledger_recomputation_receipt() -> None:

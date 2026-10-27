@@ -74,6 +74,8 @@ def dot_overlap(candidate, reference, radius_px=3.0):
 def is_duplicate(rho, overlap=None):
     if any(v is not None and not np.isfinite(v) for v in (rho, overlap)):
         raise ValueError("Duplicate checks need finite statistics or explicit None")
+    # This helper follows the lane's conservative absolute-correlation cap;
+    # a strong negative rho is an additional stop beyond the literal >.90 rule.
     return bool((rho is not None and abs(rho) > 0.90) or (overlap is not None and overlap > 0.70))
 
 
@@ -142,6 +144,26 @@ def classify_space_filling_control(
     }
 
 
+def budget_forced_duplicate(uncovered_pixels: int, candidate_dots: int, limit: float = 0.70) -> bool:
+    """Whether the counting lower bound *strictly exceeds* the overlap limit.
+
+    A negative result is not proof of novelty. The bound applies only to distinct
+    candidate cells inside the same footprint and to the measured witness radius.
+    Integer arithmetic avoids incorrectly failing an exact-threshold case.
+    """
+    from fractions import Fraction
+
+    if type(uncovered_pixels) is not int or uncovered_pixels < 0:
+        raise ValueError("uncovered_pixels must be a nonnegative integer")
+    if type(candidate_dots) is not int or candidate_dots <= 0:
+        raise ValueError("candidate_dots must be a positive integer")
+    if type(limit) not in (int, float) or not np.isfinite(limit) or not 0 <= limit <= 1:
+        raise ValueError("limit must be finite and in [0, 1]")
+    frac = Fraction(str(limit))
+    unavoidable = max(0, candidate_dots - uncovered_pixels)
+    return unavoidable * frac.denominator > candidate_dots * frac.numerator
+
+
 def compare_registry(
     surface,
     footprint,
@@ -151,6 +173,7 @@ def compare_registry(
     dots=None,
     sample_size=200000,
     separate_calibration_controls: bool = False,
+    reference_grid=None,
 ):
     """Test surface before placement, or final dots afterward, against every entry.
 
@@ -158,13 +181,14 @@ def compare_registry(
     fixed reproducible uniform sample. Dot overlap is
     exact over ALL candidate dots, directional candidate -> registry, <=3 px.
 
-    When ``separate_calibration_controls=False`` (default, preserving frozen MTR1
-    receipt verification), every entry applies the literal overlap rule. When
-    ``separate_calibration_controls=True``, entries remain in ``rows`` (never deleted),
-    Spearman rank gates (``|rho| <= 0.90``) apply to ALL entries, and directional 3-px
-    overlap (``<= 0.70``) is gated across competing detector entries while reporting
-    both ``competing_method_passed`` and ``literal_unseparated_passed`` plus exact
-    pigeonhole lower bounds for space-filling calibration lattices.
+    Every registry entry applies the literal rule. ``separate_calibration_controls``
+    adds diagnostics explaining whether dense controls forced a stop; it never
+    exempts them from ``passed`` or changes the directional overlap rule. Supply
+    ``reference_grid=(shape, crs, transform)`` from a verified template: without
+    it the result cannot pass. Constant vectors have undefined rank and fail closed.
+    Positive rho > .90 follows the literal rule; the frozen lane also caps
+    absolute rho. A strong negative raw rho or sampled kernel correlation is an
+    additional conservative stop, not proof of a positive raw-rank duplicate.
     """
     surface, footprint = np.asarray(surface), np.asarray(footprint, bool)
     if (
@@ -195,9 +219,13 @@ def compare_registry(
     for row in entries:
         path = Path(root) / row["cache_path"]
         with rasterio.open(path) as ds:
-            if ds.shape != footprint.shape:
-                raise ValueError(f"Registry grid mismatch: {path}")
+            if ds.count != 1 or ds.shape != footprint.shape:
+                raise ValueError(f"Registry grid or band mismatch: {path}")
+            if reference_grid is not None and (ds.shape, ds.crs, ds.transform) != reference_grid:
+                raise ValueError(f"Registry CRS/transform mismatch: {path}")
             a = ds.read(1)
+        if not np.isfinite(a[footprint]).all():
+            raise ValueError(f"Nonfinite registry values inside footprint: {path}")
         content = hashlib.sha256(np.asarray(a[footprint], dtype="<f4").tobytes()).hexdigest()
         if content != row["footprint_sha256"]:
             raise ValueError(f"Registry footprint checksum mismatch: {path}")
@@ -216,8 +244,11 @@ def compare_registry(
             if dots is not None and tree is not None
             else (0.0 if dots is not None else None)
         )
-        rank_dup = any(abs(x) > 0.90 for x in (raw_rank, kernel_rank) if x is not None)
-        literal_duplicate = rank_dup or (overlap is not None and overlap > 0.70)
+        raw_rank_duplicate = raw_rank is not None and raw_rank > 0.90
+        inverse_rank_stop = raw_rank is not None and raw_rank < -0.90
+        kernel_duplicate = kernel_rank is not None and abs(kernel_rank) > 0.90
+        literal_duplicate = raw_rank_duplicate or (overlap is not None and overlap > 0.70)
+        conservative_duplicate = literal_duplicate or inverse_rank_stop or kernel_duplicate
         entry_dict = {
             "registry_id": row["id"],
             "file": row["file"],
@@ -225,7 +256,11 @@ def compare_registry(
             "raw_spearman": raw_rank,
             "kernel_spearman": kernel_rank,
             "candidate_dot_overlap_within_3px": overlap,
-            "duplicate": bool(literal_duplicate),
+            "raw_rank_defined": raw_rank is not None,
+            "literal_duplicate": bool(literal_duplicate),
+            "inverse_rank_stop_conservative": bool(inverse_rank_stop),
+            "kernel_duplicate_conservative": bool(kernel_duplicate),
+            "duplicate": bool(conservative_duplicate),
         }
         if separate_calibration_controls:
             ctrl = classify_space_filling_control(
@@ -236,7 +271,7 @@ def compare_registry(
                 candidate_dot_count=n_cand_dots,
             )
             is_ctrl = bool(ctrl["is_space_filling_calibration_control"])
-            competing_dup = rank_dup or (not is_ctrl and overlap is not None and overlap > 0.70)
+            competing_dup = raw_rank_duplicate or inverse_rank_stop or kernel_duplicate or (not is_ctrl and overlap is not None and overlap > 0.70)
             entry_dict.update(
                 comparator_class=(
                     "space_filling_calibration_control" if is_ctrl else "competing_method"
@@ -246,12 +281,15 @@ def compare_registry(
                 pigeonhole_min_overlap=ctrl["pigeonhole_min_overlap_for_candidate_size"],
                 literal_duplicate=bool(literal_duplicate),
                 competing_method_duplicate=bool(competing_dup),
-                duplicate=bool(competing_dup),
+                # The experiment protocol has no exemption for calibration grids.
+                duplicate=bool(conservative_duplicate),
             )
         rows.append(entry_dict)
     out = {
         "stage": "final_dots" if dots is not None else "surface_before_placement",
-        "passed": bool(rows) and not any(row["duplicate"] for row in rows),
+        "passed": bool(rows) and reference_grid is not None and all(row["raw_rank_defined"] for row in rows) and not any(row["duplicate"] for row in rows),
+        "reference_grid_verified": reference_grid is not None,
+        "all_raw_ranks_defined": bool(rows) and all(row["raw_rank_defined"] for row in rows),
         "registry_unique_rasters": len(rows),
         "raw_rank_scope": "exact over all footprint pixels",
         "raw_rank_pixels": len(ids),
@@ -290,8 +328,11 @@ def compare_registry(
             competing_method_rasters=len(comp_rows),
             calibration_control_rasters=len(ctrl_rows),
             competing_method_passed=bool(comp_rows)
-            and not any(r["competing_method_duplicate"] for r in rows),
-            literal_unseparated_passed=bool(rows) and not any(r["literal_duplicate"] for r in rows),
+            and reference_grid is not None and all(r["raw_rank_defined"] for r in comp_rows)
+            and not any(r["competing_method_duplicate"] for r in comp_rows),
+            literal_unseparated_passed=bool(rows) and reference_grid is not None
+            and all(r["raw_rank_defined"] for r in rows)
+            and not any(r["literal_duplicate"] for r in rows),
             max_competing_dot_overlap=max(
                 (
                     r["candidate_dot_overlap_within_3px"]
@@ -345,6 +386,7 @@ def compare_prospective_registry(
     dots=None,
     sample_size=200000,
     extra_entries=(),
+    reference_grid=None,
 ):
     """Prospective registry comparison that separates synthetic calibration lattices from method lanes.
 
@@ -354,7 +396,7 @@ def compare_prospective_registry(
     calibration lattice as a method lane) are reported explicitly.
     """
     combined = list(entries) + list(extra_entries)
-    base = compare_registry(surface, footprint, combined, root, dots=dots, sample_size=sample_size)
+    base = compare_registry(surface, footprint, combined, root, dots=dots, sample_size=sample_size, reference_grid=reference_grid)
     method_rows = []
     control_rows = []
     for entry, row in zip(combined, base["rows"]):
@@ -381,7 +423,7 @@ def compare_prospective_registry(
         ),
         default=None,
     )
-    method_passed = bool(method_rows) and not any(r["duplicate"] for r in method_rows)
+    method_passed = bool(method_rows) and reference_grid is not None and all(r["raw_rank_defined"] for r in method_rows) and not any(r["duplicate"] for r in method_rows)
     return {
         **base,
         "method_lane_passed": method_passed,
