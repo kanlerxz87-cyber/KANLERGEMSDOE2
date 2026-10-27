@@ -244,12 +244,25 @@ def main() -> None:
 <p><strong>Why it cannot be copied as a new submission:</strong> any subset of GEMSDOE32 is a 100% duplicate of it under the literal rule, so further pruning does not produce a unique file.</p></div>
 <div class="table-wrap"><table><thead><tr><th>Site</th><th>Positive dots</th><th>Off-fault dots within 1&nbsp;px of known fault</th><th>within 2&nbsp;px</th><th>within 3&nbsp;px</th><th>Reported score</th></tr></thead><tbody>{''.join(mrows)}</tbody></table></div></section>'''
 
+    # PR #34 parallel candidate (binary zero-outside file): independently re-checked, research-only.
+    hyp1_block = ""
+    if s3_path.is_file():
+        hf = "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif"
+        hc = s3["candidates_format_and_witness"].get("KG2-HYP1-binary-PR34")
+        if hc is not None:
+            pw = s3["pairwise_directional_3px_overlap_focus_and_candidates"]["KG2-HYP1-binary-PR34"]
+            focus_max = max(pw[k] for k in ["GEMSDOE24","GEMSDOE25","GEMSDOE27","GEMSDOE28","GEMSDOE30","GEMSDOE31","GEMSDOE32","GEMSDOE33","GEMSDOE36"])
+            hyp1_block = f'''<div class="callout red-callout"><strong>PR #34 CANDIDATE — NOT OK TO SUBMIT (literal protocol); research download only.</strong>
+<p><a href="downloads/{esc(hf)}" download>Download {esc(hf)}</a> · SHA-256 <span class="mono">{esc(hc["sha256"][:16])}…</span> · format audit passes (EPSG:32611, 3730×3292, float32, values in [0,1], zeros outside).</p>
+<p>Independent recheck (directional 3-px overlap, this repository's definition): <strong>{100*hc["witness_overlap_fraction"]:.2f}%</strong> of its dots lie within 3&nbsp;px of the registered lattice (&gt;70%: literal duplicate). Its own claimed "&lt;2% vs all nine focus files" is <strong>not reproduced</strong>: the largest focus overlap is {100*focus_max:.2f}%. It also records <strong>{hc["on_catalogue_positive_pixels"]:,}</strong> dots on known-fault pixels, not the "0" it states. Those pixels are masked by the organizer, so they are score-neutral, but the claim is wrong.</p>
+<p>Holdout: not replayed (no HOLDOUT-DTI). Source: <a href="../evidence/session3_independent_recheck_20261027.json">receipt</a> · <a href="../research/2026-10-27_new_hypotheses.md">hypothesis note</a>.</p></div>'''
     intro_line = ('No file in this repository is OK to download and submit under the protocol as written (literal all-registry rule, PR #25). The Session-2 file below is the closest candidate and remains research-grade until the owner rules on the lattice control.'
                   if s2_summary else 'At present there is <strong>no competition-ready file</strong>. The existing file below is available for research, not a weekly submission slot.')
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>{intro_line}</p></div>
 {why_block}
 {s2_summary}
+{hyp1_block}
 {darp_summary}
 <div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Leaderboard estimates for new submissions: <strong>not available</strong>. Historical results below are user/owner-reported, not organizer-confirmed receipts.</p></div></div>{table}

@@ -68,7 +68,8 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 4. **Score provenance.** The 0.2778 and eight sibling figures are USER/OWNER-REPORTED. No submission-page receipt is stored.
 5. **Brief numbers differ from the official page.** The brief quotes 0.4413 (top) and 0.3195; the official page observed on 2026-10-27 shows 0.4544 and 0.3566.
 6. **Open PR #33** (`arena/89a5e815-kanlergemsdoe2`) proposes another promotion. It was not reviewed in this session.
-7. **The pinned lattice file is a registered competitor raster, not a neutral control.** The brief lists it under 13GEMSDOE with a USER-REPORTED 0.0904. Calling it a "calibration control" is a policy argument, and the owner should decide it explicitly.
+8. **PR #34 candidate (`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`, sha256 `f0cb1914…b539`, merged from main during this session).** Format passes. Verified: 99.99% of its dots lie within 3 px of the registered lattice (literal duplicate). It has **184** dots on known-fault pixels, not the "0" its note states. Its "<2% overlap vs focus files" does not reproduce: in this repository's directional 3-px metric the largest focus overlap is 21.7%, and the DSLUP overlap is 36.8%. The organizer masks known-fault pixels, so the 184 dots are score-neutral, but the stated claim is false. Its note's "download OK" wording is also superseded by the fail-closed status: the file is a research download only.
+9. **The pinned lattice file is a registered competitor raster, not a neutral control.** The brief lists it under 13GEMSDOE with a USER-REPORTED 0.0904. Calling it a "calibration control" is a policy argument, and the owner should decide it explicitly.
 
 ## 8. Upload-error note (open)
 

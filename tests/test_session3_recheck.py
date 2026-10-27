@@ -57,3 +57,13 @@ def test_status_feed_never_marks_a_candidate_ok() -> None:
     s2 = feed["session2_candidate"]
     assert s2["ok_to_download_and_submit"] is False
     assert s2["verdict_control_separated_policy"].startswith("would_promote")
+
+
+def test_pr34_candidate_irregularities_are_recorded() -> None:
+    """PR #34 claims 0 on-catalogue dots and <2% focus overlap; the verified recheck must say otherwise."""
+    c = _receipt()["candidates_format_and_witness"]["KG2-HYP1-binary-PR34"]
+    assert c["on_catalogue_positive_pixels"] == 184
+    assert c["witness_overlap_fraction"] > 0.70 and c["duplicate_under_literal_rule"] is True
+    pw = _receipt()["pairwise_directional_3px_overlap_focus_and_candidates"]["KG2-HYP1-binary-PR34"]
+    assert max(pw[k] for k in ["GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30",
+                               "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"]) > 0.02
