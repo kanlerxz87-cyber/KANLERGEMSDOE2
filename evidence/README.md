@@ -4,7 +4,8 @@
 [`current_run_card.json`](current_run_card.json); the current exact-byte
 findings are in [`release_audit_20261027.json`](release_audit_20261027.json),
 [`dslup_literal_validation_20261027.json`](dslup_literal_validation_20261027.json),
-and [`parallel_hypothesis1_literal_audit_20261027.json`](parallel_hypothesis1_literal_audit_20261027.json).
+and [`parallel_hypothesis1_literal_audit_20261027.json`](parallel_hypothesis1_literal_audit_20261027.json),
+and [`off36_literal_validation_20261027.json`](off36_literal_validation_20261027.json).
 
 Other cards, receipts and reports in this directory are historical records.
 Some include **retracted** control-exempt `promote`/`5/5` flags, unverified

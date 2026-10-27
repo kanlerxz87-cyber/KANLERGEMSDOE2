@@ -103,6 +103,14 @@ def main() -> None:
     dsl_file = checked_artifact(dsl_audit)
     parallel_audit = parallel["audit"]
     parallel_file = checked_artifact(parallel_audit)
+    off36 = json.loads((ROOT / "evidence/off36_independent_check_20261027.json").read_text())
+    off36_validator = json.loads((ROOT / "evidence/off36_literal_validation_20261027.json").read_text())
+    off36_file = Path(off36["file"]).name
+    off36_path = DOCS / "downloads" / off36_file
+    if (not off36_path.is_file() or hashlib.sha256(off36_path.read_bytes()).hexdigest() != off36["sha256"]
+            or off36_validator.get("ok_to_submit") is not False
+            or off36_validator.get("raster_sha256") != off36["sha256"]):
+        raise SystemExit("Refusing to publish: off36 byte identity or negative receipt changed")
     hr = audit["historical_holdout_not_replayed"]
     bound = 100 * pre["minimum_directional_overlap"]
     table = focus_table(audit["focus_nine"])
@@ -115,7 +123,7 @@ def main() -> None:
     home = f'''<div class="breadcrumb">KANLERGEMSDOE2 &nbsp; / &nbsp; <span>Current decision</span></div>
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Decision dashboard · audited {observed}</div><span class="status">Negative · do not submit</span>
 <h1 id="hero-title">No TIFF is cleared<br>for a live slot.</h1>
-<p class="lead">The fixed 37,654-dot lane cannot meet the literal all-registry novelty rule. We stopped before a new model or raster; no slot was selected or spent. Historical downloads are for research only.</p>
+<p class="lead">The fixed 37,654-dot lane cannot meet the literal all-registry novelty rule. This lane stopped before a new model or raster; no slot was selected or spent. Parallel artifacts are research only.</p>
 <div class="hero-actions"><a class="btn" href="executive-summary.html">See the comparison table →</a><a class="btn secondary" href="../evidence/current_run_card.json">Current JSON run card ↗</a></div></div>
 <aside class="hero-aside"><div class="eyebrow">The blocking witness</div><h3>At least {bound:.2f}% must overlap</h3><p>The registered spacing-5 lattice leaves only {pre['uncovered_pixels']:,} footprint pixels farther than 3 px away. At this fixed budget, at least {pre['minimum_overlapping_dots']:,} dots must overlap it: more than the 70% limit.</p><p class="note">This is an exact lower bound for this budget, not a proof about every smaller raster. No control exemption is authorized.</p></aside></section>
 <div class="metrics"><div class="metric"><div class="label">Best historical report</div><div class="value">0.2778</div><div class="hint">GEMSDOE32 · user/owner reported; no receipt</div></div>
@@ -123,7 +131,7 @@ def main() -> None:
 <div class="metric"><div class="label">New holdout</div><div class="value">Not run</div><div class="hint">Stopped before training or placement</div></div>
 <div class="metric"><div class="label">Public #1</div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated feed…</div></div></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">What changed</div><h2>One rule, one decision.</h2></div></div><div class="grid-two"><div class="card"><h3>Two archived files were rechecked</h3><p>The prior HTCADS file overlaps the lattice at <strong>{prior_pct:.3f}%</strong>; DSLUP overlaps at <strong>{dsl_pct:.3f}%</strong>. Both fail the literal rule, regardless of old control-exempt promotion claims.</p><a href="executive-summary.html">View artifacts and evidence →</a></div>
-<div class="card"><h3>A parallel-file correction</h3><p>The later hypothesis-1 TIFF overlaps the lattice at <strong>{parallel_pct:.4f}%</strong> and has <strong>{parallel_audit['on_catalogue_positive_pixels']}</strong> positives on the restored catalogue. Prior claims of uniqueness and zero catalogue positives are superseded.</p><a href="../evidence/parallel_hypothesis1_literal_audit_20261027.json">Exact-byte audit ↗</a></div></div></section>
+<div class="card"><h3>Parallel-file corrections</h3><p>The hypothesis-1 TIFF overlaps the lattice at <strong>{parallel_pct:.4f}%</strong> and has <strong>{parallel_audit['on_catalogue_positive_pixels']}</strong> on-catalogue positives. A separate 15,000-dot file deliberately targeted lattice gaps and lacks a holdout; its promotion is also retracted.</p><a href="executive-summary.html">Exact-byte audits ↗</a></div></div></section>
 <section class="section"><div class="callout"><strong>About the reported range error.</strong><p>The rejected bytes and portal diagnostic are unavailable, so its cause is unknown. Current local checks reopen the exact file and inspect inside-footprint NaN/Inf, [0,1], grid, and exterior. The official description says null/NaN outside bounds; the old all-zero exterior passes a whole-array range test but is not proven accepted. <a href="irregularities.html">Details and remaining checks →</a></p></div></section>'''
 
     summary = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Comparison</span></div>
@@ -136,6 +144,7 @@ def main() -> None:
 <tr><td class="file"><a href="downloads/{esc(prior_file)}">{esc(prior_file)}</a><small>SHA-256 {esc(prior['sha256'])}</small></td><td>HOLDOUT-DTI {hr['dti']:.6f}, {esc(hr['evaluator_version'])}, N={hr['withheld_positive_occurrences']:,} withheld-positive occurrences, 95% CI [{hr['ci95'][0]:.6f}, {hr['ci95'][1]:.6f}]. Historical receipt, not replayed.</td><td>{prior['witness_overlap_dots']:,} / {prior['inside_positive_pixels']:,} · {prior_pct:.3f}%</td><td><span class="pill stop">Do not submit</span></td></tr>
 <tr><td class="file"><a href="downloads/{esc(dsl_file)}">{esc(dsl_file)}</a><small>SHA-256 {esc(dsl_audit['sha256'])}</small></td><td>Prior holdout and control-separated reports are archived but not independently replayed. <a href="../evidence/dslup_literal_validation_20261027.json">Current validator receipt</a>.</td><td>{dsl_audit['witness_overlap_dots']:,} / {dsl_audit['inside_positive_pixels']:,} · {dsl_pct:.4f}%</td><td><span class="pill stop">Do not submit</span></td></tr>
 <tr><td class="file"><a href="downloads/{esc(parallel_file)}">{esc(parallel_file)}</a><small>SHA-256 {esc(parallel_audit['sha256'])}</small></td><td>Added by a parallel session; {parallel_audit['on_catalogue_positive_pixels']} on-catalogue positives; no independent holdout or surface replay. <a href="../evidence/parallel_hypothesis1_literal_audit_20261027.json">Corrected byte audit</a>.</td><td>{parallel_audit['witness_overlap_dots']:,} / {parallel_audit['inside_positive_pixels']:,} · {parallel_pct:.4f}%</td><td><span class="pill stop">Do not submit</span></td></tr>
+<tr><td class="file"><a href="downloads/{esc(off36_file)}">{esc(off36_file)}</a><small>SHA-256 {esc(off36['sha256'])}</small></td><td>Parallel 15,000-dot artifact; {off36['dots_in_lattice_gap_pixels']:,} dots deliberately placed in lattice gaps, {off36['on_catalogue_positive_pixels']} on catalogue, no independent holdout. The changed budget and gap targeting violate the lane. <a href="../evidence/off36_independent_check_20261027.json">Recheck</a> · <a href="../evidence/off36_literal_validation_20261027.json">negative validator</a>.</td><td>{off36['lattice_overlap_3px']*100:.2f}% to lattice; other registry and surface incomplete</td><td><span class="pill stop">Do not submit</span></td></tr>
 </tbody></table></div></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">When a future candidate is cleared</div><h2>Submission instructions</h2></div></div><div class="grid-two"><div class="card"><ol class="steps"><li><strong>Resolve and preregister the protocol.</strong> Do not silently exempt the lattice or adjust this budget to escape the gate.</li><li><strong>Replay automated checks.</strong> Check the pre-placement surface and final dots against every current registry raster; test every feature for leakage and use visible-only, buffered whole-segment spatial holdout with pooled DTI and paired CIs.</li><li><strong>Run the separate selector.</strong> It must verify exact file identity, official format, current account quota and all gates. This repository has no positive upload path today.</li></ol></div><div class="card"><h3>Only after approval</h3><p>On the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">official competition page</a>, choose Submit, upload the exact approved TIFF or a ZIP containing only that TIFF, enter its unique name and note of at most 140 characters, then save the actual receipt.</p><p>Check the current account-specific limit on the submission page; staff say it takes precedence over the rules' older weekly parenthetical. No quota was checked or slot spent here.</p></div></div></section>'''
 
@@ -188,10 +197,17 @@ def main() -> None:
                                  "witness_overlap": parallel_audit["witness_overlap_fraction"],
                                  "on_catalogue_positives": parallel_audit["on_catalogue_positive_pixels"],
                                  "ok_to_submit": False},
+        "parallel_off36": {"filename": off36_file, "sha256": off36["sha256"],
+                           "witness_overlap": off36["lattice_overlap_3px"],
+                           "on_catalogue_positives": off36["on_catalogue_positive_pixels"],
+                           "ok_to_submit": False},
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
+    howto = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> / Submission instructions</div><div class="page-intro"><div class="eyebrow">Not cleared</div><h1>How to submit, when cleared.</h1><p>No candidate is approved today. Follow the automated checks, separate selector, account-page quota and receipt instructions on the <a href="executive-summary.html">comparison page</a>.</p></div>'''
+    (DOCS / "submission-howto.html").write_text(page("How to submit", "submission-howto.html", howto, ""), encoding="utf-8")
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    (DOCS / "data/current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {
         "schema": "gems.submission-comparison.v2", "generated_utc": card["generated_utc"],
         "verdict": "negative", "ok_to_submit": False, "new_raster": None,
@@ -200,7 +216,7 @@ def main() -> None:
         "previous_artifact": prior, "focus_nine": audit["focus_nine"],
     }
     (ROOT / "evidence/submission_table_20261027.json").write_text(json.dumps(table_data, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print("Built six fail-closed pages from", audit["generated_utc"])
+    print("Built seven fail-closed pages from", audit["generated_utc"])
 
 
 if __name__ == "__main__":

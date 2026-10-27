@@ -1,6 +1,6 @@
 {
   "schema": "gems.current-status.v3",
-  "generated_utc": "2026-10-27T23:46:46.898170+00:00",
+  "generated_utc": "2026-10-27T23:55:53.306969+00:00",
   "verdict": "negative",
   "validated_ok_to_download_and_submit": false,
   "ok_to_submit": false,
@@ -19,6 +19,13 @@
     "sha256": "f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539",
     "witness_overlap": 0.9999468847931162,
     "on_catalogue_positives": 184,
+    "ok_to_submit": false
+  },
+  "parallel_off36": {
+    "filename": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+    "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+    "witness_overlap": 0.66,
+    "on_catalogue_positives": 107,
     "ok_to_submit": false
   },
   "run_card": "../../evidence/current_run_card.json",

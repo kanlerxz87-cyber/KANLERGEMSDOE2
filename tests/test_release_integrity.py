@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from gems import novelty, release_audit  # noqa: E402
+from gems.validator import sha256_file  # noqa: E402
 import refresh_public_feed  # noqa: E402
 import validate_submission  # noqa: E402
 
@@ -157,12 +158,26 @@ def test_validator_fails_closed_for_missing_references_and_identity(tmp_path, mo
     assert exact["gates"]["exact_file_identity"] is True and exact["ok_to_submit"] is False
 
 
-def test_current_evidence_has_no_new_raster_or_score():
+def test_current_evidence_new_unique_submission():
+    # PR #36 generated an off-catalogue file whose card said "promote". The review
+    # overrode that: no holdout DTI, placement chosen to pass the lattice gate, and a
+    # reduced budget. The authoritative card stays fail-closed.
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     assert card["verdict"] == "negative" and card["ok_to_submit"] is False
-    assert card["raster_sha256"] is None and card["holdout_dti"] is None
-    assert card["experiments_run"] == 0 and len(card["note"]) <= 140
+    assert card["holdout_dti"] is None and card["experiments_run"] == 0
+    assert len(card["note"]) <= 140
+    superseded = json.loads((ROOT / "evidence/superseded/current_run_card_pr36_promote_20261027.json").read_text())
+    assert superseded["verdict"] == "promote" and superseded["holdout_dti"] is None
+    assert superseded["raster_sha256"] == "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4"
+    tif = ROOT / "docs" / "downloads" / superseded["submission_name"]
+    assert tif.is_file() and sha256_file(tif) == superseded["raster_sha256"]
+    receipt = json.loads((ROOT / "evidence/off36_independent_check_20261027.json").read_text())
+    assert receipt["sha256"] == superseded["raster_sha256"]
+    assert receipt["dots"] == 15000 and receipt["holdout_dti"] is None
+    assert receipt["lattice_overlap_3px"] == 0.66 and receipt["dots_in_lattice_gap_fraction"] >= 0.30
+    assert receipt["on_catalogue_positive_pixels"] == 107
+    assert receipt["max_overlap_3px_restored_registry"]["fraction"] <= 0.70 + 1e-9
     assert audit["preflight"]["uncovered_pixels"] == 6649
     assert audit["preflight"]["minimum_overlapping_dots"] == 31005
     assert audit["prior_candidate"]["witness_overlap_dots"] == 37642

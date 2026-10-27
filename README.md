@@ -2,7 +2,7 @@
 
 > ## CURRENT DECISION: NEGATIVE / DO NOT SUBMIT
 >
-> No TIFF is approved for a live slot. This review created **no** new raster, holdout result, score estimate, or submission. The archived HTCADS, DSLUP, and later parallel hypothesis-1 TIFFs may be downloaded **for research only**. Earlier control-exempt promotion claims are superseded; no such exemption was authorized.
+> No TIFF is approved for a live slot. This review created **no** new raster, holdout result, score estimate, or submission. The archived HTCADS, DSLUP, and both later parallel TIFFs may be downloaded **for research only**. Earlier control-exempt promotion claims are superseded; no such exemption was authorized.
 >
 > **[Decision dashboard](docs/index.html)** · **[Executive comparison](docs/executive-summary.html)** · **[JSON run card](evidence/current_run_card.json)** · **[Exact-byte audit](evidence/release_audit_20261027.json)**
 
@@ -13,6 +13,8 @@ The fixed lane requires **37,654 distinct dots**, but a registered spacing-5 lat
 The archived [HTCADS TIFF](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`) overlaps that witness **37,642/37,654 = 99.9681%**. The [DSLUP research TIFF](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) overlaps **37,647/37,654 = 99.9814%**; its former validator falsely returned a promotion after excluding controls. [Corrected receipt](evidence/dslup_literal_validation_20261027.json).
 
 A TIFF added by a concurrently merged PR was also independently reopened: [`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`](docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif), SHA-256 `f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539`, overlaps **37,652/37,654 = 99.9947%** and has **184 positive pixels on the restored known-fault catalogue**, contrary to its earlier note. It is **not unique under the literal rule; do not submit**. See its [corrected audit](evidence/parallel_hypothesis1_literal_audit_20261027.json).
+
+A second parallel PR added a [15,000-dot research file](docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif), with 66% lattice overlap, but 34% of dots were deliberately placed in lattice gaps, contrary to the fixed-budget lane. It has 107 on-catalogue dots, no independent holdout and no full-registry check. Its promotion is retracted: **do not submit**. [Geometry recheck](evidence/off36_independent_check_20261027.json) · [negative validator](evidence/off36_literal_validation_20261027.json).
 
 ## What the historical scores show
 

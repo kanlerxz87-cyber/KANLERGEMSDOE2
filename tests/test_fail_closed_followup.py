@@ -268,3 +268,19 @@ def test_missing_legacy_verifiers_report_unavailable(flag):
                        capture_output=True, text=True, timeout=30)
     assert p.returncode != 0 and "not present in this checkout" in p.stderr
     assert "Traceback" not in p.stderr
+
+
+def test_parallel_off36_retracted_and_generator_disabled(tmp_path):
+    check = json.loads((ROOT / "evidence/off36_independent_check_20261027.json").read_text())
+    receipt = json.loads((ROOT / "evidence/off36_literal_validation_20261027.json").read_text())
+    sidecar = ROOT / "docs/downloads" / (check["file"][:-4] + "-validation.json")
+    public = json.loads(sidecar.read_text())
+    assert check["dots"] == 15000 and check["lattice_overlap_3px"] == 0.66
+    assert check["dots_in_lattice_gap_fraction"] == 0.34 and check["on_catalogue_positive_pixels"] == 107
+    assert receipt["gates"]["exact_file_identity"] is True and receipt["verdict"] == "negative"
+    assert public["ok_to_submit"] is False and public["verdict"] == "negative"
+    archived = ROOT / "evidence/superseded/off36_validation_pr36_promote_20261027.json"
+    assert hashlib.sha256(archived.read_bytes()).hexdigest() == public["historical_receipt_sha256"]
+    p = subprocess.run([sys.executable, str(ROOT / "scripts/generate_unique_submission.py")],
+                       cwd=tmp_path, capture_output=True, text=True, timeout=30)
+    assert p.returncode != 0 and "generator disabled" in p.stderr

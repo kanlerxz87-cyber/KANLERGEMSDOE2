@@ -41,5 +41,17 @@
   },
   "current_verdict": "negative",
   "ok_to_submit": false,
-  "scope": "Fetched exact blob from parallel PR #34; a pinned literal-registry witness is sufficient to prove duplicate. No pre-placement surface, canary, holdout or full registry replay."
+  "scope": "Fetched exact blob from parallel PR #34; a pinned literal-registry witness is sufficient to prove duplicate. No pre-placement surface, canary, holdout or full registry replay. Focus comparisons use candidate-to-reference direction within 3 px.",
+  "directional_candidate_overlap_vs_focus_and_dslup": {
+    "GEMSDOE32": 0.21671004408562172,
+    "GEMSDOE36": 0.261645509109258,
+    "GEMSDOE28": 0.21843628830934297,
+    "GEMSDOE31": 0.22279173527380888,
+    "GEMSDOE33": 0.22964359696181016,
+    "GEMSDOE25": 0.23028097944441495,
+    "GEMSDOE30": 0.23028097944441495,
+    "GEMSDOE24": 0.244675200509906,
+    "GEMSDOE27": 0.25309396080097735,
+    "DSLUP": 0.3675837892388591
+  }
 }
