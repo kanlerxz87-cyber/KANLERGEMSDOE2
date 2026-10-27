@@ -36,12 +36,12 @@ def audit_geotiff(
     mode: str = "zeros",
     template_tif: Path | None = None,
 ) -> dict:
-    """Strict 13-point DrivenData submission validator audit (zero human intervention required)."""
+    """Historical local format audit; not organizer acceptance or submission authorization."""
     if mode not in {"zeros", "nan"}:
         raise ValueError("mode must be zeros or nan")
     expected_crs = rasterio.crs.CRS.from_epsg(32611)
     expected_shape = (EXPECTED_HEIGHT, EXPECTED_WIDTH)
-    expected_transform = rasterio.transform.from_origin(243350, 4508550, 100, 100)
+    expected_transform = rasterio.Affine(100, 0, 243350, 0, -100, 4508550)
     if template_tif is not None:
         with rasterio.open(template_tif) as tpl:
             expected_crs, expected_shape, expected_transform = tpl.crs, tpl.shape, tpl.transform
@@ -102,9 +102,9 @@ def audit_geotiff(
         "in_footprint_zero_inf": in_foot_inf == 0,
         "in_footprint_zero_sentinel": in_foot_sentinel == 0,
         "in_footprint_range_0_1": in_foot_in_01,
-        "outside_footprint_compliant": out_foot_ok,
+        "outside_footprint_matches_requested_mode": out_foot_ok,
         "zero_on_catalogue_leakage": on_catalogue_dots == 0,
-        "validator_range_0_1_guaranteed": full_grid_in_01,
+        "local_range_check_passed": full_grid_in_01,
     }
     all_passed = all(checks.values())
     if not all_passed:
@@ -134,6 +134,9 @@ def audit_geotiff(
         "in_footprint_max": in_foot_max,
         "full_grid_finite_pixels": int(np.isfinite(arr).sum()),
         "values_in_0_1": full_grid_in_01,
+        "value_check_scope": "whole array" if mode == "zeros" else "inside footprint only",
+        "whole_array_strict_finite_0_1": bool(np.isfinite(arr).all() and ((arr >= 0) & (arr <= 1)).all()),
+        "organizer_acceptance_verified": False,
         "checks": checks,
         "all_checks_passed": all_passed,
     }
@@ -150,7 +153,10 @@ def write_submission_bundle(
     candidate_meta: dict,
     prefix: str = "kanlergems2",
 ) -> dict:
-    """Write and audit DrivenData-compliant `-zeros.tif` + single-GeoTIFF `.zip` + receipt."""
+    """Retired private bundle path; use the maintained shared writer and selector instead."""
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("gems32.write_submission_bundle")
     out_dir.mkdir(parents=True, exist_ok=True)
     raw = np.asarray(mask_or_probs, dtype=np.float32)
     clean_vals = np.where(foot & ~labels & np.isfinite(raw), np.clip(raw, 0.0, 1.0), 0.0).astype(np.float32)

@@ -217,6 +217,27 @@ def test_format_zip_and_outside_nan_diagnostics(synthetic_submission) -> None:
     assert not submission.check_variants(multiband, template)["format_valid"]
 
 
+def test_legacy_audit_cannot_claim_nan_outside_is_whole_array_valid(synthetic_submission, monkeypatch) -> None:
+    from gems32 import submission as legacy
+    tmp_path, template, pred, _ = synthetic_submission
+    for key, value in {"EXPECTED_HEIGHT": 8, "EXPECTED_WIDTH": 8, "EXPECTED_TOTAL_PIXELS": 64,
+                       "EXPECTED_FOOTPRINT_PIXELS": 56}.items():
+        monkeypatch.setattr(legacy, key, value)
+    nan_tif = submission.write_submission(pred, template, tmp_path / "nan-legacy.tif", outside="nan")
+    foot = np.ones((8, 8), bool)
+    foot[0, :] = False
+    report = legacy.audit_geotiff(nan_tif, foot, np.zeros_like(foot), mode="nan", template_tif=template)
+    assert report["all_checks_passed"]
+    assert report["value_check_scope"] == "inside footprint only"
+    assert report["whole_array_strict_finite_0_1"] is False
+    assert report["organizer_acceptance_verified"] is False
+    assert "validator_range_0_1_guaranteed" not in report["checks"]
+    with pytest.raises(SystemExit, match="retired"):
+        legacy.write_submission_bundle(pred, foot, np.zeros_like(foot), template,
+                                       tmp_path / "retired-output", "x", "now", {})
+    assert not (tmp_path / "retired-output").exists()
+
+
 def test_selector_remains_negative_even_with_fabricated_passing_flags(synthetic_submission) -> None:
     _, template, _, tif = synthetic_submission
     best = selector.RECORDED_BEST_DTI

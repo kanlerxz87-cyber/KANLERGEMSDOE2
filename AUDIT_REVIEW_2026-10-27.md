@@ -14,7 +14,7 @@ The repository contains substantial prior work and a downloadable GeoTIFF, but i
 4. **Independent execution is limited in this checkout.** Python has no `rasterio` and `pytest` is unavailable (`pytest: command not found`); therefore this review did not independently reopen the TIFF or rerun the raster tests. The TIFF SHA-256 was checked with `sha256sum` and matches the stored receipt (`f482d3...75abeb`); that proves file identity only, not CRS/range/score.
 5. **The site's stated holdout leaderboard projection must not be promoted as a score.** The files report holdout metrics, not organizer receipts. Do not infer a live score above 0.2778, 0.3195, or 0.4413 from these results. Actual score is known only after an organizer receipt/leaderboard entry.
 
-## Nine-site executive summary (user-provided receipts; not independently fetched in this review)
+## Nine-site executive summary (user/owner reports; not independently fetched in this earlier review)
 
 The scores below are reproduced from the supplied brief, therefore are **UNVERIFIED USER/OWNER REPORTS**, not organizer-confirmed receipts. Their exact TIFF identities and uniqueness require the archived registry audit; site score does not imply a unique submission.
 
