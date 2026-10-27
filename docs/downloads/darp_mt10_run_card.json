@@ -257,7 +257,9 @@
       "within_3px_pixels": 5160724,
       "exact_uncovered_pixels_U": 6649,
       "exact_footprint_3px_coverage": 0.99871327
-    }
+    },
+    "overlap_3px_vs_dslup_c71122d5": 0.549503,
+    "overlap_3px_vs_ecpu_cecbdca7": 0.542625
   },
   "registry_comparison": {
     "passed": true,

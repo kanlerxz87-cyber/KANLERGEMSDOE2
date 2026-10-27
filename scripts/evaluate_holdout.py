@@ -66,7 +66,7 @@ def main():
     parser.add_argument(
         "--verify-darp",
         action="store_true",
-        help="Verify recorded 2026-10-27 DARP-MT10 unified Run Card, canary, and GeoTIFF/ZIP hashes",
+        help="Verify recorded DARP-MT10 Run Card, canary, and GeoTIFF/ZIP hashes without rerunning",
     )
     parser.add_argument(
         "--work-dir",
@@ -76,23 +76,37 @@ def main():
     )
     args = parser.parse_args()
     if args.verify_darp:
-        c_root = json.loads((ROOT / "run_card.json").read_text())
-        c_ev = json.loads((ROOT / "evidence/run_card.json").read_text())
-        c_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
-        assert c_root == c_ev == c_docs, "Unified run_card.json mismatch across paths"
-        tif_p = ROOT / "docs/downloads" / c_root["submission_filename"]
-        zip_p = ROOT / "docs/downloads" / c_root["zip_filename"]
-        assert sha256_file(tif_p) == c_root["raster_sha256"], "DARP GeoTIFF hash mismatch"
-        assert sha256_file(zip_p) == c_root["zip_sha256"], "DARP ZIP hash mismatch"
-        print(json.dumps({
-            "verified": True,
-            "lane": "DARP-MT10-20261027",
-            "submission_filename": c_root["submission_filename"],
-            "raster_sha256": c_root["raster_sha256"],
-            "verdict": c_root["verdict"],
-            "ok_to_download_for_research": c_root["ok_to_download_for_research"],
-            "ok_to_download_and_submit": c_root["ok_to_download_and_submit"],
-        }, indent=2))
+        import hashlib
+
+        rc_ev = ROOT / "evidence/darp_mt10_run_card_20261027.json"
+        rc_dl = ROOT / "docs/downloads/darp_mt10_run_card.json"
+        assert rc_ev.read_bytes() == rc_dl.read_bytes(), "DARP run_card copies out of sync"
+        rc = json.loads(rc_ev.read_text(encoding="utf-8"))
+        tif_p = ROOT / "docs/downloads" / rc["submission_filename"]
+        zip_p = ROOT / "docs/downloads" / rc["zip_filename"]
+        tif_sha = hashlib.sha256(tif_p.read_bytes()).hexdigest()
+        zip_sha = hashlib.sha256(zip_p.read_bytes()).hexdigest()
+        assert tif_sha == rc["raster_sha256"], f"TIF hash mismatch: {tif_sha}"
+        assert zip_sha == rc["zip_sha256"], f"ZIP hash mismatch: {zip_sha}"
+        canary = json.loads((ROOT / "evidence/darp_mt10_canary_20261027.json").read_text(encoding="utf-8"))
+        assert canary["passed"] is True and canary["max_single_feature_auc"] <= 0.90
+        print(
+            json.dumps(
+                {
+                    "verified": True,
+                    "lane": "DARP-MT10-20261027",
+                    "verdict": rc["verdict"],
+                    "ok_to_download_and_submit": rc["ok_to_download_and_submit"],
+                    "raster_sha256": tif_sha,
+                    "zip_sha256": zip_sha,
+                    "canary_max_auc": canary["max_single_feature_auc"],
+                    "holdout_dti_c_pied": rc["holdout_dti"]["piedmont_off_catalogue_c_pied"],
+                    "exp2_c_pied_dti": rc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"]["pooled_dti"],
+                },
+                indent=2,
+                allow_nan=False,
+            )
+        )
         return
     if args.verify_kg2:
         from run_kg2_lane import verify_recorded

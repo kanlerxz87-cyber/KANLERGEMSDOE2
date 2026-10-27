@@ -19,7 +19,7 @@ from gems.validator import sha256_file  # noqa: E402
 
 
 def test_geotiff_strict_competition_compliance_without_human_intervention() -> None:
-    card = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
+    card = json.loads((ROOT / "run_card.json").read_text())
     tif_path = ROOT / "docs/downloads" / card["submission_filename"]
     zip_path = ROOT / "docs/downloads" / card["zip_artifact"]
     assert tif_path.exists(), f"Missing GeoTIFF: {tif_path}"
@@ -60,14 +60,10 @@ def test_geotiff_strict_competition_compliance_without_human_intervention() -> N
 
 
 def test_run_card_and_parallel_run_protocol_gates() -> None:
-    # Active unified run cards must match across root, evidence/, and docs/data/
-    active_root = json.loads((ROOT / "run_card.json").read_text())
-    active_ev = json.loads((ROOT / "evidence/run_card.json").read_text())
-    active_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
-    assert active_root == active_ev == active_docs
-
-    # Archived KG2-MGHV card remains intact and reproducible
-    card = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
+    card = json.loads((ROOT / "run_card.json").read_text())
+    card_ev = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
+    card_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
+    assert card == card_ev == card_docs
 
     required = {
         "hypothesis",

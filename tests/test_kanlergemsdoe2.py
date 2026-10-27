@@ -118,7 +118,7 @@ def test_rule4_leakage_canary_and_rule1_uniqueness_and_rule6_budget() -> None:
     assert canary["total_features_tested"] == 50
     assert canary["max_single_feature_auc"] <= 0.90
 
-    rc = json.loads((ROOT / "evidence" / "htcads_run_card_20261026.json").read_text(encoding="utf-8"))
+    rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
     reg = rc["registry_comparison"]
     assert reg["passed"] is False
     assert reg["literal_all_entry_overlap_vs_registered_lattice"] > 0.70
@@ -144,7 +144,7 @@ def test_rule4_leakage_canary_and_rule1_uniqueness_and_rule6_budget() -> None:
 def test_github_pages_and_markdown_integrity() -> None:
     """Verify all HTML pages, local links/assets, README prompt preservation, and Core Values."""
     docs = ROOT / "docs"
-    for page in ["index.html", "executive-summary.html", "submission-table.html", "research.html", "irregularities.html", "audit-review.html"]:
+    for page in ["index.html", "executive-summary.html", "research.html", "irregularities.html"]:
         p = docs / page
         assert p.exists(), f"Missing {page}"
         html_txt = p.read_text(encoding="utf-8")

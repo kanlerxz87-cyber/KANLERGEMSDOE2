@@ -87,17 +87,17 @@ def test_shared_holdout_empty_truth_fold_counts_false_positives() -> None:
 
 
 def test_unified_run_cards_and_new_darp_geotiff_portal_safety() -> None:
-    """Verify byte-identical unified run_card.json across all 4 locations + 13/13 GeoTIFF checks."""
+    """Verify byte-identical DARP-MT10 run cards + 13/13 GeoTIFF checks + <=70% vs DSLUP/ECPU."""
     paths = [
-        ROOT / "run_card.json",
-        ROOT / "evidence/run_card.json",
-        ROOT / "docs/data/run_card.json",
+        ROOT / "evidence/darp_mt10_run_card_20261027.json",
         ROOT / "docs/downloads/darp_mt10_run_card.json",
     ]
     blobs = [p.read_bytes() for p in paths]
-    assert blobs[0] == blobs[1] == blobs[2] == blobs[3], "Split run_card.json copies detected!"
+    assert blobs[0] == blobs[1], "DARP run_card copies out of sync!"
 
     rc = json.loads(blobs[0].decode("utf-8"))
+    assert rc["correlation_overlap_vs_registry"]["overlap_3px_vs_dslup_c71122d5"] <= 0.70
+    assert rc["correlation_overlap_vs_registry"]["overlap_3px_vs_ecpu_cecbdca7"] <= 0.70
     assert rc["verdict"] == "negative"
     assert rc["ok_to_download_for_research"] is True
     assert rc["ok_to_download_and_submit"] is False
