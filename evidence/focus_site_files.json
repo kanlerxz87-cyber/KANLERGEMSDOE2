@@ -3,7 +3,7 @@
   "records": [
     {
       "site": "GEMSDOE24",
-      "role": "portal-safe sibling of gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "role": "all-finite sibling of gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
       "listed_stem": "h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -29,7 +29,7 @@
     },
     {
       "site": "GEMSDOE25",
-      "role": "portal-safe sibling of gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "role": "all-finite sibling of gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
       "listed_stem": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -55,7 +55,7 @@
     },
     {
       "site": "GEMSDOE27",
-      "role": "portal-safe sibling of gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "role": "all-finite sibling of gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
       "listed_stem": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -81,7 +81,7 @@
     },
     {
       "site": "GEMSDOE28",
-      "role": "portal-safe sibling of gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "role": "all-finite sibling of gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
       "listed_stem": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -120,7 +120,7 @@
     },
     {
       "site": "GEMSDOE31",
-      "role": "portal-safe sibling of gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "role": "all-finite sibling of gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
       "listed_stem": "h27-4-solo-d28-20261004-8acb75e1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -222,5 +222,7 @@
       "sha256": "eff2b18e37378d0f0a2f5c8e22fc68e7c359ee161114502a985135e03dd217f9",
       "status": "downloaded"
     }
-  ]
+  ],
+  "status": "Historical downloaded files; local checks do not establish portal acceptance or submission authorization.",
+  "superseded_by": "evidence/release_audit_20261027.json"
 }
