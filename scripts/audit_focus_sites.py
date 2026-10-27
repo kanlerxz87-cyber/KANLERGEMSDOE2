@@ -181,6 +181,9 @@ def _invert_d28_collar_cascade() -> dict:
 
 
 def main() -> int:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("audit_focus_sites")
     ddir = data_dir()
     ctx = holdout.load_holdout_context(ddir)
 

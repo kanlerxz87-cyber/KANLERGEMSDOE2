@@ -3,7 +3,7 @@
   "records": [
     {
       "site": "GEMSDOE24",
-      "role": "portal-safe sibling of gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "role": "all-finite sibling of gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
       "listed_stem": "h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -12,7 +12,8 @@
       "local_path": "docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-allfinite.tif",
       "bytes": 863902,
       "sha256": "3e0730e8d4f7db095dd80246a98cba3bc0fc9a28f436b91db27ca34df4d0d1ce",
-      "status": "downloaded"
+      "status": "downloaded",
+      "historical_role": "portal-safe sibling of gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif"
     },
     {
       "site": "GEMSDOE24",
@@ -29,7 +30,7 @@
     },
     {
       "site": "GEMSDOE25",
-      "role": "portal-safe sibling of gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "role": "all-finite sibling of gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
       "listed_stem": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -38,7 +39,8 @@
       "local_path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-zeros.tif",
       "bytes": 836982,
       "sha256": "3e78737f0da8dd2ca66cc6caac0ce8eeefcd6715707f8d1bd3091845cd9bcc30",
-      "status": "downloaded"
+      "status": "downloaded",
+      "historical_role": "portal-safe sibling of gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif"
     },
     {
       "site": "GEMSDOE25",
@@ -55,7 +57,7 @@
     },
     {
       "site": "GEMSDOE27",
-      "role": "portal-safe sibling of gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "role": "all-finite sibling of gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
       "listed_stem": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -64,7 +66,8 @@
       "local_path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-allfinite.tif",
       "bytes": 866160,
       "sha256": "a9bf76b57453a5b3af74c8eef837df53c29a0931162aa540b8763220b36ba3bb",
-      "status": "downloaded"
+      "status": "downloaded",
+      "historical_role": "portal-safe sibling of gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif"
     },
     {
       "site": "GEMSDOE27",
@@ -81,7 +84,7 @@
     },
     {
       "site": "GEMSDOE28",
-      "role": "portal-safe sibling of gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "role": "all-finite sibling of gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
       "listed_stem": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -90,7 +93,8 @@
       "local_path": "docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-allfinite.tif",
       "bytes": 825430,
       "sha256": "7c74270ad48fa0b865163853046a6d3815967c5bf37bbda5b74ca7fa22583a32",
-      "status": "downloaded"
+      "status": "downloaded",
+      "historical_role": "portal-safe sibling of gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif"
     },
     {
       "site": "GEMSDOE28",
@@ -120,7 +124,7 @@
     },
     {
       "site": "GEMSDOE31",
-      "role": "portal-safe sibling of gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "role": "all-finite sibling of gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
       "listed_stem": "h27-4-solo-d28-20261004-8acb75e1-nan",
       "user_reported_score": null,
       "score_label": "NO SCORE LISTED (same stem as the -nan file; check dot identity in audit)",
@@ -129,7 +133,8 @@
       "local_path": "docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-allfinite.tif",
       "bytes": 154580,
       "sha256": "acd853936e5a7170b207f23411b1844caa0e7cfdfc303c600e520ccfe75159e6",
-      "status": "downloaded"
+      "status": "downloaded",
+      "historical_role": "portal-safe sibling of gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif"
     },
     {
       "site": "GEMSDOE31",
@@ -222,5 +227,6 @@
       "sha256": "eff2b18e37378d0f0a2f5c8e22fc68e7c359ee161114502a985135e03dd217f9",
       "status": "downloaded"
     }
-  ]
+  ],
+  "superseded_notice": "Historical files only; no submission is authorized. All-finite encoding is not a portal-acceptance guarantee."
 }

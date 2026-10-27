@@ -392,6 +392,10 @@ def render(d: dict) -> str:
 
 
 def main() -> int:
+    sys.path.insert(0, str(ROOT / "src"))
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("build_submission_table")
     d = build()
     (ROOT / "evidence" / "submission_table_20261027.json").write_text(json.dumps(d, indent=2) + "\n", encoding="utf-8")
     (ROOT / "docs" / "submission-table.html").write_text(render(d), encoding="utf-8")

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""One preregistered H24-MTR1 experiment; shared hide-and-recover + writer.
+"""Shared fold scoring and historical KG2 file verification, never upload.
 
-No upload, no score projections, no private metric, no hyperparameter search.
-Run cache_priority_registry.py and prepare_data.py first. A duplicate or canary
-failure halts before packaging. A negative scientific result is still published.
+The old model-generating driver is retired. Fold-array scoring does not prove
+feature lineage, leakage canaries, novelty, baseline replay or account quota.
 """
 
 from __future__ import annotations
@@ -69,7 +68,40 @@ def main():
         default=Path("/tmp/gems_work"),
         help="Scratch directory outside tracked workspace for memmaps",
     )
+    parser.add_argument(
+        "--score-folds", type=Path,
+        help="Score fold-specific binary predictions in an NPZ; this does not certify how they were made",
+    )
+    parser.add_argument("--template", type=Path, default=paths.core_path("sample_submission.tif"))
+    parser.add_argument("--labels", type=Path, default=paths.core_path("labels.tif"))
     args = parser.parse_args()
+    modes = [args.score_folds is not None, args.verify_kg2, args.run_kg2, args.verify_tnr1,
+             args.verify_recorded, args.verify_gvc1, args.run_gvc1]
+    if sum(bool(x) for x in modes) > 1:
+        parser.error("Choose exactly one evaluation mode")
+    if args.score_folds is not None:
+        with rasterio.open(args.template) as t, rasterio.open(args.labels) as labels:
+            if t.count != 1 or t.crs is None or (labels.shape, labels.crs, labels.transform, labels.count) != (t.shape, t.crs, t.transform, 1):
+                raise SystemExit("Labels do not match a single-band template grid with a CRS")
+            fp = np.isfinite(t.read(1))
+            raw = labels.read(1)
+            if not np.isin(raw[fp], [0, 1]).all():
+                raise SystemExit("Labels inside the template footprint must be finite binary values")
+            catalogue = fp & (raw > 0)
+        context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
+        with np.load(args.score_folds, allow_pickle=False) as archive:
+            expected = [fold["name"] for fold in context.folds]
+            if sorted(archive.files) != sorted(expected):
+                raise SystemExit(f"NPZ must contain exactly the fold arrays: {expected}")
+            predictions = [archive[name] for name in expected]
+        result = context.summarize(predictions)
+        result["provenance_warning"] = (
+            "Metric only: fold-local feature derivation, leakage canaries, registry novelty, "
+            "and baseline replay were not certified from these arrays. No slot is authorized."
+        )
+        result["ok_to_submit"] = False
+        print(json.dumps(result, indent=2, allow_nan=False))
+        return
     if args.verify_kg2:
         from run_kg2_lane import verify_recorded
 
@@ -125,6 +157,9 @@ def main():
         print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
         return
     if args.run_gvc1:
+        from gems.protocol import retired_legacy_pipeline
+
+        retired_legacy_pipeline("evaluate_holdout --run-gvc1")
         from run_gvc1_pipeline import run_gvc1
 
         summary = run_gvc1(work_dir=args.work_dir)
@@ -146,13 +181,16 @@ def main():
             )
         )
         return
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("evaluate_holdout default historical driver")
     if RESULT.exists():
         raise SystemExit(
             "Experiment already recorded and stopped. No implicit rerun/tuning; use --verify-recorded."
         )
     started = time.monotonic()
     fp = footprint.load_footprint()
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    template = paths.core_path("sample_submission.tif")
     meta = json.loads((paths.DATA_DIR / "prepared/features.json").read_text())
     stack_path = paths.DATA_DIR / "prepared/features.npy"
     if sha256_file(stack_path) != meta["sha256"]:
@@ -170,7 +208,7 @@ def main():
         if (s.shape, s.crs, s.transform) != (t.shape, t.crs, t.transform):
             raise SystemExit("Ratio grid mismatch")
         thk = s.read(1).astype(np.float32)
-    with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as s:
+    with rasterio.open(paths.core_path("labels.tif")) as s:
         catalogue = (s.read(1) > 0) & fp
     registry = json.loads((ROOT / "registry/priority_rasters.json").read_text())
     surfaces, support = magnetic_trough.build_surfaces(rtp, thk, fp)
@@ -190,7 +228,7 @@ def main():
         "input_provenance": "hash-pinned owner mirrors; not independently organizer-authenticated",
         "inputs": {
             str(p.relative_to(paths.DATA_DIR)): sha256_file(p)
-            for p in (stack_path, ratio_path, template, paths.DATA_DIR / "bridge/labels.tif")
+            for p in (stack_path, ratio_path, template, paths.core_path("labels.tif"))
         },
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)

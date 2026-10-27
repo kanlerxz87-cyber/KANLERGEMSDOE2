@@ -9,13 +9,14 @@
   "submission_authorized": false,
   "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
   "hard_failures": [],
-  "official_format_compliant": false,
+  "official_format_compliant": null,
+  "official_format_compliance_reason": "Not independently determined: official text says outside bounds should be null/NaN; the relationship between those bounds and the mirrored irregular footprint is unclear.",
   "in_footprint_positive_pixels": 37654,
   "in_footprint_mass": 37654.0,
   "checks": {
-    "official_template_grid_and_footprint": {
+    "pinned_mirror_template_grid_and_footprint": {
       "pass": true,
-      "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+      "detail": "Template must match the pinned mirror grid and footprint; organizer provenance is not independently authenticated",
       "hard_requirement": true
     },
     "single_band": {
@@ -55,7 +56,7 @@
     },
     "outside_is_nan_official_text": {
       "pass": false,
-      "detail": "0 of 7,111,787 outside pixels are NaN",
+      "detail": "0 of 7,111,787 outside-footprint cells are NaN; the official wording refers to bounds, whose relationship to this irregular footprint is not verified",
       "hard_requirement": false
     },
     "nodata_tag_is_nan": {
@@ -75,10 +76,10 @@
     },
     "variant_strict_whole_array_no_nan_allowed": {
       "pass": true,
-      "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+      "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the mirrored sample's NaN outside",
       "hard_requirement": false
     },
-    "profile_matches_official_sample": {
+    "profile_matches_pinned_sample": {
       "pass": false,
       "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
       "hard_requirement": false

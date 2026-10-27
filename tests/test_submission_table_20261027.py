@@ -1,118 +1,94 @@
-"""Regression tests for the 2026-10-27 per-site submission table and focus-site file restore.
-
-These tests do not need the competition data (data/ is git-ignored). They check committed
-evidence against committed files, so a silently broken link or hash fails CI.
-"""
+"""Cross-check concurrently restored historical files without authorizing them."""
 from __future__ import annotations
 
 import hashlib
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def _sha256(path: Path) -> str:
-    h = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
+def load(path: str):
+    return json.loads((ROOT / path).read_text())
 
 
-def _load(rel: str) -> dict:
-    return json.loads((ROOT / rel).read_text(encoding="utf-8"))
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_focus_site_files_match_recorded_sha256() -> None:
-    recs = _load("evidence/focus_site_files.json")["records"]
-    downloaded = [r for r in recs if r.get("status") == "downloaded"]
-    assert len(downloaded) == 9 + 3 + sum(1 for r in recs if str(r.get("role", "")).startswith("portal-safe")), (
-        "expected 9 listed focus files + 3 alternates + siblings all downloaded")
-    for r in downloaded:
-        p = ROOT / r["local_path"]
-        assert p.exists(), f"missing {r['local_path']}"
-        assert _sha256(p) == r["sha256"], f"sha256 drift for {r['local_path']}"
-        assert p.stat().st_size == r["bytes"]
+def test_restored_files_match_checksums_and_independent_pinned_audit() -> None:
+    records = load("evidence/focus_site_files.json")["records"]
+    downloaded = [r for r in records if r.get("status") == "downloaded"]
+    assert len(downloaded) == 17
+    for row in downloaded:
+        path = ROOT / row["local_path"]
+        assert path.is_file() and path.stat().st_size == row["bytes"]
+        assert sha256(path) == row["sha256"]
+    independently_pinned = load("evidence/focus_reaudit_20261027.json")["focus_sites"]
+    for row in independently_pinned:
+        match = [r for r in downloaded if r["site"] == row["site"] and r["role"] == "listed"]
+        assert len(match) == 1
+        assert Path(match[0]["local_path"]).name == row["file"]
+        assert match[0]["sha256"] == row["file_audit"]["sha256"]
+        assert not row["organizer_receipt_verified"]
 
 
-def test_listed_top_scores_match_prompt_listing() -> None:
-    """The 9 listed top-scoring submissions (USER-REPORTED) that the table must cover."""
-    recs = _load("evidence/focus_site_files.json")["records"]
-    tops = {r["site"]: r["user_reported_score"] for r in recs
-            if r.get("role", "listed") == "listed" and r.get("user_reported_score") is not None}
-    expected = {"GEMSDOE24": 0.2477, "GEMSDOE25": 0.2600, "GEMSDOE27": 0.2449, "GEMSDOE28": 0.2710,
-                "GEMSDOE30": 0.2600, "GEMSDOE31": 0.2708, "GEMSDOE32": 0.2778, "GEMSDOE33": 0.2632,
-                "GEMSDOE36": 0.2750}
-    assert set(tops) == set(expected), sorted(set(tops) ^ set(expected))
-    for site, score in expected.items():
-        assert abs(tops[site] - score) < 1e-9, (site, tops[site])
-    assert max(tops, key=tops.get) == "GEMSDOE32"
+def test_nine_user_reported_values_and_format_evidence() -> None:
+    records = load("evidence/focus_site_files.json")["records"]
+    top = {r["site"]: r["user_reported_score"] for r in records if r["role"] == "listed"}
+    assert top == {"GEMSDOE24": .2477, "GEMSDOE25": .2600, "GEMSDOE27": .2449,
+                   "GEMSDOE28": .2710, "GEMSDOE30": .2600, "GEMSDOE31": .2708,
+                   "GEMSDOE32": .2778, "GEMSDOE33": .2632, "GEMSDOE36": .2750}
+    audit = load("evidence/focus_site_audit_20261027.json")
+    assert "Superseded" in audit["superseded_notice"]
+    for row in audit["files"]:
+        if not row["label"].startswith("archive:"):
+            assert row["nan_inside_footprint"] == 0 and row["dots_on_catalogue"] == 0
+    lattice = [r for r in audit["promoted_vs_all"] if "lattice" in r["against"]]
+    assert len(lattice) == 1 and lattice[0]["promoted_dots_within_3px_of_against"] > .70
+    assert lattice[0]["duplicate_by_protocol_overlap_gt_0p70"]
 
 
-def test_format_audit_passes_for_all_focus_files_and_promoted() -> None:
-    audit = _load("evidence/focus_site_audit_20261027.json")
-    for f in audit["files"]:
-        if f["label"].startswith("archive:"):
-            continue
-        assert f["all_checks_passed"], f"format checks failed for {f['label']}: {f['checks']}"
-        assert f["nan_inside_footprint"] == 0
-        assert f["dots_on_catalogue"] == 0
+def test_old_projection_and_promotion_are_quarantined() -> None:
+    data = load("evidence/submission_table_20261027.json")
+    assert "promoted" not in data
+    candidate = data["historical_candidate"]
+    assert candidate["verdict"] == "negative" and candidate["ok_to_submit"] is False
+    assert "not a score" in candidate["historical_quarantined_projection"]["status"]
+    assert "literal" in candidate["lattice_overlap_note"]
+    for page in ("docs/submission-table.html", "docs/audit-review.html"):
+        text = (ROOT / page).read_text()
+        assert "DO NOT SUBMIT" in text
+        assert "VALIDATED: PROMOTE" not in text and "0.3146" not in text
 
 
-def test_promoted_file_hash_matches_run_card_and_is_unique_under_protocol() -> None:
-    rc = _load("evidence/run_card.json")
-    promoted = ROOT / "docs/downloads" / rc["submission_filename"]
-    assert _sha256(promoted) == rc["raster_sha256"]
-    audit = _load("evidence/focus_site_audit_20261027.json")
-    # Protocol Rule 1: no focus-site file or non-lattice archive reference may exceed 70% 3-px overlap.
-    for p in audit["promoted_vs_all"]:
-        if "lattice" in p["against"]:
-            continue
-        assert p["overlap_3px_max_direction"] <= 0.70, p["against"]
-        assert not p["exact_dot_identity"], p["against"]
+def test_all_historical_site_download_links_resolve() -> None:
+    text = (ROOT / "docs/submission-table.html").read_text()
+    hrefs = re.findall(r'href="(downloads/[^"]+\.tif)"', text)
+    assert len(hrefs) >= 10  # nine historical files plus the current research artifact
+    for href in hrefs:
+        assert (ROOT / "docs" / href).is_file()
+    for page in list((ROOT / "docs").glob("*.html")) + [ROOT / "README.md", ROOT / "EXECUTIVE_SUMMARY.md"]:
+        for name in set(re.findall(r"downloads/([A-Za-z0-9._-]+\.tif)", page.read_text())):
+            assert (ROOT / "docs/downloads" / name).is_file(), (page, name)
 
 
-def test_projection_is_labelled_and_arithmetically_consistent() -> None:
-    d = _load("evidence/submission_table_20261027.json")
-    pr = d["promoted"]["projection"]
-    assert pr["label"].startswith("PROJECTION")
-    expected = 0.2778 * pr["holdout_exp2"] / pr["holdout_champion"]
-    assert abs(pr["point"] - round(expected, 4)) < 1e-9
-    assert pr["range_low"] <= pr["point"] <= pr["range_high"]
-    # the holdout inputs must equal the run card receipt
-    rc = _load("evidence/run_card.json")["holdout_dti"]["primary_hide_and_recover"]
-    assert abs(pr["holdout_exp2"] - rc["pooled_dti"]) < 1e-9
-    assert abs(pr["holdout_champion"] - rc["champion_02778_same_evaluator"]) < 1e-9
+def test_unsafe_concurrent_entrypoints_are_retired() -> None:
+    for name in ("build_submission_table.py", "audit_focus_files.py", "fetch_focus_submissions.py"):
+        proc = subprocess.run([sys.executable, str(ROOT / "scripts" / name)], capture_output=True, text=True)
+        assert proc.returncode != 0
+        assert "retired" in proc.stderr
 
 
-def test_submission_table_html_links_resolve() -> None:
-    html_text = (ROOT / "docs/submission-table.html").read_text(encoding="utf-8")
-    hrefs = re.findall(r'href="(downloads/[^"]+)"', html_text)
-    assert hrefs, "table must link downloadable files"
-    for h in hrefs:
-        assert (ROOT / "docs" / h).exists(), f"broken download link: {h}"
-
-
-def test_all_pages_download_links_resolve() -> None:
-    """Every docs/downloads/*.tif referenced by a page or the README exists (fixes the 12 broken links)."""
-    pages = list((ROOT / "docs").glob("*.html")) + [ROOT / "README.md", ROOT / "EXECUTIVE_SUMMARY.md"]
-    missing = []
-    for page in pages:
-        text = page.read_text(encoding="utf-8")
-        for name in set(re.findall(r"downloads/([A-Za-z0-9._-]+\.tif)", text)):
-            if not (ROOT / "docs" / "downloads" / name).exists():
-                missing.append((page.name, name))
-    assert not missing, f"broken download links: {missing}"
-
-
-def test_official_sources_record_has_urls_and_quotes() -> None:
-    src = _load("registry/official_sources_20261027.json")
+def test_official_source_register_is_dated_and_linked() -> None:
+    src = load("registry/official_sources_20261027.json")
+    assert src["verified_on_utc"] == "2026-10-27"
     ids = [s["id"] for s in src["sources"]]
     assert len(ids) == len(set(ids))
-    for s in src["sources"]:
-        assert s["url"].startswith("https://"), s["id"]
-    lb = next(s for s in src["sources"] if s["id"] == "OS-3")
-    assert lb["snapshot_values_used"]["rank_1"] == 0.4544
-    assert lb["snapshot_values_used"]["rank_25"] == 0.3195
+    assert all(s["url"].startswith("https://") for s in src["sources"])
+    leaderboard = next(s for s in src["sources"] if s["id"] == "OS-3")
+    assert leaderboard["snapshot_values_used"]["rank_1"] == .4544
+    assert leaderboard["snapshot_values_used"]["rank_25"] == .3195

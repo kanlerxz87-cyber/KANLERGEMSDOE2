@@ -79,7 +79,7 @@ def main() -> None:
         raise ValueError("Incomplete prepared cache; explicit --force required")
     fp = footprint.load_footprint()
     idx = np.flatnonzero(fp.ravel())
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    template = paths.core_path("sample_submission.tif")
     source = paths.DATA_DIR / "training_features.tif"
     lidar = paths.DATA_DIR / "external/lidar_scarp_features_u8.tif"
     with rasterio.open(template) as t, rasterio.open(source) as s, rasterio.open(lidar) as lidar_ds:

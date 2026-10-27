@@ -14,7 +14,7 @@
         "Data outside the bounds is null or nan."
       ],
       "quote": "Your submission contains a single layer with datatype of 32-bit float (`float32`) with values between 0 and 1 ... data outside the bounds is null or nan.",
-      "irregularity": "IRR-2026-10-27-02: the repo's promoted file zero-fills outside the footprint instead of NaN. The rule text allows null/nan outside bounds but does not forbid 0. Organizer confirmation is needed."
+      "irregularity": "IRR-2026-10-27-02: the repo's promoted file zero-fills outside the footprint instead of NaN. The published wording calls for null/nan outside bounds; its relationship to the irregular footprint and portal acceptance of zeros remain unverified."
     },
     {
       "id": "OS-2",

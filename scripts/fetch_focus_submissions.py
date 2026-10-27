@@ -95,6 +95,10 @@ def sha256(p: Path) -> str:
 
 
 def main() -> int:
+    sys.path.insert(0, str(ROOT / "src"))
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("fetch_focus_submissions (unpinned HEAD; use the pinned re-audit)")
     records = []
     cache: dict[str, list[dict]] = {}
     jobs = [(s_, r_, st, sc, "listed") for s_, r_, st, sc in CANDIDATES]

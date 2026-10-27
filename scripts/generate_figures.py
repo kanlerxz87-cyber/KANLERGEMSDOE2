@@ -16,6 +16,9 @@ from gems32 import htcads, paths
 
 
 def main() -> None:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("generate_figures")
     root = Path(__file__).resolve().parents[1]
     ddir = paths.data_dir()
     wdir = paths.work_dir()

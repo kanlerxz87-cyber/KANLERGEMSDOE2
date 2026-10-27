@@ -129,6 +129,9 @@ def surface_of(path: Path, foot: np.ndarray) -> np.ndarray:
 
 
 def main() -> int:
+    from gems.protocol import retired_legacy_pipeline
+
+    retired_legacy_pipeline("audit_focus_files")
     ddir = data_dir()
     foot, labels = load_footprint_and_labels(ddir)
 
