@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Execute preregistered KG2-S2 DSLUP-3D experiments (EXP-A, EXP-B, EXP-C) + Run Card.
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
+
+Execute preregistered KG2-S2 DSLUP-3D experiments (EXP-A, EXP-B, EXP-C) + Run Card.
 
 Lane (frozen in registry/preregistration_dslup.json BEFORE any experiment ran):
   Depth-Scaled Listric Updip Continuation & Blind-Basin Dual-Population Reallocation.
@@ -165,6 +167,14 @@ def _overlap_vs_named(dots_2d: np.ndarray, registry: list[dict], name_tag: str) 
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived lane disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

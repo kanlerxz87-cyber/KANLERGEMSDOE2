@@ -135,17 +135,23 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     def add(name: str, ok: bool, detail: str, *, hard: bool = True) -> None:
         checks[name] = {"pass": bool(ok), "detail": detail, "hard_requirement": hard}
 
+    from .footprint import load_footprint
+
+    # A matching count is not enough: a shifted/permuted finite footprint with
+    # the same number of pixels must fail against the committed mirror mask.
+    mirror_footprint = load_footprint()
     expected_template = (
         t_crs is not None
         and t_crs.to_epsg() == 32611
+        and t_prof.get("count") == 1
         and t_shape == EXPECTED["shape"]
         and tuple(t_tr)[:6] == EXPECTED["transform"]
-        and int(footprint.sum()) == EXPECTED["footprint_pixels"]
+        and np.array_equal(footprint, mirror_footprint)
     )
     add(
-        "official_template_grid_and_footprint",
+        "official_template_grid_and_footprint",  # legacy key; reference is an owner mirror
         expected_template,
-        "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "Template grid and every footprint pixel must match the pinned owner mirror; organizer provenance is not established",
     )
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
@@ -190,7 +196,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "variant_strict_whole_array_no_nan_allowed",
         bool(((arr >= 0) & (arr <= 1)).all()),
-        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the mirror sample's NaN outside",
         hard=False,
     )
 
@@ -204,9 +210,9 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         for k in ("driver", "dtype", "nodata", "width", "height", "crs", "transform")
     )
     add(
-        "profile_matches_official_sample",
+        "profile_matches_official_sample",  # legacy key; not authenticated as official
         bool(same_profile),
-        f"driver/dtype/nodata/size/crs/transform equal to template; compress={prof.get('compress')} (template {t_prof.get('compress')})",
+        f"driver/dtype/nodata/size/crs/transform equal to supplied template; compress={prof.get('compress')} (template {t_prof.get('compress')})",
         hard=False,
     )
     hard_fail = [k for k, v in checks.items() if v["hard_requirement"] and not v["pass"]]

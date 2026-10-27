@@ -22,7 +22,10 @@ DRAWS = (20, 21)
 COLLAR_PX = 15       # 1.5 km spatial buffer between train and test quadrants
 DOMAIN_ERODE = 12    # 1.2 km boundary erosion
 NEAR_LABEL_PX = 3    # 300 m kernel radius around known catalogue faults
-ESTIMATED_LB_HIDDEN_TRUTH_PX = 12691.0  # Calibrated from blind lattice-s5 (0.0904) & h19-5->d1.5->d2.8
+# Archived, unverified ledger-inversion assumption retained only to reproduce
+# legacy SGMC research transforms. It is NOT an observed hidden-truth count,
+# an organizer score, or a valid basis for a promotion gate.
+ESTIMATED_LB_HIDDEN_TRUTH_PX = 12691.0
 EVALUATOR_VERSION = "GEMSDOE32-HOLDOUT-v3-visible-only"
 HOLDOUT_EVALUATOR_VERSION = "GEMSDOE32-HOLDOUT-v3-visible-gated"
 HIDE_RECOVER_EVALUATOR_VERSION = "GEMSDOE32-HIDE-RECOVER-v3.0"
@@ -641,6 +644,20 @@ def _is_binary_field(arr: np.ndarray) -> bool:
     return bool(np.all((fin == 0.0) | (fin == 1.0)))
 
 
+def _validate_probability_grid(values: np.ndarray, footprint: np.ndarray) -> None:
+    """Refuse invalid in-footprint values; exterior NaNs remain permissible.
+
+    This is a scoring check, not a GeoTIFF-format or leakage certification.
+    In particular, replacing an invalid fold surface with zeros or clipping it
+    would silently alter both the score and its confidence interval.
+    """
+    if values.ndim != 2 or values.shape != footprint.shape:
+        raise ValueError("Prediction must match the evaluation footprint grid")
+    selected = values[footprint]
+    if not np.isfinite(selected).all() or np.any((selected < 0) | (selected > 1)):
+        raise ValueError("Predictions inside the footprint must be finite and in [0,1]")
+
+
 def _exact_soft_truth_credit(p: np.ndarray, ty: np.ndarray, tx: np.ndarray) -> np.ndarray:
     """Exact 25-offset Euclidean 300 m kernel credit max_{d<=3} p(x)*k(d) for soft p in [0, 1]."""
     H, W = p.shape
@@ -662,12 +679,14 @@ def evaluate_hide_and_recover(
     seed: int = 20261026,
     name: str = "candidate",
 ) -> dict:
-    """Protocol Rule 2 leak-free Hide-and-Recover Pooled DTI evaluator (fixes IR-32-INSTR-03 & IR-SHARED-SOFT-01).
+    """Score hide-and-recover pooled DTI; the caller must ensure fold-safe features.
 
-    Withholds whole fault segments with a 15-px collar buffer, masks ONLY visible faults pixel-exactly
-    (plus optional ``b_visible_px`` exclusion strictly around visible faults — NEVER hidden faults),
-    and computes exact pooled DTI (alpha=0.2, beta=0.8, 300 m triangular kernel) for BOTH binary {0, 1}
-    and soft/continuous [0, 1] predictions, with a spatial ``grid_n x grid_n`` block cluster-bootstrap 95% CI.
+    The context withholds whole components and masks visible faults pixel-exactly.
+    The optional ``b_visible_px`` exclusion uses visible faults only. This
+    function cannot inspect how predictions were produced: any catalogue-derived
+    feature must be rebuilt from that cell's visible faults; a shared static
+    prediction is appropriate only for a demonstrably label-independent surface.
+    Scores use the 300 m triangular kernel, with a spatial-block bootstrap CI.
     """
     h, w = ctx.foot.shape
     n_blocks = grid_n * grid_n
@@ -683,13 +702,12 @@ def evaluate_hide_and_recover(
     base_is_bin = True
     if not is_cell_dict:
         raw_arr = np.asarray(pred_or_cells)
+        _validate_probability_grid(raw_arr, ctx.foot)
         base_is_bin = _is_binary_field(raw_arr)
         if base_is_bin:
-            base_arr = (np.isfinite(raw_arr) & (raw_arr > 0)) & ctx.foot
+            base_arr = (raw_arr > 0) & ctx.foot
         else:
-            if np.any(np.isfinite(raw_arr[ctx.foot]) & ((raw_arr[ctx.foot] < 0.0) | (raw_arr[ctx.foot] > 1.0))):
-                raise ValueError("Soft predictions inside footprint must lie in [0, 1]")
-            base_arr = np.where(ctx.foot & np.isfinite(raw_arr), raw_arr, 0.0).astype(np.float64)
+            base_arr = np.where(ctx.foot, raw_arr, 0.0).astype(np.float64)
 
     folds: dict[str, dict] = {}
     for cell in ctx.cells:
@@ -697,8 +715,13 @@ def evaluate_hide_and_recover(
         r0, c0 = int(sl[0].start), int(sl[1].start)
         if is_cell_dict:
             raw_cell = np.asarray(pred_or_cells[cell.key])
-            cell_bin = _is_binary_field(raw_cell)
-            sub_raw = raw_cell[sl] if raw_cell.shape == (h, w) else raw_cell
+            if raw_cell.shape == (h, w):
+                _validate_probability_grid(raw_cell, ctx.foot)
+                sub_raw = raw_cell[sl]
+            else:
+                sub_raw = raw_cell
+                _validate_probability_grid(sub_raw, ctx.foot[sl])
+            cell_bin = _is_binary_field(sub_raw)
         else:
             cell_bin = base_is_bin
             sub_raw = base_arr[sl]
@@ -731,7 +754,7 @@ def evaluate_hide_and_recover(
             py_sub, px_sub = np.nonzero(p_sub)
             fp_weights = (1.0 - cell.k_dg_sub[p_sub]).astype(np.float64)
         else:
-            p_sub_f = np.where(allow & np.isfinite(sub_raw), np.clip(sub_raw, 0.0, 1.0), 0.0).astype(np.float64)
+            p_sub_f = np.where(allow, sub_raw, 0.0).astype(np.float64)
             pos_sub = p_sub_f > 0.0
             n_emit = int(pos_sub.sum())
             mass_emit = float(p_sub_f.sum())
@@ -803,9 +826,15 @@ def evaluate_sgmc_with_ci(
     seed: int = 20261026,
     name: str = "candidate",
 ) -> dict:
-    """Off-catalogue SGMC DTI (raw & prevalence-calibrated) with 256-block spatial cluster-bootstrap 95% CI."""
+    """Raw off-catalogue SGMC DTI plus an archived, unvalidated ledger transform.
+
+    The raw SGMC metric is a proxy holdout, not a leaderboard estimate. The
+    transformed value relies on an inferred hidden-truth count and must not be
+    used as a measured score or promotion gate.
+    """
     h, w = ctx.foot.shape
     raw_arr = np.asarray(mask)
+    _validate_probability_grid(raw_arr, ctx.foot)
     is_bin = _is_binary_field(raw_arr)
     allow = ctx.foot & ~ctx.labels
     n_blocks = grid_n * grid_n
@@ -833,8 +862,13 @@ def evaluate_sgmc_with_ci(
             np.add.at(emit_blk, p_blk, 1.0)
         else:
             np.add.at(fn_blk, t_blk, 1.0)
+            if m_bool.any():  # no truth: every prediction is a false positive
+                py, px = np.nonzero(m_bool)
+                p_blk = _spatial_block_index(py, px, (h, w), grid_n)
+                np.add.at(fp_blk, p_blk, 1.0)
+                np.add.at(emit_blk, p_blk, 1.0)
     else:
-        p_f = np.where(allow & np.isfinite(raw_arr), np.clip(raw_arr, 0.0, 1.0), 0.0).astype(np.float64)
+        p_f = np.where(allow, raw_arr, 0.0).astype(np.float64)
         pos = p_f > 0.0
         if pos.any() and ctx.sgmc_n_truth > 0:
             t_cred = _exact_soft_truth_credit(p_f, ty, tx)
@@ -847,6 +881,11 @@ def evaluate_sgmc_with_ci(
             np.add.at(emit_blk, p_blk, p_f[pos])
         else:
             np.add.at(fn_blk, t_blk, 1.0)
+            if pos.any():  # no truth: all soft prediction mass is false positive
+                py, px = np.nonzero(pos)
+                p_blk = _spatial_block_index(py, px, (h, w), grid_n)
+                np.add.at(fp_blk, p_blk, p_f[pos])
+                np.add.at(emit_blk, p_blk, p_f[pos])
 
     raw_pooled, raw_ci95, _ = _cluster_bootstrap_pooled_dti(tp_blk, fp_blk, fn_blk, active_blocks, n_boot=n_boot, seed=seed)
 
@@ -873,14 +912,22 @@ def evaluate_sgmc_with_ci(
     return {
         "candidate_id": name,
         "evaluator_version": SGMC_EVALUATOR_VERSION,
-        "score_label": "HOLDOUT-DTI",
+        "score_label": "HOLDOUT-DTI (raw SGMC proxy only)",
         "n_withheld_positives": int(ctx.sgmc_n_truth),
         "n_spatial_clusters": k,
         "n_bootstrap_reps": int(n_boot),
         "sgmc_raw_pooled_dti": raw_pooled,
         "sgmc_raw_ci95": raw_ci95,
+        "raw_components": {
+            "tp": float(tp_blk[active_blocks].sum()),
+            "fp": float(fp_blk[active_blocks].sum()),
+            "fn": float(fn_blk[active_blocks].sum()),
+            "prediction_mass": float(emit_blk[active_blocks].sum()),
+        },
         "sgmc_prevalence_calibrated_dti": cal_pooled,
         "sgmc_calibrated_ci95": cal_ci95,
+        "calibration_status": "UNVALIDATED RESEARCH TRANSFORM; not a holdout DTI, leaderboard score or promotion gate",
+        "calibration_assumption": "Fixed hidden-truth count inferred from unverified historical reports; not organizer-confirmed.",
         "_cal_boots": cal_boots,
     }
 

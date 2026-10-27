@@ -1,7 +1,7 @@
 {
   "schema": "kanlergemsdoe2.official_sources.v1",
   "verified_on_utc": "2026-10-27",
-  "method": "Each entry was fetched with fetch_page on 2026-10-27 (UTC). 'quote' is copied from the fetched text. Items marked NOT-VERIFIED were not reachable or not checked.",
+  "method": "Sources were inspected with the page-fetch tool on 2026-10-27 UTC. Exact downloaded data and authenticated submissions were not obtained unless explicitly noted; quotes are from the cited pages.",
   "sources": [
     {
       "id": "OS-1",
@@ -14,7 +14,7 @@
         "Data outside the bounds is null or nan."
       ],
       "quote": "Your submission contains a single layer with datatype of 32-bit float (`float32`) with values between 0 and 1 ... data outside the bounds is null or nan.",
-      "irregularity": "IRR-2026-10-27-02: the repo's promoted file zero-fills outside the footprint instead of NaN. The rule text allows null/nan outside bounds but does not forbid 0. Organizer confirmation is needed."
+      "irregularity": "Official wording requires null/NaN outside bounds. Whether the irregular finite-pixel footprint in the owner mirror equals those bounds, and whether either exterior encoding is accepted by the portal, remain unverified."
     },
     {
       "id": "OS-2",
@@ -79,17 +79,65 @@
       "id": "OS-6",
       "title": "DrivenData data page (training data)",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/data/",
-      "claims_verified": ["NOT-VERIFIED this session: the page requires login. Prior-session notes say it redirects to login; the restored files are owner-supplied mirrors (see registry/data_manifest.json)."],
-      "quote": null,
-      "irregularity": "IRR-2026-10-27-04: competition inputs come from owner-mirror GitHub repos, pinned by SHA-256, not from organizer downloads."
+      "claims_verified": [
+        "Unauthenticated access to the official data page redirected to the DrivenData login page on 2026-10-27.",
+        "Owner-hosted input mirrors were restored and SHA-checked; this does not establish organizer provenance."
+      ],
+      "quote": "Login",
+      "irregularity": "Competition inputs used here are pinned owner mirrors, not authenticated downloads from the organizer."
     },
     {
       "id": "OS-7",
       "title": "GeoDAWN USGS data release (DOI 10.5066/P93LGLVQ)",
-      "url": "https://doi.org/10.5066/P93LGLVQ",
-      "claims_verified": ["Cited by OS-2 PDF footnote 3 as the GeoDAWN source; the DOI string appears verbatim in the rules PDF."],
-      "quote": "[https://doi.org/10.5066/P93LGLVQ](https://doi.org/10.5066/P93LGLVQ)",
-      "irregularity": null
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "claims_verified": [
+        "USGS describes GeoDAWN airborne magnetic and radiometric surveys in northern/western Nevada and eastern California.",
+        "The landing page marks the release CC0 and links DOI 10.5066/P93LGLVQ."
+      ],
+      "quote": "This work is marked with CC0 1.0 Universal",
+      "irregularity": "Owner-derived feature rasters have not been independently reconstructed from the USGS source files."
+    },
+    {
+      "id": "OS-8",
+      "title": "DOE GDR INGENIOUS regional compilation",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "claims_verified": [
+        "The page lists 2 m probes, spring/well chemistry, faults, volcanics and linked geophysical datasets.",
+        "The landing page states CC BY 4.0 with attribution."
+      ],
+      "quote": "These datasets may be redistributed with attribution",
+      "irregularity": "The landing page and download links were inspected; source data files were not downloaded in this sandbox."
+    },
+    {
+      "id": "OS-9",
+      "title": "USGS 3D Elevation Program",
+      "url": "https://www.usgs.gov/3d-elevation-program",
+      "claims_verified": [
+        "USGS states all 3DEP products are free of charge and without use restrictions."
+      ],
+      "quote": "All 3DEP products are available free of charge and without use restrictions.",
+      "irregularity": "The locally restored derived LiDAR features are an owner mirror, not independently rebuilt from source tiles."
+    },
+    {
+      "id": "OS-10",
+      "title": "NASA OPERA product description",
+      "url": "https://www.earthdata.nasa.gov/data/projects/opera",
+      "claims_verified": [
+        "NASA lists OPERA DISP-S1 at the ASF DAAC with a US spatial extent."
+      ],
+      "quote": "Surface Displacement from Sentinel-1 (DISP-S1)",
+      "irregularity": "Relevant tile availability, license conditions, access and usable time series have not been verified or downloaded."
+    },
+    {
+      "id": "OS-11",
+      "title": "DrivenData competition overview",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+      "claims_verified": [
+        "The overview lists December 3, 2026, 11:59 p.m. UTC as the competition end date.",
+        "It states that the same selected submission is scored in both rounds."
+      ],
+      "quote": "Dec. 3, 2026, 11:59 p.m. UTC",
+      "irregularity": "Always check the current page and rules for changes before acting."
     }
   ]
 }

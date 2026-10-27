@@ -132,10 +132,13 @@ def main() -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(record, indent=2, allow_nan=False) + "\n")
     prior = record["prior_candidate"]
+    dslup_archive = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
+    dslup = next(r for r in candidates if r["sha256"] == dslup_archive["raster_sha256"]
+                 and r["file"] == dslup_archive["submission_filename"])
     card = {
         "schema": "gems.parallel-run-card.v2",
         "generated_utc": record["generated_utc"],
-        "hypothesis": "H-K1 HTCADS; proposed height-persistent cross-gradient corroboration",
+        "hypothesis": "H-K1 HTCADS frozen lane; proposed height-persistent cross-gradient ablation is not yet registered or fitted",
         "mechanism": "Compare potential-field gradient orientation and displacement across continuation heights with separate hydrothermal evidence; proposed, not fitted.",
         "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
         "holdout_dti": None,
@@ -146,6 +149,8 @@ def main() -> int:
             "surface_status": "No new surface was built or compared",
             "prior_final_dots_spearman_vs_witness": prior["witness_final_dots_spearman"],
             "prior_final_dots_overlap_vs_witness": prior["witness_overlap_fraction"],
+            "prior_dslup_final_dots_spearman_vs_witness": dslup["witness_final_dots_spearman"],
+            "prior_dslup_final_dots_overlap_vs_witness": dslup["witness_overlap_fraction"],
             "witness_sha256": WITNESS_SHA,
             "unavoidable_overlap_at_registered_budget": budget["minimum_directional_overlap"],
             "complete_registry_checked": False,
@@ -154,7 +159,8 @@ def main() -> int:
         "validator_output": {
             "new_raster": "not produced",
             "prior_raster_exact_byte_audit": prior,
-            "note": "The prior raster is a research artifact only; range/grid checks are not portal acceptance.",
+            "prior_dslup_exact_byte_audit": dslup,
+            "note": "Both prior rasters are research artifacts only; range/grid checks are not portal acceptance.",
         },
         "submission_name": None,
         "note": "No new candidate; literal registry duplicate stop. Research only; do not submit.",
