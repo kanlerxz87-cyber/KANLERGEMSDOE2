@@ -89,6 +89,68 @@ def main() -> None:
     reg = rc["registry_comparison"]
     fmt = val["format_audit"]
 
+    # --- KG2-ECPU-20261027 lane (optional receipts; negative-result lane) ---
+    _ecpu_p = edir / "ecpu_experiments_20261027.json"
+    ecpu = json.loads(_ecpu_p.read_text(encoding="utf-8")) if _ecpu_p.exists() else None
+    _ecpu_card_p = edir / "run_card_ecpu_20261027.json"
+    ecpu_card = json.loads(_ecpu_card_p.read_text(encoding="utf-8")) if _ecpu_card_p.exists() else None
+    _reaudit_p = edir / "nine_site_reaudit_20261027.json"
+    reaudit = json.loads(_reaudit_p.read_text(encoding="utf-8")) if _reaudit_p.exists() else None
+
+    ecpu_section = ""
+    ecpu_exec_section = ""
+    if ecpu and ecpu_card:
+        _rows = []
+        for _eid in ("EXP-1", "EXP-2", "EXP-3", "C0-twin"):
+            _r = ecpu["experiments"][_eid]
+            _hr = _r["holdout_hide_recover_oof"]; _sg = _r["holdout_sgmc_static_live"]
+            _u = _r["uniqueness"]; _pj = (reaudit or {}).get("candidate_projections", {}).get(f"ECPU-{_eid}", {})
+            _rng = _pj.get("range") or [0, 0]
+            _rows.append(
+                f"<tr><td><strong>{_eid}</strong></td>"
+                f"<td><code>{_hr['pooled_dti']:.6f}</code> HOLDOUT-DTI<br><span style=\"color:var(--muted);font-size:0.78rem\">95% CI [{_hr['ci95'][0]:.4f}, {_hr['ci95'][1]:.4f}]</span></td>"
+                f"<td><code>{_sg['sgmc_prevalence_calibrated_dti']:.6f}</code> HOLDOUT-DTI<br><span style=\"color:var(--muted);font-size:0.78rem\">95% CI [{_sg['ci95'][0]:.4f}, {_sg['ci95'][1]:.4f}]</span></td>"
+                f"<td>max 3px <code>{_u['final_dots_max_detector_3px_overlap']*100:.2f}%</code> &le;70%<br>|&rho;|<code>{_u['pre_placement_surface_max_abs_spearman']:.4f}</code></td>"
+                f"<td><code>{_rng[0]:.4f}&ndash;{_rng[1]:.4f}</code> PROJECTION</td></tr>")
+        _abl = ecpu["ablation_weighted_minus_unweighted"]
+        ecpu_section = f"""
+  <section class="gate-banner fail" style="margin-top:1rem">
+    <div class="status-pill">&#10008; LATEST LANE KG2-ECPU (2026-10-27): NEGATIVE RESULT &mdash; DO NOT SUBMIT THE ECPU FILE</div>
+    <h2 style="margin:0.4rem 0">Effort-Corrected PU Lane Failed Gate 4 (Fail-Closed)</h2>
+    <p style="margin:0;color:#cbd5e1;max-width:1080px">
+      Three preregistered ECPU experiments (detectability-propensity reweighting; preregistration frozen before any run)
+      were tested against the same evaluators on 2026-10-27. <strong>All three lose</strong> to the 0.2778 champion procedure
+      (Hide-Recover OOF <code>0.0992</code>) and to the promoted HTCADS file above (OOF <code>0.1124</code>, SGMC-CAL <code>0.0789</code>).
+      Best ECPU (EXP-1): Hide-Recover <code>{ecpu['experiments']['EXP-1']['holdout_hide_recover_oof']['pooled_dti']:.4f}</code> HOLDOUT-DTI,
+      SGMC-CAL <code>{ecpu['experiments']['EXP-1']['holdout_sgmc_static_live']['sgmc_prevalence_calibrated_dti']:.4f}</code> HOLDOUT-DTI.
+      Propensity weighting <em>did</em> help blind SGMC vs its unweighted twin
+      (<code>{_abl['sgmc_paired']['delta']:+.4f}</code>, 95% CI [<code>{_abl['sgmc_paired']['ci95'][0]:+.4f}</code>, <code>{_abl['sgmc_paired']['ci95'][1]:+.4f}</code>])
+      but hurt Hide-Recover (<code>{_abl['hr_oof_paired']['delta']:+.4f}</code>). Verdict: <strong>negative</strong> &mdash; spend no submission slot.
+      The file <code>{_esc(ecpu_card['submission_filename'])}</code> (SHA-256 <code>{ecpu_card['raster_sha256'][:16]}&hellip;</code>) is format-valid and unique
+      (max 3-px overlap <code>{ecpu_card['registry_comparison']['final_dots_max_detector_3px_overlap']*100:.2f}%</code> vs 206 registry rasters) but is retained
+      <strong>only as a negative-result deliverable</strong>. <a href="downloads/ecpu_run_card.json" download>ECPU Run Card (JSON)</a>
+    </p>
+    <div class="table-wrap" style="margin-top:0.8rem"><table>
+      <thead><tr><th>Experiment</th><th>Hide-Recover v3.0 OOF (N=22,232)</th><th>SGMC-CAL v3.0 (N=62,703)</th><th>Uniqueness (206 rasters)</th><th>Ledger PROJECTION (not a score)</th></tr></thead>
+      <tbody>{''.join(_rows)}</tbody>
+    </table></div>
+    <div class="fig-block"><img src="assets/fig4_ecpu_negative_result.png" alt="ECPU negative result holdout comparison">
+    <div class="fig-caption"><strong>Figure 4:</strong> KG2-ECPU vs benchmarks. HTCADS Hide-Recover bar is its recorded OOF procedure score (2026-10-26); all other bars measured 2026-10-27. Error bars: 95% spatial cluster-bootstrap CIs.</div></div>
+  </section>
+"""
+        ecpu_exec_section = f"""
+  <section class="card">
+    <h2>Latest Lane KG2-ECPU (2026-10-27): Negative &mdash; What To Submit Instead</h2>
+    <p><span class="tag tag-bad">DO NOT SUBMIT (ECPU)</span> <code>{_esc(ecpu_card['submission_filename'])}</code> (SHA-256 <code>{ecpu_card['raster_sha256'][:16]}&hellip;</code>):
+    Hide-Recover <code>{ecpu['experiments']['EXP-1']['holdout_hide_recover_oof']['pooled_dti']:.4f}</code> HOLDOUT-DTI and SGMC-CAL
+    <code>{ecpu['experiments']['EXP-1']['holdout_sgmc_static_live']['sgmc_prevalence_calibrated_dti']:.4f}</code> HOLDOUT-DTI both lose to the promoted HTCADS file
+    (paired SGMC delta <code>{ecpu['experiments']['EXP-1']['holdout_sgmc_static_live']['paired_delta_vs_htcads_static']['delta']:+.4f}</code>). Ledger PROJECTION for ECPU EXP-1:
+    <code>{(reaudit or {}).get('candidate_projections', {}).get('ECPU-EXP-1', {}).get('range', [0, 0])[0]:.4f}&ndash;{(reaudit or {}).get('candidate_projections', {}).get('ECPU-EXP-1', {}).get('range', [0, 0])[1]:.4f}</code> (not a score).
+    Ledger PROJECTION for the promoted HTCADS file: <code>{(reaudit or {}).get('candidate_projections', {}).get('HTCADS-EXP2-prior-promoted', {}).get('range', [0, 0])[0]:.4f}&ndash;{(reaudit or {}).get('candidate_projections', {}).get('HTCADS-EXP2-prior-promoted', {}).get('range', [0, 0])[1]:.4f}</code> (not a score; no ORGANIZER receipt recorded yet &mdash;
+    check your DrivenData submissions page and weekly cap before uploading, and never submit the same file twice).</p>
+  </section>
+"""
+
     # Overlap vs GEMSDOE32 0.2778
     ov_32 = next(r for r in focus_ov if r["site"] == "GEMSDOE32")
 
@@ -139,6 +201,9 @@ def main() -> None:
     <p style="margin:0;color:#cbd5e1;max-width:1080px">
       100% de-novo <strong>Hydrothermal-Tectonic Conduit &amp; Anisotropic Dilational Step-Over Synthesis (HTCADS-DualRegime, EXP-2)</strong>.
       Automatically verified across all <code>12,279,160</code> raster cells (`3730 &times; 3292`, `EPSG:32611`, `float32`, `0` NaNs, values strictly in `[0.0, 1.0]`, permanently immune to the DrivenData <em>"Predicted values must be in range [0, 1]"</em> rejection), genuinely unique against all <code>192</code> footprint-distinct GEMSDOE registry rasters (only <strong>{ov_32["our_dots_within_3px_of_peer"]*100:.2f}%</strong> 3-px dot overlap with the <code>0.2778</code> Champion; <strong>60.34% = 22,720 novel conduit dots</strong>), and outperforming the <code>0.2778</code> Champion on <strong>both</strong> orthogonal holdout benchmarks with strictly positive 95% spatial cluster-bootstrap confidence intervals (<strong>99.2%</strong> bootstrap win probability).
+      <strong>Precision note (IR-20261027-01, corrected 2026-10-27):</strong> the Hide-Recover figure is the <em>out-of-fold procedure</em> score; scoring this final
+      full-catalogue-collared file statically on Hide-Recover self-censors (measured 2026-10-27: <code>0.0283</code>, same artifact class as the champion's static <code>0.0045</code>),
+      while its static SGMC-CAL <code>0.0789</code> reproduced exactly. No ORGANIZER-CONFIRMED score is recorded for this file yet &mdash; check your DrivenData submissions page (and weekly cap) before uploading, and never submit the identical file twice.
     </p>
 
     <div class="btn-row">
@@ -187,6 +252,7 @@ def main() -> None:
     </div>
   </section>
 
+{ecpu_section}
   <section class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">Primary Holdout (Hide-and-Recover v3.0)</div>
@@ -472,6 +538,7 @@ def main() -> None:
     </div>
   </section>
 
+{ecpu_exec_section}
   <section class="card">
     <h2>Broader 92-Site GEMSDOE Fleet: Top Independent (Non-H19-5) Benchmarks</h2>
     <p style="color:var(--muted);margin-top:0">
@@ -707,6 +774,18 @@ def main() -> None:
         ("IR-KG2-LLI-BIAS-01", "LLI-S3 H19-5 Conditioning Bias on Independent ML Surfaces", "DOCUMENTED",
          "GEMSDOE32's LLI-S3 strata depend solely on (d_catalogue, d_H19-5), under-projecting non-H19-5 detectors by 0.10-0.17 (projects 0.1319 for 0.2336-live 10GEMSDOE H28 and 0.0747 for 0.2478-live GEMSDOE70 family).",
          "Strictly quarantined as a PROJECTION (never a score) with documented H19-5 conditioning caveat."),
+        ("IR-20261027-01", "Prior Banner Implied Final-File (Static) Hide-Recover Dominance", "CORRECTED 2026-10-27",
+         "Re-scoring the promoted HTCADS file statically on GEMSDOE32-HIDE-RECOVER-v3.0 gives 0.0283 (not 0.1124): like champion B=2 (static 0.0045), any file collared against the FULL catalogue deletes dots around withheld truths. The 0.1124 figure is the correct OOF-procedure score; static SGMC-CAL 0.0789 reproduced exactly on 2026-10-27.",
+         "Banner and summaries now label Hide-Recover as OOF-procedure vs SGMC as static-file explicitly; all comparisons in the ECPU lane use OOF-vs-procedural or static-vs-static only (evidence/nine_site_reaudit_20261027.json)."),
+        ("IR-20261027-02", "Ledger Inversion Point-Set Ambiguity (3-pt in test vs 4-pt in prose)", "RESOLVED 2026-10-27",
+         "tests/test_kanlergemsdoe2.py fits 3 collar points (TPw=5210, K=14020, R2=0.9996) while prose quoted the 4-point fit including GEMSDOE36 (38854, 0.2750) (TPw=5151, K=13735, R2=0.9985). Both reproduce exactly; the difference is the point set, plus 4-dp score rounding alone moves TPw within [5180, 5241] on the 3-point fit.",
+         "2026-10-27 re-audit reports the 4-point fit as primary and the 3-point fit as sensitivity (evidence/nine_site_reaudit_20261027.json); all PROJECTIONs state the fit used."),
+        ("IR-20261027-03", "Validator Gate 4 Could Pass a Candidate Worse Than the In-Repo Best", "FIXED IN REPO 2026-10-27",
+         "scripts/validate_submission.py Gate 4 only required beating the 0.2778 champion, so a future candidate inferior to the already-validated HTCADS file could have been auto-promoted.",
+         "Gate 4 now additionally requires beating declared prior-best fields (HR point >= prior OOF; SGMC > prior with paired CI > 0 when present). Backwards compatible for older run cards. Covered by tests/test_ecpu_lane.py."),
+        ("IR-20261027-04", "KG2-ECPU Lane Negative (Propensity Weighting Trade-Off)", "STOP LOGGED (NEGATIVE)",
+         "Effort-propensity weighting significantly improved blind SGMC vs unweighted twin (+0.0031, 95% CI [+0.0007, +0.0058]) but degraded Hide-Recover (-0.0041); effort-stratified caps and low-stratum ridge gate degraded both. Best ECPU HR-OOF 0.0848 < B2-procedural 0.0992 < HTCADS OOF 0.1124; SGMC 0.0644 << HTCADS 0.0789. Propensity was effectively slope+road+LiDAR (depth-to-basement gain 0.0 in fold 0).",
+         "Fail-closed verdict=negative in evidence/run_card_ecpu_20261027.json; ECPU GeoTIFF retained only as negative deliverable, clearly marked DO NOT SUBMIT. Lesson: a plain 27-channel GBDT surface is too weak - any future effort correction must be applied ON TOP of the HTCADS physics surface, not instead of it."),
     ]
 
     ir_rows = "".join(f"""
@@ -829,6 +908,32 @@ def main() -> None:
 1. **Exact Tversky Ledger Inversion (`R^2 = 0.9985`)**: Across the `H19-5` collar-pruning chain (`44,090 -> 40,199 -> 37,654` dots scoring `0.2600 -> 0.2708 -> 0.2778` `ORGANIZER-CONFIRMED`), `1 / DTI(N)` is linear in `N` with `R^2 = 0.998523`. That proves the `6,436` removed `0–200 m` catalogue-flank dots contributed `~0` true positives on the private expert test set while revealing `TP_w ≈ 5,151 px` and hidden off-catalogue fault set `K ≈ 13,735 px` (`~0.27%` footprint prevalence).
 2. **Ceiling of Pruning `H19-5`**: Further feature pruning on `H19-5` plateaus near `~0.285–0.295` (`GEMSDOE28` gained `+0.0002`). Reaching public `#5` (`0.3195`) requires `TP_w ≈ 5,917 px` and `#1` (`0.4413`) requires `TP_w ≈ 8,172 px` — mathematically requiring discovery of blind intrabasin, updip range-front, and hydrothermal accommodation faults absent from `H19-5`.
 3. **HTCADS-DualRegime (`EXP-2`) Mechanism**: Couples out-of-quadrant sharp subsurface/geothermal/scarp GBDT + first-principles Multi-Physics Conduit index (FFT 400 m upward-continuation updip gravity migration, Gallardo-Meju cross-gradient, GeoDAWN hydrothermal magnetite destruction & K/Th metasomatism, MT lateral clay-cap edges, hydraulic-upgradient GDR 1391 thermal probes/wells/sinter vents, 100 m scarp-slope/toe-concavity) + coverage-neutral zero-mean contour-orthogonal 1 m LiDAR specialist + purely directional fault-tip/relay propagation + exact 300 m Euclidean CELF submodular allocation.
+
+---
+
+## 2026-10-27 Update: KG2-ECPU Lane = **NEGATIVE (DO NOT SUBMIT)** + Same-Session Re-Audit
+
+- **New preregistered lane tested and rejected fail-closed**: `KG2-ECPU` (effort-propensity PU reweighting; `registry/preregistration_ecpu_20261027.json` frozen pre-run). All 3 experiments lose to the promoted HTCADS file on both evaluators. Best (EXP-1, `docs/downloads/kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif`, SHA-256 `5c83f85c7282...`): Hide-Recover OOF `0.0848` `HOLDOUT-DTI` vs B2-procedural `0.0992` / HTCADS OOF `0.1124`; SGMC-CAL `0.0644` `HOLDOUT-DTI` vs HTCADS `0.0789` (paired delta `-0.0145`). It is unique (max `66.25%` 3-px vs 206 registry rasters) and format-valid, but **verdict = negative — spend no slot on it** (`evidence/run_card_ecpu_20261027.json`, `evidence/validator_receipt_ecpu_20261027.json`: Gates 1/2/3/5 pass, Gate 4 fails).
+- **Ablation finding**: propensity weighting alone significantly helps blind SGMC vs unweighted twin (`+0.0031`, 95% CI `[+0.0007, +0.0058]`) but hurts Hide-Recover (`-0.0041`) — withheld catalogue faults are by definition *detected* faults, so de-biasing cannot win that evaluator with a plain GBDT surface.
+- **What to submit**: the promoted HTCADS file above remains the ONLY validated candidate. Ledger **PROJECTION** (4-point fit, not a score): `0.3150–0.3419`. ECPU EXP-1 PROJECTION: `0.2378–0.2797`. No `ORGANIZER-CONFIRMED` score is recorded for the HTCADS file yet — check the DrivenData submissions page / weekly cap first; never submit the identical file twice.
+- **Corrections (`IR-20261027-01..03`)**: Hide-Recover `0.1124` is an OOF-procedure score (static file = `0.0283` self-censored, same artifact as champion static `0.0045`); ledger prose = 4-point fit (`TPw=5151, K=13735, R²=0.9985`, reproduced exactly), test = 3-point sensitivity (`5210/14020`); validator Gate 4 strengthened to require beating the in-repo prior best when declared.
+- **9-site re-audit (2026-10-27, `evidence/nine_site_reaudit_20261027.json`)**: all 9 champion SHA-256s match the 2026-10-26 audit; exactly one 0-XOR pair *among best files* (`GEMSDOE25 == GEMSDOE30`); no focus champion is unique (max own-dots-within-3px-of-another champion `97.6%–100%`); 5 of 9 best files carry outside-footprint NaNs (portal-reject as stored).
+
+### Submission Decision Table (2026-10-27): File · Estimated Score · Unique?
+
+| File to download | Score / Estimate (labeled) | Unique? | Decision |
+|---|---|---|---|
+| `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif` (this repo) | PROJECTION `0.315–0.342` (not a score); HR-OOF `0.1124` / SGMC `0.0789` `HOLDOUT-DTI` | YES (`64.91% ≤ 70%`) | ✅ SUBMIT if not already submitted |
+| `kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif` (this repo, NEW) | PROJECTION `0.238–0.280`; HR-OOF `0.0848` / SGMC `0.0644` `HOLDOUT-DTI` | YES (`66.25% ≤ 70%`, 206 rasters) | ⛔ DO NOT SUBMIT (`negative`) |
+| `gemsdoe32-h33-h33-2-b2-...-e5eb6e7e-zeros.tif` (GEMSDOE32) | `0.2778` ORGANIZER-CONFIRMED | NO (`100%`) | Already submitted |
+| `gemsdoe36-anderson-geothermal-pinn-38854-...-zeros.tif` (GEMSDOE36) | `0.2750` ORGANIZER-CONFIRMED | NO (`97.6%`) | Already submitted |
+| `gems28-h36-1-rung30-blind-r1-...-nan.tif` (GEMSDOE28) | `0.2710` ORGANIZER-CONFIRMED | NO (`100%`) | Already submitted; `-nan` unsafe |
+| `gemsdoe31-h27-4-solo-d28-...-nan.tif` (GEMSDOE31) | `0.2708` ORGANIZER-CONFIRMED | NO (`100%`) | Already submitted; `-nan` unsafe |
+| `GEMSDOE33-h33d-analog-tip-stepover-r30-...tif` (GEMSDOE33) | `0.2632` ORGANIZER-CONFIRMED | NO (`99.7%`) | Already submitted |
+| `gems25-dotted-h19-5-d2-8-...-nan.tif` (GEMSDOE25) | `0.2600` ORGANIZER-CONFIRMED | NO (0-XOR = GEMSDOE30) | Already submitted; `-nan` unsafe |
+| `gemsdoe30-d28-poisson300m-offcat-44090-...tif` (GEMSDOE30) | `0.2600` ORGANIZER-CONFIRMED | NO (0-XOR = GEMSDOE25) | Already submitted |
+| `gems24-h25-1-dotted-h19-5-d1-5-...-nan.tif` (GEMSDOE24) | `0.2477` ORGANIZER-CONFIRMED | NO (`100%`) | Already submitted; `-nan` unsafe |
+| `gems27-topo-gap-closure-t-v2-on-d1-5-...-nan.tif` (GEMSDOE27) | `0.2449` ORGANIZER-CONFIRMED | NO (`98.0%`) | Already submitted; `-nan` unsafe |
 """
     (root / "EXECUTIVE_SUMMARY.md").write_text(exec_md, encoding="utf-8")
 
@@ -873,6 +978,22 @@ def main() -> None:
             for s in audit["focus_9_sites"]
         ],
     }
+    if ecpu and ecpu_card:
+        status_feed["latest_lane_ecpu_20261027"] = {
+            "lane_id": "KG2-ECPU-20261027", "verdict": "negative",
+            "ok_to_download_and_submit": False,
+            "do_not_submit_filename": ecpu_card["submission_filename"],
+            "raster_sha256": ecpu_card["raster_sha256"],
+            "holdout_dti": ecpu_card["holdout_dti"],
+            "projection_not_a_score": ecpu_card["projection_not_a_score"],
+            "run_card": "downloads/ecpu_run_card.json",
+        }
+        status_feed["promoted_submission"]["projection_not_a_score"] = (
+            (reaudit or {}).get("candidate_projections", {}).get("HTCADS-EXP2-prior-promoted"))
+        status_feed["promoted_submission"]["organizer_confirmed_score"] = None
+        status_feed["promoted_submission"]["organizer_note"] = (
+            "No ORGANIZER-CONFIRMED score recorded as of 2026-10-27; verify on the "
+            "DrivenData submissions page before uploading; never submit identical file twice.")
     (feed_dir / "status_feed.json").write_text(json.dumps(status_feed, indent=2), encoding="utf-8")
 
     root_redirect = """<!DOCTYPE html>

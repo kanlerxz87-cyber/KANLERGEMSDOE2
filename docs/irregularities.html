@@ -130,6 +130,34 @@
         <td>Strictly quarantined as a PROJECTION (never a score) with documented H19-5 conditioning caveat.</td>
       </tr>
     
+      <tr>
+        <td><code>IR-20261027-01</code><br><span class="tag tag-ok">CORRECTED 2026-10-27</span></td>
+        <td><strong>Prior Banner Implied Final-File (Static) Hide-Recover Dominance</strong></td>
+        <td>Re-scoring the promoted HTCADS file statically on GEMSDOE32-HIDE-RECOVER-v3.0 gives 0.0283 (not 0.1124): like champion B=2 (static 0.0045), any file collared against the FULL catalogue deletes dots around withheld truths. The 0.1124 figure is the correct OOF-procedure score; static SGMC-CAL 0.0789 reproduced exactly on 2026-10-27.</td>
+        <td>Banner and summaries now label Hide-Recover as OOF-procedure vs SGMC as static-file explicitly; all comparisons in the ECPU lane use OOF-vs-procedural or static-vs-static only (evidence/nine_site_reaudit_20261027.json).</td>
+      </tr>
+    
+      <tr>
+        <td><code>IR-20261027-02</code><br><span class="tag tag-ok">RESOLVED 2026-10-27</span></td>
+        <td><strong>Ledger Inversion Point-Set Ambiguity (3-pt in test vs 4-pt in prose)</strong></td>
+        <td>tests/test_kanlergemsdoe2.py fits 3 collar points (TPw=5210, K=14020, R2=0.9996) while prose quoted the 4-point fit including GEMSDOE36 (38854, 0.2750) (TPw=5151, K=13735, R2=0.9985). Both reproduce exactly; the difference is the point set, plus 4-dp score rounding alone moves TPw within [5180, 5241] on the 3-point fit.</td>
+        <td>2026-10-27 re-audit reports the 4-point fit as primary and the 3-point fit as sensitivity (evidence/nine_site_reaudit_20261027.json); all PROJECTIONs state the fit used.</td>
+      </tr>
+    
+      <tr>
+        <td><code>IR-20261027-03</code><br><span class="tag tag-ok">FIXED IN REPO 2026-10-27</span></td>
+        <td><strong>Validator Gate 4 Could Pass a Candidate Worse Than the In-Repo Best</strong></td>
+        <td>scripts/validate_submission.py Gate 4 only required beating the 0.2778 champion, so a future candidate inferior to the already-validated HTCADS file could have been auto-promoted.</td>
+        <td>Gate 4 now additionally requires beating declared prior-best fields (HR point &gt;= prior OOF; SGMC &gt; prior with paired CI &gt; 0 when present). Backwards compatible for older run cards. Covered by tests/test_ecpu_lane.py.</td>
+      </tr>
+    
+      <tr>
+        <td><code>IR-20261027-04</code><br><span class="tag tag-ok">STOP LOGGED (NEGATIVE)</span></td>
+        <td><strong>KG2-ECPU Lane Negative (Propensity Weighting Trade-Off)</strong></td>
+        <td>Effort-propensity weighting significantly improved blind SGMC vs unweighted twin (+0.0031, 95% CI [+0.0007, +0.0058]) but degraded Hide-Recover (-0.0041); effort-stratified caps and low-stratum ridge gate degraded both. Best ECPU HR-OOF 0.0848 &lt; B2-procedural 0.0992 &lt; HTCADS OOF 0.1124; SGMC 0.0644 &lt;&lt; HTCADS 0.0789. Propensity was effectively slope+road+LiDAR (depth-to-basement gain 0.0 in fold 0).</td>
+        <td>Fail-closed verdict=negative in evidence/run_card_ecpu_20261027.json; ECPU GeoTIFF retained only as negative deliverable, clearly marked DO NOT SUBMIT. Lesson: a plain 27-channel GBDT surface is too weak - any future effort correction must be applied ON TOP of the HTCADS physics surface, not instead of it.</td>
+      </tr>
+    
         </tbody>
       </table>
     </div>

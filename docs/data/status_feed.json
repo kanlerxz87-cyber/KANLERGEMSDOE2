@@ -21,7 +21,18 @@
     "size_bytes": 204099,
     "emitted_dots": 37654,
     "portal_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
-    "portal_note_length": 110
+    "portal_note_length": 110,
+    "projection_not_a_score": {
+      "label": "PROJECTION via 4-point ledger TPw/(0.2N+0.8K) with TPw scaled by holdout ratio vs B2; NOT a score",
+      "via_hr_oof_ratio": 0.31504500670307634,
+      "via_sgmc_raw_ratio": 0.34186574995713587,
+      "range": [
+        0.31504500670307634,
+        0.34186574995713587
+      ]
+    },
+    "organizer_confirmed_score": null,
+    "organizer_note": "No ORGANIZER-CONFIRMED score recorded as of 2026-10-27; verify on the DrivenData submissions page before uploading; never submit identical file twice."
   },
   "holdout_dti": {
     "primary_hide_and_recover": {
@@ -134,5 +145,71 @@
       "portal_safe_0_1": false,
       "unique_among_focus9": false
     }
-  ]
+  ],
+  "latest_lane_ecpu_20261027": {
+    "lane_id": "KG2-ECPU-20261027",
+    "verdict": "negative",
+    "ok_to_download_and_submit": false,
+    "do_not_submit_filename": "kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif",
+    "raster_sha256": "5c83f85c72825752c6d320152b9d90f7233de2a181a0acd8ef9d6fd7e569d15d",
+    "holdout_dti": {
+      "primary_hide_and_recover": {
+        "pooled_dti": 0.0847926450486347,
+        "ci95": [
+          0.070745378414052,
+          0.09905031931300662
+        ],
+        "per_quadrant_dti": {
+          "NW": 0.08751391827341277,
+          "NE": 0.09132856497803798,
+          "SW": 0.058948221234266476,
+          "SE": 0.10754932966548927
+        },
+        "champion_02778_same_evaluator": 0.09920232315251679,
+        "paired_delta_vs_0p2778_ref": -0.014409678103882093,
+        "paired_delta_ci95": [
+          -0.02456452234740256,
+          -0.0038245244159556546
+        ],
+        "win_prob_vs_ref": 0.004,
+        "prior_best_htcads_oof_same_evaluator_recorded": 0.112353,
+        "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.0707, 0.0991]) [OOF cell emissions]"
+      },
+      "secondary_off_catalogue_sgmc": {
+        "raw_dti": 0.09658701394922634,
+        "sgmc_prevalence_calibrated_dti": 0.0644059160621947,
+        "ci95": [
+          0.05583887365927792,
+          0.07235397150576794
+        ],
+        "champion_02778_same_evaluator": 0.0641209376417646,
+        "paired_delta_vs_0p2778_ref": 0.0002849784204300987,
+        "paired_delta_ci95": [
+          -0.007465882576691563,
+          0.008151108632372143
+        ],
+        "prior_best_htcads_same_evaluator": 0.07891309679943982,
+        "paired_delta_vs_prior_best": {
+          "delta": -0.01450718073724512,
+          "ci95": [
+            -0.020518972534840096,
+            -0.00776902707799816
+          ],
+          "win_prob": 0.0,
+          "ci95_strictly_positive": false
+        },
+        "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0558, 0.0724])"
+      }
+    },
+    "projection_not_a_score": {
+      "label": "PROJECTION via 4-point ledger TPw/(0.2N+0.8K) with TPw scaled by holdout ratio vs B2; NOT a score",
+      "via_hr_oof_ratio": 0.23776400654827812,
+      "via_sgmc_raw_ratio": 0.2796956641321597,
+      "range": [
+        0.23776400654827812,
+        0.2796956641321597
+      ]
+    },
+    "run_card": "downloads/ecpu_run_card.json"
+  }
 }

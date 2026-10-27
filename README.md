@@ -16,6 +16,36 @@
 
 ---
 
+## ⛔ 2026-10-27 Session Update — NEW Lane Tested & REJECTED (Read Before Downloading Anything)
+
+> ### ❌ DO NOT SUBMIT: `kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif` (`verdict = negative`)
+> - New preregistered lane **`KG2-ECPU`** (mapping-effort propensity reweighting; [`registry/preregistration_ecpu_20261027.json`](registry/preregistration_ecpu_20261027.json) frozen before any run, 3 experiments + unweighted ablation twin, 583 s): **all 3 experiments lose to the promoted HTCADS file above on both holdouts** — best ECPU Hide-Recover OOF `0.0848` `HOLDOUT-DTI` vs HTCADS OOF `0.1124`; SGMC-CAL `0.0644` vs `0.0789` (paired Δ `-0.0145`, 95% CI `[-0.0205, -0.0078]`). Gates 1/2/3/5 pass, **Gate 4 fails → fail-closed** ([`evidence/run_card_ecpu_20261027.json`](evidence/run_card_ecpu_20261027.json) · [`evidence/validator_receipt_ecpu_20261027.json`](evidence/validator_receipt_ecpu_20261027.json) · [`evidence/ecpu_experiments_20261027.json`](evidence/ecpu_experiments_20261027.json)). The ECPU `.tif` (SHA-256 `5c83f85c72...`) stays in `docs/downloads/` **only as a negative-result deliverable**.
+> - **Useful ablation signal**: propensity weighting alone improves blind SGMC vs its unweighted twin (`+0.0031`, 95% CI `[+0.0007, +0.0058]`) but degrades Hide-Recover (`-0.0041`) — future effort correction must be layered **on top of** the HTCADS physics surface, not replace it.
+> - **What to submit**: still **only** the promoted HTCADS file at the top of this README — **and only if it has not already been submitted** (no `ORGANIZER-CONFIRMED` score is recorded for it in the ledger as of 2026-10-27; check the DrivenData submissions page + weekly cap first; never submit the identical file twice).
+> - **Corrections this session (`IR-20261027-01..04`)**: Hide-Recover `0.1124` is an **OOF-procedure** score (the final collared file statically self-censors at `0.0283`, the same artifact class as the champion's static `0.0045`; static SGMC `0.0789` reproduced exactly); ledger fit point-set clarified (prose 4-point `TPw=5151/K=13735/R²=0.9985` vs test 3-point `5210/14020`); validator Gate 4 strengthened to require beating the in-repo prior best; full same-session 9-site re-audit in [`evidence/nine_site_reaudit_20261027.json`](evidence/nine_site_reaudit_20261027.json) (all 9 SHA-256s re-verified; one 0-XOR pair among best files: `GEMSDOE25 == GEMSDOE30`).
+
+### Submission Decision Table (2026-10-27) — File · Estimated Score · Unique?
+
+> `ORGANIZER-CONFIRMED` = copied from the user's submission ledger. `PROJECTION` = 4-point Tversky ledger estimate `TPw/(0.2N+0.8K)`, `TPw` scaled by same-evaluator holdout ratio vs the `0.2778` champion (range = Hide-Recover-based to SGMC-based) — **a projection is never a score**. Holdout figures: `HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0 OOF, N=22232)` / `(GEMSDOE32-SGMC-CAL-v3.0 static, N=62703)`.
+
+| File to download (exact name) | Score / Estimate (strictly labeled) | Unique vs other GEMSDOE sites? | Decision |
+|---|---|---|---|
+| [`kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (this repo, SHA-256 `f482d3ba…`) | Unsubmitted (no receipt recorded) · HR-OOF `0.1124`, SGMC `0.0789` `HOLDOUT-DTI` · **PROJECTION `0.315–0.342`** | **YES** — max `64.91% ≤ 70%` 3-px (2026-10-26, 192 rasters); `39.66%` vs champion | ✅ **SUBMIT (only if not already submitted)** — note `KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)` (110/140) |
+| [`kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif`](docs/downloads/kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif) (this repo, NEW, SHA-256 `5c83f85c…`) | Unsubmitted · HR-OOF `0.0848`, SGMC `0.0644` `HOLDOUT-DTI` · **PROJECTION `0.238–0.280`** | **YES** — max `66.25% ≤ 70%` 3-px (206 rasters, closest = HTCADS above); surface `|ρ|=0.157` | ⛔ **DO NOT SUBMIT** — Gate 4 failed (`verdict = negative`) |
+| `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` ([GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html), `c55bafc4…`) | **`0.2778` ORGANIZER-CONFIRMED** (best of focus-9) | NO — `100%` of its dots within 3 px of GEMSDOE36's file | Already submitted; historical anchor only |
+| `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` ([GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/docs/), `e1589102…`) | **`0.2750` ORGANIZER-CONFIRMED** | NO — `97.6%` max 3-px vs another champion | Already submitted |
+| `gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif` ([GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/), `5556aa14…`) | **`0.2710` ORGANIZER-CONFIRMED** | NO — `100%` | Already submitted; ⚠️ `-nan` = portal-rejects as stored |
+| `gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif` ([GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/docs/), `07b6db44…`) | **`0.2708` ORGANIZER-CONFIRMED** | NO — `100%` | Already submitted; ⚠️ `-nan` |
+| `GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif` ([GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/), `87f857d5…`) | **`0.2632` ORGANIZER-CONFIRMED** | NO — `99.7%` | Already submitted |
+| `gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif` ([GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/), `91eae1ca…`) | **`0.2600` ORGANIZER-CONFIRMED** | NO — **0-XOR identical** to GEMSDOE30 best | Already submitted; ⚠️ `-nan` |
+| `gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif` ([GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/), `8cf893ea…`) | **`0.2600` ORGANIZER-CONFIRMED** | NO — **0-XOR identical** to GEMSDOE25 best | Already submitted |
+| `gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif` ([GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/), `68d0e2e4…`) | **`0.2477` ORGANIZER-CONFIRMED** | NO — `100%` | Already submitted; ⚠️ `-nan` |
+| `gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif` ([GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/), `33003374…`) | **`0.2449` ORGANIZER-CONFIRMED** | NO — `98.0%` | Already submitted; ⚠️ `-nan` |
+
+**Why did GEMSDOE32's `0.2778` win the focus-9, and can we beat it? (one-paragraph answer; full forensics in §2)** — All 9 focus champions are thinnings of one ancestor (19GEMSDOE `H19-5`, live `0.1922`). GEMSDOE32 is exactly `d2.8-thinned H19-5 AND distance-to-catalogue > 2 px` (verified 2026-10-27: 0 XOR vs `gems25 d2.8 & d_cat>2`). Because the hidden test faults are *off-catalogue by construction*, the 6,436 deleted 0–200 m catalogue-collar dots were pure false positives: `1/DTI` vs `N` is linear (4-point `R²=0.9985`, `TPw≈5,151 px`, hidden `K≈13,735 px`), so deleting them raised DTI `0.2600 → 0.2708 → 0.2778` at constant `TPw`. Pruning the same ancestor further plateaus (`~0.285–0.295`); reaching `0.3195`/`0.4413` requires `TPw ≈ 5,917`/`8,172 px`, i.e. **new** blind-fault discoveries. The promoted HTCADS file is the only in-repo candidate whose OOF + blind holdouts imply such a `TPw` gain (PROJECTION `0.315–0.342`, not a score); this session's ECPU lane does not (PROJECTION `0.238–0.280`) and was rejected fail-closed. Only an `ORGANIZER-CONFIRMED` receipt can settle whether HTCADS actually beats `0.2778` live.
+
+---
+
 ## Arena Core Values
 
 - **Maximize P(Win):** Every design decision targets maximum expected leaderboard and Phase 2 ($250k / $395k expert-reviewed evaluation) return per scarce rolling submission slot. Rather than burning slots on `H19-5` clones or cosmetic threshold tweaks, we invert the `0.2778` ledger mathematically, identify why prior supervised GBDTs suffered alluvial mapping bias (`IR-KG2-BUG-02`) and why prior `GEMSDOE32` attempts (`H38`, `H44`, `H45`, `ARENA47`, `H47`) failed closed on one of the two holdouts, and promote **only** a candidate (`EXP-2: HTCADS-DualRegime`) that beats the `0.2778` Champion on **both** orthogonal holdouts with strictly positive 95% confidence intervals while exploring **60.34% (`22,720` dots)** genuinely new fault conduits.
@@ -124,6 +154,11 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/
 .venv/bin/python scripts/prepare_htcads_data.py      # Build 50-ch stack + verify Rule 4 Leakage Canary (<=0.90)
 .venv/bin/python scripts/audit_focus_sites.py        # Recompute 9-site + 92-site forensic audit
 .venv/bin/python scripts/run_htcads_experiments.py   # Run EXP-1..3 + emit GeoTIFF + run 5 automated gates
+# 2026-10-27 KG2-ECPU lane (negative result; needs focus-9 clones in /tmp/explore for registry):
+.venv/bin/python scripts/run_ecpu_experiments.py     # Preregistered ECPU EXP-1..3 + C0 twin -> evidence/ecpu_experiments_20261027.json
+.venv/bin/python scripts/build_ecpu_run_card.py      # Run card + 9-site re-audit + ledger projections (needs .cache/gems_data/focus9/)
+.venv/bin/python scripts/generate_ecpu_figure.py     # docs/assets/fig4_ecpu_negative_result.png
+.venv/bin/python scripts/validate_submission.py --tif docs/downloads/kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif --run-card evidence/run_card_ecpu_20261027.json --out evidence/validator_receipt_ecpu_20261027.json  # EXPECT exit 1 / verdict negative (Gate 4 fail-closed)
 .venv/bin/python scripts/validate_submission.py \
   --tif docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif \
   --run-card evidence/run_card.json --out evidence/validator_receipt.json

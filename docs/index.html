@@ -33,6 +33,9 @@
     <p style="margin:0;color:#cbd5e1;max-width:1080px">
       100% de-novo <strong>Hydrothermal-Tectonic Conduit &amp; Anisotropic Dilational Step-Over Synthesis (HTCADS-DualRegime, EXP-2)</strong>.
       Automatically verified across all <code>12,279,160</code> raster cells (`3730 &times; 3292`, `EPSG:32611`, `float32`, `0` NaNs, values strictly in `[0.0, 1.0]`, permanently immune to the DrivenData <em>"Predicted values must be in range [0, 1]"</em> rejection), genuinely unique against all <code>192</code> footprint-distinct GEMSDOE registry rasters (only <strong>39.66%</strong> 3-px dot overlap with the <code>0.2778</code> Champion; <strong>60.34% = 22,720 novel conduit dots</strong>), and outperforming the <code>0.2778</code> Champion on <strong>both</strong> orthogonal holdout benchmarks with strictly positive 95% spatial cluster-bootstrap confidence intervals (<strong>99.2%</strong> bootstrap win probability).
+      <strong>Precision note (IR-20261027-01, corrected 2026-10-27):</strong> the Hide-Recover figure is the <em>out-of-fold procedure</em> score; scoring this final
+      full-catalogue-collared file statically on Hide-Recover self-censors (measured 2026-10-27: <code>0.0283</code>, same artifact class as the champion's static <code>0.0045</code>),
+      while its static SGMC-CAL <code>0.0789</code> reproduced exactly. No ORGANIZER-CONFIRMED score is recorded for this file yet &mdash; check your DrivenData submissions page (and weekly cap) before uploading, and never submit the identical file twice.
     </p>
 
     <div class="btn-row">
@@ -79,6 +82,31 @@
         <span>Unique timestamp+hash filename, <code>110/140</code>-char note, exactly <code>3/3</code> pre-registered experiments in <code>10.05 min &le; 120 min</code>.</span>
       </div>
     </div>
+  </section>
+
+
+  <section class="gate-banner fail" style="margin-top:1rem">
+    <div class="status-pill">&#10008; LATEST LANE KG2-ECPU (2026-10-27): NEGATIVE RESULT &mdash; DO NOT SUBMIT THE ECPU FILE</div>
+    <h2 style="margin:0.4rem 0">Effort-Corrected PU Lane Failed Gate 4 (Fail-Closed)</h2>
+    <p style="margin:0;color:#cbd5e1;max-width:1080px">
+      Three preregistered ECPU experiments (detectability-propensity reweighting; preregistration frozen before any run)
+      were tested against the same evaluators on 2026-10-27. <strong>All three lose</strong> to the 0.2778 champion procedure
+      (Hide-Recover OOF <code>0.0992</code>) and to the promoted HTCADS file above (OOF <code>0.1124</code>, SGMC-CAL <code>0.0789</code>).
+      Best ECPU (EXP-1): Hide-Recover <code>0.0848</code> HOLDOUT-DTI,
+      SGMC-CAL <code>0.0644</code> HOLDOUT-DTI.
+      Propensity weighting <em>did</em> help blind SGMC vs its unweighted twin
+      (<code>+0.0031</code>, 95% CI [<code>+0.0007</code>, <code>+0.0058</code>])
+      but hurt Hide-Recover (<code>-0.0041</code>). Verdict: <strong>negative</strong> &mdash; spend no submission slot.
+      The file <code>kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif</code> (SHA-256 <code>5c83f85c72825752&hellip;</code>) is format-valid and unique
+      (max 3-px overlap <code>66.25%</code> vs 206 registry rasters) but is retained
+      <strong>only as a negative-result deliverable</strong>. <a href="downloads/ecpu_run_card.json" download>ECPU Run Card (JSON)</a>
+    </p>
+    <div class="table-wrap" style="margin-top:0.8rem"><table>
+      <thead><tr><th>Experiment</th><th>Hide-Recover v3.0 OOF (N=22,232)</th><th>SGMC-CAL v3.0 (N=62,703)</th><th>Uniqueness (206 rasters)</th><th>Ledger PROJECTION (not a score)</th></tr></thead>
+      <tbody><tr><td><strong>EXP-1</strong></td><td><code>0.084793</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0707, 0.0991]</span></td><td><code>0.064406</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0558, 0.0724]</span></td><td>max 3px <code>66.25%</code> &le;70%<br>|&rho;|<code>0.1574</code></td><td><code>0.2378&ndash;0.2797</code> PROJECTION</td></tr><tr><td><strong>EXP-2</strong></td><td><code>0.079229</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0669, 0.0920]</span></td><td><code>0.060184</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0526, 0.0674]</span></td><td>max 3px <code>62.25%</code> &le;70%<br>|&rho;|<code>0.1574</code></td><td><code>0.2222&ndash;0.2617</code> PROJECTION</td></tr><tr><td><strong>EXP-3</strong></td><td><code>0.079820</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0676, 0.0925]</span></td><td><code>0.058664</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0510, 0.0659]</span></td><td>max 3px <code>60.05%</code> &le;70%<br>|&rho;|<code>0.1574</code></td><td><code>0.2238&ndash;0.2550</code> PROJECTION</td></tr><tr><td><strong>C0-twin</strong></td><td><code>0.088928</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0747, 0.1026]</span></td><td><code>0.061278</code> HOLDOUT-DTI<br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0533, 0.0690]</span></td><td>max 3px <code>68.64%</code> &le;70%<br>|&rho;|<code>0.1866</code></td><td><code>0.2494&ndash;0.2663</code> PROJECTION</td></tr></tbody>
+    </table></div>
+    <div class="fig-block"><img src="assets/fig4_ecpu_negative_result.png" alt="ECPU negative result holdout comparison">
+    <div class="fig-caption"><strong>Figure 4:</strong> KG2-ECPU vs benchmarks. HTCADS Hide-Recover bar is its recorded OOF procedure score (2026-10-26); all other bars measured 2026-10-27. Error bars: 95% spatial cluster-bootstrap CIs.</div></div>
   </section>
 
   <section class="kpi-grid">

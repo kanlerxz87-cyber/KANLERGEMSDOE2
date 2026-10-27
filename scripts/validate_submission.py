@@ -60,6 +60,22 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
         and float(hr["paired_delta_ci95"][0]) > 0.0
         and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
     )
+    # IR-20261027-03 (shared-tool fix, 2026-10-27): when a run card declares a prior
+    # same-repo holdout best, Gate 4 must ALSO beat it. Previously a candidate could
+    # pass Gate 4 by beating only the 0.2778 champion while being worse than an
+    # already-validated in-repo candidate. Backwards compatible: cards without
+    # prior-best fields are judged exactly as before.
+    prior_hr = hr.get("prior_best_htcads_oof_same_evaluator_recorded")
+    if prior_hr is not None:
+        holdout_ok = holdout_ok and bool(float(hr["pooled_dti"]) >= float(prior_hr))
+    prior_sg = sg.get("prior_best_htcads_same_evaluator")
+    if prior_sg is not None:
+        paired_prior = sg.get("paired_delta_vs_prior_best") or {}
+        paired_ci = paired_prior.get("ci95") if isinstance(paired_prior, dict) else None
+        sg_beats_prior = float(sg["sgmc_prevalence_calibrated_dti"]) > float(prior_sg)
+        if paired_ci is not None:
+            sg_beats_prior = sg_beats_prior and bool(float(paired_ci[0]) > 0.0)
+        holdout_ok = holdout_ok and bool(sg_beats_prior)
 
     note = str(card.get("submission_note", ""))
     meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)

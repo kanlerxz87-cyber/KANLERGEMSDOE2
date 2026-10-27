@@ -1,0 +1,64 @@
+{
+  "candidate_id": "EXP-1",
+  "slug": "ecpu-exp-1-37654dots",
+  "content_digest8": "cecbdca7",
+  "description": "KG2-ECPU EXP-1 (verdict=negative)",
+  "submission_name": "kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros",
+  "submission_note": "KANLERGEMS2 ECPU EXP-1: effort-propensity PU 27ch+CELF (37654 dots, HR-OOF=0.0848)",
+  "submission_note_length": 82,
+  "zeros_tif": {
+    "filename": "kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif",
+    "size_bytes": 203158,
+    "sha256": "5c83f85c72825752c6d320152b9d90f7233de2a181a0acd8ef9d6fd7e569d15d",
+    "mode": "zeros",
+    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 37654,
+    "emitted_mass": 37654.0,
+    "footprint_fraction": 0.007287,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "nan_inside_footprint": 0,
+    "full_grid_nan_pixels": 0,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "values_in_0_1": true,
+    "checks": {
+      "exact_reference_grid_match": true,
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "zeros_zip": {
+    "filename": "kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.zip",
+    "size_bytes": 167849,
+    "sha256": "bc1aad15e0daf8380e781aab03509a39347f40420ee62c2b5a3b1b927fa228a9"
+  }
+}

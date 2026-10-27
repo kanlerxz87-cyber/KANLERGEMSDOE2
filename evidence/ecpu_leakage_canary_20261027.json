@@ -1,0 +1,315 @@
+{
+  "protocol_rule": "Rule 4 Leakage Canary (single-feature holdout AUC <= 0.90)",
+  "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0 (draw20 spatially-blocked withheld segments)",
+  "threshold": 0.9,
+  "total_features_tested": 50,
+  "n_withheld_positive_pixels_tested": 11172,
+  "n_negative_pixels_tested": 240000,
+  "max_single_feature_auc": 0.795377,
+  "max_feature_name": "vis_aniso_prior",
+  "passed": true,
+  "features": [
+    {
+      "feature": "vis_aniso_prior",
+      "group": "fold_visible_catalogue_only",
+      "raw_auc": 0.795377,
+      "oriented_auc": 0.795377
+    },
+    {
+      "feature": "vis_log_dist",
+      "group": "fold_visible_catalogue_only",
+      "raw_auc": 0.246895,
+      "oriented_auc": 0.753105
+    },
+    {
+      "feature": "vis_tip_cone",
+      "group": "fold_visible_catalogue_only",
+      "raw_auc": 0.738919,
+      "oriented_auc": 0.738919
+    },
+    {
+      "feature": "vis_relay_bridge",
+      "group": "fold_visible_catalogue_only",
+      "raw_auc": 0.67664,
+      "oriented_auc": 0.67664
+    },
+    {
+      "feature": "tpi_1200m",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.394311,
+      "oriented_auc": 0.605689
+    },
+    {
+      "feature": "piedmont_break_s3",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.594965,
+      "oriented_auc": 0.594965
+    },
+    {
+      "feature": "topo_grav_concord",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.570893,
+      "oriented_auc": 0.570893
+    },
+    {
+      "feature": "lidar_subsurf_corrob",
+      "group": "lidar_specialist",
+      "raw_auc": 0.570669,
+      "oriented_auc": 0.570669
+    },
+    {
+      "feature": "grav_hess_ridge_s3",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.567821,
+      "oriented_auc": 0.567821
+    },
+    {
+      "feature": "lidar_crest_toe_dipole",
+      "group": "lidar_specialist",
+      "raw_auc": 0.567095,
+      "oriented_auc": 0.567095
+    },
+    {
+      "feature": "lidar_ex_max",
+      "group": "lidar_specialist",
+      "raw_auc": 0.56038,
+      "oriented_auc": 0.56038
+    },
+    {
+      "feature": "lidar_worm_500m",
+      "group": "lidar_specialist",
+      "raw_auc": 0.559538,
+      "oriented_auc": 0.559538
+    },
+    {
+      "feature": "gps_strain_2ndinv",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.558673,
+      "oriented_auc": 0.558673
+    },
+    {
+      "feature": "lidar_step_max",
+      "group": "lidar_specialist",
+      "raw_auc": 0.557747,
+      "oriented_auc": 0.557747
+    },
+    {
+      "feature": "lidar_ortho_scarp",
+      "group": "lidar_specialist",
+      "raw_auc": 0.557518,
+      "oriented_auc": 0.557518
+    },
+    {
+      "feature": "piedmont_break_s1",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.554882,
+      "oriented_auc": 0.554882
+    },
+    {
+      "feature": "grav_hess_ridge_s1",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.554678,
+      "oriented_auc": 0.554678
+    },
+    {
+      "feature": "piedmont_apron_zone",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.552403,
+      "oriented_auc": 0.552403
+    },
+    {
+      "feature": "lidar_facing_asymmetry",
+      "group": "lidar_specialist",
+      "raw_auc": 0.549867,
+      "oriented_auc": 0.549867
+    },
+    {
+      "feature": "tpi_300m",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.545152,
+      "oriented_auc": 0.545152
+    },
+    {
+      "feature": "k_on_th_metasomatism",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.456261,
+      "oriented_auc": 0.543739
+    },
+    {
+      "feature": "u_th_redox_front",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.543425,
+      "oriented_auc": 0.543425
+    },
+    {
+      "feature": "seismic_swarm_idx",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.542001,
+      "oriented_auc": 0.542001
+    },
+    {
+      "feature": "lidar_coh100",
+      "group": "lidar_specialist",
+      "raw_auc": 0.458728,
+      "oriented_auc": 0.541272
+    },
+    {
+      "feature": "lidar_ex_mean",
+      "group": "lidar_specialist",
+      "raw_auc": 0.539698,
+      "oriented_auc": 0.539698
+    },
+    {
+      "feature": "base_flexure_curv",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.526121,
+      "oriented_auc": 0.526121
+    },
+    {
+      "feature": "grav_hg",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.474056,
+      "oriented_auc": 0.525944
+    },
+    {
+      "feature": "base_depth_grad",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.525681,
+      "oriented_auc": 0.525681
+    },
+    {
+      "feature": "gps_transtension",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.523901,
+      "oriented_auc": 0.523901
+    },
+    {
+      "feature": "rtp_worm_1500m",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.523835,
+      "oriented_auc": 0.523835
+    },
+    {
+      "feature": "grav_worm_1500m",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.476486,
+      "oriented_auc": 0.523514
+    },
+    {
+      "feature": "mag_tmi_hg",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.520803,
+      "oriented_auc": 0.520803
+    },
+    {
+      "feature": "hydro_conduit_coupled",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.520717,
+      "oriented_auc": 0.520717
+    },
+    {
+      "feature": "gallardo_meju_xgrad",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.517573,
+      "oriented_auc": 0.517573
+    },
+    {
+      "feature": "gdr_probe_f2mdab_upgrad",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.517434,
+      "oriented_auc": 0.517434
+    },
+    {
+      "feature": "tmi_vg_edge",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.517415,
+      "oriented_auc": 0.517415
+    },
+    {
+      "feature": "low_thk_alteration",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.515885,
+      "oriented_auc": 0.515885
+    },
+    {
+      "feature": "gps_dilatation",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.514836,
+      "oriented_auc": 0.514836
+    },
+    {
+      "feature": "grav_updip_proj",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.514339,
+      "oriented_auc": 0.514339
+    },
+    {
+      "feature": "rtp_hess_ridge_s15",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.512444,
+      "oriented_auc": 0.512444
+    },
+    {
+      "feature": "tilt_zerocross_sharp",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.510341,
+      "oriented_auc": 0.510341
+    },
+    {
+      "feature": "lidar_contour_ortho",
+      "group": "lidar_specialist",
+      "raw_auc": 0.508707,
+      "oriented_auc": 0.508707
+    },
+    {
+      "feature": "gdr_geotherm_upgrad",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.493995,
+      "oriented_auc": 0.506005
+    },
+    {
+      "feature": "grav_vg",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.50403,
+      "oriented_auc": 0.50403
+    },
+    {
+      "feature": "mt_claycap_edge",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.495975,
+      "oriented_auc": 0.504025
+    },
+    {
+      "feature": "gdr_sinter_vent_strike",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.496006,
+      "oriented_auc": 0.503994
+    },
+    {
+      "feature": "anderson_slip_tendency",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.496374,
+      "oriented_auc": 0.503626
+    },
+    {
+      "feature": "mt_cond_local",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.502799,
+      "oriented_auc": 0.502799
+    },
+    {
+      "feature": "hydro_demag_trough",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.498078,
+      "oriented_auc": 0.501922
+    },
+    {
+      "feature": "sb_heatflow_excess",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.5,
+      "oriented_auc": 0.5
+    }
+  ],
+  "elapsed_seconds": 158.5,
+  "session": "KG2-ECPU-20261027 re-run"
+}
