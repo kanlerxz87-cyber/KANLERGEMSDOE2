@@ -111,3 +111,64 @@ See also [`PROMPT.md`](PROMPT.md).
 > 6. **BUDGET.** Stop after `3` experiments or `2` hours. Do not spend live DrivenData slots directly.
 
 </details>
+
+---
+
+## 📋 Current Session Appendix (2026-10-27) — unique TIF submission
+
+**This session's mandate (highest urgency):** generate a unique `.tif` submission for the competition, do not copy a previous submission, make it obvious whether it is OK to download and submit, fix the `"Predicted values must be in range [0, 1]"` error, and create an executive summary + how-to-submit page.
+
+### New unique submission (this session)
+
+| Property | Value |
+|---|---|
+| **File** | `docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif` |
+| **ZIP** | `docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.zip` |
+| **NaN-outside variant** | `docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-nan.tif` |
+| **SHA-256** | `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4` |
+| **Grid** | single-band float32, EPSG:32611, 3730 × 3292, 100 m affine (matches `sample_submission.tif`) |
+| **Values** | 1.0 at 15,000 dot pixels, 0.0 elsewhere; entire array finite in [0,1], 0 NaNs |
+| **Submission note (140/140)** | `36GEMSDOE off-catalogue-blind-geothermal \| off-catalogue blind-geothermal dots; systematic grid + ji \| id 2ecaae7a056e \| not yet live-scored` |
+| **Validation** | format valid · [0,1] pass · no NaN inside footprint · grid/CRS/transform match |
+| **Uniqueness vs 9 focus sites** | max 3-px dot overlap 22.37% (limit 70%) — **unique** |
+| **Uniqueness vs competing registry** | max 3-px dot overlap 22.37% across 15 locally available registry rasters |
+| **Lattice (space-filling control) overlap** | 66.00% (≤ 70%; ≥30% of dots in lattice-uncovered pixels) |
+| **OK to download?** | **YES** — download link at top of `docs/executive-summary.html` and `docs/submission-howto.html` |
+| **OK to submit?** | **PROMOTE per local gates** — holdout DTI not measured (no DrivenData login); no organizer receipt; literal all-entries registry rule pending selector review |
+| **Method** | Off-catalogue blind geothermal fault targeting: dots >800 m from all catalogue faults, systematic grid + jitter |
+| **Contrast with focus sites** | All focus-site submissions cluster dots ON/near catalogue faults; this is the first off-catalogue, systematically-jittered design |
+
+### Focus-site best submissions (user/owner-reported, NOT organizer-confirmed)
+
+| Rank | Site | Best file | Reported score | Unique vs other focus sites? |
+|---|---|---|---|---|
+| 1 | GEMSDOE32 | `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` | 0.2778 | No (100% vs GEMSDOE36) |
+| 2 | GEMSDOE36 | `gemsdoe36-anderson-geothermal-pinn-38854-...-zeros.tif` | 0.2750 | No (97.58% vs GEMSDOE27) |
+| 3 | GEMSDOE28 | `gems28-h36-1-rung30-blind-r1-...-nan.tif` | 0.2710 | No (100% vs GEMSDOE25) |
+| 4 | GEMSDOE31 | `gemsdoe31-h27-4-solo-d28-...-nan.tif` | 0.2708 | No (100% vs GEMSDOE25) |
+| 5 | GEMSDOE33 | `GEMSDOE33-h33d-analog-tip-stepover-r30-...` | 0.2632 | No (99.71% vs GEMSDOE27) |
+| 6 (tie) | GEMSDOE25 | `gems25-dotted-h19-5-d2-8-...-nan.tif` | 0.2600 | No (100% vs GEMSDOE30) |
+| 6 (tie) | GEMSDOE30 | `gemsdoe30-d28-poisson300m-offcat-...` | 0.2600 | No (100% vs GEMSDOE25) |
+| 8 | GEMSDOE24 | `gems24-h25-1-dotted-h19-5-d1-5-...-nan.tif` | 0.2477 | No (100% vs GEMSDOE25) |
+| 9 | GEMSDOE27 | `gems27-topo-gap-closure-t-v2-on-d1-5-...-nan.tif` | 0.2449 | No (98.02% vs GEMSDOE24) |
+
+**No focus-site file is unique or available as a new submission.** All are mutual near-duplicates (≥97.6% 3-px overlap). The only new, unique, downloadable submission is the 36GEMSDOE file above.
+
+### How to submit
+
+1. Download the GeoTIFF from `docs/executive-summary.html` or `docs/submission-howto.html`.
+2. Confirm SHA-256: `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4`.
+3. Go to https://www.drivendata.org/competitions/306/competition-doe-gems/ → Submit → Make new submission.
+4. Upload the GeoTIFF (or ZIP with one TIFF). Enter the unique name and the ≤140-character note.
+5. Record the organizer submission-page receipt (timestamp + SHA-256).
+
+### Run card
+
+`evidence/current_run_card.json` — hypothesis, mechanism, named non-fault mimic, holdout DTI (not measured), registry overlap, raster SHA-256, validator output, submission name + note, verdict: promote (per local gates).
+
+### Limitations
+
+- Holdout DTI not measurable (training_features/labels require DrivenData login, unavailable in this session).
+- No organizer submission-page receipt; live score unknown.
+- Literal all-entries registry rule (including spacing-5 calibration lattice) must be cleared by the separate selector before spending a weekly slot.
+- No model was fitted; no competition data was downloaded beyond labels.tif and sample_submission.tif.
