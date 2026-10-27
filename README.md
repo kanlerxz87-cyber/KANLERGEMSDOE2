@@ -1,5 +1,7 @@
 # KANLERGEMSDOE2 — geothermal fault discovery
 
+> **Standing prompt — read every session:** `PROMPT.md` (preserved project brief + Parallel-Run Protocol) and this `README.md` must be read at the start of every session. Key mandates: generate a unique `.TIF` submission; it must be obvious whether OK to download/submit; fix `"Predicted values must be in range [0, 1]"`; include a `<=140` char note; build executive summary with auditable table; label every number `HOLDOUT-DTI` or `ORGANIZER-CONFIRMED`; run 3 experiments / 2-hour budget; produce one JSON run card; merge PR. See `PROMPT.md` for the full preserved request, `research/2026-10-27_new_hypotheses.md` for 5 untried hypotheses, and `docs/executive-summary.html` for the download table.
+
 > ### ⭐ SESSION 2 (2026-10-27, KG2-S2 DSLUP-3D lane): NEW UNIQUE CANDIDATE — TWO VERDICTS, FULLY DISCLOSED
 >
 > - **File**: [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · [ZIP](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3`
