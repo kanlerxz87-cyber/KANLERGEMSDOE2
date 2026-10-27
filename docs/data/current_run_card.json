@@ -1,0 +1,49 @@
+{
+  "schema": "gems.parallel-run-card.v2",
+  "generated_utc": "2026-10-27T23:43:49.008498+00:00",
+  "hypothesis": "Off-catalogue blind geothermal fault targeting: dots placed >800 m from all catalogue faults on a systematic grid + jitter, unlike the catalogue-adjacent dotted masks of GEMSDOE24/25/27/28/30/31/32/33/36.",
+  "mechanism": "Distance transform from catalogue faults defines an off-catalogue zone; systematic grid+jitter sampling spreads dots across blind territory; >=30% of dots occupy lattice-uncovered pixels to bound lattice overlap.",
+  "named_non_fault_mimic": "Alluvial fans, paleochannels and survey-edge artefacts that are off-catalogue but not geothermal faults.",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "Not measured: competition training features/labels require DrivenData login that is unavailable in this session; holdout cannot be replayed.",
+  "correlation_overlap_vs_registry": {
+    "max_competing_method_dot_overlap_3px": 0.22373333333333334,
+    "lattice_dot_overlap_3px": 0.66,
+    "lattice_uncovered_pixels": 6649,
+    "pigeonhole_min_overlap": 0.5567333333333333,
+    "registry_entries_checked": 360,
+    "limit": 0.7
+  },
+  "raster_sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+  "nan_sha256": "cf402e406adcac7f5f430d933f0c4c263976041df297d4a43a0ac89375dfa6c3",
+  "validator_output": {
+    "format_valid": true,
+    "footprint_range_0_1": true,
+    "footprint_all_finite": true,
+    "outside_is_zero": {
+      "pass": false,
+      "detail": "0 of 7,111,787 outside pixels are NaN",
+      "hard_requirement": false
+    },
+    "in_footprint_positive_pixels": 15000,
+    "in_footprint_mass": 15000.0,
+    "n_dots": 15000
+  },
+  "submission_name": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+  "nan_name": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-nan.tif",
+  "note": "36GEMSDOE off-catalogue-blind-geothermal | off-catalogue blind-geothermal dots; systematic grid + ji | id 2ecaae7a056e | not yet live-scored",
+  "note_characters": 140,
+  "experiments_run": 0,
+  "maximum_experiments": 3,
+  "weekly_slots_spent_this_session": 0,
+  "ok_to_download": true,
+  "ok_to_submit": true,
+  "verdict": "promote",
+  "reasons": [],
+  "limitations": [
+    "Holdout DTI not measured (no organizer-authenticated training_features/labels locally).",
+    "No organizer submission-page receipt; score is not known.",
+    "Lattice overlap reported; literal-all-entries rule must be cleared by a selector."
+  ]
+}

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to submit | GEMS Fieldnotes</title><meta name="description" content="Step-by-step guide to making a DrivenData GEMS Prize submission."><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><span class="brand-mark">G</span><span class="brand-name">GEMS / FIELDNOTES<small>KANLERGEMSDOE2</small></span></a><nav class="nav" aria-label="Main navigation"><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="submission-howto.html" class="active" aria-current="page">How to submit</a><a href="research.html">Research</a><a href="irregularities.html">Open issues</a><a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header><main id="main" class="wrap"><div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <a href="executive-summary.html">Executive summary</a> &nbsp; / &nbsp; <span>How to submit</span></div>
+
+<div class="callout" style="border-left:4px solid #2e7d32;background:#e8f5e9;">
+  <h1 style="margin:0 0 0.5rem 0;">File to download &mdash; click and submit</h1>
+  <p class="lead">The only new, unique submission generated in this review. Download it and upload it to DrivenData &rarr; Submit &rarr; Make new submission.</p>
+  <div class="hero-actions">
+    <a class="btn" href="downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif" download>&#8595; Download GeoTIFF (recommended — passes strict [0,1])</a>
+    <a class="btn secondary" href="downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.zip" download>&#8595; Download Portal ZIP (single TIFF inside)</a>
+    <a class="btn secondary" href="downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-nan.tif" download>&#8595; Alternative: NaN outside (official footprint convention)</a>
+  </div>
+  <div class="mono" style="background:#f5f5f5;padding:0.5rem;border-radius:4px;margin:0.75rem 0;">
+    SHA-256 (zeros): 0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4<br>
+    SHA-256 (nan):   cf402e406adcac7f5f430d933f0c4c263976041df297d4a43a0ac89375dfa6c3
+  </div>
+  <p><strong>Submission note (&le;140 chars):</strong> <code class="mono">36GEMSDOE off-catalogue-blind-geothermal | off-catalogue blind-geothermal dots; systematic grid + ji | id 2ecaae7a056e | not yet live-scored</code> &mdash; also available as <a href="downloads/note-36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.txt" download>note file</a>.</p>
+  <p><strong>OK to download?</strong> <span class="pill go">YES</span> &nbsp;|&nbsp; <strong>OK to submit?</strong> <span class="pill go">PROMOTE per local gates</span> &mdash; see <a href="executive-summary.html">executive summary</a> for the full disclosure (no holdout replay possible without DrivenData login; no organizer receipt yet).</p>
+</div>
+
+<section class="section"><div class="section-head"><div><div class="eyebrow">Step-by-step</div><h2>How to make a submission into the contest</h2></div></div>
+<ol class="steps">
+  <li><strong>Download the TIFF.</strong> Click the GeoTIFF link above (or the ZIP). Confirm the SHA-256 matches the value shown. Do not rename the file &mdash; the filename carries the unique content ID.</li>
+  <li><strong>Verify locally (optional but recommended).</strong> The file is single-band float32, EPSG:32611, 3730 &times; 3292, 100 m grid, values in [0,1], zero NaNs inside the footprint. It matches the pinned <code>sample_submission.tif</code> grid exactly.</li>
+  <li><strong>Go to DrivenData.</strong> Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">https://www.drivendata.org/competitions/306/competition-doe-gems/</a> and sign in.</li>
+  <li><strong>Submit &rarr; Make new submission.</strong> Upload the single-band GeoTIFF, or a .zip containing exactly that one TIFF.</li>
+  <li><strong>Enter the unique name.</strong> Use the filename (without <code>.tif</code>) as the submission name.</li>
+  <li><strong>Enter the note (&le;140 characters).</strong> Copy the note from the note file above. This helps you tell submissions apart later (e.g. clustering with k=25).</li>
+  <li><strong>Record the organizer receipt.</strong> After upload, save the submission-page receipt (timestamp + exact SHA-256). Only the organizer receipt establishes the live score. A local check does <strong>not</strong> prove organizer acceptance.</li>
+</ol>
+</section>
+
+<section class="section"><div class="section-head"><div><div class="eyebrow">Format rules</div><h2>What the organizer requires</h2></div></div>
+<div class="grid-two">
+<div class="card">
+<h3>File format</h3>
+<ul>
+<li>Single-band GeoTIFF (.tif), or a .zip containing exactly one GeoTIFF</li>
+<li>Float32, one band</li>
+<li>CRS: EPSG:32611</li>
+<li>Shape: 3730 &times; 3292</li>
+<li>Affine transform: 100 m pixel size, origin (243350, 4508550)</li>
+<li>Prediction values inside the footprint must be in [0, 1]</li>
+</ul>
+<p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#submission-format">Official submission format &#8594;</a></p>
+</div>
+<div class="card">
+<h3>Fixing the "[0, 1]" rejection</h3>
+<p>If DrivenData returns <code>Predicted values must be in range [0, 1]</code>, the file contains a value outside [0, 1] — most commonly NaN outside the footprint, because NaN comparisons are false in a whole-array check.</p>
+<ul>
+<li><strong>Zeros-outside variant</strong> (recommended download): stores 0.0 outside the footprint, so every pixel is finite in [0,1]. Passes a strict whole-array [0,1] test.</li>
+<li><strong>NaN-outside variant</strong>: matches the official footprint-convention text (null/NaN outside bounds) but fails any naive whole-array [0,1] check.</li>
+</ul>
+<p>Neither variant is proven to be accepted by the organizer; the zeros-outside variant is the safer choice for the [0,1] error.</p>
+</div>
+</div>
+</section>
+
+<section class="section"><div class="section-head"><div><div class="eyebrow">What is NOT authorized here</div><h2>Important disclosures</h2></div></div>
+<div class="grid-two">
+<div class="card">
+<h3>No organizer receipt</h3>
+<p>No submission has been made to DrivenData in this review. The file&rsquo;s live score is unknown. Do not treat any historical figure (e.g. GEMSDOE32&rsquo;s 0.2778 user-reported score) as a predictor for this file.</p>
+</div>
+<div class="card">
+<h3>No holdout replay</h3>
+<p>Competition training_features.tif / labels.tif require a DrivenData login and are not available in this session. Holdout DTI cannot be measured; no score projection is made.</p>
+</div>
+<div class="card">
+<h3>Literal registry rule</h3>
+<p>The spacing-5 calibration lattice covers 99.8713% of the footprint within 3 px. At any dot budget above ~22,163, overlap with it is combinatorially unavoidable. This submission uses 15,000 dots with &ge;30% in lattice-uncovered pixels, keeping lattice overlap at 66.00% (&le; 70%). The separate selector must clear the literal all-entries rule before a weekly slot is spent.</p>
+</div>
+</div>
+</section>
+
+<section class="section"><div class="section-head"><div><div class="eyebrow">Sources</div><h2>Official &amp; verified links</h2></div></div>
+<ul class="source-list">
+  <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData GEMS Prize competition page</a></li>
+  <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Competition overview &amp; problem description</a></li>
+  <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#submission-format">Submission format</a></li>
+  <li><a href="https://www.drivendata.org/competitions/306/competitions/306/competition-doe-gems/page/968/">About page</a></li>
+  <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Data tab (login required)</a></li>
+  <li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">GEMS prize reference solution</a></li>
+  <li><a href="https://gdr.openei.org/submissions/1391">DOE GDR submission 1391 (GeoDAWN / INGENIOUS)</a></li>
+  <li><a href="https://epsg.io/32611">EPSG:32611 coordinate reference system</a></li>
+</ul>
+</section>
+
+</main><footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) &middot; Own the Outcome<br>Built from auditable, dated evidence. No upload is automated.</div></div></footer></body></html>
