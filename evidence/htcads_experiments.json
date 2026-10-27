@@ -73,7 +73,7 @@
         "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0727, 0.0894])"
       },
       "uniqueness_audit": {
-        "passed": true,
+        "passed": false,
         "unique_rasters_checked": 192,
         "pre_placement_surface_max_abs_spearman": 0.175272,
         "pre_placement_closest_peer": "8GEMSDOE_Hedge-v2_submission.tif",
@@ -175,7 +175,9 @@
             "continuous_spearman": 0.076755,
             "final_dots_spearman": 0.015652
           }
-        ]
+        ],
+        "historical_detector_only_pass": true,
+        "literal_rule_status": "duplicate vs registered lattice, historical unreplayed; see fresh audit for EXP-2"
       }
     },
     {
@@ -229,7 +231,7 @@
         "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0700, 0.0870])"
       },
       "uniqueness_audit": {
-        "passed": true,
+        "passed": false,
         "unique_rasters_checked": 192,
         "pre_placement_surface_max_abs_spearman": 0.179514,
         "pre_placement_closest_peer": "8GEMSDOE_Hedge-v2_submission.tif",
@@ -332,7 +334,9 @@
             "final_dots_spearman": 0.025855
           }
         ],
-        "exact_sha256_unique": true
+        "exact_sha256_unique": true,
+        "historical_detector_only_pass": true,
+        "literal_rule_status": "duplicate vs registered lattice, historical unreplayed; see fresh audit for EXP-2"
       }
     },
     {
@@ -386,7 +390,7 @@
         "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0683, 0.0848])"
       },
       "uniqueness_audit": {
-        "passed": true,
+        "passed": false,
         "unique_rasters_checked": 192,
         "pre_placement_surface_max_abs_spearman": 0.179873,
         "pre_placement_closest_peer": "8GEMSDOE_Hedge-v2_submission.tif",
@@ -488,7 +492,9 @@
             "continuous_spearman": 0.099066,
             "final_dots_spearman": 0.038571
           }
-        ]
+        ],
+        "historical_detector_only_pass": true,
+        "literal_rule_status": "duplicate vs registered lattice, historical unreplayed; see fresh audit for EXP-2"
       }
     }
   ],
@@ -644,5 +650,7 @@
       "lidar_ortho_scarp",
       1494.41
     ]
-  ]
+  ],
+  "superseded_by": "evidence/current_run_card.json",
+  "supersession_notice": "SUPERSEDED 2026-10-27: prior detector-only promotion violated the literal all-registry rule. Research only; do not submit. Current decision: evidence/current_run_card.json."
 }

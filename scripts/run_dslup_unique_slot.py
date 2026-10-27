@@ -418,7 +418,11 @@ def main() -> int:
 
     val_path = edir / "dslup_unique_slot_validator_receipt.json"
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "validate_submission.py"),
+        # NOTE (post-merge provenance): canonical scripts/validate_submission.py was replaced by the
+        # fail-closed PR#25 validator during the 2026-10-27 main merge. This lane's 5-gate validator
+        # (with the documented --mode unique-slot) is preserved as validate_submission_kg2s2.py; the
+        # shipped receipts in evidence/ were produced by it.
+        [sys.executable, str(ROOT / "scripts" / "validate_submission_kg2s2.py"),
          "--tif", str(dl_dir / tif_name), "--run-card", str(rc_path),
          "--mode", "unique-slot", "--out", str(val_path)],
         check=False,

@@ -1,0 +1,132 @@
+{
+  "schema_version": "kanlergemsdoe2.preregistration.v2",
+  "frozen_utc": "2026-10-27",
+  "session_branch": "arena/921c03c6-kanlergemsdoe2",
+  "lane_id": "KG2-ECPU-20261027",
+  "irregularity_lane_paragraph": "IR-PROMPT-MISSING-LANE-PARAGRAPH (recurrence): the standing prompt again contains no individualized single method paragraph for this parallel session. This preregistration therefore freezes ONE explicit lane (below) before any experiment, distinct from prior in-repo lanes HTCADS-K2 (promoted 2026-10-26), KG2-MGHV and KG2-FVCA-SUBMOD (negative).",
+  "lane_paragraph": "KG2-ECPU: Effort-Corrected Positive-Unlabeled detectability-propensity reweighting. Standard supervised detectors learn P(catalogued) = P(fault present) x P(detected and mapped | fault, mapping effort), so they reproduce range-front scarp mapping bias ( in-repo evidence: unweighted KG2-FVCA converged 80.68% onto the dense 10GEMSDOE supervised scarp blanket and scored only 0.0440 on blind SGMC-CAL). ECPU (1) estimates a fold-visible-only detectability propensity e(x) from effort covariates ONLY (1 m LiDAR coverage indicator, log depth-to-basement cover thickness, detrended-elevation slope, log TIGER road distance), (2) trains ONE LightGBM detector on the cached 27 sharp subsurface/scarp channels (X_sub minus the 9 regional-blob columns used by HTCADS) with positive sample weights w = clip(median_positive(e)/e(x), 0.5, 4.0) so catalogue positives in low-effort strata (deep basin fill, LiDAR void, low slope, far from roads) dominate the loss, and (3) emits via the shared exact 300 m CELF allocator (htcads.emit_submodular_celf) outside a fold-visible d>2 px collar. No HTCADS physics Noisy-OR pillars, no tip/relay specialist, no LiDAR feature columns in the detector (LiDAR enters ONLY through the propensity).",
+  "protocol_constraints": {
+    "max_promotable_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "max_surface_abs_spearman_vs_registry": 0.9,
+    "max_dots_abs_spearman_vs_registry": 0.9,
+    "max_detector_3px_dot_overlap_vs_registry": 0.7,
+    "max_single_feature_canary_auc": 0.9,
+    "evaluators": [
+      "GEMSDOE32-HIDE-RECOVER-v3.0 (OOF cell-dict emissions only; static full-catalogue-collared files are self-censored on this evaluator - see IR-20261027-01)",
+      "GEMSDOE32-SGMC-CAL-v3.0 (static files; off-catalogue SGMC truth, no censoring)"
+    ],
+    "reference_benchmarks_not_experiments": [
+      "REF-B2-HR: GEMSDOE25 d2.8 mask scored with b_visible_px=2.0 (exact procedural reconstruction of GEMSDOE32 B=2; verified 2026-10-27: d2.8 & d_cat>2 == B2 file with 0 XOR)",
+      "REF-B2-SGMC: GEMSDOE32 B=2 static file on SGMC-CAL",
+      "REF-HTCADS-SGMC: prior promoted file kanlergems2-htcads-exp-2-...-11a2f251-zeros.tif static on SGMC-CAL (reproduced 2026-10-27: 0.078913)",
+      "REF-HTCADS-HR-OOF: prior recorded OOF 0.112353 [0.0990,0.1257] from evidence/htcads_experiments.json (not re-runnable paired in this session without re-running the full HTCADS lane; treated as point+CI comparator, paired claims only vs same-session references)"
+    ]
+  },
+  "candidate_hypotheses_ranked": [
+    {
+      "rank": 1,
+      "id": "H-N1",
+      "name": "ECPU - detectability-propensity reweighting + effort-stratified allocation",
+      "selected_for_validation": true,
+      "layers": [
+        "Cached stack from gems32.htcads.build_static_feature_stack: X_sub 36 subsurface channels (USGS GeoDAWN DOI 10.5066/P93LGLVQ derivatives + DOE GDR 1391 DOI 10.15121/1881483 derivatives + training_features.tif 19 official bands), detector uses 27 sharp cols (excludes regional-blob cols {20,21,22,24,25,26,27,33,35})",
+        "Effort covariates (label-free): lidar_valid_fp (USGS 3DEP 1 m stack coverage), training_features depth_to_base_surf (band 15), det_elev_slope (band 19), external/tiger_road_distance_m.tif (U.S. Census TIGER roads distance)",
+        "Fold-visible labels ONLY (cell.visible_full / quadrant-out training domain); SGMC strictly evaluation-only"
+      ],
+      "physical_signature": "Inverse-propensity-weighted decision boundary: faults that were catalogued DESPITE thick cover / no LiDAR / low slope / poor road access must carry strong subsurface signatures (gravity/magnetic basement steps, hydrothermal demagnetization, MT edges); upweighting them x0.5-4.0 shifts the detector toward those signatures and away from tall-scarp topography.",
+      "why_catches_unmapped_not_catalogued": "Uncatalogued faults are preferentially those in low-effort strata (blind intrabasin, piedmont under Holocene alluvium, LiDAR-void 24.6% swath). Correcting P(catalogued) toward P(fault) reallocates probability mass exactly there; stratified emission (EXP-2/3) guarantees budget reaches low-effort strata instead of being crowded out by range fronts.",
+      "differs_from_prior_repos": "HTCADS-K2 = hand-built physics pillars + unweighted GBDT + tip specialist; KG2-MGHV = dual-head soft-DTI regression; KG2-FVCA = unweighted supervised (failed via scarp convergence). ECPU changes the TRAINING DISTRIBUTION (propensity weights) and the BUDGET ALLOCATION (effort strata), uses a single plain GBDT, no physics pillar fusion, no LiDAR detector features. No focus-9 site (all H19-5 thinnings) does any training at all.",
+      "named_non_fault_mimic": "Conductive playa clays and Pleistocene Lake Lahontan shoreline scarplets concentrated in flat low-effort basins; mitigated in EXP-3 by requiring potential-field ridge support (max of grav_hg, mag_tmi_hg, base_depth_grad stack cols 0/5/10 >= 70th percentile among eligible low-effort pixels) for low-effort-stratum dots, and by clipping propensity weights to [0.5, 4.0].",
+      "expected_dti_improvement": "Uncertain sign on Hide-Recover (withheld truths are by definition detected faults, so de-biasing may not help there); expected +0.005..+0.020 on blind SGMC-CAL if effort bias is the binding constraint. Promotion requires BOTH gates below regardless of this prior.",
+      "implementation_cost": "Low-medium (~15-30 min CPU reusing cached stack)",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 2,
+      "id": "H-N2",
+      "name": "Bimodal strike-mode steerable orientation coherence (NNE range-front + NW Walker Lane)",
+      "selected_for_validation": false,
+      "layers": ["X_sub Hessian ridge cols 1/2/6 + strike fields recomputed from iso_grav/rtp", "det_elev"],
+      "physical_signature": "Steerable-filter response ratio between the two regional strike modes; suppress ridges whose local strike is >35 deg from both modes.",
+      "why_catches_unmapped_not_catalogued": "Short en-echelon Walker Lane splays are under-mapped because walk-over mapping followed NNE range fronts.",
+      "differs_from_prior_repos": "HTCADS axial smoothing is strike-agnostic Gaussian; no prior lane used explicit bimodal strike prior. Not selected: overlaps HTCADS pillar-1 ridges, medium cost, and strike of hidden test faults may follow same modes as catalogue (limited blind gain).",
+      "expected_dti_improvement": "+0.002..+0.008 HOLDOUT-DTI (guess, unvalidated)",
+      "implementation_cost": "Medium",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 3,
+      "id": "H-N3",
+      "name": "AFDK - alluvial-fan drainage-azimuth vorticity / knickzone tensor (carry-over H-K4)",
+      "selected_for_validation": false,
+      "layers": ["USGS 3DEP 1/3 arc-second seamless DEM (needed)", "det_elev (100 m, available but too coarse alone)"],
+      "physical_signature": "Cross-strike rotation (vorticity) of ephemeral-wash azimuths + stream-profile knickzones at piedmont slope breaks.",
+      "why_catches_unmapped_not_catalogued": "Low-slip oblique faults in fanglomerate lose vertical scarps but deflect drainages.",
+      "differs_from_prior_repos": "All prior lanes measure vertical step/ridge amplitude, not drainage-azimuth rotation.",
+      "expected_dti_improvement": "+0.002..+0.006 HOLDOUT-DTI (guess, unvalidated)",
+      "implementation_cost": "Medium-high",
+      "external_data_obtainable_in_sandbox": false,
+      "official_external_source_needed": "USGS 3DEP staged products https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/ (free, public domain; host NOT on this sandbox outbound allowlist - verified against session allowlist github.com/codeload.github.com/api.github.com/registry.npmjs.org/pypi.org/files.pythonhosted.org)"
+    },
+    {
+      "rank": 4,
+      "id": "H-N4",
+      "name": "OPERA DISP-S1 InSAR aquifer-compartment phase step (carry-over H-K5)",
+      "selected_for_validation": false,
+      "layers": ["NASA OPERA L3 DISP-S1 (needed)", "cond_surf", "depth_to_base_surf"],
+      "physical_signature": "Sub-200 m seasonal poroelastic deformation steps across impermeable fault-gouge aquifer barriers.",
+      "why_catches_unmapped_not_catalogued": "Fully blind playa faults with no scarp and no shallow basement step still compartmentalize groundwater head.",
+      "differs_from_prior_repos": "No prior lane used time-series InSAR deformation.",
+      "expected_dti_improvement": "+0.008..+0.020 HOLDOUT-DTI (guess, unvalidated)",
+      "implementation_cost": "High",
+      "external_data_obtainable_in_sandbox": false,
+      "official_external_source_needed": "NASA ASF DAAC OPERA DISP-S1 https://asf.alaska.edu/datasets/daac/opera/ (free, CC0; host NOT on sandbox allowlist)"
+    },
+    {
+      "rank": 5,
+      "id": "H-N5",
+      "name": "ASTER TIR silicification + SWIR argillic halo (carry-over KG2-H5)",
+      "selected_for_validation": false,
+      "layers": ["NASA LP DAAC ASTER AST_05/AST_07XT (needed)", "GeoDAWN Th/K, U/Th"],
+      "physical_signature": "TIR 8.3-9.1 um SiO2 reststrahlen emissivity minimum (opaline sinter / silicified breccia) flanked by SWIR illite/kaolinite absorption.",
+      "why_catches_unmapped_not_catalogued": "Fossil high-T geothermal upflow along unmapped conduits leaves silicified aprons even where the fault scarp is buried.",
+      "differs_from_prior_repos": "Prior lanes used point sinter inventories (GDR 1391), never orbital TIR emissivity spectra.",
+      "expected_dti_improvement": "+0.003..+0.010 HOLDOUT-DTI (guess, unvalidated)",
+      "implementation_cost": "High",
+      "external_data_obtainable_in_sandbox": false,
+      "official_external_source_needed": "NASA LP DAAC https://lpdaac.usgs.gov/products/ast_05v003/ (free, public domain; host NOT on sandbox allowlist)"
+    }
+  ],
+  "experiments_preregistered": [
+    {
+      "id": "EXP-1",
+      "name": "ECPU-W (weighted) with preregistered unweighted ablation twin C0 (non-promotable)",
+      "detector": "Per-quadrant-fold LightGBM (n_estimators=135, lr=0.065, num_leaves=31, min_child_samples=100, subsample=0.8 freq1, colsample=0.75, reg_alpha=2, reg_lambda=8, seed 700+fold) on 27 sharp X_sub cols. Positives: 1-px-dilated visible labels in training domain (footprint minus test-quadrant 15-px collar), cap 38k; negatives: training domain minus 3-px-dilated labels, 4x positives. Twin C0 identical with all weights=1 (seed 600+fold). Candidate = weighted model only.",
+      "propensity": "Per-fold LightGBM (n_estimators=80, lr=0.08, num_leaves=15, min_child_samples=200, seed 800+fold) on 4 effort covariates only, same pos/neg pools; e(x) predicted on all footprint pixels; weights for positives w=clip(median(e over fold positives)/e, 0.5, 4.0), negatives w=1.",
+      "emission_oof": "Per holdout cell: surface = that quadrant fold's OOF probability (2D), eligibility = footprint & (distance to cell.visible_full > 2.0 px), htcads.emit_submodular_celf(max_dots=37654, marginal_bar=0.0) on full grid, crop to cell bbox (identical protocol to HTCADS lane).",
+      "emission_live": "Surface = mean of 4 fold models' full-grid probabilities; eligibility = footprint & (distance to full labels > 2.0 px); CELF max_dots=37654."
+    },
+    {
+      "id": "EXP-2",
+      "name": "ECPU-WS (weighted + effort-stratified allocation)",
+      "detector": "Identical weighted OOF/live surfaces as EXP-1 (no retraining).",
+      "emission": "Effort score = live/per-cell propensity surface e(x) (per-cell: that fold's propensity). Strata by terciles of e over eligible pixels. Budget caps: high-effort 40% (15062), mid 35% (13179), low 25% (9413) of 37654. CELF run per stratum on stratum-restricted eligibility; dots = union. Same per-cell cropping for OOF."
+    },
+    {
+      "id": "EXP-3",
+      "name": "ECPU-WSR (weighted + stratified + low-effort potential-field ridge gate)",
+      "detector": "Identical weighted surfaces as EXP-1.",
+      "emission": "As EXP-2, plus low-effort stratum eligibility additionally requires ridge_support = max(X_sub cols 0 grav_hg, 5 mag_tmi_hg, 10 base_depth_grad) >= 70th percentile of ridge_support over eligible low-effort pixels (computed per emission, label-free)."
+    }
+  ],
+  "promotion_gates_fail_closed": {
+    "gate1_format": "validate_submission-equivalent 13 checks: EPSG:32611, 3730x3292, float32, single band, nodata None, 0 NaN/inf in all 12,279,160 cells, values in [0,1], 0 on-catalogue pixels",
+    "gate2_canary": "htcads.run_leakage_canary on cached stack: max single-feature oriented AUC <= 0.90 (re-run this session, saved to evidence/ecpu_leakage_canary_20261027.json)",
+    "gate3_uniqueness": "Vs registry assembled this session (focus-9 repo downloads cloned 2026-10-27 + scored cache + this repo's 3 prior download TIFs): pre-placement surface max |Spearman| <= 0.90 AND final dots max |Spearman| <= 0.90 AND max 3-px overlap <= 0.70 vs every detector raster (5-px calibration lattice logged separately as non-detector). Registry count reported as measured, never inherited.",
+    "gate4_holdout": "Candidate must beat BOTH: (a) HR-OOF pooled DTI > REF-B2-HR procedural (same-session) with paired 95% CI strictly > 0, AND HR-OOF point estimate >= prior HTCADS OOF 0.112353; (b) SGMC-CAL static > REF-HTCADS-SGMC 0.078913 with paired 95% CI strictly > 0. Failing either => verdict negative, DO NOT SUBMIT new file.",
+    "gate5_metadata": "Unique timestamp+hash filename; DrivenData note <= 140 chars; <=3 promotable experiments; <=2 h experiment wall time"
+  },
+  "selection_rule_frozen_pre_experiment": "Among EXP-1..3, select the experiment with the highest HIDE-RECOVER-v3.0 OOF pooled DTI among those passing Gate 3 uniqueness; tie-break by SGMC-CAL. The unweighted twin C0 is a non-promotable ablation control and can never be selected. Selection does NOT override Gate 4: if the selected experiment fails Gate 4, verdict=negative and no new file is promoted.",
+  "score_labelling": "Every number labelled HOLDOUT-DTI (evaluator version, N, 95% CI) or ORGANIZER-CONFIRMED (user-supplied submission ledger) or PROJECTION (ledger-inversion estimate, formula shown, never called a score)."
+}

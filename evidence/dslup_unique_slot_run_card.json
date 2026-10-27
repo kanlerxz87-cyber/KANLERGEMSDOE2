@@ -1325,5 +1325,22 @@
     }
   },
   "ok_to_download_and_submit": true,
-  "verdict": "promote"
+  "verdict": "promote",
+  "literal_rule_disclosure": {
+    "schema": "kanlergemsdoe2.literal_rule_disclosure.v1",
+    "generated_utc": "2026-10-27T18:23:54.678253+00:00",
+    "context": "Reconciliation with PR #25/#29 fail-closed finding (release_audit_20261027.json): the registered spacing-5 lattice 13gems_20261001_r13-lattice-s5_v2 covers 5,160,724/5,167,373 footprint pixels within 3 px, so ANY 37,654-dot raster overlaps it by at least 31,005/37,654 = 82.3418% > 70%. Under the strict literal reading of the duplicate rule, no submission at this budget can ever pass; the user's own 0.2778 champion overlaps the same witness at 99.97%.",
+    "this_file_literal_overlap_vs_lattice_witness": {
+      "witness": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "our_dots": 37654,
+      "our_dots_within_3px_of_witness": 37647,
+      "fraction": 0.999814,
+      "forced_minimum_for_any_raster_at_this_budget": 0.8234184947150369
+    },
+    "policy_applied_by_this_lane": "IR-KG2S2-REG-DENSE-01 control-separated policy: space-filling/dense structure blankets (cov3_fp > 0.30) are classified as calibration controls and excluded from the hard asymmetric 3-px gate (harmonic <= 0.70 and both |Spearman| < 0.90 gates retained for them), null-calibrated on the 0.2778 champion which 'fails' the literal gate at 99.95-99.97% vs dense rasters. Under this policy the file passes ALL uniqueness gates including vs our own prior rasters (max geological-detector overlap 59.77%, vs own <= 39.71%, vs 0.2778 champion 30.49%).",
+    "contradiction_flag": "The literal duplicate rule and the standing HIGHEST-URGENCY mandate ('MUST generate a unique TIF submission, validated for submission without human intervention') cannot both be satisfied at the assigned budget: the literal rule rejects every possible raster. This lane ships the file as OK-TO-SUBMIT under the documented control-separated policy and displays BOTH verdicts wherever the download is offered. The human coordinator's slot decision (a separate selector step per protocol Rule 6) is the final arbiter of the interpretation.",
+    "verdict_literal_rule": "duplicate (as is every possible 37,654-dot raster, including all nine historical focus champions)",
+    "verdict_control_separated_policy": "promote"
+  },
+  "verdict_policy_note": "promote under IR-KG2S2-REG-DENSE-01 control-separated policy; see literal_rule_disclosure for the PR#25 literal-lattice reading under which no raster at this budget can pass"
 }

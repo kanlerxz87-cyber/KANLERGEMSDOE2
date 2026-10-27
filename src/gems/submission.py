@@ -37,13 +37,11 @@ def write_submission(
     *,
     outside: str = "zero",
 ) -> Path:
-    """Write ``pred_2d`` using the template profile and a portal-safe default.
+    """Write ``pred_2d`` using the template grid with an explicit exterior.
 
-    The default is an all-finite ``0.0`` exterior because some portal validators
-    inspect every stored cell and reject the template's ``NaN`` outside
-    convention as out of range.  Use ``outside="nan"`` only when producing an
-    explicitly labelled compatibility twin; it is never the recommended upload
-    artifact and must fail the strict whole-array preflight diagnostic.
+    ``zero`` passes a strict whole-array finite-range check; ``nan`` matches
+    the mirror template's exterior convention. Neither variant is proven to be
+    accepted by the organizer, and a format check cannot approve a slot.
     """
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
@@ -224,8 +222,8 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "submission_authorized": False,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": hard_fail,
-        "official_format_compliant": checks["outside_is_nan_official_text"]["pass"]
-        and not hard_fail,
+        "official_format_compliant": None,  # organizer acceptance was not observed
+        "matches_mirror_nan_footprint_convention": checks["outside_is_nan_official_text"]["pass"] and not hard_fail,
         "in_footprint_positive_pixels": int((inside > 0).sum()),
         "in_footprint_mass": round(float(np.nansum(inside, dtype=np.float64)), 2)
         if inside.size

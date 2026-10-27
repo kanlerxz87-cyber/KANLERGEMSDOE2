@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
-"""Automated End-to-End Submission Gate Validator (Zero Human Intervention Required).
+"""Fail-closed exact-file screening; a format pass never authorizes upload.
 
-Validates a candidate GeoTIFF + run card across all 5 mandatory automated gates:
-  Gate 1 (FORMAT & [0,1] RANGE): 13 GeoTIFF checks against sample_submission.tif, 0 NaNs across all
-         12,279,160 cells, values strictly in [0.0, 1.0], 0 pixels on existing_faults.tif.
-  Gate 2 (LEAKAGE CANARY): Every individual feature tested alone on spatially-blocked holdout has AUC <= 0.90.
-  Gate 3 (LANE UNIQUENESS): Pre-placement surface & final dots satisfy |Spearman| < 0.90 and 3-px dot
-         overlap <= 0.70 against all geological detector rasters across all 9 focus sites + scored archive
-         (with space-filling uniform calibration grids evaluated via null-calibrated excess).
-  Gate 4 (HOLDOUT PERFORMANCE): Beats the 0.2778 Champion benchmark on leak-free Hide-and-Recover v3.0
-         (with strictly positive paired 95% CI) AND beats Champion on blind off-catalogue SGMC-CAL v3.0.
-  Gate 5 (PORTAL METADATA): Non-empty unique submission name and note <= 140 characters.
+The former five-gate script trusted self-asserted run-card summaries and ignored
+registered calibration grids. This shared entry point now reopens the exact
+candidate and checks a pinned literal duplicate witness. One witness can prove
+failure, never full novelty. Pre-placement replay, current full registry and
+weekly quota verification are not implemented, so no positive upload path exists.
 """
 from __future__ import annotations
 
@@ -19,114 +14,82 @@ import json
 import sys
 from pathlib import Path
 
-import numpy as np
-import rasterio
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-
+from gems.release_audit import assess_file, load_reference  # noqa: E402
 from gems32.paths import data_dir  # noqa: E402
-from gems32.submission import audit_geotiff  # noqa: E402
 
 
-def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None, mode: str = "champion") -> dict:
-    """Validate all 5 gates.
-
-    ``mode="champion"`` (default, unchanged): Gate 4 requires HR pooled DTI > champion proxy AND
-    strictly positive paired 95% CI AND SGMC-CAL > champion.
-
-    ``mode="unique-slot"`` (IR-KG2S2-GATE-UNIQSLOT-02, 2026-10-27): promotion bar for a SECOND
-    portfolio slot when a prior promoted submission from this repository is already pending on the
-    portal and the new raster must additionally be unique against our OWN prior rasters. Gate 4
-    becomes: HR pooled DTI point estimate > champion proxy AND SGMC-CAL > champion AND the SGMC-CAL
-    paired 95% CI vs champion strictly positive (SGMC-CAL is the blind metric that tracks
-    ORGANIZER-CONFIRMED live scores across the nine anchor sites, R^2 = 0.956). Gate 3 additionally
-    requires max 3-px overlap vs our own prior rasters <= 0.70. HR CI-positivity is reported as
-    informational, not gating.
-    """
-    ddir = ddir or data_dir()
-    sample_tif = ddir / "sample_submission.tif"
-    labels_tif = ddir / "labels.tif"
-    with rasterio.open(sample_tif) as ds:
-        foot = np.isfinite(ds.read(1))
-    with rasterio.open(labels_tif) as ds:
-        labels = (ds.read(1) > 0) & foot
-
-    fmt = audit_geotiff(tif_path, foot, labels, mode="zeros", template_tif=sample_tif)
-    card = json.loads(run_card_path.read_text(encoding="utf-8"))
-
-    sha_matches = fmt["sha256"] == card["raster_sha256"]
-    canary = card["leakage_canary"]
-    canary_ok = bool(canary["passed"] and float(canary["max_single_feature_auc"]) <= 0.90)
-
-    uniq = card["registry_comparison"]
-    uniq_ok = bool(
-        float(uniq["pre_placement_surface_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_detector_3px_overlap"]) <= 0.70
-        and bool(uniq["exact_sha256_unique"])
-    )
-    if mode == "unique-slot":
-        own = card.get("overlap_vs_own_prior_rasters") or {}
-        own_max = max(
-            (float(v["asym_3px_overlap_ours_in_peer"]) for v in own.values() if v),
-            default=1.0,
-        )
-        uniq_ok = bool(uniq_ok and own_max <= 0.70)
-
-    hr = card["holdout_dti"]["primary_hide_and_recover"]
-    sg = card["holdout_dti"]["secondary_off_catalogue_sgmc"]
-    if mode == "unique-slot":
-        holdout_ok = bool(
-            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-            and float(sg["paired_delta_ci95"][0]) > 0.0
-        )
-    else:
-        holdout_ok = bool(
-            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-            and float(hr["paired_delta_ci95"][0]) > 0.0
-            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-        )
-
-    note = str(card.get("submission_note", ""))
-    meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)
-
+def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None) -> dict:
     gates = {
-        "gate_1_format_and_range_0_1": bool(fmt["all_checks_passed"] and sha_matches),
-        "gate_2_leakage_canary_le_090": canary_ok,
-        "gate_3_registry_uniqueness": uniq_ok,
-        "gate_4_holdout_beats_champion": holdout_ok,
-        "gate_5_portal_metadata_le_140": meta_ok,
+        "exact_file_identity": False,
+        "local_grid_dtype_inside_range": False,
+        "literal_witness_not_duplicate": False,
+        "complete_current_registry_replayed": False,
+        "surface_before_placement_replayed": False,
+        "independent_canary_and_holdout_replay": False,
+        "current_weekly_quota_verified": False,
     }
-    all_ok = all(gates.values())
-    return {
-        "validated_ok_to_download_and_submit": all_ok,
+    result = {
+        "schema": "gems.fail-closed-validator.v2",
+        "validated_ok_to_download_and_submit": False,
+        "ok_to_submit": False,
+        "verdict": "negative",
         "human_intervention_required": False,
-        "verdict": "promote" if all_ok else "negative",
-        "validation_mode": mode,
-        "raster_filename": tif_path.name,
-        "raster_sha256": fmt["sha256"],
+        "raster_filename": Path(tif_path).name,
+        "raster_sha256": None,
         "gates": gates,
-        "format_audit": fmt,
+        "format_audit": None,
+        "reasons": [],
+        "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization.",
     }
+    try:
+        card = json.loads(Path(run_card_path).read_text(encoding="utf-8"))
+        ref = load_reference(ROOT, ddir or data_dir())
+        fmt = assess_file(Path(tif_path), ref)
+        result["format_audit"] = fmt
+        result["raster_sha256"] = fmt["sha256"]
+        expected_name = card.get("submission_filename") or card.get("raster_filename")
+        gates["exact_file_identity"] = bool(
+            fmt["sha256"] == card.get("raster_sha256")
+            and expected_name == Path(tif_path).name
+            and Path(tif_path).suffix.lower() == ".tif"
+        )
+        gates["local_grid_dtype_inside_range"] = fmt["local_grid_dtype_inside_range_pass"]
+        if not gates["exact_file_identity"]:
+            result["reasons"].append("File name or SHA-256 does not match the run card.")
+        if not gates["local_grid_dtype_inside_range"]:
+            result["reasons"].append("Local grid, float32 dtype, or inside-footprint finite/range check failed.")
+        rho = fmt["witness_final_dots_spearman"]
+        gates["literal_witness_not_duplicate"] = bool(
+            fmt["inside_positive_pixels"] > 0
+            and not fmt["duplicate_under_literal_rule"]
+            and rho is not None and abs(rho) <= 0.90  # frozen lane uses an absolute cap
+        )
+        if not gates["literal_witness_not_duplicate"]:
+            result["reasons"].append("Literal all-entry witness failed or was undefined; no exemption for calibration rasters.")
+        if fmt["outside_footprint_all_zero"]:
+            result["reasons"].append("Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.")
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        result["reasons"].append(f"Reference/format check unavailable: {type(exc).__name__}: {exc}")
+    result["reasons"].append("Complete current registry, pre-placement surface, independent replay and account quota have not been verified.")
+    return result
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tif", type=Path, required=True)
-    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence" / "run_card.json")
-    ap.add_argument("--out", type=Path, default=None)
-    ap.add_argument("--mode", choices=["champion", "unique-slot"], default="champion")
+    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence/run_card.json")
+    ap.add_argument("--data-dir", type=Path, default=None)
+    ap.add_argument("--out", type=Path)
     args = ap.parse_args()
-
-    res = validate_all_gates(args.tif, args.run_card, mode=args.mode)
-    txt = json.dumps(res, indent=2)
-    if args.out is not None:
+    result = validate_all_gates(args.tif, args.run_card, args.data_dir)
+    text = json.dumps(result, indent=2, allow_nan=False)
+    if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(txt + "\n", encoding="utf-8")
-    print(txt)
-    return 0 if res["validated_ok_to_download_and_submit"] else 1
+        args.out.write_text(text + "\n", encoding="utf-8")
+    print(text)
+    return 0 if result["ok_to_submit"] else 1
 
 
 if __name__ == "__main__":

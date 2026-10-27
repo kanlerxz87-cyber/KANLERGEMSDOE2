@@ -71,7 +71,11 @@ def test_fvca_canaries_and_cross_lane_72raster_audit() -> None:
     lanes = cross["lanes"]
     assert lanes["HTCADS-DualRegime-EXP-2"]["passes_72_detector_registry_70pct_gate"] is True
     assert lanes["HTCADS-DualRegime-EXP-2"]["max_3px_detector_overlap"] <= 0.70
+    assert lanes["HTCADS-DualRegime-EXP-2"]["literal_all_registry_pass"] is False
+    assert lanes["HTCADS-DualRegime-EXP-2"]["verdict"] == "negative"
     assert lanes["KG2-MGHV-EXP-1"]["passes_72_detector_registry_70pct_gate"] is True
+    assert lanes["KG2-MGHV-EXP-1"]["literal_all_registry_pass"] is False
+    assert lanes["KG2-MGHV-EXP-1"]["verdict"] == "negative"
     assert lanes["KG2-MGHV-EXP-1"]["max_3px_detector_overlap"] <= 0.70
     assert lanes["KG2-FVCA-SUBMOD-EXP-2"]["passes_72_detector_registry_70pct_gate"] is False
     assert lanes["KG2-FVCA-SUBMOD-EXP-2"]["verdict"] == "negative"

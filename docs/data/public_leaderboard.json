@@ -1,0 +1,10 @@
+{
+  "status": "verified_snapshot",
+  "source_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "observed_utc": "2026-10-27",
+  "time_precision": "date only; source viewed via the research page-fetch tool",
+  "top_public_dti": 0.4544,
+  "fifth_public_dti": 0.3566,
+  "evidence_class": "ORGANIZER PUBLIC LEADERBOARD OBSERVATION; not a submission-page receipt",
+  "warning": "Historical snapshot until an automated refresh succeeds; the leaderboard and account quota can change."
+}

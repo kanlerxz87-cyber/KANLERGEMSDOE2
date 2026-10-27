@@ -1,0 +1,69 @@
+{
+  "reviewed_utc": "2026-10-27",
+  "purpose": "Official sources and availability; cited pages support the descriptions below, not model efficacy or mirror authenticity.",
+  "sources": [
+    {
+      "id": "competition-description",
+      "title": "DrivenData GEMS problem description, metric and submission format",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "evidence": "Fault predictions are evaluated against newly expert-labeled faults; 300 m triangular kernel; alpha 0.2, beta 0.8; single-band float32, EPSG:32611, 100 m, values [0,1].",
+      "access": "Public page fetched; competition data page redirects to login."
+    },
+    {
+      "id": "competition-overview",
+      "title": "DrivenData GEMS overview",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+      "evidence": "Describes two scoring rounds, external-data license requirement and published deadline.",
+      "access": "Public page fetched."
+    },
+    {
+      "id": "pixel-exact-mask",
+      "title": "DrivenData staff clarification of known-fault scoring mask",
+      "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4",
+      "evidence": "Staff state the known-fault mask is pixel-exact; new truth can lie within 300 m of known faults.",
+      "access": "Public forum fetched; do not assume a buffered scoring mask."
+    },
+    {
+      "id": "official-rules",
+      "title": "National Laboratory of the Rockies GEMS official rules PDF",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "evidence": "Official rule document; participants should verify eligibility and terms against the latest version.",
+      "access": "Public document text fetched."
+    },
+    {
+      "id": "geodawn",
+      "title": "USGS GeoDAWN airborne magnetic and radiometric surveys",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "evidence": "Official data release describes magnetic and radiometric surveys and GeoTIFF grids; landing page lists CC0.",
+      "access": "Landing page fetched; local derived rasters restored from owner mirror, not compared with the official bytes."
+    },
+    {
+      "id": "ingenious",
+      "title": "DOE Geothermal Data Repository: INGENIOUS Great Basin compilation",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "evidence": "Public datasets include 2 m probes, geological faults, paleogeothermal deposits, well/spring chemistry, seismicity and related layers; page lists CC BY 4.0.",
+      "access": "Landing page fetched; owner-mirrored files restored and hash checked, but not compared with the official files."
+    },
+    {
+      "id": "3dep",
+      "title": "USGS 3D Elevation Program",
+      "url": "https://www.usgs.gov/3d-elevation-program",
+      "evidence": "USGS describes elevation and lidar products; landing page says products are free and without use restrictions.",
+      "access": "Landing page fetched; coverage and provenance of each derived owner-mirror tile have not been independently confirmed."
+    },
+    {
+      "id": "opera",
+      "title": "NASA OPERA project and surface-displacement products",
+      "url": "https://www.earthdata.nasa.gov/data/projects/opera",
+      "evidence": "NASA lists DISP-S1 and U.S. spatial extent; line-of-sight deformation is not itself proof of faulting.",
+      "access": "Metadata page fetched, but product tiles, specific coverage, licensing and authenticated access not verified; host blocked for sandbox downloads. Not used in this run."
+    },
+    {
+      "id": "reference-solution",
+      "title": "DrivenData GEMS reference solution",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
+      "evidence": "Organizer reference notebook supports CPU and GPU environments; data must be obtained separately.",
+      "access": "Public repository reviewed; no GPU used in this audit."
+    }
+  ]
+}

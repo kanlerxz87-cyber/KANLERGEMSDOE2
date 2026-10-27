@@ -555,6 +555,10 @@ def render_figures(card: dict[str, Any], fp: np.ndarray, catalogue: np.ndarray) 
 
 
 def main() -> None:
+    raise SystemExit("Archived figure/audit generator disabled: historical promotion and forensic claims were retracted. Use scripts/build_site.py and evidence/release_audit_20261027.json.")
+
+
+def _legacy_main_archived() -> None:
     fp = footprint.load_footprint()
     with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as ds:
         catalogue = (ds.read(1) > 0) & fp
