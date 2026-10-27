@@ -1,0 +1,64 @@
+{
+  "schema": "gems.fail-closed-validator.v2",
+  "validated_ok_to_download_and_submit": false,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "human_intervention_required": false,
+  "raster_filename": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+  "raster_sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+  "gates": {
+    "exact_file_identity": true,
+    "local_grid_dtype_inside_range": true,
+    "literal_witness_not_duplicate": true,
+    "assigned_37654_dot_budget_matches": false,
+    "assigned_lane_provenance_independently_verified": false,
+    "complete_current_registry_replayed": false,
+    "surface_before_placement_replayed": false,
+    "independent_canary_and_holdout_replay": false,
+    "current_weekly_quota_verified": false
+  },
+  "format_audit": {
+    "file": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+    "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+    "size_bytes": 781400,
+    "count": 1,
+    "shape": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "grid_matches_pinned_owner_template": true,
+    "no_nan_inside_footprint": true,
+    "no_inf_inside_footprint": true,
+    "inside_range_0_1": true,
+    "local_grid_dtype_inside_range_pass": true,
+    "strict_whole_array_finite_0_1": true,
+    "outside_footprint_all_nan": false,
+    "outside_footprint_all_zero": true,
+    "inside_positive_pixels": 15000,
+    "outside_positive_pixels": 0,
+    "on_catalogue_positive_pixels": 107,
+    "witness_overlap_dots": 9900,
+    "witness_overlap_fraction": 0.66,
+    "witness_final_dots_spearman": -0.003973779109310169,
+    "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+    "duplicate_under_literal_rule": false,
+    "organizer_acceptance_verified": false
+  },
+  "reasons": [
+    "The positive-pixel count differs from the assigned 37,654-dot budget.",
+    "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
+    "Assigned-lane provenance, complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+  ],
+  "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
+}

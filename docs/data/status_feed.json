@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-27T23:41:21.109334+00:00",
+  "generated_utc": "2026-10-27T23:55:42.261888+00:00",
   "source_audit": "evidence/release_recheck_20261027.json",
   "source_run_card": "evidence/current_run_card.json",
   "research_artifact_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
@@ -16,6 +16,16 @@
     "filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
     "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
     "literal_witness_overlap": 0.9998140967759069
+  },
+  "archived_reduced_budget": {
+    "verdict": "negative",
+    "ok_to_submit": false,
+    "research_only": true,
+    "filename": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+    "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+    "dots": 15000,
+    "literal_witness_overlap": 0.66,
+    "full_registry_cleared": false
   },
   "forced_budget_witness": {
     "budget": 37654,

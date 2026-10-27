@@ -99,11 +99,19 @@ def main():
     s2_name = revalidation["raster_filename"]
     files = {row["file"]: row for row in audit["all_local_candidate_artifacts"]}
     s2 = files[s2_name]
+    hyp1 = next(row for name, row in files.items() if "unique-hypothesis1-binary" in name)
+    reduced = next(row for name, row in files.items() if name.startswith("36GEMSDOE-") and name.endswith("-zeros.tif"))
+    reduced_validation = read_json(ROOT / "evidence/off36_literal_revalidation_20261027.json")
+    if (reduced_validation.get("ok_to_submit") is not False
+            or reduced_validation.get("verdict") != "negative"
+            or reduced_validation.get("raster_sha256") != reduced["sha256"]
+            or reduced_validation["gates"]["assigned_37654_dot_budget_matches"] is not False):
+        raise SystemExit("Reduced-budget validation is stale or unsafe; refusing to publish")
     if (s2["sha256"] != revalidation["raster_sha256"]
             or s2["duplicate_under_literal_rule"] is not True
             or revalidation["gates"]["literal_witness_not_duplicate"] is not False):
         raise SystemExit("Inconsistent Session-2 audit/validation; refusing to publish")
-    for item in (prior, s2):
+    for item in (prior, s2, hyp1, reduced):
         artifact_path = DOCS / "downloads" / item["file"]
         if not artifact_path.is_file() or sha(artifact_path) != item["sha256"]:
             raise SystemExit("Prior research artifact missing or differs from audited hash")
@@ -133,13 +141,19 @@ def main():
                            "research_only": True, "filename": s2["file"],
                            "sha256": s2["sha256"],
                            "literal_witness_overlap": s2["witness_overlap_fraction"]},
+        "archived_reduced_budget": {"verdict": "negative", "ok_to_submit": False,
+                                    "research_only": True, "filename": reduced["file"],
+                                    "sha256": reduced["sha256"], "dots": reduced["inside_positive_pixels"],
+                                    "literal_witness_overlap": reduced["witness_overlap_fraction"],
+                                    "full_registry_cleared": False},
         "forced_budget_witness": {"budget": pre["candidate_dot_budget"],
                                   "minimum_overlap_fraction": pre["minimum_directional_overlap"]},
         "leaderboard_source": "public_leaderboard.json",
         "warning": "Historical holdouts and owner-reported values are not organizer-confirmed scores. All TIFFs are research only.",
     }
     (data / "status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    (data / "run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    for filename in ("run_card.json", "current_run_card.json"):
+        (data / filename).write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
     home = f'''<div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
@@ -164,7 +178,9 @@ def main():
 <div class="callout red-callout"><strong>NO FILE AUTHORIZED. DO NOT SUBMIT.</strong><p>The former Session-2 and Session-1 promotion claims are withdrawn: neither an exemption for a lattice nor an alternate slot policy appears in the literal user protocol. A selector cannot waive a failed required gate.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Archived candidates</div><h2>Exact downloads, not submit recommendations</h2><p>No public-score estimate or organizer acceptance is established for these files.</p></div></div><div class="table-wrap"><table><thead><tr><th>Research file and hash</th><th>Recorded holdout procedure</th><th>Literal lattice overlap</th><th>Decision</th></tr></thead><tbody>
 <tr><td class="file"><a href="downloads/{esc(s2["file"])}" download>{esc(s2["file"])}</a><small>SHA-256 {esc(s2["sha256"])}</small></td><td><strong>{hr["pooled_dti"]:.6f}</strong><small>{esc(hr["label"])}<br>Historical procedure; not independently replayed and not a score for the final TIFF.</small><strong>{sg["sgmc_prevalence_calibrated_dti"]:.6f}</strong><small>{esc(sg["label"])}<br>Historical procedure; not independently replayed.</small></td><td>{s2_overlap:.4f}%<small>{s2["witness_overlap_dots"]:,} / {s2["inside_positive_pixels"]:,} dots</small></td><td><span class="pill stop">Do not submit</span><small><a href="../evidence/dslup_literal_revalidation_20261027.json">Fresh validator ↗</a></small></td></tr>
-<tr><td class="file"><a href="downloads/{esc(prior["file"])}" download>{esc(prior["file"])}</a><small>SHA-256 {esc(prior["sha256"])}</small></td><td><strong>{audit["historical_holdout_not_replayed"]["dti"]:.6f}</strong><small>HOLDOUT-DTI · {esc(audit["historical_holdout_not_replayed"]["evaluator_version"])} · {audit["historical_holdout_not_replayed"]["withheld_positive_occurrences"]:,} withheld-positive occurrences · 95% CI [{audit["historical_holdout_not_replayed"]["ci95"][0]:.6f}, {audit["historical_holdout_not_replayed"]["ci95"][1]:.6f}]<br>Historical receipt; not replayed here.</small></td><td>{prior_overlap:.4f}%<small>{prior["witness_overlap_dots"]:,} / {prior["inside_positive_pixels"]:,} dots</small></td><td><span class="pill stop">Do not submit</span></td></tr></tbody></table></div></section>
+<tr><td class="file"><a href="downloads/{esc(prior["file"])}" download>{esc(prior["file"])}</a><small>SHA-256 {esc(prior["sha256"])}</small></td><td><strong>{audit["historical_holdout_not_replayed"]["dti"]:.6f}</strong><small>HOLDOUT-DTI · {esc(audit["historical_holdout_not_replayed"]["evaluator_version"])} · {audit["historical_holdout_not_replayed"]["withheld_positive_occurrences"]:,} withheld-positive occurrences · 95% CI [{audit["historical_holdout_not_replayed"]["ci95"][0]:.6f}, {audit["historical_holdout_not_replayed"]["ci95"][1]:.6f}]<br>Historical receipt; not replayed here.</small></td><td>{prior_overlap:.4f}%<small>{prior["witness_overlap_dots"]:,} / {prior["inside_positive_pixels"]:,} dots</small></td><td><span class="pill stop">Do not submit</span></td></tr>
+<tr><td class="file"><a href="downloads/{esc(hyp1["file"])}" download>{esc(hyp1["file"])}</a><small>SHA-256 {esc(hyp1["sha256"])}</small></td><td>Not measured<small>No independent holdout or organizer receipt.</small></td><td>{100*hyp1["witness_overlap_fraction"]:.4f}%<small>{hyp1["on_catalogue_positive_pixels"]} known-fault pixels; contradicts the old note</small></td><td><span class="pill stop">Do not submit</span></td></tr>
+<tr><td class="file"><a href="downloads/{esc(reduced["file"])}" download>{esc(reduced["file"])}</a><small>SHA-256 {esc(reduced["sha256"])}</small></td><td>Not measured<small>No independent holdout or organizer receipt.</small></td><td>{100*reduced["witness_overlap_fraction"]:.2f}%<small>Witness alone does not establish uniqueness. {reduced["on_catalogue_positive_pixels"]} known-fault pixels.</small></td><td><span class="pill stop">Do not submit</span><small>15,000 dots, not the frozen 37,654; lattice-gap placement.</small></td></tr></tbody></table></div><p class="note">The 82.34% forced bound applies only to the frozen 37,654-dot budget. A smaller file can pass this one witness yet fail the assigned method and other required gates.</p></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Reported numbers are <strong>USER/OWNER-REPORTED</strong>; no organizer submission-page receipts tie them to these bytes. No estimated DTI for a new file is available.</p></div></div>{table}<p class="note">Overlap is directional: the fraction of a row’s dots within 3 px of its closest other focus raster. Every row fails at least one focus comparison; this is not a complete current-registry clearance.</p></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">For a future approved candidate</div><h2>How submission will work</h2><p>Instructions only. No weekly slot was used in this review.</p></div></div><div class="grid-two"><div class="card"><ol class="steps"><li><strong>Resolve the protocol and run the gates.</strong> With proper authorization, require visible-only catalogue features, every feature canary, buffered comparable holdout with CI, literal full-registry checks before and after placement, and verified current quota.</li><li><strong>Use the separate selector.</strong> Download only an exact, SHA-identified future file cleared by an independent selector; a local format pass is not approval.</li><li><strong>Open DrivenData → Submit → Make new submission.</strong> Select the approved TIFF or its single-TIFF ZIP and enter the unique name and note of at most 140 characters.</li><li><strong>Record the organizer receipt.</strong> Only an actual submission-page receipt can establish a file-linked live score.</li></ol></div><div class="card"><h3>Format versus acceptance</h3><p>The <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">official format</a> specifies a single float32 band in [0,1], EPSG:32611 and the supplied 100 m grid, with null/NaN outside bounds. The mirror’s irregular exterior is NaN; these files store zeros there.</p><p>The earlier <code>Predicted values must be in range [0, 1]</code> rejection has no retained rejected-file bytes or organizer diagnosis. A local check does not prove portal acceptance or diagnose that rejection.</p><p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">Official competition &amp; rules ↗</a></p></div></div></section>'''
 
@@ -180,7 +196,8 @@ def main():
 
     issues = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Fail closed</div><h1>What remains unresolved.</h1><p>The negative decision is deliberate: no model fit, TIFF emission or live submission is justified by the current evidence.</p></div>
 <section class="section"><div class="grid-two"><div class="card"><h3>Literal registry conflict</h3><p>At this specific fixed budget, ≥{minimum:.4f}% must overlap the registered lattice within 3 px. The requested maximum is 70%; calibration grids have no exemption. Stop before placement. Any change requires a new, explicitly authorized protocol rather than evasion.</p></div><div class="card"><h3>Authenticity &amp; incomplete data</h3><p>DrivenData data require login. Hash-pinned owner mirrors are not authenticated organizer bytes. Restoration verified 31 of 46 manifest files; 14 DEM10 files depend on a deleted ref and one heat-flow CSV is missing. Re-run the restore tool; it writes a partial receipt and exits nonzero.</p></div><div class="card"><h3>Uniqueness &amp; leakage</h3><p>One witness proves failure; it does not prove complete registry coverage. Pre-placement surface ranks, every feature canary and independent fold-safe holdouts remain unreplayed. Six declared benchmark cards and three historical verifier modules are missing, so the current-best inventory is incomplete.</p></div><div class="card"><h3>Portal &amp; quota</h3><p>Current account quota is unknown. The [0,1] rejection’s file bytes and diagnosis were not retained. Whole-array local checks do not demonstrate acceptance; zero-filled versus NaN exterior remains an ambiguity, not a proven fix.</p></div></div>
-<p><a href="../evidence/current_run_card.json">Current negative JSON run card ↗</a> · <a href="../evidence/release_recheck_20261027.json">Exact-byte recheck ↗</a> · <a href="../evidence/independent_witness_20261027.json">Independent witness review ↗</a> · <a href="../evidence/data_restore_recheck_20261027.json">Partial restore receipt ↗</a> · <a href="../evidence/dslup_literal_revalidation_20261027.json">DSLUP validator ↗</a></p></section>'''
+<div class="callout red-callout"><strong>Parallel artifacts are not exceptions.</strong><p>The PR #34 TIFF overlaps the lattice {100*hyp1["witness_overlap_fraction"]:.4f}% and has {hyp1["on_catalogue_positive_pixels"]} on-catalogue dots. The PR #36 TIFF uses only {reduced["inside_positive_pixels"]:,} dots and deliberately fills lattice gaps; its {100*reduced["witness_overlap_fraction"]:.2f}% witness overlap does not clear the assigned budget, full registry, holdout or quota. Both are research-only.</p></div>
+<p><a href="../evidence/current_run_card.json">Current negative JSON run card ↗</a> · <a href="../evidence/release_recheck_20261027.json">Exact-byte recheck ↗</a> · <a href="../evidence/independent_witness_20261027.json">Independent witness review ↗</a> · <a href="../evidence/data_restore_recheck_20261027.json">Partial restore receipt ↗</a> · <a href="../evidence/dslup_literal_revalidation_20261027.json">DSLUP validator ↗</a> · <a href="../evidence/off36_literal_revalidation_20261027.json">15,000-dot validator ↗</a></p></section>'''
 
     for filename, title, body in (
         ("index.html", "Decision dashboard", home),
@@ -188,6 +205,9 @@ def main():
         ("submission-table.html", "Nine-site comparison", submission_table),
         ("research.html", "Research agenda", research),
         ("irregularities.html", "Open issues", issues),
+        # Preserve older incoming links without publishing stale contradictory content.
+        ("audit-review.html", "Open issues", issues),
+        ("submission-howto.html", "Executive summary and submission guide", summary),
     ):
         script = FEED_SCRIPT if filename == "index.html" else ""
         (DOCS / filename).write_text(page(title, filename, body, script), encoding="utf-8")

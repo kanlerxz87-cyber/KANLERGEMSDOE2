@@ -1,0 +1,6 @@
+RESEARCH ONLY — DO NOT SUBMIT. The historical note and promotion were superseded.
+File: kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif
+SHA-256: f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539
+Fresh checks: 37,654 in-footprint dots; 184 lie on known-fault pixels, contrary to the original note.
+The previously asserted <2% directional 3-pixel focus overlap did not reproduce. The file is a literal duplicate of the registered lattice; see evidence/session3_independent_recheck_20261027.json and evidence/release_recheck_20261027.json.
+No independent holdout or organizer acceptance has been established; no estimated live score is available.

@@ -69,6 +69,11 @@ def main(argv=None):
     witness = foot & (witness_array > 0)
     if not witness.any():
         raise ValueError("Empty witness")
+    with rasterio.open(inputs["labels"]) as ds:
+        if (ds.shape, ds.crs, ds.transform) != grid or ds.count != 1:
+            raise ValueError("Catalogue grid mismatch")
+        label_array = ds.read(1)
+    catalogue = foot & np.isfinite(label_array) & (label_array > 0)
     # EDT uses a different algorithm than the audit's 29-cell binary dilation.
     near = distance_transform_edt(~witness) <= 3.0
     coverage = int((foot & near).sum())
@@ -86,8 +91,10 @@ def main(argv=None):
             raise AssertionError(f"Independent witness mismatch for {key}")
 
     candidates = []
-    for name_part in ("-dslup-", "-htcads-", "-darp-", "-ecpu-"):
-        row = next(r for r in audit["all_local_candidate_artifacts"] if name_part in r["file"])
+    for name_part in ("-dslup-", "-htcads-", "-darp-", "-ecpu-",
+                      "kanlergemsdoe2-unique-hypothesis1-binary", "36GEMSDOE-off-catalogue"):
+        row = next(r for r in audit["all_local_candidate_artifacts"]
+                   if name_part in r["file"] and not r["file"].endswith("-nan.tif"))
         path = ROOT / "docs/downloads" / row["file"]
         if sha(path) != row["sha256"]:
             raise ValueError(f"Candidate SHA-256 mismatch: {path.name}")
@@ -98,11 +105,15 @@ def main(argv=None):
         dots = foot & np.isfinite(arr) & (arr > 0)
         count = int(dots.sum())
         overlap = int((dots & near).sum())
-        if count != row["inside_positive_pixels"] or overlap != row["witness_overlap_dots"]:
+        on_catalogue = int((dots & catalogue).sum())
+        if (count != row["inside_positive_pixels"] or overlap != row["witness_overlap_dots"]
+                or on_catalogue != row["on_catalogue_positive_pixels"]):
             raise AssertionError(f"Independent candidate counts disagree: {path.name}")
         candidates.append({"file": path.name, "sha256": row["sha256"], "dots": count,
                            "within_3px": overlap, "overlap_fraction": overlap / count,
-                           "duplicate": overlap * 10 > count * 7})
+                           "on_catalogue_positive_pixels": on_catalogue,
+                           "matches_assigned_budget": count == budget,
+                           "duplicate_vs_witness": overlap * 10 > count * 7})
 
     result = {
         "schema": "gems.independent-witness-review.v1",

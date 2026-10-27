@@ -1362,6 +1362,8 @@
       "exact_file_identity": true,
       "local_grid_dtype_inside_range": true,
       "literal_witness_not_duplicate": false,
+      "assigned_37654_dot_budget_matches": true,
+      "assigned_lane_provenance_independently_verified": false,
       "complete_current_registry_replayed": false,
       "surface_before_placement_replayed": false,
       "independent_canary_and_holdout_replay": false,
@@ -1408,7 +1410,7 @@
     "reasons": [
       "Literal all-entry witness failed or was undefined; no exemption for calibration rasters.",
       "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
-      "Complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+      "Assigned-lane provenance, complete current registry, pre-placement surface, independent replay and account quota have not been verified."
     ],
     "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
   }

@@ -110,7 +110,7 @@ def test_legacy_validator_modes_cannot_authorize_self_asserted_card(tmp_path):
 
 @pytest.mark.parametrize("script", ["run_dslup_experiments.py", "run_dslup_unique_slot.py",
                                     "run_ecpu_experiments.py", "run_darp_mt10_experiments.py",
-                                    "run_cpr_experiments.py"])
+                                    "run_cpr_experiments.py", "generate_unique_submission.py"])
 def test_archived_parallel_lane_entry_points_stop_before_fitting(script):
     module = importlib.import_module(script[:-3])
     with pytest.raises(SystemExit, match="Archived parallel lane disabled"):
@@ -136,7 +136,8 @@ def test_rendered_pages_and_feeds_are_fail_closed_and_local_links_resolve(tmp_pa
     downloads.mkdir(parents=True)
     for filename in ("release_recheck_20261027.json", "current_run_card.json",
                      "dslup_literal_revalidation_20261027.json", "dslup_unique_slot_run_card.json",
-                     "data_restore_recheck_20261027.json", "independent_witness_20261027.json"):
+                     "data_restore_recheck_20261027.json", "independent_witness_20261027.json",
+                     "off36_literal_revalidation_20261027.json"):
         shutil.copy2(ROOT / "evidence" / filename, evidence / filename)
     shutil.copy2(ROOT / "docs/style.css", docs / "style.css")
     (tmp_path / "research").mkdir()
@@ -145,6 +146,8 @@ def test_rendered_pages_and_feeds_are_fail_closed_and_local_links_resolve(tmp_pa
     filenames = {Path(row["path"]).name for row in audit["focus_nine"]}
     filenames.add(audit["prior_candidate"]["file"])
     filenames.add(json.loads((evidence / "dslup_literal_revalidation_20261027.json").read_text())["raster_filename"])
+    filenames.add(json.loads((evidence / "off36_literal_revalidation_20261027.json").read_text())["raster_filename"])
+    filenames.add(next(row["file"] for row in audit["all_local_candidate_artifacts"] if "unique-hypothesis1-binary" in row["file"]))
     for filename in filenames:
         shutil.copy2(ROOT / "docs/downloads" / filename, downloads / filename)
     monkeypatch.setattr(build_site, "ROOT", tmp_path)
@@ -188,7 +191,13 @@ def test_independent_distance_transform_receipt_agrees_with_release_audit():
     assert check["complete_registry_replayed"] is False and check["holdout_or_leakage_replayed"] is False
     for key, value in check["independent_preflight"].items():
         assert audit["preflight"][key] == value
-    assert all(row["duplicate"] for row in check["candidates"])
+    rows = {row["file"]: row for row in check["candidates"]}
+    reduced = next(row for name, row in rows.items() if name.startswith("36GEMSDOE-"))
+    assert reduced["duplicate_vs_witness"] is False and reduced["overlap_fraction"] == 0.66
+    assert reduced["dots"] == 15000 and reduced["matches_assigned_budget"] is False
+    assert reduced["on_catalogue_positive_pixels"] == 107
+    hyp1 = next(row for name, row in rows.items() if "unique-hypothesis1" in name)
+    assert hyp1["duplicate_vs_witness"] is True and hyp1["on_catalogue_positive_pixels"] == 184
 
 
 @pytest.mark.parametrize("flag,method", [("--verify-tnr1", "TNR1"), ("--verify-gvc1", "GVC1"),
@@ -228,3 +237,23 @@ def test_restore_empty_group_is_not_success(tmp_path, monkeypatch):
     receipt = json.loads((tmp_path / "data/restore_receipt_core.json").read_text())
     assert result == 1 and receipt["status"] == "failed"
     assert receipt["verified_files_count"] == 0
+
+
+def test_reduced_budget_file_fails_the_assigned_budget_even_though_one_witness_passes():
+    receipt = json.loads((ROOT / "evidence/off36_literal_revalidation_20261027.json").read_text())
+    assert receipt["ok_to_submit"] is False and receipt["verdict"] == "negative"
+    assert receipt["gates"]["exact_file_identity"] is True
+    assert receipt["gates"]["literal_witness_not_duplicate"] is True  # one witness is not a clearance
+    assert receipt["gates"]["assigned_37654_dot_budget_matches"] is False
+    assert receipt["gates"]["complete_current_registry_replayed"] is False
+    assert receipt["gates"]["independent_canary_and_holdout_replay"] is False
+    assert receipt["format_audit"]["on_catalogue_positive_pixels"] == 107
+
+
+def test_pr36_superseded_cards_cannot_authorize_submission():
+    for name in ("evidence/superseded/current_run_card_pr36_promote_20261027.json",
+                 "docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros-validation.json"):
+        data = json.loads((ROOT / name).read_text())
+        assert data["verdict"] == "negative" and data["ok_to_submit"] is False
+        assert data["historical_verdict_at_creation"] == "promote"
+        assert "SUPERSEDED" in data["supersession_notice"]
