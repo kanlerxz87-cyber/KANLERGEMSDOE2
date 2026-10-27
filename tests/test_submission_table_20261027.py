@@ -28,7 +28,7 @@ def _load(rel: str) -> dict:
 def test_focus_site_files_match_recorded_sha256() -> None:
     recs = _load("evidence/focus_site_files.json")["records"]
     downloaded = [r for r in recs if r.get("status") == "downloaded"]
-    assert len(downloaded) == 9 + 3 + sum(1 for r in recs if str(r.get("role", "")).startswith("portal-safe")), (
+    assert len(downloaded) == 9 + 3 + sum(1 for r in recs if str(r.get("role", "")).startswith("all-finite")), (
         "expected 9 listed focus files + 3 alternates + siblings all downloaded")
     for r in downloaded:
         p = ROOT / r["local_path"]
@@ -51,9 +51,11 @@ def test_listed_top_scores_match_prompt_listing() -> None:
     assert max(tops, key=tops.get) == "GEMSDOE32"
 
 
-def test_format_audit_passes_for_all_focus_files_and_promoted() -> None:
+def test_historical_local_format_audit_is_not_upload_authorization() -> None:
     audit = _load("evidence/focus_site_audit_20261027.json")
+    assert "does not establish" in audit["status"]
     for f in audit["files"]:
+        assert f["organizer_acceptance_verified"] is False
         if f["label"].startswith("archive:"):
             continue
         assert f["all_checks_passed"], f"format checks failed for {f['label']}: {f['checks']}"
@@ -61,45 +63,22 @@ def test_format_audit_passes_for_all_focus_files_and_promoted() -> None:
         assert f["dots_on_catalogue"] == 0
 
 
-def test_promoted_file_hash_matches_run_card_and_is_unique_under_protocol() -> None:
-    rc_new = _load("evidence/run_card.json")
-    new_tif = ROOT / "docs/downloads" / rc_new["submission_filename"]
-    assert _sha256(new_tif) == rc_new["raster_sha256"]
-
-    rc_ht = _load("evidence/htcads_run_card_20261026.json")
-    promoted = ROOT / "docs/downloads" / rc_ht["submission_filename"]
-    assert _sha256(promoted) == rc_ht["raster_sha256"]
-
-    audit = _load("evidence/focus_site_audit_20261027.json")
-    for p in audit["new_darp_vs_all"]:
-        if "lattice" in p["against"]:
-            continue
-        assert p["overlap_3px_max_direction"] <= 0.70, p["against"]
-        assert not p["exact_dot_identity"], p["against"]
-    for p in audit["promoted_vs_all"]:
-        if "lattice" in p["against"]:
-            continue
-        assert p["overlap_3px_max_direction"] <= 0.70, p["against"]
-        assert not p["exact_dot_identity"], p["against"]
+def test_prior_file_hash_matches_run_card_but_fails_literal_protocol() -> None:
+    rc = _load("evidence/run_card.json")
+    prior = ROOT / "docs/downloads" / rc["submission_filename"]
+    assert _sha256(prior) == rc["raster_sha256"]
+    assert rc["verdict"] == "negative" and rc["ok_to_download_and_submit"] is False
+    current = _load("evidence/release_audit_20261027.json")
+    assert current["prior_candidate"]["witness_overlap_fraction"] > 0.70
+    assert current["prior_candidate"]["duplicate_under_literal_rule"] is True
 
 
-def test_projection_is_labelled_and_arithmetically_consistent() -> None:
+def test_current_comparison_has_no_unsupported_projection() -> None:
     d = _load("evidence/submission_table_20261027.json")
-    pr = d["promoted"]["projection"]
-    assert pr["label"].startswith("PROJECTION")
-    expected = 0.2778 * pr["holdout_exp2"] / pr["holdout_champion"]
-    assert abs(pr["point"] - round(expected, 4)) < 1e-9
-    assert pr["range_low"] <= pr["point"] <= pr["range_high"]
-    rc_ht = _load("evidence/htcads_run_card_20261026.json")["holdout_dti"]["primary_hide_and_recover"]
-    assert abs(pr["holdout_exp2"] - rc_ht["pooled_dti"]) < 1e-9
-    assert abs(pr["holdout_champion"] - rc_ht["champion_02778_same_evaluator"]) < 1e-9
-
-    pr_new = d["new_darp_mt10"]["projection"]
-    assert pr_new["label"].startswith("PROJECTION")
-    rc_new = _load("evidence/run_card.json")["holdout_dti"]["primary_hide_and_recover"]
-    assert abs(pr_new["holdout_exp2"] - rc_new["pooled_dti"]) < 1e-9
-    assert abs(pr_new["holdout_champion"] - rc_new["champion_02778_same_evaluator"]) < 1e-9
-
+    assert d["verdict"] == "negative" and d["ok_to_submit"] is False
+    assert d["new_raster"] is None and d["leaderboard_estimate"] is None
+    assert len(d["focus_nine"]) == 9
+    assert all(r["score_evidence_class"].startswith("USER/OWNER-REPORTED") for r in d["focus_nine"])
 
 def test_submission_table_html_links_resolve() -> None:
     html_text = (ROOT / "docs/submission-table.html").read_text(encoding="utf-8")

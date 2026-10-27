@@ -1,0 +1,36 @@
+{
+  "schema_version": "kanlergems2.preregistration.v2",
+  "frozen_utc": "2026-10-27T17:40:00Z",
+  "session_branch": "arena/33f25930-kanlergemsdoe2",
+  "lane_id": "KG2-S2-DSLUP3D",
+  "lane_paragraph": "Depth-Scaled Listric Updip Continuation & Blind-Basin Dual-Population Reallocation: replace the fixed 400 m FFT upward-continuation updip gravity crest migration of HTCADS-DualRegime with a locally depth-to-basement-scaled listric-dip 3-height (150/400/800 m) continuation crest-migration projector (per-pixel updip offset s = depth/tan(dip_eff)/100 m, dip_eff 62deg->38deg listric, clipped 1.5-11 px) gated by multi-height strike coherence, substituted into both the sharp out-of-quadrant GBDT and the first-principles Multi-Physics Conduit pillar, and allocate the 300 m submodular CELF budget as a dual population reserving a 6,000-dot concealed-basin hydro-geothermal tranche (deep basement outside 1 m LiDAR) before packing the remaining 31,654 dots with 300 m exclusion. Shared holdout evaluators, submission writer, tip/relay and ortho-LiDAR specialists reused unchanged.",
+  "executes_previous_session_roadmap_item": "Extend uniform 400 m FFT upward continuation to locally depth-scaled 3D listric fault continuation (README next-session roadmap item 3, 2026-10-26).",
+  "protocol_constraints": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "max_surface_abs_spearman": 0.90,
+    "max_dots_abs_spearman": 0.90,
+    "max_detector_3px_dot_overlap": 0.70,
+    "max_single_feature_canary_auc": 0.90,
+    "uniqueness_registry_scope": "All 1,644 unique prediction-raster blobs across 114 GEMSDOE-family repositories (inventoried 2026-10-27 via GitHub trees API, deduplicated by git blob SHA), explicitly INCLUDING this repository's own three prior rasters (11a2f251, f5a469e94b14, cab53e1b)."
+  },
+  "experiments": [
+    {"id": "EXP-A", "name": "DSLUP-Core", "spec": "DSLUP channel (H1+H3) replaces grav_updip_proj in GBDT + physics pillar; isotropic B=2.0 collar; single 300 m CELF; 37,654 dots."},
+    {"id": "EXP-B", "name": "DSLUP-BlindBasin", "spec": "EXP-A + H2 dual-population allocation: 6,000-dot concealed-basin tranche (top-40% basement depth, outside 1 m LiDAR, hydro-geothermal pillar score gated on DSLUP ridges) + 31,654 main dots with 300 m exclusion around tranche."},
+    {"id": "EXP-C", "name": "DSLUP-AnisoTip", "spec": "EXP-B + axial strike-continuity smoothing + anisotropic tip-preserving (d>1.45 px) / flank-depleting (d>2.15 px) collar + marginal bar 0.0020."}
+  ],
+  "selection_rule": "Among experiments passing ALL fail-closed gates (format, canary, both uniqueness gates vs 1,644+own registry, hide-recover HOLDOUT-DTI > fresh REF with paired 95% CI lower bound > 0, SGMC-CAL > REF): pick highest hide-recover HOLDOUT-DTI; tie-break lower 3-px overlap vs own 11a2f251. If none passes: verdict=negative, prior promoted file remains the only OK-to-submit artifact.",
+  "benchmarks": {
+    "fresh_ref": "GEMSDOE32 B=2 champion proxy (0.2778 ORGANIZER-CONFIRMED) re-evaluated this session on the identical evaluator",
+    "recorded_prior_promoted": {
+      "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+      "hide_recover_holdout_dti": 0.112353,
+      "sgmc_cal_holdout_dti": 0.078913,
+      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232, 95% CI [0.0990, 0.1257]) — recorded 2026-10-26, same deterministic evaluator and seed"
+    }
+  },
+  "blocked_external_hypotheses": [
+    {"id": "KG2-S2-H4", "source": "https://asf.alaska.edu/datasets/daac/opera/", "status": "blocked by sandbox outbound allowlist"},
+    {"id": "KG2-S2-H5", "source": "https://lpdaac.usgs.gov/products/ast_05v003/", "status": "blocked by sandbox outbound allowlist"}
+  ]
+}

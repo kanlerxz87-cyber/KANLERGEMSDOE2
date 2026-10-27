@@ -22,7 +22,10 @@ def _resolve_default_data_dir() -> Path:
 
 
 ROOT: Path = Path(__file__).resolve().parents[2]
-DATA_DIR: Path = _resolve_default_data_dir()
+# Use the same resolver as restore_data.py, including legacy /core layouts.
+from gems32.paths import data_dir as _data_dir
+
+DATA_DIR: Path = _data_dir()
 GROUP_DIR: Path = Path(os.environ.get("GEMS_GROUP_DIR", DATA_DIR / "group_subs"))
 EVIDENCE_DIR: Path = ROOT / "evidence"
 DOCS_DIR: Path = ROOT / "docs"

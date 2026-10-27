@@ -13,7 +13,7 @@ Follows knowledge/01_preregistered_hypotheses_kg2_20261026.md and the Parallel-R
   4. Checks pre-placement surface & post-placement dot uniqueness against all 360 unique
      GeoTIFFs across all 9 focus sites + registry (halt if |rho| > 0.90 or competing 3-px
      overlap > 0.70).
-  5. Emits portal-safe -zeros.tif via shared submission_writer.py + single-TIFF .zip and
+  5. Historically emitted locally all-finite -zeros.tif (portal acceptance unverified) via shared submission_writer.py + single-TIFF .zip and
      produces the JSON Run Card. Never contacts DrivenData or spends a weekly slot automatically.
 """
 
@@ -1106,9 +1106,12 @@ def verify_recorded() -> dict[str, Any]:
         "max_surface_spearman": c1["correlation_overlap_vs_registry"][
             "pre_placement_surface_max_abs_spearman"
         ],
-        "ok_to_download": c1["ok_to_download"],
-        "ok_to_submit": c1["ok_to_submit"],
-        "verdict": c1["verdict"],
+        "historical_recorded_verdict": c1.get("historical_verdict_at_creation", c1["verdict"]),
+        "scope": "Archived hash/ZIP/metadata verification only; does not replay holdout or authorize upload.",
+        "ok_to_download": True,
+        "ok_to_submit": False,
+        "verdict": "negative",
+        "reason": "Current literal registry-witness audit supersedes the historical promotion flag.",
     }
 
 
@@ -1130,16 +1133,8 @@ def main() -> None:
 
     if args.stage == "verify":
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
-    elif args.stage == "features_and_canary":
-        run_stage_features_and_canary()
-    elif args.stage == "holdout_experiments":
-        run_stage_holdout_experiments(args.cache_dir)
-    elif args.stage == "emit_and_audit":
-        run_stage_emit_and_audit(args.cache_dir, args.registry_local, arm_override=args.arm_override)
-    elif args.stage == "all":
-        run_stage_features_and_canary()
-        run_stage_holdout_experiments(args.cache_dir)
-        run_stage_emit_and_audit(args.cache_dir, args.registry_local, arm_override=args.arm_override)
+        return
+    raise SystemExit("Archived parallel lane disabled: it is not the assigned HTCADS lane and its former promotion gate excluded the literal registry witness")
 
 
 if __name__ == "__main__":

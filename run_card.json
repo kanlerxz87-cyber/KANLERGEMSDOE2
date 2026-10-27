@@ -235,29 +235,175 @@
     }
   },
   "correlation_overlap_vs_registry": {
-    "detector_protocol_passed": true,
-    "literal_including_5px_calibration_lattice_passed": false,
-    "rasters_checked": 290,
-    "competing_detectors_checked": 287,
-    "calibration_lattices_checked": 3,
-    "pre_placement_surface_max_abs_spearman": 0.329543,
-    "pre_placement_closest_peer": "WBGGEMSDOE1__wbg-c1-commutator-research-surface-20261026-acea88448272.tif",
-    "post_placement_dots_max_abs_spearman": 0.126948,
-    "post_placement_competing_max_3px_overlap": 0.670792,
-    "post_placement_closest_detector_peer": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
-    "overlap_3px_vs_02778_champion": 0.367451,
-    "overlap_3px_vs_prior_htcads_11a2f251": 0.588277,
-    "literal_all_registry_max_3px_overlap": 0.999522,
-    "literal_all_registry_closest_peer": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-    "exact_13gems_pigeonhole_proof": {
-      "name": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
-      "n_dots_in_footprint": 206895,
-      "footprint_pixels": 5167373,
-      "within_3px_pixels": 5160724,
-      "exact_uncovered_pixels_U": 6649,
-      "exact_footprint_3px_coverage": 0.99871327
-    }
+    "rasters_checked": 360,
+    "competing_detectors_checked": 359,
+    "space_filling_controls_checked": 1,
+    "pre_placement_surface_max_abs_spearman": 0.196486,
+    "pre_placement_surface_nearest_peer": "GEMSDOE24:gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif",
+    "pre_placement_surface_pass_le_0p90": true,
+    "post_placement_dots_max_abs_spearman": 0.116631,
+    "post_placement_dots_nearest_spearman_peer": "GEMSDOE31:gemsdoe31-h31x-piedmont-junction-37654-20261026-5a956da9-nan.tif",
+    "post_placement_competing_max_3px_overlap": 0.691799,
+    "post_placement_competing_nearest_overlap_peer": "GEMSDOE24:gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif",
+    "post_placement_competing_pass_le_0p70": true,
+    "post_placement_literal_all360_max_3px_overlap": 0.995751,
+    "post_placement_literal_all360_nearest_peer": "GEMSDOE24:13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "key_focus_site_comparisons": {
+      "GEMSDOE24:13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": {
+        "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+        "positive_dots": 206895,
+        "is_space_filling_control": true,
+        "surface_abs_spearman": 0.00013,
+        "dots_abs_spearman": 0.000399,
+        "candidate_within_3px_of_peer": 0.995751
+      },
+      "GEMSDOE24:gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-nan.tif": {
+        "sha256": "e5bec43bd64db33022c1b425d0fcd065f42ac1ca4e85ab07e7c29b8d2a4e7c11",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.109778,
+        "dots_abs_spearman": 0.108498,
+        "candidate_within_3px_of_peer": 0.691799
+      },
+      "GEMSDOE24:gems24-dprf1-stitched-oof-tworegime-20261026-81849d67c8bf-zeros.tif": {
+        "sha256": "c1257c1d4b5ac9cc0a8e29b0120c614fcaa1f38474bc1f6de98c0a1afb0567f1",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.109778,
+        "dots_abs_spearman": 0.108498,
+        "candidate_within_3px_of_peer": 0.691799
+      },
+      "GEMSDOE25:gems25-h73-pm-deapron-sapd2-8-k3p0-20261026-1b7533ebb62b-nan.tif": {
+        "sha256": "9f71fa8dc4f9f9829c888b923eefc2dd98ae1bc71d5b1c2d9014bed1dc9da829",
+        "positive_dots": 42997,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.066946,
+        "dots_abs_spearman": 0.033607,
+        "candidate_within_3px_of_peer": 0.393185
+      },
+      "GEMSDOE25:gems25-h73-pm-deapron-sapd2-8-k3p0-20261026-1b7533ebb62b-zeros.tif": {
+        "sha256": "35e1b1400a5a2057b8ae4acaab43ad7d9d165532f9a43709cf0d1eb4f2247595",
+        "positive_dots": 42997,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.066946,
+        "dots_abs_spearman": 0.033607,
+        "candidate_within_3px_of_peer": 0.393185
+      },
+      "GEMSDOE27:gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-allfinite.tif": {
+        "sha256": "2c002b02792419864bd3b29a218e543cb41e3f07b3b57c29ef35c6e39e184bfe",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.102615,
+        "dots_abs_spearman": 0.078214,
+        "candidate_within_3px_of_peer": 0.59242
+      },
+      "GEMSDOE27:gems27-h31-drcg-wl-celf28-20261026-cf8e1bbef244-nan.tif": {
+        "sha256": "5f9a7f20a91431dae8fb5a5faacc61336c32bbae1b9a22b6fc73cf9db675d310",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.102615,
+        "dots_abs_spearman": 0.078214,
+        "candidate_within_3px_of_peer": 0.59242
+      },
+      "GEMSDOE28:gems28-s21-puhgb-20261026-16bbf281ba9b-allfinite.tif": {
+        "sha256": "2bf4737ae0a3b844a160d4041d435e5a7daf92c6ec92f128a0c2c596ba23787c",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.037807,
+        "dots_abs_spearman": 0.025806,
+        "candidate_within_3px_of_peer": 0.204759
+      },
+      "GEMSDOE28:gems28-s21-puhgb-20261026-16bbf281ba9b-nan.tif": {
+        "sha256": "a43ae055706f44e0896fdb68499f1f85f424250bd27ee5ea66b14dfd6c45c625",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.037807,
+        "dots_abs_spearman": 0.025806,
+        "candidate_within_3px_of_peer": 0.204759
+      },
+      "GEMSDOE31:gemsdoe31-h31x-piedmont-junction-37654-20261026-5a956da9-nan.tif": {
+        "sha256": "acc86db7d74dc9875cbec21fe320dee36e8376b22c7ea5504853a5c86eb015af",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.118598,
+        "dots_abs_spearman": 0.116631,
+        "candidate_within_3px_of_peer": 0.548494
+      },
+      "GEMSDOE31:gemsdoe31-h31x-piedmont-junction-37654-20261026-5a956da9-zeros.tif": {
+        "sha256": "eff2b18e37378d0f0a2f5c8e22fc68e7c359ee161114502a985135e03dd217f9",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.118598,
+        "dots_abs_spearman": 0.116631,
+        "candidate_within_3px_of_peer": 0.548494
+      },
+      "GEMSDOE32:gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-nan.tif": {
+        "sha256": "baeae3219bba6a19bc8cfe79224e28555c50184b7c1ca65c2a822f54807c77dd",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.100433,
+        "dots_abs_spearman": 0.048867,
+        "candidate_within_3px_of_peer": 0.518829
+      },
+      "GEMSDOE32:gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif": {
+        "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.100433,
+        "dots_abs_spearman": 0.048867,
+        "candidate_within_3px_of_peer": 0.518829
+      },
+      "GEMSDOE32:gemsdoe32-h47-lli-unique-coupling-49231-20261026T230000Z-33464ce2-zeros.tif": {
+        "sha256": "d8da7e947db3ed03a3d7064c02b523c254bcb3ae1c5115b7e59b4b436f80fea1",
+        "positive_dots": 49231,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.055223,
+        "dots_abs_spearman": 0.029987,
+        "candidate_within_3px_of_peer": 0.493334
+      },
+      "GEMSDOE33:gemsdoe33-a33-r3-llc-37654-20261026-7f91f9f3ced9-nan.tif": {
+        "sha256": "08710c7abd2ef9f39199e3e3106437ca315e31a114f2e3db2c53abb892d2e6ba",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.047475,
+        "dots_abs_spearman": 0.00823,
+        "candidate_within_3px_of_peer": 0.334812
+      },
+      "GEMSDOE33:gemsdoe33-a33-r3-llc-37654-20261026-7f91f9f3ced9-zeros.tif": {
+        "sha256": "76f9e157d01bb9bec2d98c3c5941b6114e06e0f439272d5f140af6e3584c8825",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.047475,
+        "dots_abs_spearman": 0.00823,
+        "candidate_within_3px_of_peer": 0.334812
+      },
+      "GEMSDOE36:gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif": {
+        "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+        "positive_dots": 38854,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.098952,
+        "dots_abs_spearman": 0.048198,
+        "candidate_within_3px_of_peer": 0.522866
+      },
+      "GEMSDOE36:gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif": {
+        "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+        "positive_dots": 38854,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.098952,
+        "dots_abs_spearman": 0.048198,
+        "candidate_within_3px_of_peer": 0.522866
+      },
+      "GEMSDOE36:gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif": {
+        "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+        "positive_dots": 37654,
+        "is_space_filling_control": false,
+        "surface_abs_spearman": 0.050285,
+        "dots_abs_spearman": 0.019894,
+        "candidate_within_3px_of_peer": 0.308599
+      }
+    },
+    "literal_all_entries_pass": false,
+    "warning": "Historical competitor-only checks are not the literal registry gate. Prior surface/holdout not independently replayed."
   },
   "registry_comparison": {
     "passed": true,
@@ -606,34 +752,98 @@
     ],
     "dtype": "float32",
     "nodata": null,
-    "nodata_repr": "None",
-    "emitted_positive_pixels": 37654,
-    "emitted_mass": 37654.0,
-    "footprint_fraction": 0.007287,
-    "on_catalogue_positive_pixels": 0,
-    "in_footprint_finite_pixels": 5167373,
-    "nan_inside_footprint": 0,
-    "full_grid_nan_pixels": 0,
-    "in_footprint_min": 0.0,
-    "in_footprint_max": 1.0,
-    "full_grid_finite_pixels": 12279160,
-    "values_in_0_1": true,
-    "checks": {
-      "exact_reference_grid_match": true,
-      "single_band": true,
-      "dtype_float32": true,
-      "dimensions_3730x3292": true,
-      "crs_epsg_32611": true,
-      "in_footprint_all_finite": true,
-      "in_footprint_zero_nan": true,
-      "in_footprint_zero_inf": true,
-      "in_footprint_zero_sentinel": true,
-      "in_footprint_range_0_1": true,
-      "outside_footprint_compliant": true,
-      "zero_on_catalogue_leakage": true,
-      "validator_range_0_1_guaranteed": true
+    "positive_dots_in_footprint": 37654,
+    "on_catalogue_positive_dots": 0,
+    "file_size_bytes": 825198,
+    "zip_size_bytes": 184537,
+    "submission_writer_checks": {
+      "file": "kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
+      "bytes": 825198,
+      "sha256": "cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e",
+      "format_valid": true,
+      "ok_to_upload": false,
+      "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+      "format_acceptable": true,
+      "submission_authorized": false,
+      "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+      "hard_failures": [],
+      "official_format_compliant": false,
+      "in_footprint_positive_pixels": 37654,
+      "in_footprint_mass": 37654.0,
+      "checks": {
+        "official_template_grid_and_footprint": {
+          "pass": true,
+          "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+          "hard_requirement": true
+        },
+        "single_band": {
+          "pass": true,
+          "detail": "count=1",
+          "hard_requirement": true
+        },
+        "dtype_float32": {
+          "pass": true,
+          "detail": "dtypes=('float32',)",
+          "hard_requirement": true
+        },
+        "crs_epsg_32611": {
+          "pass": true,
+          "detail": "EPSG:32611",
+          "hard_requirement": true
+        },
+        "shape_matches_template": {
+          "pass": true,
+          "detail": "(3730, 3292) vs (3730, 3292)",
+          "hard_requirement": true
+        },
+        "geotransform_matches_template": {
+          "pass": true,
+          "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+          "hard_requirement": true
+        },
+        "footprint_all_finite": {
+          "pass": true,
+          "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+          "hard_requirement": true
+        },
+        "footprint_range_0_1": {
+          "pass": true,
+          "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+          "hard_requirement": true
+        },
+        "outside_is_nan_official_text": {
+          "pass": false,
+          "detail": "0 of 7,111,787 outside pixels are NaN",
+          "hard_requirement": false
+        },
+        "nodata_tag_is_nan": {
+          "pass": false,
+          "detail": "nodata=None",
+          "hard_requirement": false
+        },
+        "variant_nan_aware_whole_array": {
+          "pass": true,
+          "detail": "np.nanmin/np.nanmax over the whole array",
+          "hard_requirement": true
+        },
+        "variant_masked_read": {
+          "pass": true,
+          "detail": "rasterio read(masked=True).compressed()",
+          "hard_requirement": true
+        },
+        "variant_strict_whole_array_no_nan_allowed": {
+          "pass": true,
+          "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+          "hard_requirement": false
+        },
+        "profile_matches_official_sample": {
+          "pass": false,
+          "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+          "hard_requirement": false
+        }
+      }
     },
-    "all_checks_passed": true
+    "upload_authorization": "negative: witness duplicate; no complete registry, independent replay or quota verification"
   },
   "submission_name": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros",
   "submission_filename": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
@@ -643,11 +853,11 @@
   "submission_note": "KG2 DARP-MT10 (DARP-EXP-1, 37654d): updip grav/RTP+asymMT+ComCat; HideRec=0.0980, CPied=0.1169 (EXP2=0.1408); research negative",
   "experiments_used": 3,
   "budget_max_experiments": 3,
-  "wall_hours": 0.2658,
-  "budget_max_wall_hours": 2.0,
+  "ok_to_download": true,
+  "ok_to_submit": false,
   "weekly_slot_spent_automatically": false,
   "verdict": "negative",
-  "ok_to_download_for_research": true,
-  "ok_to_download_and_submit": false,
-  "decision_summary": "OK TO DOWNLOAD FOR RESEARCH (13/13 [0,1] portal-safe format PASS, 0 NaNs, 68/68 leakage canaries PASS, detector uniqueness PASS at 67.08% <= 70% across 287 competing detectors & 58.83% vs prior 11a2f251) \u00b7 NEGATIVE / DO NOT SUBMIT TO DRIVENDATA (primary HIDE-RECOVER-v3.1 delta is -0.001153 [-0.0169, +0.0141] vs 0.2778 Champion despite +15.5% / +39.1% C_pied piedmont fault gains, and literal all-registry check hits the 99.87%-footprint 13gems 5-px calibration grid; 0 weekly slots spent)."
+  "superseded_by": "evidence/current_run_card.json",
+  "supersession_notice": "SUPERSEDED 2026-10-27: prior detector-only promotion violated the literal all-registry rule. Research only; do not submit. Current decision: evidence/current_run_card.json.",
+  "historical_verdict_at_creation": "promote"
 }

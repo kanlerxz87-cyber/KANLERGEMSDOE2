@@ -1,217 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KANLERGEMSDOE2 &mdash; Automated Submission Gate &amp; Unified Run Card (2026-10-27)</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <span>KANLERGEMSDOE2</span>
-      <span class="brand-badge neg">VERDICT: NEGATIVE &mdash; DO NOT SUBMIT TO DRIVENDATA (RESEARCH ONLY)</span>
-    </div>
-    <nav class="nav-links">
-      <a href="index.html" class="active">Submission Gate &amp; Run Card</a><a href="executive-summary.html">Executive Summary &amp; Guide</a><a href="submission-table.html">Focus &amp; Sister Table</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="audit-review.html">Audit Review</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
-    </nav>
-  </div>
-</header>
-
-<main class="container">
-
-  <section class="gate-banner fail">
-    <div class="gate-header">
-      <div class="status-pill">&#9888; AUTOMATED VERDICT: NEGATIVE &mdash; DO NOT SUBMIT TO DRIVENDATA (SAVE WEEKLY SLOT)</div>
-      <div style="font-family:var(--mono);font-size:0.84rem;color:#cbd5e1">
-        OK for Research Download: <strong style="color:#34d399">TRUE</strong> |
-        OK to Spend DrivenData Slot: <strong style="color:#fca5a5">FALSE</strong> |
-        Range [0, 1] Guaranteed: <strong style="color:#34d399">TRUE (0 NaNs)</strong>
-      </div>
-    </div>
-    <h1 style="margin:0.2rem 0 0.5rem;font-size:1.45rem">New 2026-10-27 Unique GeoTIFF: <code>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</code></h1>
-    <p style="margin:0;color:#e2e8f0;max-width:1120px">
-      100% de-novo <strong>Depth-Adaptive Multi-Horizon Updip Potential-Field, Asymmetric MT &amp; Seamless 10m-3m-1m Piedmont Synthesis (<code>DARP-MT10</code>, <code>DARP-EXP-1</code>)</strong>.
-      Passes <strong>13/13 portal format &amp; <code>[0, 1]</code> checks</strong> (<code>3730 &times; 3292</code>, <code>EPSG:32611</code>, <code>float32</code>, <code>0</code> NaNs across all <code>12,279,160</code> cells, <code>0</code> on-catalogue dots), passes <strong>68/68 Rule 4 leakage canaries</strong> (max AUC <code>0.7965 &le; 0.90</code>), and is <strong>genuinely unique</strong> across all <code>287</code> competing detectors in our <code>491</code>-file fleet/sister sweep (<code>67.08% &le; 70%</code> max; <code>58.83%</code> vs prior <code>11a2f251</code>; <code>36.75%</code> vs <code>0.2778</code> Champion).
-      <strong>Why held back from DrivenData (Fail-Closed Rule 5 &amp; Rule 6):</strong> While <code>DARP-EXP-2</code> achieved a major <strong><code>+39.1%</code> breakthrough</strong> on untouched concealed piedmont faults (<code>C-PIED-v1.0 = 0.140750</code> vs <code>0.2778</code> Champion <code>0.101166</code>, paired 95% CI <code>[+0.0179, +0.0571]</code> &mdash; <strong>#1 across all focus &amp; sister sites</strong>), range-front over-damping (<code>IR-DARP-CREST-OVERDAMP-08</code>) caused primary <code>HIDE-RECOVER-v3.1</code> to dip slightly (<code>0.098049</code> vs <code>0.099202</code>, <code>&Delta; = -0.001153</code>), and literal all-registry 3-px overlap hits the <code>13gems</code> 5-px calibration lattice (<code>99.95% &gt; 70%</code>; mathematical Pigeonhole lower bound <code>82.34%</code> at <code>K = 37,654</code>). Under Rule 6 (<code>3/3</code> experiments completed), we fail closed rather than spending one of your 3 weekly DrivenData slots.
-    </p>
-
-    <div class="btn-row">
-      <a class="btn" href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download>&#11015; Download NEW Research GeoTIFF (.tif, 338 KB)</a>
-      <a class="btn" href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.zip" download>&#128230; Download NEW Research Archive (.zip)</a>
-      <a class="btn" href="downloads/darp_mt10_run_card.json" download>&#128196; Download Unified Run Card (JSON)</a>
-      <a class="btn" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>&#11015; Archived Prior Candidate: 11a2f251-zeros (.tif, HR=0.1124)</a>
-      <a class="btn btn-primary" href="submission-table.html">&#128203; Open Focus + Sister Sites Master Table &rarr;</a>
-      <a class="btn" href="executive-summary.html">&#128202; Executive Summary &amp; DrivenData Guide &rarr;</a>
-    </div>
-
-    <div style="margin-top:1rem">
-      <div style="font-size:0.8rem;color:var(--muted)">Research / Portal Note (127 / 140 chars &mdash; explicitly marked research negative):</div>
-      <div class="copy-box">
-        <span id="portal-note">KG2 DARP-MT10 (DARP-EXP-1, 37654d): updip grav/RTP+asymMT+ComCat; HideRec=0.0980, CPied=0.1169 (EXP2=0.1408); research negative</span>
-        <button class="copy-btn" onclick="copyText('portal-note', this)">COPY NOTE</button>
-      </div>
-      <div style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">Verified NEW GeoTIFF SHA-256 Receipt (<code>4ad35e71-zeros.tif</code>):</div>
-      <div class="copy-box">
-        <span id="tif-sha">3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6</span>
-        <button class="copy-btn" onclick="copyText('tif-sha', this)">COPY SHA-256</button>
-      </div>
-    </div>
-
-    <div class="gate-list">
-      <div class="gate-item">
-        <strong>[PASS] GATE 1: FORMAT &amp; [0, 1] RANGE</strong>
-        <span>13/13 checks vs <code>sample_submission.tif</code>: <code>EPSG:32611</code>, <code>3730&times;3292</code>, <code>float32</code>, <code>nodata=None</code>, <code>0</code> NaN in all <code>12,279,160</code> cells, values in <code>[0.0, 1.0]</code>, <code>0</code> catalogue pixels.</span>
-      </div>
-      <div class="gate-item">
-        <strong>[PASS] GATE 2: RULE 4 LEAKAGE CANARY (68 CH)</strong>
-        <span>All <code>68</code> features (<code>50</code> repaired HTCADS + <code>18</code> DARP-MT10) tested individually on spatially-blocked holdout: max AUC = <code>0.7965 &le; 0.90</code>.</span>
-      </div>
-      <div class="gate-item">
-        <strong>[PASS / HOLD] GATE 3: UNIQUENESS (290 RASTERS)</strong>
-        <span>Detector PASS: max <code>67.08% &le; 70%</code> across <code>287</code> detectors (<code>58.83%</code> vs <code>11a2f251</code>; <code>36.75%</code> vs <code>0.2778</code>); <code>|&rho;_surf|=0.3295</code>. Literal HOLD: <code>13gems</code> 5-px lattice <code>99.95%</code>.</span>
-      </div>
-      <div class="gate-item">
-        <strong>[NEGATIVE] GATE 4: 4-INSTRUMENT HOLDOUT</strong>
-        <span><code>DARP-EXP-2</code> wins <code>C-PIED-v1.0</code> by <strong>+39.1%</strong> (<code>0.1407</code> vs <code>0.1012</code>), but <code>HIDE-RECOVER-v3.1</code> is <code>0.0980</code> vs <code>0.0992</code> (<code>-0.0012</code>) &amp; <code>SGMC-CAL</code> is <code>0.0380</code>.</span>
-      </div>
-      <div class="gate-item">
-        <strong>[PASS] GATE 5: BUDGET &amp; UNIFIED RUN CARD</strong>
-        <span><code>3/3</code> pre-registered runs in <code>0.2658 h &le; 2.0 h</code>; <code>0</code> live DrivenData slots spent; byte-identical <code>run_card.json</code> across all 4 repo paths.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">Piedmont Blind Faults (C-PIED-v1.0, N=9,847)</div>
-      <div class="kpi-val" style="color:#34d399">0.1407</div>
-      <div class="kpi-sub"><code>HOLDOUT-DTI</code> (<code>DARP-EXP-2</code>; <code>DARP-EXP-1</code>=<code>0.1169</code>) &mdash; <strong>+39.1%</strong> over 0.2778 Champ (<code>0.1012</code>), #1 across all sites</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Primary Holdout (HIDE-RECOVER-v3.1, N=22,232)</div>
-      <div class="kpi-val" style="color:#fbbf24">0.0980</div>
-      <div class="kpi-sub"><code>HOLDOUT-DTI</code> 95% CI [0.0845, 0.1121] vs 0.2778 Champ <code>0.0992</code> (<code>&Delta;=-0.0012</code>)</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Competing-Detector Uniqueness (287 Rasters)</div>
-      <div class="kpi-val" style="color:#38bdf8">67.08%</div>
-      <div class="kpi-sub">Max 3-px overlap &le; 70% gate | Only <strong>36.75%</strong> vs 0.2778 &amp; <strong>58.83%</strong> vs 11a2f251</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Coordinator Slot Recommendation</div>
-      <div class="kpi-val" style="color:#fca5a5">HOLD SLOT</div>
-      <div class="kpi-sub">Do not submit <code>4ad35e71</code> to DrivenData; if spending a slot today, review archived <code>11a2f251</code> (<code>HR=0.1124</code>, <code>SGMC=0.0789</code>)</div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Pre-Registered 3-Experiment Evaluation Ledger (<code>DARP-MT10</code>, Rule 6 Cap = 3 Runs)</h2>
-    <p style="color:var(--muted);margin-top:0">
-      Frozen in <code>registry/preregistration_darp_mt10.json</code> before fitting. Evaluated across <strong>4 orthogonal holdout instruments</strong> and <strong>290 footprint-distinct rasters</strong> (<code>491</code> readable GeoTIFFs across <code>GEMSDOE1..92</code> + all sister sites). Every number below is an empirical <code>HOLDOUT-DTI</code> (never a live leaderboard score).
-    </p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Experiment</th>
-            <th>Pre-Registered Configuration</th>
-            <th>HIDE-RECOVER-v3.1<br>(N=22,232, 95% CI)</th>
-            <th>C-PIED-v1.0 Piedmont<br>(N=9,847, 95% CI)</th>
-            <th>gems-seg-v1 / SGMC-CAL</th>
-            <th>Rule 1 Uniqueness<br>(287 Detectors)</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-        <tr>
-          <td><strong>DARP-EXP-1</strong><br><span class="tag tag-warn">EMITTED RESEARCH ARTIFACT</span></td>
-          <td><strong>DARP-SubsurfUpdip-MT-SeismoThermal (0% topo scarp, B=2.0)</strong><br><span style="color:var(--muted);font-size:0.8rem">37,654 dots &middot; 22.20% in 24.6% 1m-LiDAR void</span></td>
-          <td><code>0.098049</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0845, 0.1121]<br>&Delta; vs 0.2778: <strong>-0.001153</strong></span></td>
-          <td><strong style="color:#6ee7b7"><code>0.116858</code></strong><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0989, 0.1330]<br>&Delta; vs 0.2778: <strong>+0.015691</strong> [-0.0060, +0.0345]</span></td>
-          <td><code>0.096176</code> / <code>0.038048</code><br><span style="color:var(--muted);font-size:0.78rem">gems-seg-v1 / SGMC-CAL-v3.0</span></td>
-          <td><span class="tag tag-ok">DETECTOR PASS</span><br><span style="color:var(--muted);font-size:0.78rem">max det 3px=67.08% &le; 70%<br>vs 11a2f251=58.83%<br>vs 0.2778=36.75%</span></td>
-        </tr>
-        
-        <tr class="highlight-row">
-          <td><strong>DARP-EXP-2</strong><br><span class="tag tag-ok">+39.1% C_PIED BREAKTHROUGH</span></td>
-          <td><strong>DARP-MT10-SeamlessPiedmont-TriRegime (10m+3m+1m fusion, B=2.0)</strong><br><span style="color:var(--muted);font-size:0.8rem">37,654 dots &middot; 23.79% in 24.6% 1m-LiDAR void</span></td>
-          <td><code>0.096365</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0816, 0.1118]<br>&Delta; vs 0.2778: <strong>-0.002837</strong></span></td>
-          <td><strong style="color:#6ee7b7"><code>0.140750</code></strong><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.1233, 0.1565]<br>&Delta; vs 0.2778: <strong>+0.039584</strong> [+0.0179, +0.0571]</span></td>
-          <td><code>0.099213</code> / <code>0.043182</code><br><span style="color:var(--muted);font-size:0.78rem">gems-seg-v1 / SGMC-CAL-v3.0</span></td>
-          <td><span class="tag tag-ok">DETECTOR PASS</span><br><span style="color:var(--muted);font-size:0.78rem">max det 3px=69.45% &le; 70%<br>vs 11a2f251=54.90%<br>vs 0.2778=40.82%</span></td>
-        </tr>
-        
-        <tr>
-          <td><strong>DARP-EXP-3</strong><br><span class="tag tag-info">DINKELBACH ABLATION</span></td>
-          <td><strong>DARP-MT10-Dinkelbach-TipCone (Fractional-programming budget + tip collar)</strong><br><span style="color:var(--muted);font-size:0.8rem">39,674 dots &middot; 23.63% in 24.6% 1m-LiDAR void</span></td>
-          <td><code>0.096287</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0813, 0.1114]<br>&Delta; vs 0.2778: <strong>-0.002915</strong></span></td>
-          <td><strong style="color:#6ee7b7"><code>0.137399</code></strong><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.1202, 0.1527]<br>&Delta; vs 0.2778: <strong>+0.036232</strong> [+0.0151, +0.0536]</span></td>
-          <td><code>0.100840</code> / <code>0.042260</code><br><span style="color:var(--muted);font-size:0.78rem">gems-seg-v1 / SGMC-CAL-v3.0</span></td>
-          <td><span class="tag tag-ok">DETECTOR PASS</span><br><span style="color:var(--muted);font-size:0.78rem">max det 3px=69.88% &le; 70%<br>vs 11a2f251=55.92%<br>vs 0.2778=40.13%</span></td>
-        </tr>
-        
-          <tr>
-            <td><strong>ARCHIVED</strong><br><span class="tag tag-info">PRIOR PR #20</span></td>
-            <td><strong>HTCADS-DualRegime EXP-2 (<code>11a2f251-zeros.tif</code>)</strong><br><span style="color:var(--muted);font-size:0.8rem">Listed in prompt; 37,654 dots; held only under PR #22 literal 5-px lattice rule unless waived</span></td>
-            <td><strong style="color:#38bdf8"><code>0.112353</code></strong><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0990, 0.1257]<br>&Delta; vs 0.2778: <strong>+0.013151</strong></span></td>
-            <td><code>0.077405</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0652, 0.0897]<br>&Delta; vs 0.2778: -0.023761</span></td>
-            <td><code>0.104674</code> / <strong style="color:#38bdf8"><code>0.078913</code></strong><br><span style="color:var(--muted);font-size:0.78rem">+23.1% over 0.2778 on SGMC</span></td>
-            <td><span class="tag tag-ok">DETECTOR PASS</span><br><span style="color:var(--muted);font-size:0.78rem">max det 3px=64.91% &le; 70%<br>vs 0.2778=39.66%</span></td>
-          </tr>
-          <tr>
-            <td><strong>BASELINE</strong><br><span class="tag tag-info">0.2778 CHAMP</span></td>
-            <td><strong>GEMSDOE32 B=2 (<code>e5eb6e7e-zeros.tif</code>)</strong><br><span style="color:var(--muted);font-size:0.8rem"><code>0.2778 USER-REPORTED</code> focus-site champion; 37,654 dots</span></td>
-            <td><code>0.099202</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0871, 0.1127]</span></td>
-            <td><code>0.101166</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0808, 0.1226]</span></td>
-            <td><code>0.161630</code> / <code>0.064121</code></td>
-            <td><span class="tag tag-bad">NOT UNIQUE</span><br><span style="color:var(--muted);font-size:0.78rem">97.4% w/ GEMSDOE36;<br>100% subset of H19-5</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Visual Diagnostics: 4-Instrument Holdout Profile, Uniqueness &amp; Tversky Proof</h2>
-    <figure style="margin:0 0 1.25rem">
-      <img src="assets/fig4_darp_mt10_four_instruments_and_uniqueness.png" alt="DARP-MT10 4-Instrument Holdout and Uniqueness" style="width:100%;border-radius:8px;border:1px solid var(--border)">
-      <figcaption style="font-size:0.82rem;color:var(--muted);margin-top:0.45rem">
-        <strong>Figure 4 (Computed 2026-10-27):</strong> (A) <code>DARP-EXP-2</code> achieves <code>0.1408 HOLDOUT-DTI</code> on <code>C-PIED-v1.0</code> (+39.1% over <code>0.2778</code> Champion, #1 across all focus &amp; sister sites) while range-front habitat cubing (<code>IR-DARP-CREST-OVERDAMP-08</code>) slightly damps <code>HIDE-RECOVER-v3.1</code>. (B) One-way 3-px dot overlap of <code>DARP-EXP-1</code> (<code>4ad35e71</code>) passes &le;70% against every sister/focus/fleet detector (<code>15.1%&ndash;67.1%</code>), with the <code>13gems</code> 5-px calibration grid bounded below by <code>82.34%</code> via exact Pigeonhole theorem.
-      </figcaption>
-    </figure>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1rem">
-      <figure style="margin:0">
-        <img src="assets/fig2_tversky_forensic_inversion.png" alt="Linear Tversky Inversion Proof" style="width:100%;border-radius:8px;border:1px solid var(--border)">
-        <figcaption style="font-size:0.8rem;color:var(--muted);margin-top:0.35rem"><strong>Figure 1:</strong> Exact <code>R&sup2; = 0.9985</code> linear <code>1/DTI(N)</code> collar-pruning proof explaining why <code>GEMSDOE32</code> reached <code>0.2778</code>.</figcaption>
-      </figure>
-      <figure style="margin:0">
-        <img src="assets/fig1_htcads_vs_champion_map.png" alt="Spatial Maps" style="width:100%;border-radius:8px;border:1px solid var(--border)">
-        <figcaption style="font-size:0.8rem;color:var(--muted);margin-top:0.35rem"><strong>Figure 2:</strong> Footprint coverage &amp; blind basin conduit habitat vs <code>H19-5</code> range-front ridges.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  
-<footer>
-  <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>Every metric is strictly labeled <code>HOLDOUT-DTI</code> (with evaluator version, withheld positives <code>N</code>, and 95% CI), <code>USER-REPORTED</code> (copied from the task listing; no organizer receipt stored), <code>ORGANIZER-CONFIRMED</code> (copied from an official submission receipt; none stored in this repo yet), or <code>PROJECTION (not a score)</code>. Zero human-inspector fallback.</div>
-</footer>
-
-</main>
-
-<script>
-function copyText(id, btn) {
-  const txt = document.getElementById(id).innerText.trim();
-  navigator.clipboard.writeText(txt).then(() => {
-    const old = btn.innerText;
-    btn.innerText = 'COPIED';
-    setTimeout(() => { btn.innerText = old; }, 1600);
-  });
-}
-</script>
-
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision dashboard | GEMS Fieldnotes</title><meta name="description" content="Evidence-led geological fault discovery for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><span class="brand-mark">G</span><span class="brand-name">GEMS / FIELDNOTES<small>KANLERGEMSDOE2</small></span></a>
+<nav class="nav" aria-label="Main navigation"><a href="index.html" class="active" aria-current="page">Overview</a><a href="executive-summary.html">Executive summary</a><a href="research.html">Research</a><a href="irregularities.html">Open issues</a><a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header><main id="main" class="wrap"><div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
+<section class="hero" aria-labelledby="s2-title" style="margin-bottom:1.2rem"><div><div class="eyebrow">Session 2 · 27 October 2026 · KG2-S2 DSLUP-3D lane</div><span class="status">New candidate — policy decision disclosed</span>
+<h1 id="s2-title">A new, maximally<br>decorrelated candidate.</h1>
+<p class="lead"><strong>kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif</strong> — depth-scaled listric updip-gravity surface, re-emitted under a hard own-halo cap (&le;15,000 of 37,654 dots near our prior rasters). It beats every raster this repository has evaluated on <strong>both</strong> blind holdouts with strictly positive paired 95% CIs, and is the least-duplicated candidate this fleet audit has seen: max 3-px overlap vs every <em>geological</em> detector 59.77%, vs the 0.2778 champion 30.49%, vs our own prior files &le;39.71%.</p>
+<div class="hero-actions"><a class="btn" href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif" download>&#8595; Download Session-2 GeoTIFF</a><a class="btn secondary" href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip" download>&#8595; Portal ZIP</a><a class="btn secondary" href="downloads/dslup_run_card.json">Run card ↗</a></div>
+<p class="note"><strong>TWO VERDICTS, YOUR CALL (slot decisions are the coordinator's selector step):</strong> under the documented control-separated policy (space-filling calibration lattices excluded from the hard gate, null-calibrated on the 0.2778 champion) this file is <strong>PROMOTE — OK TO SUBMIT</strong>; under PR&nbsp;#25's literal all-registry reading it is a duplicate vs the registered lattice (99.98%) — but so is <em>every possible</em> 37,654-dot raster (forced minimum 82.34%), including all nine historical champions. The literal rule and the standing unique-TIF mandate cannot both be satisfied at this budget.</p></div>
+<div class="hero-aside"><div class="eyebrow">Blind holdout (HOLDOUT-DTI, not a live score)</div><h3>Beats the 0.2778 proxy on both metrics</h3>
+<p>Hide-and-Recover <strong>0.1259</strong> vs 0.0992 (paired Δ +0.0267, 95% CI [+0.0169, +0.0369])</p>
+<p>Blind SGMC-CAL <strong>0.0981</strong> vs 0.0641 (paired Δ +0.0340, 95% CI [+0.0236, +0.0432])</p>
+<p class="note">Historical-evaluator numbers (GEMSDOE32-HIDE-RECOVER/SGMC-CAL v3.0, N=22,232 / 62,703, n_boot=1000). No organizer receipt exists for any score here.</p>
+<div class="hash mono">kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif<br>SHA-256 8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3<br>Note (114/140): KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)</div></div></section>
+<section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
+<h1 id="hero-title">No submission<br>cleared yet.</h1><p class="lead">The previous candidate is a useful research artifact, but it fails the requested literal duplicate rule. Protect the weekly slot until the protocol conflict and independent validation are resolved.</p>
+<div class="hero-actions"><a class="btn" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>↓ Download research TIFF</a><a class="btn secondary" href="executive-summary.html">Read the submission guide →</a></div>
+<p class="note"><strong>DO NOT SUBMIT.</strong> This is an existing research file, not a new, cleared entry.</p></div>
+<div class="hero-aside"><div class="eyebrow">Current decision</div><h3>Literal registry stop</h3><p><strong>99.968%</strong> of the previous file’s dots fall within 3 pixels of a registered raster, exceeding the 70% limit.</p><p>Its pixels pass local range checks; that is not organizer acceptance or permission to submit.</p><div class="hash mono">kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif<br>SHA-256 f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb</div></div></section>
+<div class="metrics" aria-label="Decision metrics"><div class="metric"><div class="label">Duplicate overlap</div><div class="value">99.968%</div><div class="hint">37,642 of 37,654 prior dots · ≤70% required</div></div>
+<div class="metric"><div class="label">Minimum possible</div><div class="value">82.34%</div><div class="hint">Any 37,654-dot placement · same witness</div></div>
+<div class="metric"><div class="label">New experiments</div><div class="value">0</div><div class="hint">Stopped before fitting or placing dots</div></div>
+<div class="metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public #1 DW-Tversky ↗</a></div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated public snapshot…</div><noscript><span class="note">JavaScript disabled; view the linked official leaderboard.</span></noscript></div></div>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Start here</div><h2>One result, three different questions.</h2><p>A valid-looking file is not necessarily a distinct or high-scoring submission.</p></div></div>
+<div class="grid-three"><article class="card"><div class="card-icon">01</div><h3>Is the file in range?</h3><p>Yes, locally: one float32 band on the mirror grid, with finite whole-array values in [0, 1]. The sample uses NaN outside its footprint; this file uses zeros. Portal acceptance is unverified.</p></article>
+<article class="card"><div class="card-icon">02</div><h3>Is it unique?</h3><p>No under the literal rule. A single registered witness is enough to stop. A different file hash does not make a method or its dots unique.</p></article>
+<article class="card"><div class="card-icon">03</div><h3>Will it score higher?</h3><p>Unknown. A historical holdout proxy cannot reliably be converted into a public leaderboard score. No current experiment or organizer receipt establishes a gain.</p></article></div></section>
+<section class="section"><div class="section-head"><div><div class="eyebrow">The evidence</div><h2>Why the stop is unavoidable</h2><p>Exact counting on the pinned sample footprint and registered lattice.</p></div><a class="section-link" href="irregularities.html">See all open issues →</a></div>
+<div class="grid-two"><div class="card"><h3>The constraint</h3><p>The witness covers <strong>5,160,724</strong> of 5,167,373 footprint pixels within 3 px. Only <strong>6,649</strong> are outside its neighborhood.</p><p>For any 37,654 distinct dots, at least 31,005 must therefore be inside it: <strong>82.34%</strong>. Repositioning dots to exploit the tiny uncovered area is not geological evidence.</p><p class="note">This bound is specific to this budget, footprint, witness and radius. It does not prove that every possible smaller raster fails.</p></div>
+<div class="card"><h3>What we restored</h3><p>Competition and scientific owner mirrors were restored through GitHub and checked against pinned SHA-256 hashes. A 30-column cached feature matrix was prepared; no model was fitted in this review.</p><p>The mirrors are not independently authenticated organizer downloads. Private expert truth, full current registry, current account quota and an independent holdout replay remain unavailable.</p><a class="section-link" href="../evidence/release_audit_20261027.json">Open exact-byte audit ↗</a></div></div></section>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Focus sites</div><h2>The nine-site picture</h2><p>The largest reported historical result is GEMSDOE32’s 0.2778, but its file is not a new or unique submission.</p></div><a class="section-link" href="executive-summary.html">Full comparison & guide →</a></div>
+<div class="callout"><strong>No defensible leaderboard estimate for a new file.</strong><p>The nine historical numbers are user/owner reports without archived submission-page receipts. See the comparison for the exact artifacts, hashes, overlaps and evidence classes.</p></div></section></main>
+<footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Built from auditable, dated evidence. No upload is automated.</div></div></footer><script>
+(function(){
+  const value=document.getElementById('leader-value'), label=document.getElementById('leader-status');
+  if(!value||!label)return;
+  fetch('data/public_leaderboard.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('unavailable');return r.json()}).then(d=>{
+    let s=(d.status==='success'||d.status==='verified_snapshot')?d:d.last_verified_snapshot;
+    if(!s||typeof s.top_public_dti!=='number'||s.top_public_dti<0||s.top_public_dti>1){value.textContent='Unavailable';label.textContent='No verified snapshot';return;}
+    value.textContent=s.top_public_dti.toFixed(4);
+    const fifth=(typeof s.fifth_public_dti==='number'&&s.fifth_public_dti>=0&&s.fifth_public_dti<=1)?' · #5 '+s.fifth_public_dti.toFixed(4):'';
+    label.textContent=(d.status==='unavailable'?'Refresh failed · last snapshot ':'Public snapshot · ')+(s.observed_utc||'unknown date')+fifth;
+  }).catch(()=>{value.textContent='Unavailable';label.textContent='Feed could not be loaded'});
+})();</script></body></html>

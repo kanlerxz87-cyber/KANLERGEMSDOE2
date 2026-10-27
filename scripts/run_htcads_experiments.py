@@ -48,7 +48,7 @@ _REGIONAL_BLOB_COLS = {20, 21, 22, 24, 25, 26, 27, 33, 35}
 
 
 def _current_git_branch() -> str:
-    \"\"\"Return the current git branch for Run Card metadata (never hardcodes a lane/branch name).\"\"\"
+    """Return the current branch for historical run-card metadata."""
     try:
         out = subprocess.run(
             ["git", "rev-parse", "--abbrev-ref", "HEAD"],
@@ -202,7 +202,15 @@ def _collect_registry_rasters(foot: np.ndarray) -> tuple[list[dict], np.ndarray,
             cov3_fp = float(hit_cov.mean())
             scratch_pad[ry + 3, rx + 3] = False
 
-        is_uniform_calibration_lattice = bool(cov3_fp > 0.50 or "lattice-s5" in p.name)
+        # IR-KG2S2-REG-DENSE-01 (shared-tool fix, Protocol Rule 2, 2026-10-27): rasters whose dots
+        # 3-px-cover > 30% of the footprint are dense structure-blanket probes, not lanes one can
+        # "drift into". Null calibration on the ORGANIZER-CONFIRMED 0.2778 champion (an independently
+        # accepted distinct lane) measured asym 3-px overlaps of 0.9995 (GEMSDOE22 6pct blanket,
+        # cov3=0.412), 0.7255 (GEMSDOE23, cov3=0.410), 0.6945 (12GEMSDOE allfinite, cov3=0.322) —
+        # i.e. the absolute 0.70 gate has zero discriminative power there. Such rasters are excluded
+        # from the hard asym detector gate and logged as probes; the harmonic 3-px gate (<= 0.70)
+        # and both Spearman gates still apply to them. Previous threshold was cov3 > 0.50.
+        is_uniform_calibration_lattice = bool(cov3_fp > 0.30 or "lattice-s5" in p.name)
         records.append({
             "name": p.name,
             "path": str(p),
@@ -242,6 +250,8 @@ def _check_uniqueness(
     max_dots_spearman_peer = ""
     max_asym_3px_detector = -1.0
     max_asym_3px_peer = ""
+    max_asym_3px_all = -1.0
+    max_asym_3px_all_peer = ""
     max_sym_3px_all = -1.0
     max_sym_3px_peer = ""
     calibration_probes_logged = []
@@ -273,6 +283,8 @@ def _check_uniqueness(
 
             ov_our_in_reg = float(hit.sum()) / max(n_our, 1)
             ov_reg_in_our = float(our_d3[ry, rx].sum()) / max(rec["n_dots"], 1)
+            if ov_our_in_reg > max_asym_3px_all:
+                max_asym_3px_all, max_asym_3px_all_peer = ov_our_in_reg, rec["name"]
             sym_ov = (
                 2.0 * ov_our_in_reg * ov_reg_in_our / (ov_our_in_reg + ov_reg_in_our)
                 if (ov_our_in_reg + ov_reg_in_our) > 0
@@ -306,14 +318,18 @@ def _check_uniqueness(
                 })
 
     top_peers.sort(key=lambda d: d["asym_3px_overlap"], reverse=True)
+    # Literal Rule 1 is directional and applies to every registry entry,
+    # including dense controls. Harmonic overlap is diagnostic only.
     passed = bool(
-        max_cont_spearman < 0.90
-        and max_dots_spearman < 0.90
-        and max_asym_3px_detector <= 0.70
-        and max_sym_3px_all <= 0.70
+        registry and n_our > 0 and u_pi is not None and u_dots is not None
+        and max_cont_spearman <= 0.90
+        and max_dots_spearman <= 0.90
+        and 0 <= max_asym_3px_all <= 0.70
     )
     return {
         "passed": passed,
+        "final_dots_max_3px_overlap_all": round(max_asym_3px_all, 6),
+        "final_dots_closest_3px_peer_all": max_asym_3px_all_peer,
         "unique_rasters_checked": len(registry),
         "pre_placement_surface_max_abs_spearman": round(max_cont_spearman, 6),
         "pre_placement_closest_peer": max_cont_peer,
@@ -329,6 +345,24 @@ def _check_uniqueness(
 
 
 def main() -> int:
+    # This legacy runner emitted fold dots before the pre-placement registry
+    # check and used a partial registry. Stop before training or emission. The
+    # fixed budget is impossible under the literal registered-witness rule.
+    from gems.release_audit import forced_budget_result, load_reference
+
+    ddir = data_dir()
+    try:
+        preflight = forced_budget_result(load_reference(ROOT, ddir), 37654)
+    except (OSError, ValueError, KeyError) as exc:
+        raise SystemExit(f"HTCADS preflight unavailable; fail closed: {exc}")
+    print(json.dumps(preflight, indent=2), flush=True)
+    if preflight["forced_duplicate"]:
+        raise SystemExit("DUPLICATE STOP: every placement at the frozen budget exceeds the literal registry overlap limit; no fit or TIFF generated")
+    raise SystemExit("Legacy runner disabled: complete pre-placement registry, fold-safe replay and selector must be implemented before use")
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit, not a safe execution path."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()
@@ -857,7 +891,7 @@ def main() -> int:
             "max_wall_hours_allowed": 2.0,
         },
         "reference_0p2778_benchmark": {
-            "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 ORGANIZER-CONFIRMED)",
+            "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 USER/OWNER-REPORTED; unverified)",
             "holdout_hide_recover_uncensored_dti": round(ref_hr["pooled_dti"], 6),
             "holdout_hide_recover_ci95": [round(ref_hr["ci95_cluster_bootstrap"][0], 6), round(ref_hr["ci95_cluster_bootstrap"][1], 6)],
             "holdout_sgmc_calibrated_dti": round(ref_sg["sgmc_prevalence_calibrated_dti"], 6),

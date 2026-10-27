@@ -100,33 +100,7 @@ def main():
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
         return
     if args.run_kg2:
-        from run_kg2_lane import (
-            run_stage_emit_and_audit,
-            run_stage_features_and_canary,
-            run_stage_holdout_experiments,
-        )
-
-        run_stage_features_and_canary()
-        run_stage_holdout_experiments(args.work_dir / "kg2_stage_cache")
-        card = run_stage_emit_and_audit(
-            args.work_dir / "kg2_stage_cache",
-            args.work_dir / "comparison_registry_local.json",
-        )
-        print(
-            json.dumps(
-                {
-                    "submission_filename": card["submission_filename"],
-                    "holdout_dti": card["holdout_dti"]["dti"],
-                    "ci95": card["holdout_dti"]["ci95"],
-                    "ok_to_download": card["ok_to_download"],
-                    "ok_to_submit": card["ok_to_submit"],
-                    "verdict": card["verdict"],
-                },
-                indent=2,
-                allow_nan=False,
-            )
-        )
-        return
+        raise SystemExit("Archived KG2 lane disabled: not this session's assigned HTCADS method and not literal-registry safe")
     if args.verify_tnr1:
         from run_tnr1_lane import verify_recorded
 
@@ -149,31 +123,12 @@ def main():
         print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
         return
     if args.run_gvc1:
-        from run_gvc1_pipeline import run_gvc1
+        raise SystemExit("Archived GVC1 lane disabled: not the assigned lane and no literal-registry clearance")
+    raise SystemExit("Archived MTR1 experiment disabled: this session's assigned lane stops at the literal registry preflight")
 
-        summary = run_gvc1(work_dir=args.work_dir)
-        print(
-            json.dumps(
-                {
-                    "submission_name": summary["submission_name"],
-                    "holdout_dti": summary["holdout"]["dti"],
-                    "ci95": summary["holdout"]["ci95"]["interval"],
-                    "b0_dti": summary["baselines_same_evaluator"]["B0_oof_h24_ridge_dti"],
-                    "b1_dti": summary["baselines_same_evaluator"]["B1_oof_base_submod_dti"],
-                    "all_technical_gates_passed": summary["all_technical_gates_passed"],
-                    "ok_to_download": summary["ok_to_download"],
-                    "ok_to_submit": summary["ok_to_submit"],
-                    "verdict": summary["verdict"],
-                },
-                indent=2,
-                allow_nan=False,
-            )
-        )
-        return
-    if RESULT.exists():
-        raise SystemExit(
-            "Experiment already recorded and stopped. No implicit rerun/tuning; use --verify-recorded."
-        )
+
+def _legacy_experiment_archived():
+    """Historical implementation retained for review, not a safe entry point."""
     started = time.monotonic()
     fp = footprint.load_footprint()
     template = paths.DATA_DIR / "bridge/sample_submission.tif"

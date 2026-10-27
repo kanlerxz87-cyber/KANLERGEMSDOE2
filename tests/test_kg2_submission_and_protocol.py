@@ -37,10 +37,10 @@ def test_geotiff_strict_competition_compliance_without_human_intervention() -> N
         assert ds.dtypes == ("float32",)
         assert ds.crs is not None and ds.crs.to_epsg() == 32611
         assert ds.transform == Affine(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)
-        assert ds.nodata is None, "nodata must be None on -zeros.tif to prevent [0, 1] rejection"
+        assert ds.nodata is None  # zeros-outside local variant; acceptance unverified
         arr = ds.read(1)
 
-    # Whole-array [0, 1] and zero-NaN guarantee (fixes 'Predicted values must be in range [0, 1]')
+    # Whole-array local [0, 1] check; it does not establish portal acceptance.
     assert int(np.isnan(arr).sum()) == 0
     assert int(np.isinf(arr).sum()) == 0
     assert np.isfinite(arr).all()
@@ -82,7 +82,8 @@ def test_run_card_and_parallel_run_protocol_gates() -> None:
         "verdict",
     }
     assert required.issubset(card.keys())
-    assert card["verdict"] in {"promote", "negative"}
+    assert card["verdict"] == "negative"
+    assert card["ok_to_submit"] is False
     assert len(card["submission_note"]) <= 140
     assert card["experiments_used"] <= card["budget_max_experiments"] <= 3
     assert card["weekly_slot_spent_automatically"] is False
@@ -95,7 +96,9 @@ def test_run_card_and_parallel_run_protocol_gates() -> None:
     assert uniq["pre_placement_surface_pass_le_0p90"] is True
     assert uniq["post_placement_dots_max_abs_spearman"] <= 0.90
     assert uniq["post_placement_competing_max_3px_overlap"] <= 0.70
-    assert uniq["post_placement_competing_pass_le_0p70"] is True
+    assert uniq["post_placement_competing_pass_le_0p70"] is True  # historical subset only
+    assert uniq["post_placement_literal_all360_max_3px_overlap"] > 0.70
+    assert uniq["literal_all_entries_pass"] is False
 
     # Gate 4: Leakage canary on all 78 channels
     canary = json.loads((ROOT / "evidence/kg2_canary_20261026.json").read_text())
@@ -123,11 +126,12 @@ def test_c2st_ben_david_and_nine_site_receipts() -> None:
     assert bd["source_domain"]["pixels"] + bd["target_domain"]["pixels"] == 5_167_373
     assert bd["empirical_proxy_d_HDeltaH"]["quantile_aligned_10m_dem_and_geophysics"] < 0.1
 
-    nine = json.loads((ROOT / "docs/data/nine_site_summary_20261026.json").read_text())
-    assert len(nine["executive_table"]) == 10
-    for row in nine["executive_table"]:
+    nine = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
+    assert len(nine["focus_nine"]) == 9
+    for row in nine["focus_nine"]:
         assert len(row["sha256"]) == 64
-        assert "NEVER A SCORE" in row["quarantined_projection"] or "owner-reported" in row["quarantined_projection"]
+        assert row["max_directional_focus_overlap_within_3px"] > 0.70
+        assert row["score_evidence_class"] == "USER/OWNER-REPORTED; not an organizer receipt"
 
 
 def test_dti_tversky_metric_algebra() -> None:
@@ -152,5 +156,5 @@ def test_evaluate_holdout_cli_verify_kg2() -> None:
     out = json.loads(proc.stdout)
     assert out["verified"] is True
     assert out["ok_to_download"] is True
-    assert out["ok_to_submit"] is True
-    assert out["verdict"] == "promote"
+    assert out["ok_to_submit"] is False
+    assert out["verdict"] == "negative"

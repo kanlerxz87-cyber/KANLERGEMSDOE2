@@ -1,0 +1,1 @@
+DO NOT SUBMIT — KG2-ECPU EXP-1 verdict=negative (Gate 4 failed 2026-10-27). See evidence/run_card_ecpu_20261027.json. Retained only as a negative-result deliverable.

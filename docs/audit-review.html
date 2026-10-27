@@ -1,46 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audit Review &amp; Previous-Session Resolution &mdash; KANLERGEMSDOE2</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <span>KANLERGEMSDOE2</span>
-      <span class="brand-badge neg">VERDICT: NEGATIVE &mdash; DO NOT SUBMIT TO DRIVENDATA (RESEARCH ONLY)</span>
-    </div>
-    <nav class="nav-links">
-      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html">Executive Summary &amp; Guide</a><a href="submission-table.html">Focus &amp; Sister Table</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="audit-review.html" class="active">Audit Review</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
-    </nav>
-  </div>
-</header>
-
-<main class="container">
-  <section class="gate-banner fail">
-    <div class="gate-header">
-      <div class="status-pill">&#9888; FAIL-CLOSED AUDIT GOVERNANCE: VERDICT = NEGATIVE (DO NOT SUBMIT TO DRIVENDATA)</div>
-    </div>
-    <p style="margin:0;color:#e2e8f0">
-      All 4 previous-session audit action items from <code>AUDIT_REVIEW_2026-10-27.md</code> (PR #22) and PR #24 have been executed and verified in this 2026-10-27 run:
-    </p>
-    <ol style="margin:0.75rem 0 0;color:#e2e8f0">
-      <li><strong>Calibration Lattice Mathematical Proof:</strong> Computed exact 3-px coverage of <code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code> (<code>206,895</code> dots) across the <code>5,167,373</code>-pixel footprint: <code>5,160,724</code> pixels covered (<code>99.871327%</code>), leaving exactly <code>U = 6,649</code> uncovered boundary pixels. By the Pigeonhole Principle, <em>every</em> <code>37,654</code>-dot submission has &ge; <code>(37,654 - 6,649)/37,654 = 82.3418% &gt; 70%</code> literal overlap. Both literal all-registry (<code>99.95%</code>) and non-blanket competing-detector (<code>67.08% &le; 70%</code>) metrics are reported side by side, and automatic promotion remains fail-closed.</li>
-      <li><strong>Full <code>rasterio</code> + <code>pytest</code> Re-Validation:</strong> Rebuilt Python 3.11 <code>.venv</code>, verified all <code>46/46</code> SHA-256 manifest inputs against <code>sample_submission.tif</code>, and audited <code>491</code> readable GeoTIFFs (<code>290</code> footprint-distinct rasters) across the 92-site fleet + sister repos.</li>
-      <li><strong>New Pre-Registered 3-Experiment Lane (<code>DARP-MT10</code>):</strong> Executed <code>DARP-EXP-1..3</code> in <code>0.2658 h &le; 2.0 h</code> (<code>0</code> DrivenData slots spent), emitting unique portal-safe <a href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download><code>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</code></a> (<code>58.83%</code> 3-px overlap vs prior <code>11a2f251-zeros</code>; <code>DARP-EXP-2 C-PIED = 0.1408</code>, +39.1% over <code>0.2778</code>; held as <code>verdict = "negative"</code> due to <code>-0.0012</code> Hide-Rec range-front over-damping).</li>
-      <li><strong>Unified Run Card &amp; Strict Provenance Labels:</strong> Synchronized byte-identical <code>run_card.json == evidence/run_card.json == docs/data/run_card.json == docs/downloads/darp_mt10_run_card.json</code> and enforced strict <code>HOLDOUT-DTI</code> / <code>USER-REPORTED</code> / <code>ORGANIZER-CONFIRMED</code> / <code>PROJECTION (not a score)</code> labels across all pages.</li>
-    </ol>
-  </section>
-  
-<footer>
-  <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
-  <div>Every metric is strictly labeled <code>HOLDOUT-DTI</code> (with evaluator version, withheld positives <code>N</code>, and 95% CI), <code>USER-REPORTED</code> (copied from the task listing; no organizer receipt stored), <code>ORGANIZER-CONFIRMED</code> (copied from an official submission receipt; none stored in this repo yet), or <code>PROJECTION (not a score)</code>. Zero human-inspector fallback.</div>
-</footer>
-
-</main>
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open issues | GEMS Fieldnotes</title><meta name="description" content="Evidence-led geological fault discovery for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><span class="brand-mark">G</span><span class="brand-name">GEMS / FIELDNOTES<small>KANLERGEMSDOE2</small></span></a>
+<nav class="nav" aria-label="Main navigation"><a href="index.html">Overview</a><a href="executive-summary.html">Executive summary</a><a href="research.html">Research</a><a href="irregularities.html">Open issues</a><a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header><main id="main" class="wrap"><div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p>These are explicit blockers, not requests for a human geological inspector. Automated checks must fail closed.</p></div>
+<div class="grid-two"><article class="card"><div class="eyebrow">01 · blocking</div><h3>Literal novelty contradiction</h3><p>The registered spacing-5 raster is a calibration control, but the prompt says <em>any</em> registry raster. Its neighborhood forces ≥82.34% overlap at the frozen budget, above the 70% stop. No implicit control exemption has been applied.</p></article>
+<article class="card"><div class="eyebrow">02 · blocking</div><h3>Replay and registry completeness</h3><p>The prior pre-placement surface and OOF caches are unavailable. A single witness proves failure but cannot prove all-registry uniqueness; the complete current registry and independent holdout/canary replay are not established.</p></article>
+<article class="card"><div class="eyebrow">03 · blocking</div><h3>Score provenance</h3><p>Historical scores are user/owner reports, not receipts. The legacy site incorrectly called them organizer-confirmed and claimed a mathematical proof of hidden true positives. Both claims are withdrawn.</p></article>
+<article class="card"><div class="eyebrow">04 · blocking</div><h3>Portal and quota</h3><p>Neither all-finite nor NaN-exterior variants have an acceptance receipt here. The cause of the range error and current weekly quota are unknown; the selector does not provide a positive authorization path.</p></article>
+<article class="card"><div class="eyebrow">05 · provenance</div><h3>Data is restored, not authenticated</h3><p>Core, external and calibration owner mirrors were restored and hash-pinned. Hashes establish identity to a mirror, not origin at DrivenData, USGS or DOE. The mirror sample also contains known-fault positives despite the page’s “total fault absence” description.</p></article>
+<article class="card"><div class="eyebrow">06 · next session</div><h3>Reliable promotion pathway</h3><p>Resolve the literal control conflict without silently weakening it; obtain the authenticated organizer template and a complete frozen registry; replay canaries and spatial holdout; implement quota verification; only then allow a separate selector to approve a file.</p></article></div>
+<section class="section"><div class="callout"><strong>Three-pass review record.</strong><p>Pass 1: restored and hashed inputs, audited bytes, repaired the false-positive gate and rebuilt the site. Pass 2: exercised adversarial and missing-evidence cases. Pass 3: rechecked data, links, generated pages and CI. See <a href="../evidence/current_run_card.json">the current run card</a> and repository tests.</p></div></section></main>
+<footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Built from auditable, dated evidence. No upload is automated.</div></div></footer></body></html>
