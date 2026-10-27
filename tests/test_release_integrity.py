@@ -159,28 +159,25 @@ def test_validator_fails_closed_for_missing_references_and_identity(tmp_path, mo
 
 
 def test_current_evidence_new_unique_submission():
+    # PR #36 generated an off-catalogue file whose card said "promote". The review
+    # overrode that: no holdout DTI, placement chosen to pass the lattice gate, and a
+    # reduced budget. The authoritative card stays fail-closed.
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
-    # The 2026-10-27 session generated a new unique submission; the run card
-    # reflects a promote verdict per local gates, with full disclosure that
-    # holdout DTI was not measured and the organizer has not issued a receipt.
-    assert card["verdict"] == "promote"
-    assert card["ok_to_submit"] is True
-    assert card["raster_sha256"] is not None and len(card["raster_sha256"]) == 64
-    assert card["holdout_dti"] is None  # not measurable without DrivenData login
-    assert card["experiments_run"] == 0
+    assert card["verdict"] == "negative" and card["ok_to_submit"] is False
+    assert card["holdout_dti"] is None and card["experiments_run"] == 0
     assert len(card["note"]) <= 140
-    assert card["ok_to_download"] is True
-    assert card["raster_sha256"] == "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4"
-    assert card["submission_name"].startswith("36GEMSDOE-off-catalogue-blind-geothermal-targeting")
-    # The submitted file must exist in docs/downloads.
-    tif = ROOT / "docs" / "downloads" / card["submission_name"]
-    assert tif.is_file()
-    assert sha256_file(tif) == card["raster_sha256"]
-    # Uniqueness: max competing-method overlap within the 70% limit.
-    assert card["correlation_overlap_vs_registry"]["max_competing_method_dot_overlap_3px"] <= 0.70
-    assert card["correlation_overlap_vs_registry"]["lattice_dot_overlap_3px"] <= 0.70
-    # Audit preflight constants unchanged.
+    superseded = json.loads((ROOT / "evidence/superseded/current_run_card_pr36_promote_20261027.json").read_text())
+    assert superseded["verdict"] == "promote" and superseded["holdout_dti"] is None
+    assert superseded["raster_sha256"] == "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4"
+    tif = ROOT / "docs" / "downloads" / superseded["submission_name"]
+    assert tif.is_file() and sha256_file(tif) == superseded["raster_sha256"]
+    receipt = json.loads((ROOT / "evidence/off36_independent_check_20261027.json").read_text())
+    assert receipt["sha256"] == superseded["raster_sha256"]
+    assert receipt["dots"] == 15000 and receipt["holdout_dti"] is None
+    assert receipt["lattice_overlap_3px"] == 0.66 and receipt["dots_in_lattice_gap_fraction"] >= 0.30
+    assert receipt["on_catalogue_positive_pixels"] == 107
+    assert receipt["max_overlap_3px_restored_registry"]["fraction"] <= 0.70 + 1e-9
     assert audit["preflight"]["uncovered_pixels"] == 6649
     assert audit["preflight"]["minimum_overlapping_dots"] == 31005
     assert audit["prior_candidate"]["witness_overlap_dots"] == 37642

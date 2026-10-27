@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 """
+**RESEARCH-ONLY (fail-closed, 2026-10-27 review).** This generator must not publish a
+promote verdict. Its lattice gate is met only by placing >=30% of dots in lattice-gap pixels
+and a reduced 15,000-dot budget, which AGENTS.md forbids, and no holdout DTI is measured.
+Its card is written to evidence/research/ and forced to verdict negative.
+
 Generate a UNIQUE, competition-format GeoTIFF submission for the DOE GEMS Prize.
 
 Method: Off-Catalogue Blind Geothermal Fault Targeting (contrarian design)
@@ -313,6 +318,9 @@ def main():
         and (max_competing_overlap is None or max_competing_overlap <= 0.70)
     )
 
+    # Fail-closed override (review 2026-10-27): holdout not measured; placement designed to pass the lattice gate.
+    ok_to_submit = False
+
     # Note (<=140 chars).
     summary = "off-catalogue blind-geothermal dots; systematic grid + jitter; 15000 dots"
     prefix = f"36GEMSDOE off-catalogue-blind-geothermal | "
@@ -390,12 +398,10 @@ def main():
             f"(literal all-entries rule)."
         )
 
-    card_path = EVIDENCE / "current_run_card.json"
+    # Research-only: never overwrite the authoritative evidence/current_run_card.json.
+    card_path = EVIDENCE / "research" / "off36_generator_card.json"
+    card_path.parent.mkdir(parents=True, exist_ok=True)
     card_path.write_text(json.dumps(card, indent=2, allow_nan=False) + "\n")
-    # Also mirror into docs/data for the site.
-    (paths.DOCS_DIR / "data" / "current_run_card.json").write_text(
-        json.dumps(card, indent=2, allow_nan=False) + "\n"
-    )
 
     # Validation sidecar for downloads.
     val = {
