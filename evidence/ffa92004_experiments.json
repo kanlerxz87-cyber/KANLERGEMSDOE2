@@ -1,0 +1,59 @@
+{
+  "schema": "kanlergemsdoe2.ffa92004_experiments.v1",
+  "generated_utc": "2026-10-27T23:51:52.881743+00:00",
+  "lane_id": "FFA92004-CPES",
+  "preregistration": "knowledge/2026-10-27_ffa92004_hypotheses.md",
+  "experiments": [
+    {
+      "id": "EXP1-CPES-CURV",
+      "desc": "H-F1 curvature persistence (multi-scale Hessian 1.5/5/12px) + grav updip gate, B=2.0, 37654 dots",
+      "dots": 37654,
+      "hr_dti": 0.03586251572904821,
+      "hr_ci95": [
+        0.032801655997445535,
+        0.038769537978592644
+      ],
+      "hr_n": 22232,
+      "sgmc_dti": 0.04257124390609931,
+      "sgmc_ci95": [
+        0.035979638405017486,
+        0.04951607664383457
+      ],
+      "is_best": false
+    },
+    {
+      "id": "EXP2-CPES-MT",
+      "desc": "EXP1 + H-F2 MT clay-cap anisotropy (asymmetric HW/FW) + Th/K gate, B=2.0",
+      "dots": 37654,
+      "hr_dti": 0.03661726866216843,
+      "hr_ci95": [
+        0.03298600149295549,
+        0.04001400617424946
+      ],
+      "hr_n": 22232,
+      "sgmc_dti": 0.04231416330538526,
+      "sgmc_ci95": [
+        0.03603758308017418,
+        0.04894375387797464
+      ],
+      "is_best": true
+    },
+    {
+      "id": "EXP3-CPES-SWARM",
+      "desc": "EXP2 + H-F3 swarm jog dilat*shear*log1p(deq) gated on grav hg + anisotropic tip collar + Dinkelbach",
+      "dots": 37654,
+      "hr_dti": 0.03659043214801539,
+      "hr_ci95": [
+        0.03329705141476903,
+        0.039888856611212206
+      ],
+      "hr_n": 22232,
+      "sgmc_dti": 0.042464120068948924,
+      "sgmc_ci95": [
+        0.03604339919459232,
+        0.049637772329442095
+      ],
+      "is_best": false
+    }
+  ]
+}

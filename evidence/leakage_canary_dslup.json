@@ -46,16 +46,16 @@
       "oriented_auc": 0.594965
     },
     {
+      "feature": "lidar_subsurf_corrob",
+      "group": "lidar_specialist",
+      "raw_auc": 0.575094,
+      "oriented_auc": 0.575094
+    },
+    {
       "feature": "topo_grav_concord",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.570893,
       "oriented_auc": 0.570893
-    },
-    {
-      "feature": "lidar_subsurf_corrob",
-      "group": "lidar_specialist",
-      "raw_auc": 0.570669,
-      "oriented_auc": 0.570669
     },
     {
       "feature": "grav_hess_ridge_s3",
@@ -196,16 +196,16 @@
       "oriented_auc": 0.523514
     },
     {
+      "feature": "hydro_conduit_coupled",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.521914,
+      "oriented_auc": 0.521914
+    },
+    {
       "feature": "mag_tmi_hg",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.520803,
       "oriented_auc": 0.520803
-    },
-    {
-      "feature": "hydro_conduit_coupled",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.520717,
-      "oriented_auc": 0.520717
     },
     {
       "feature": "gallardo_meju_xgrad",
@@ -250,16 +250,16 @@
       "oriented_auc": 0.512444
     },
     {
-      "feature": "tilt_zerocross_sharp",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.510341,
-      "oriented_auc": 0.510341
-    },
-    {
       "feature": "lidar_contour_ortho",
       "group": "lidar_specialist",
       "raw_auc": 0.508707,
       "oriented_auc": 0.508707
+    },
+    {
+      "feature": "tilt_zerocross_sharp",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.491888,
+      "oriented_auc": 0.508112
     },
     {
       "feature": "gdr_geotherm_upgrad",
