@@ -15,8 +15,13 @@ from gems32.paths import data_dir, evidence_dir, work_dir  # noqa: E402
 
 
 def main() -> int:
-    t0 = time.time()
     ddir = data_dir()
+    from gems.preflight import require_safe_legacy_runner
+    try:
+        require_safe_legacy_runner(ddir, ROOT, 37654)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
+    t0 = time.time()
     wdir = work_dir()
     print(f"[prepare_data] Building 46-channel label-free HTCADS stack from {ddir} -> {wdir} ...")
     stack = htcads.build_static_feature_stack(ddir, wdir)

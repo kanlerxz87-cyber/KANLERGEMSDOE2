@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
-"""Automated End-to-End Submission Gate Validator (Zero Human Intervention Required).
+"""Fail-closed, byte-bound GeoTIFF and recorded-evidence screening.
 
-Validates a candidate GeoTIFF + run card across all 5 mandatory automated gates:
-  Gate 1 (FORMAT & [0,1] RANGE): 13 GeoTIFF checks against sample_submission.tif, 0 NaNs across all
-         12,279,160 cells, values strictly in [0.0, 1.0], 0 pixels on existing_faults.tif.
-  Gate 2 (LEAKAGE CANARY): Every individual feature tested alone on spatially-blocked holdout has AUC <= 0.90.
-  Gate 3 (LANE UNIQUENESS): Pre-placement surface & final dots satisfy |Spearman| < 0.90 and 3-px dot
-         overlap <= 0.70 against all geological detector rasters across all 9 focus sites + scored archive
-         (with space-filling uniform calibration grids evaluated via null-calibrated excess).
-  Gate 4 (HOLDOUT PERFORMANCE): Beats the 0.2778 Champion benchmark on leak-free Hide-and-Recover v3.0
-         (with strictly positive paired 95% CI) AND beats Champion on blind off-catalogue SGMC-CAL v3.0.
-  Gate 5 (PORTAL METADATA): Non-empty unique submission name and note <= 140 characters.
+The format check is not portal acceptance, a new holdout replay, an exhaustive
+registry comparison, or weekly-slot authorization. No upload is performed.
 """
 from __future__ import annotations
 
@@ -24,79 +16,125 @@ import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-
+from gems import submission  # noqa: E402
+from gems.preflight import LATTICE_NAME, TEMPLATE_SHA256, measure_candidate, pinned_witness  # noqa: E402
+from gems.validator import sha256_file  # noqa: E402
 from gems32.paths import data_dir  # noqa: E402
-from gems32.submission import audit_geotiff  # noqa: E402
 
 
 def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None) -> dict:
-    ddir = ddir or data_dir()
-    sample_tif = ddir / "sample_submission.tif"
-    labels_tif = ddir / "labels.tif"
-    with rasterio.open(sample_tif) as ds:
-        foot = np.isfinite(ds.read(1))
-    with rasterio.open(labels_tif) as ds:
-        labels = (ds.read(1) > 0) & foot
+    """Reopen exact bytes and return a negative decision if evidence is missing.
 
-    fmt = audit_geotiff(tif_path, foot, labels, mode="zeros", template_tif=sample_tif)
-    card = json.loads(run_card_path.read_text(encoding="utf-8"))
-
-    sha_matches = fmt["sha256"] == card["raster_sha256"]
-    canary = card["leakage_canary"]
-    canary_ok = bool(canary["passed"] and float(canary["max_single_feature_auc"]) <= 0.90)
-
-    uniq = card["registry_comparison"]
-    uniq_ok = bool(
-        float(uniq["pre_placement_surface_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_detector_3px_overlap"]) <= 0.70
-        and bool(uniq["exact_sha256_unique"])
-    )
-
-    hr = card["holdout_dti"]["primary_hide_and_recover"]
-    sg = card["holdout_dti"]["secondary_off_catalogue_sgmc"]
-    holdout_ok = bool(
-        float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-        and float(hr["paired_delta_ci95"][0]) > 0.0
-        and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-    )
-
-    note = str(card.get("submission_note", ""))
-    meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)
-
+    The recorded numbers in an old card are not independently reproduced merely
+    by reading them. There is intentionally no positive slot-authorization path
+    until the complete replay and current-account selector are implemented.
+    """
+    ddir = Path(ddir) if ddir is not None else data_dir()
+    tif_path, run_card_path = Path(tif_path), Path(run_card_path)
+    template = ddir / "sample_submission.tif"
+    issues: list[str] = []
+    checks = None
+    witness = None
+    card: dict = {}
+    sha = None
+    note_ok = False
+    identity_ok = False
+    template_ok = False
+    format_ok = False
+    witness_ok = False
+    try:
+        card = json.loads(run_card_path.read_text(encoding="utf-8"))
+        if not isinstance(card, dict):
+            raise ValueError("run card must be an object")
+        note = card.get("note", card.get("submission_note"))
+        note_ok = isinstance(note, str) and 0 < len(note) <= 140 and bool(card.get("submission_name"))
+    except (OSError, ValueError) as exc:
+        issues.append(f"run card unavailable or malformed: {exc}")
+    try:
+        sha = sha256_file(tif_path)
+        identity_ok = sha == card.get("raster_sha256")
+        if not identity_ok:
+            issues.append("artifact SHA-256 does not match the recorded run card")
+    except OSError as exc:
+        issues.append(f"artifact unavailable: {exc}")
+    try:
+        template_ok = sha256_file(template) == TEMPLATE_SHA256
+        if not template_ok:
+            raise ValueError("template does not match the pinned owner mirror")
+        checks = submission.check_variants(tif_path, template)
+        strict = checks["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
+        format_ok = bool(checks["format_valid"] and strict)
+        if not format_ok:
+            issues.append("reopened file failed a local grid/range check")
+    except (OSError, ValueError, KeyError, rasterio.errors.RasterioError) as exc:
+        issues.append(f"local format check unavailable or failed: {exc}")
+    if format_ok:
+        try:
+            # Derive K from the actual raster before measuring the registered
+            # witness. This is not a claim that the rest of the registry passed.
+            with rasterio.open(template) as ds:
+                fp = np.isfinite(ds.read(1))
+            with rasterio.open(tif_path) as ds:
+                k = int((ds.read(1)[fp] > 0).sum())
+            proof, fp, halo = pinned_witness(
+                template, ddir / "scored" / LATTICE_NAME,
+                ROOT / "registry/comparison_registry.json", k,
+            )
+            witness = {**measure_candidate(tif_path, template, fp, halo),
+                       "forced_minimum_overlap": proof["minimum_possible_directional_overlap"]}
+            witness_ok = not witness["literal_duplicate"]
+            if not witness_ok:
+                issues.append("literal registry duplicate: more than 70% of candidate dots are within 3 px of the registered lattice")
+        except (OSError, ValueError, KeyError, rasterio.errors.RasterioError) as exc:
+            issues.append(f"literal registry witness unavailable or invalid: {exc}")
+    # Recorded booleans, sampled correlations, and a format pass are not a
+    # replay certificate. Fail closed until these integrations really exist.
     gates = {
-        "gate_1_format_and_range_0_1": bool(fmt["all_checks_passed"] and sha_matches),
-        "gate_2_leakage_canary_le_090": canary_ok,
-        "gate_3_registry_uniqueness": uniq_ok,
-        "gate_4_holdout_beats_champion": holdout_ok,
-        "gate_5_portal_metadata_le_140": meta_ok,
+        "artifact_sha_matches_card": identity_ok,
+        "pinned_owner_mirror_template": template_ok,
+        "local_grid_and_whole_array_range": format_ok,
+        "literal_registered_lattice_overlap": witness_ok,
+        "complete_registry_surface_and_final_replayed": False,
+        "all_feature_canaries_independently_replayed": False,
+        "same_evaluator_current_best_paired_holdout_replayed": False,
+        "note_at_most_140_characters": note_ok,
+        "separate_account_quota_selector_verified": False,
     }
-    all_ok = all(gates.values())
+    issues.extend([
+        "complete registry/surface and final-dot replay is not implemented",
+        "feature-canary and current-best paired holdout replays are not attached to this exact artifact",
+        "current-account weekly allowance and separate selector are not verified",
+    ])
     return {
-        "validated_ok_to_download_and_submit": all_ok,
-        "human_intervention_required": False,
-        "verdict": "promote" if all_ok else "negative",
+        "schema": "gems.validator.fail-closed.v2",
         "raster_filename": tif_path.name,
-        "raster_sha256": fmt["sha256"],
+        "raster_sha256": sha,
+        "format_audit": checks,
+        "local_format_valid": format_ok,
+        "literal_lattice_witness": witness,
         "gates": gates,
-        "format_audit": fmt,
+        "validated_ok_to_download_and_submit": False,
+        "ok_to_submit": False,
+        "verdict": "negative",
+        "automated_screen_only": True,
+        "portal_acceptance": "unknown",
+        "reasons": issues,
     }
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tif", type=Path, required=True)
-    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence" / "run_card.json")
-    ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence/run_card.json")
+    ap.add_argument("--out", type=Path)
     args = ap.parse_args()
-
-    res = validate_all_gates(args.tif, args.run_card)
-    txt = json.dumps(res, indent=2)
-    if args.out is not None:
+    result = validate_all_gates(args.tif, args.run_card)
+    text = json.dumps(result, indent=2, allow_nan=False) + "\n"
+    if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(txt + "\n", encoding="utf-8")
-    print(txt)
-    return 0 if res["validated_ok_to_download_and_submit"] else 1
+        args.out.write_text(text, encoding="utf-8")
+    print(text, end="")
+    return 0 if result["ok_to_submit"] else 1
 
 
 if __name__ == "__main__":

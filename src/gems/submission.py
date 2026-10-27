@@ -37,17 +37,18 @@ def write_submission(
     *,
     outside: str = "zero",
 ) -> Path:
-    """Write ``pred_2d`` using the template profile and a portal-safe default.
+    """Write ``pred_2d`` using the template profile; this never authorizes upload.
 
-    The default is an all-finite ``0.0`` exterior because some portal validators
-    inspect every stored cell and reject the template's ``NaN`` outside
-    convention as out of range.  Use ``outside="nan"`` only when producing an
-    explicitly labelled compatibility twin; it is never the recommended upload
-    artifact and must fail the strict whole-array preflight diagnostic.
+    ``outside="zero"`` is the project's strict all-finite local variant; ``nan``
+    preserves a null exterior. Neither local variant is proof of portal acceptance,
+    and the cause of any previous rejection is unknown. The organizer describes
+    null/NaN outside bounds, which need not mean the sample footprint exterior.
     """
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
     out_path = Path(out_path)
+    if out_path.resolve() == Path(template_path).resolve():
+        raise ValueError("output must not overwrite the source template")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(template_path) as t:
         profile = t.profile.copy()
@@ -147,7 +148,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "official_template_grid_and_footprint",
         expected_template,
-        "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "Template must match the documented grid and expected footprint count; owner-mirror provenance is not organizer-authenticated",
     )
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
@@ -168,7 +169,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         add(
             "outside_is_nan_official_text",
             bool(np.isnan(outside).all()),
-            f"{int(np.isnan(outside).sum()):,} of {outside.size:,} outside pixels are NaN",
+            f"{int(np.isnan(outside).sum()):,} of {outside.size:,} outside-footprint pixels are NaN; not proof of official compliance",
             hard=False,
         )
     else:
@@ -192,7 +193,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "variant_strict_whole_array_no_nan_allowed",
         bool(((arr >= 0) & (arr <= 1)).all()),
-        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the owner-mirror template's NaN exterior",
         hard=False,
     )
 
@@ -208,7 +209,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "profile_matches_official_sample",
         bool(same_profile),
-        f"driver/dtype/nodata/size/crs/transform equal to template; compress={prof.get('compress')} (template {t_prof.get('compress')})",
+        f"driver/dtype/nodata/size/crs/transform equal to owner-mirror template; compress={prof.get('compress')} (template {t_prof.get('compress')})",
         hard=False,
     )
     hard_fail = [k for k, v in checks.items() if v["hard_requirement"] and not v["pass"]]
@@ -224,8 +225,10 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
         "submission_authorized": False,
         "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
         "hard_failures": hard_fail,
-        "official_format_compliant": checks["outside_is_nan_official_text"]["pass"]
-        and not hard_fail,
+        # Legacy key kept as explicitly unknown: footprint exterior is not
+        # necessarily the same as "outside bounds" in the official text.
+        "official_format_compliant": None,
+        "portal_acceptance": "unknown; local format checks are not an organizer receipt",
         "in_footprint_positive_pixels": int((inside > 0).sum()),
         "in_footprint_mass": round(float(np.nansum(inside, dtype=np.float64)), 2)
         if inside.size

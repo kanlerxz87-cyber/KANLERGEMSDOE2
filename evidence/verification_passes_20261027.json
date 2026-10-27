@@ -1,0 +1,45 @@
+{
+  "schema": "gems.verification-passes.v1",
+  "review_date_utc": "2026-10-27",
+  "scope": "Code/data/report verification only; no geological experiment, new candidate, portal upload or slot used.",
+  "passes": [
+    {
+      "pass": 1,
+      "purpose": "Implementation and direct preflight",
+      "checks": [
+        "Restored owner-mirror inputs with manifest SHA-256 verification and prepared the shared 30-channel feature matrix; no model fitted.",
+        "Independently recomputed the registered-lattice counting bound and measured the historical TIFF's exact overlap.",
+        "Replaced unsafe promotion defaults with a negative byte-bound run card and validator; ran the first regression suite.",
+        "The initial suite exposed malformed leaderboard-parser test markup and a runner ignoring GEMS_DATA_DIR; both were fixed and the suite rerun."
+      ],
+      "result": "passed after corrections; literal duplicate stop maintained"
+    },
+    {
+      "pass": 2,
+      "purpose": "Adversarial edge cases, reproducibility and report review",
+      "checks": [
+        "Added non-vacuous pre-placement support, literal control inclusion, template-grid alignment and undefined-rank blocking to novelty checks; tested the exact >70% boundary.",
+        "Prevented invalid probability clipping and source-template overwrite; tested unsigned top-K ordering and forged quota/recorded flags.",
+        "Bound prepared-cache reuse to implementation hashes and numerical-library versions; explicitly rebuilt it and reproduced SHA-256 a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8.",
+        "Reopened all nine pinned historical reference rasters and independently reproduced the entire directional matrix (excluding timestamp).",
+        "Archived superseded promotions, unverified receipt labels, historical hidden-truth claims and prior figures; current pages and feeds say do not submit."
+      ],
+      "result": "passed; no new scientific score or registry-wide pass claimed"
+    },
+    {
+      "pass": 3,
+      "purpose": "Final clean-data, exact-file and deployment-readiness checks",
+      "checks": [
+        "23 tests passed with GEMS_DATA_DIR pointing to an empty directory; local link, TIFF/ZIP, metric, preflight, validator, selector, cache and leaderboard failure tests included.",
+        "All 26 locally restored files matched the manifest hashes; these verify owner-mirror consistency, not organizer provenance.",
+        "Reopened the historical HTCADS TIFF and reproduced the stored validator receipt exactly; format passed locally, literal lattice overlap was 37642/37654, and the CLI correctly returned nonzero for no-submit.",
+        "Local HTTP preview returned 200 for the report, run status, leaderboard snapshot, proof and research memo under an external-style Host header.",
+        "A direct leaderboard refresh was blocked by sandbox network restrictions and produced unavailable with the previous value explicitly dated, not a false fresh score. GitHub Actions scheduling/deployment remains conditional on repository Pages settings and permissions."
+      ],
+      "result": "passed with stated external-network and deployment limitations"
+    }
+  ],
+  "submission_verdict": "negative",
+  "new_raster_generated": false,
+  "slots_spent": 0
+}

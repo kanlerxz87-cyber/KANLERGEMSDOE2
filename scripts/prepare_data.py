@@ -14,6 +14,7 @@ from pathlib import Path
 
 import numpy as np
 import rasterio
+import scipy
 from scipy.ndimage import gaussian_filter
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +50,18 @@ BASE_BANDS = (
 LIDAR_BANDS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)  # strike converted to circular encoding below.
 
 
+def pipeline_signature() -> dict:
+    """Bind cache reuse to implementation bytes and numerical-library versions."""
+    files = (
+        Path(__file__), ROOT / "src/gems/arcs.py", ROOT / "src/gems/geofeatures.py",
+        ROOT / "src/gems/footprint.py",
+    )
+    return {
+        "code_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in files},
+        "versions": {"numpy": np.__version__, "scipy": scipy.__version__, "rasterio": rasterio.__version__},
+    }
+
+
 def verify_cached_preparation(dest, meta_path, input_paths, expected_shape, expected_names):
     """Fail closed on stale bytes, inputs, or layout instead of trusting cache presence."""
     metadata = json.loads(Path(meta_path).read_text())
@@ -61,6 +74,8 @@ def verify_cached_preparation(dest, meta_path, input_paths, expected_shape, expe
     expected_inputs = {_input_key(p): sha256_file(p) for p in input_paths}
     if metadata.get("inputs") != expected_inputs:
         raise ValueError("Prepared cache inputs changed; explicit --force required")
+    if metadata.get("pipeline_signature") != pipeline_signature():
+        raise ValueError("Prepared cache implementation or library versions changed; explicit --force required")
     arr = np.load(dest, mmap_mode="r", allow_pickle=False)
     if arr.shape != tuple(expected_shape) or arr.dtype != np.dtype("float32"):
         raise ValueError("Prepared cache array layout does not match metadata")
@@ -79,7 +94,9 @@ def main() -> None:
         raise ValueError("Incomplete prepared cache; explicit --force required")
     fp = footprint.load_footprint()
     idx = np.flatnonzero(fp.ravel())
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    # restore_data.py writes the pinned template directly into GEMS_DATA_DIR.
+    # Do not require an undocumented data/bridge copy.
+    template = paths.TEMPLATE_PATH
     source = paths.DATA_DIR / "training_features.tif"
     lidar = paths.DATA_DIR / "external/lidar_scarp_features_u8.tif"
     with rasterio.open(template) as t, rasterio.open(source) as s, rasterio.open(lidar) as lidar_ds:
@@ -171,6 +188,7 @@ def main() -> None:
         "arc_radii_px": list(arcs.RADII_PX),
         "sha256": sha256_file(dest),
         "inputs": {_input_key(p): sha256_file(p) for p in (template, source, lidar)},
+        "pipeline_signature": pipeline_signature(),
         "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities.",
     }
     meta_path.write_text(json.dumps(metadata, indent=2) + "\n")

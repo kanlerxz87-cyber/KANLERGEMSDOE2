@@ -43,9 +43,22 @@
   ],
   "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
   "inputs": {
-    "data/bridge/sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "data/sample_submission.tif": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
     "data/training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
     "data/external/lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
+  },
+  "pipeline_signature": {
+    "code_sha256": {
+      "scripts/prepare_data.py": "7b170bc3bc178e6d70ccb5b71fc613fe427bc1d2d83d63c3d11ff609526faafc",
+      "src/gems/arcs.py": "6fa7289e4e926ae21f346b873a6b043a1bf7f276a71aaed8b1f1853bbf127ca6",
+      "src/gems/geofeatures.py": "a7f71f0434b4edb63d81d32b34287a64fbc5ebd2bf771291cad362ceb5cf53c7",
+      "src/gems/footprint.py": "2e09d625b754104c72a0cf92e70ed6c387bcfb7a5824b4126f1cc2b6880a361a"
+    },
+    "versions": {
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "rasterio": "1.4.4"
+    }
   },
   "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities."
 }

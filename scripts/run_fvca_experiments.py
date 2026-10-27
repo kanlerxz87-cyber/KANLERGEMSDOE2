@@ -18,6 +18,7 @@ import gc
 import hashlib
 import json
 import math
+import os
 import resource
 import sys
 import time
@@ -43,7 +44,7 @@ from gems.submodular_celf import (  # noqa: E402
 )
 from gems32 import holdout as hr_holdout  # noqa: E402
 
-DATA = ROOT / "data"
+DATA = Path(os.environ.get("GEMS_DATA_DIR", ROOT / "data"))
 CACHE = ROOT / ".cache"
 EVID = ROOT / "evidence"
 FULL_BUDGET_DOTS = 38_500
@@ -446,6 +447,13 @@ def project_lli_s3(pred_binary: np.ndarray, foot: np.ndarray, labels: np.ndarray
 
 
 def main() -> int:
+    # The historical run exempted a registered calibration lattice and placed
+    # candidate dots before its surface gate. Never replay that ordering.
+    from gems.preflight import require_safe_legacy_runner
+    try:
+        require_safe_legacy_runner(DATA, ROOT, FULL_BUDGET_DOTS)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
     t0 = time.time()
     EVID.mkdir(parents=True, exist_ok=True)
     meta = json.loads((CACHE / "fvca_stack_meta.json").read_text())

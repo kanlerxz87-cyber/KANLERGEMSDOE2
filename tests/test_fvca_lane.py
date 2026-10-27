@@ -26,7 +26,7 @@ def _sha256(path: Path) -> str:
 def test_fvca_geotiff_and_zip_format_and_negative_verdict() -> None:
     card = json.loads((ROOT / "evidence" / "fvca_run_card.json").read_text(encoding="utf-8"))
     docs_card = json.loads((ROOT / "docs" / "downloads" / "fvca_run_card.json").read_text(encoding="utf-8"))
-    assert card == docs_card
+    assert docs_card["status"] == "superseded" and docs_card["ok_to_submit"] is False
     assert card["verdict"] == "negative"
     assert card["ok_to_submit"] is False
     assert card["ok_to_download_and_submit"] is False
@@ -59,14 +59,16 @@ def test_fvca_geotiff_and_zip_format_and_negative_verdict() -> None:
         assert hashlib.sha256(zf.read(tif_path.name)).hexdigest() == card["raster_sha256"]
 
 
-def test_fvca_canaries_and_cross_lane_72raster_audit() -> None:
+def test_historical_fvca_records_are_subset_diagnostics_not_current_passes() -> None:
     canaries = json.loads((ROOT / "evidence" / "fvca_canaries.json").read_text(encoding="utf-8"))
     assert canaries["n_features"] == 60
     assert canaries["passed"] is True
     assert canaries["max_feature_alone_auc"] <= 0.90
     assert all(not v["leakage_suspected"] for v in canaries["features"].values())
 
-    cross = json.loads((ROOT / "evidence" / "cross_lane_72raster_audit.json").read_text(encoding="utf-8"))
+    marker = json.loads((ROOT / "evidence" / "cross_lane_72raster_audit.json").read_text())
+    assert marker["status"] == "superseded" and marker["ok_to_submit"] is False
+    cross = json.loads((ROOT / marker["archive"]).read_text(encoding="utf-8"))
     assert cross["non_lattice_detector_rasters_checked"] == 71
     lanes = cross["lanes"]
     assert lanes["HTCADS-DualRegime-EXP-2"]["passes_72_detector_registry_70pct_gate"] is True

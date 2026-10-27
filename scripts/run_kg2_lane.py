@@ -13,8 +13,8 @@ Follows knowledge/01_preregistered_hypotheses_kg2_20261026.md and the Parallel-R
   4. Checks pre-placement surface & post-placement dot uniqueness against all 360 unique
      GeoTIFFs across all 9 focus sites + registry (halt if |rho| > 0.90 or competing 3-px
      overlap > 0.70).
-  5. Emits portal-safe -zeros.tif via shared submission_writer.py + single-TIFF .zip and
-     produces the JSON Run Card. Never contacts DrivenData or spends a weekly slot automatically.
+  5. Historical output is a locally checked -zeros.tif and ZIP, not proof of portal acceptance.
+     The legacy execution path is blocked before fit/placement; verification is research only.
 """
 
 from __future__ import annotations
@@ -69,6 +69,7 @@ CANARY_JSON = ROOT / "evidence/kg2_canary_20261026.json"
 HOLDOUT_JSON = ROOT / "evidence/kg2_holdout_20261026.json"
 EXPERIMENT_JSON = ROOT / "evidence/kg2_experiment_20261026.json"
 RUN_CARD_JSON = ROOT / "evidence/kg2_run_card_20261026.json"
+ARCHIVED_RUN_CARD_JSON = ROOT / "evidence/archive/kg2_mghv_root_card_20261026.json"
 ROOT_RUN_CARD_JSON = ROOT / "run_card.json"
 DOCS_RUN_CARD_JSON = ROOT / "docs/data/run_card.json"
 
@@ -99,10 +100,10 @@ def load_all_stacks() -> tuple[
 ]:
     fp = footprint.load_footprint()
     fp_ids = np.flatnonzero(fp.ravel())
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    template = paths.TEMPLATE_PATH
     with rasterio.open(template) as t_ds:
         transform = t_ds.transform
-    with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as l_ds:
+    with rasterio.open(paths.LABELS_PATH) as l_ds:
         catalogue = (l_ds.read(1) > 0) & fp
 
     prep_meta = json.loads((paths.DATA_DIR / "prepared/features.json").read_text())
@@ -164,7 +165,16 @@ def load_nuisance(fp_ids: np.ndarray) -> np.ndarray:
     return nuis
 
 
+def _stop_unsafe_legacy_lane() -> None:
+    from gems.preflight import require_safe_legacy_runner
+    try:
+        require_safe_legacy_runner(paths.DATA_DIR, ROOT, FULL_DOT_BUDGET)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
+
+
 def run_stage_features_and_canary() -> dict[str, Any]:
+    _stop_unsafe_legacy_lane()
     t0 = time.monotonic()
     print("[Stage 1] Building/verifying 78-channel feature stack + confounds...", flush=True)
     (
@@ -253,6 +263,7 @@ def run_stage_features_and_canary() -> dict[str, Any]:
 
 
 def run_stage_holdout_experiments(cache_dir: Path) -> dict[str, Any]:
+    _stop_unsafe_legacy_lane()
     t0 = time.monotonic()
     if not CANARY_JSON.exists():
         run_stage_features_and_canary()
@@ -676,6 +687,7 @@ def run_stage_emit_and_audit(
     registry_local_path: Path,
     arm_override: str | None = None,
 ) -> dict[str, Any]:
+    _stop_unsafe_legacy_lane()
     t0 = time.monotonic()
     hold = json.loads(HOLDOUT_JSON.read_text())
     canary = json.loads(CANARY_JSON.read_text())
@@ -1071,14 +1083,11 @@ def run_stage_emit_and_audit(
 
 
 def verify_recorded() -> dict[str, Any]:
-    for p in (CANARY_JSON, HOLDOUT_JSON, RUN_CARD_JSON, ROOT_RUN_CARD_JSON, DOCS_RUN_CARD_JSON):
+    """Check archived bytes/receipts only, never re-authorize a historical run."""
+    for p in (CANARY_JSON, HOLDOUT_JSON, ARCHIVED_RUN_CARD_JSON):
         if not p.exists():
             raise SystemExit(f"Missing recorded KG2 artifact: {p}")
-    c1 = json.loads(RUN_CARD_JSON.read_text())
-    c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
-    c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+    c1 = json.loads(ARCHIVED_RUN_CARD_JSON.read_text())
 
     tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
     zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]
@@ -1098,6 +1107,10 @@ def verify_recorded() -> dict[str, Any]:
         "submission_filename": c1["submission_filename"],
         "raster_sha256": c1["raster_sha256"],
         "holdout_dti": c1["holdout_dti"]["dti"],
+        "holdout_label": "HOLDOUT-DTI, historical and not replayed",
+        "evaluator_version": c1["holdout_dti"]["evaluator_version"],
+        "withheld_positive_pixels": c1["holdout_dti"]["withheld_positive_pixels"],
+        "holdout_replayed": False,
         "ci95": c1["holdout_dti"]["ci95"],
         "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][
             "post_placement_competing_max_3px_overlap"
@@ -1105,9 +1118,11 @@ def verify_recorded() -> dict[str, Any]:
         "max_surface_spearman": c1["correlation_overlap_vs_registry"][
             "pre_placement_surface_max_abs_spearman"
         ],
-        "ok_to_download": c1["ok_to_download"],
-        "ok_to_submit": c1["ok_to_submit"],
-        "verdict": c1["verdict"],
+        "ok_to_download": True,
+        "ok_to_submit": False,
+        "verdict": "negative",
+        "historical_recorded_verdict": c1["verdict"],
+        "scope": "Archive byte/receipt consistency only; historical promotion withdrawn under the literal all-entry registry rule.",
     }
 
 

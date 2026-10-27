@@ -1,19 +1,15 @@
-"""DrivenData GeoTIFF Submission Builder & Automated 13-Check Range-[0, 1] Validator.
+"""Legacy bundle adapter and local GeoTIFF checks.
 
-Permanently prevents the DrivenData portal error `"Predicted values must be in range [0, 1]"` by:
-1. Sanitizing all float32 `-3.4028235e+38` sentinels, Infs, and NaNs inside the 5,167,373-pixel footprint.
-2. Enforcing `np.clip(pred, 0.0, 1.0)` across all 5,167,373 in-footprint pixels and `pred[labels] = 0.0`.
-3. Encoding outside-footprint cells as `0.0` (`nodata=None`, `-zeros.tif`) so all 12,279,160 / 12,279,160
-   raster cells satisfy `(arr >= 0.0) & (arr <= 1.0)` with zero NaNs anywhere.
-4. Supporting both binary `{0.0, 1.0}` and continuous `[0.0, 1.0]` predictions cleanly (fixes shared-tool
-   bitwise-and bug `IR-SHARED-SOFT-01`).
+Whole-array [0,1] checks can detect invalid values but cannot establish portal
+acceptance or diagnose an earlier rejected file. The official description also
+mentions null/NaN outside bounds; zero outside is a documented local variant.
+The adapter delegates actual raster writing to the shared strict writer.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
-import zipfile
 from pathlib import Path
 
 import numpy as np
@@ -40,7 +36,11 @@ def audit_geotiff(
     mode: str = "zeros",
     template_tif: Path | None = None,
 ) -> dict:
-    """Strict 13-point DrivenData submission validator audit (zero human intervention required)."""
+    """Run a strict local grid/range audit; this cannot certify portal acceptance."""
+    foot_raw, labels_raw = np.asarray(foot), np.asarray(labels)
+    if not np.isin(foot_raw, (0, 1)).all() or not np.isin(labels_raw, (0, 1)).all():
+        raise ValueError("footprint and labels must be binary masks")
+    foot, labels = foot_raw.astype(bool), labels_raw.astype(bool)
     if mode not in {"zeros", "nan"}:
         raise ValueError("mode must be zeros or nan")
     expected_crs = rasterio.crs.CRS.from_epsg(32611)
@@ -49,6 +49,8 @@ def audit_geotiff(
     if template_tif is not None:
         with rasterio.open(template_tif) as tpl:
             expected_crs, expected_shape, expected_transform = tpl.crs, tpl.shape, tpl.transform
+            if tpl.count != 1 or not np.array_equal(np.isfinite(tpl.read(1)), foot):
+                raise ValueError("footprint does not match the template")
     with rasterio.open(tif_path) as src:
         grid_match = bool(
             src.crs == expected_crs
@@ -100,7 +102,7 @@ def audit_geotiff(
         "single_band": count == 1,
         "dtype_float32": dtypes[0] == "float32",
         "dimensions_3730x3292": (height == EXPECTED_HEIGHT and width == EXPECTED_WIDTH),
-        "crs_epsg_32611": "32611" in crs_str,
+        "crs_epsg_32611": expected_crs == rasterio.crs.CRS.from_epsg(32611),
         "in_footprint_all_finite": in_foot_finite == EXPECTED_FOOTPRINT_PIXELS,
         "in_footprint_zero_nan": in_foot_nan == 0,
         "in_footprint_zero_inf": in_foot_inf == 0,
@@ -140,6 +142,8 @@ def audit_geotiff(
         "values_in_0_1": full_grid_in_01,
         "checks": checks,
         "all_checks_passed": all_passed,
+        "portal_acceptance": "unknown",
+        "submission_authorized": False,
     }
 
 
@@ -154,42 +158,32 @@ def write_submission_bundle(
     candidate_meta: dict,
     prefix: str = "kanlergems2",
 ) -> dict:
-    """Write and audit DrivenData-compliant `-zeros.tif` + single-GeoTIFF `.zip` + receipt."""
-    out_dir.mkdir(parents=True, exist_ok=True)
-    raw = np.asarray(mask_or_probs, dtype=np.float32)
-    clean_vals = np.where(foot & ~labels & np.isfinite(raw), np.clip(raw, 0.0, 1.0), 0.0).astype(np.float32)
-    digest8 = hashlib.sha256(clean_vals.tobytes()).hexdigest()[:8]
-
-    zeros_name = f"{prefix}-{slug}-{timestamp_tag}-{digest8}-zeros.tif"
-    zeros_path = out_dir / zeros_name
-
-    with rasterio.open(template_tif) as tpl:
-        profile_zeros = tpl.profile.copy()
-
-    profile_zeros.update(
-        driver="GTiff",
-        dtype="float32",
-        count=1,
-        compress="deflate",
-        predictor=3,
-        zlevel=9,
-        tiled=True,
-        blockxsize=256,
-        blockysize=256,
-        nodata=None,
-    )
-    with rasterio.open(zeros_path, "w", **profile_zeros) as dst:
-        dst.write(clean_vals, 1)
-
-    audit_zeros = audit_geotiff(zeros_path, foot, labels, mode="zeros", template_tif=template_tif)
-
-    zip_path = zeros_path.with_suffix(".zip")
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-        zf.write(zeros_path, arcname=zeros_path.name)
+    """Write a locally checked `-zeros.tif`, single-file ZIP and receipt; portal acceptance is unknown."""
+    from gems.submission import write_submission, zip_single
 
     note = str(candidate_meta.get("submission_note", "")).strip()
     if len(note) > 140:
         raise ValueError(f"Submission note exceeds 140 characters ({len(note)} chars)")
+    raw, raw_foot, raw_labels = np.asarray(mask_or_probs), np.asarray(foot), np.asarray(labels)
+    if not np.isin(raw_foot, (0, 1)).all() or not np.isin(raw_labels, (0, 1)).all():
+        raise ValueError("footprint and labels must be binary masks")
+    foot, labels = raw_foot.astype(bool), raw_labels.astype(bool)
+    if raw.shape != foot.shape or labels.shape != foot.shape or not foot.any():
+        raise ValueError("aligned, nonempty prediction/footprint/label grids required")
+    if not np.isfinite(raw[foot]).all() or np.any((raw[foot] < 0) | (raw[foot] > 1)):
+        raise ValueError("invalid in-footprint predictions: sanitize explicitly before writing")
+    with rasterio.open(template_tif) as template:
+        if template.count != 1 or not np.array_equal(np.isfinite(template.read(1)), foot):
+            raise ValueError("footprint does not match the template")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    clean_vals = np.where(foot & ~labels, raw, 0.0).astype(np.float32)
+    digest8 = hashlib.sha256(clean_vals.tobytes()).hexdigest()[:8]
+
+    zeros_name = f"{prefix}-{slug}-{timestamp_tag}-{digest8}-zeros.tif"
+    zeros_path = out_dir / zeros_name
+    write_submission(clean_vals, template_tif, zeros_path, outside="zero")
+    audit_zeros = audit_geotiff(zeros_path, foot, labels, mode="zeros", template_tif=template_tif)
+    zip_path = zip_single(zeros_path)
 
     bundle = {
         "candidate_id": candidate_meta.get("candidate_id", slug),

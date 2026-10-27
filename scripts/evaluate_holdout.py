@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""One preregistered H24-MTR1 experiment; shared hide-and-recover + writer.
+"""Shared historical holdout evaluator; legacy execution currently blocked.
 
 No upload, no score projections, no private metric, no hyperparameter search.
-Run cache_priority_registry.py and prepare_data.py first. A duplicate or canary
-failure halts before packaging. A negative scientific result is still published.
+The current HTCADS-K2 preregistration blocks historical MTR1/GVC1/KG2 runs.
+Recorded verification does not authorize a weekly slot.
 """
 
 from __future__ import annotations
@@ -76,83 +76,25 @@ def main():
         print(json.dumps(verify_recorded(), indent=2, allow_nan=False))
         return
     if args.run_kg2:
-        from run_kg2_lane import (
-            run_stage_emit_and_audit,
-            run_stage_features_and_canary,
-            run_stage_holdout_experiments,
-        )
-
-        run_stage_features_and_canary()
-        run_stage_holdout_experiments(args.work_dir / "kg2_stage_cache")
-        card = run_stage_emit_and_audit(
-            args.work_dir / "kg2_stage_cache",
-            args.work_dir / "comparison_registry_local.json",
-        )
-        print(
-            json.dumps(
-                {
-                    "submission_filename": card["submission_filename"],
-                    "holdout_dti": card["holdout_dti"]["dti"],
-                    "ci95": card["holdout_dti"]["ci95"],
-                    "ok_to_download": card["ok_to_download"],
-                    "ok_to_submit": card["ok_to_submit"],
-                    "verdict": card["verdict"],
-                },
-                indent=2,
-                allow_nan=False,
-            )
-        )
-        return
-    if args.verify_tnr1:
-        from run_tnr1_lane import verify_recorded
-
-        print(
-            json.dumps(
-                {"verified": True, "experiment_rerun": False, "run_card": verify_recorded()},
-                indent=2,
-                allow_nan=False,
-            )
-        )
-        return
-    if args.verify_recorded:
-        from verify_mtr_receipt import verify
-
-        print(json.dumps(verify(), indent=2, allow_nan=False))
-        return
-    if args.verify_gvc1:
-        from run_gvc1_pipeline import verify_gvc1
-
-        print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
-        return
+        raise SystemExit("BLOCKED: KG2 is not the registered HTCADS-K2 lane; no experiment or placement was run.")
+    if args.verify_tnr1 or args.verify_recorded or args.verify_gvc1:
+        raise SystemExit("BLOCKED: the requested historical verifier is not present in this checkout; no result was verified.")
     if args.run_gvc1:
-        from run_gvc1_pipeline import run_gvc1
-
-        summary = run_gvc1(work_dir=args.work_dir)
-        print(
-            json.dumps(
-                {
-                    "submission_name": summary["submission_name"],
-                    "holdout_dti": summary["holdout"]["dti"],
-                    "ci95": summary["holdout"]["ci95"]["interval"],
-                    "b0_dti": summary["baselines_same_evaluator"]["B0_oof_h24_ridge_dti"],
-                    "b1_dti": summary["baselines_same_evaluator"]["B1_oof_base_submod_dti"],
-                    "all_technical_gates_passed": summary["all_technical_gates_passed"],
-                    "ok_to_download": summary["ok_to_download"],
-                    "ok_to_submit": summary["ok_to_submit"],
-                    "verdict": summary["verdict"],
-                },
-                indent=2,
-                allow_nan=False,
-            )
-        )
-        return
+        raise SystemExit("BLOCKED: GVC1 is not the registered HTCADS-K2 lane; no experiment or placement was run.")
+    # Preserve the shared historical evaluator, but never run this legacy
+    # MTR1 lane under the current preregistration or before a literal preflight.
+    from gems.preflight import require_safe_legacy_runner
+    try:
+        require_safe_legacy_runner(paths.DATA_DIR, ROOT, 37654)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
     if RESULT.exists():
         raise SystemExit(
             "Experiment already recorded and stopped. No implicit rerun/tuning; use --verify-recorded."
         )
     started = time.monotonic()
     fp = footprint.load_footprint()
-    template = paths.DATA_DIR / "bridge/sample_submission.tif"
+    template = paths.TEMPLATE_PATH
     meta = json.loads((paths.DATA_DIR / "prepared/features.json").read_text())
     stack_path = paths.DATA_DIR / "prepared/features.npy"
     if sha256_file(stack_path) != meta["sha256"]:
@@ -170,7 +112,7 @@ def main():
         if (s.shape, s.crs, s.transform) != (t.shape, t.crs, t.transform):
             raise SystemExit("Ratio grid mismatch")
         thk = s.read(1).astype(np.float32)
-    with rasterio.open(paths.DATA_DIR / "bridge/labels.tif") as s:
+    with rasterio.open(paths.LABELS_PATH) as s:
         catalogue = (s.read(1) > 0) & fp
     registry = json.loads((ROOT / "registry/priority_rasters.json").read_text())
     surfaces, support = magnetic_trough.build_surfaces(rtp, thk, fp)
@@ -190,7 +132,7 @@ def main():
         "input_provenance": "hash-pinned owner mirrors; not independently organizer-authenticated",
         "inputs": {
             str(p.relative_to(paths.DATA_DIR)): sha256_file(p)
-            for p in (stack_path, ratio_path, template, paths.DATA_DIR / "bridge/labels.tif")
+            for p in (stack_path, ratio_path, template, paths.LABELS_PATH)
         },
         "code_sha256": {
             str(p.relative_to(ROOT)): sha256_file(p)
@@ -249,7 +191,10 @@ def main():
     print("Canaries passed", flush=True)
     # This runs BEFORE the first dot is placed. No registry values modify scores.
     report["surface_novelty"] = novelty.compare_registry(
-        surfaces["candidate"], fp, registry["unique_rasters"], ROOT
+        surfaces["candidate"], fp, registry["unique_rasters"], ROOT,
+        surface_support=novelty.topk_surface_support(
+            surfaces["candidate"], support & ~catalogue, round(BUDGET_FRACTION * fp.sum())
+        ), template_path=template,
     )
     save(report, RESULT)
     if not report["surface_novelty"]["passed"]:
@@ -295,7 +240,8 @@ def main():
     if not final.any():
         raise SystemExit("No positive evidence; refusing an empty submission")
     report["final_novelty"] = novelty.compare_registry(
-        final.astype(np.float32), fp, registry["unique_rasters"], ROOT, dots=final
+        final.astype(np.float32), fp, registry["unique_rasters"], ROOT, dots=final,
+        template_path=template,
     )
     if not report["final_novelty"]["passed"]:
         report.update(

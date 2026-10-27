@@ -1,3 +1,5 @@
+> **Current factual correction, 2026-10-27:** The preserved brief below contains user-reported values and older targets, not verified file-linked organizer receipts. The literal lattice proof requires **negative / DO NOT SUBMIT**, before fitting or placement. See `README.md`, `EXECUTIVE_SUMMARY.md`, and `evidence/run_card.json`. The original protocol and user wording below remain preserved.
+
 # Standing Project Brief & Parallel-Run Protocol (`KANLERGEMSDOE2`)
 
 > **Epistemic Integrity Note (Zero Hallucinations):** This file preserves the complete standing project brief, 9-site / 92-site audit mandate, Parallel-Run Protocol (Rules 1–6), and Arena Core Values (**Maximize P(Win)** and **Own the Outcome**) governing `kanlerxz87-cyber/KANLERGEMSDOE2`. Read this brief together with `README.md` at the start of every session before writing code or running experiments.

@@ -71,6 +71,8 @@ def _literal_novelty_passed(run_card: dict[str, Any]) -> bool:
         return (
             surface.get("literal_all_entries_passed") is True
             and final.get("literal_all_entries_passed") is True
+            and isinstance(surface.get("literal_duplicate_rows"), list)
+            and not surface["literal_duplicate_rows"]
             and isinstance(final.get("literal_duplicate_rows"), list)
             and not final["literal_duplicate_rows"]
         )

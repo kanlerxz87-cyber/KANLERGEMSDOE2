@@ -1,66 +1,8 @@
 {
-  "schema": "kanlergemsdoe2.cross_lane_72raster_audit.v1",
-  "generated_utc": "2026-10-26T23:58:00Z",
-  "auditor_branch": "arena/e7db879b-kanlergemsdoe2",
-  "non_lattice_detector_rasters_checked": 71,
-  "calibration_lattice_probes_excluded_from_detector_cap": [
-    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
-  ],
-  "lanes": {
-    "HTCADS-DualRegime-EXP-2": {
-      "file": "docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
-      "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
-      "positive_dots": 37654,
-      "verdict": "promote",
-      "passes_72_detector_registry_70pct_gate": true,
-      "max_3px_detector_overlap": 0.64912,
-      "top_4_detector_overlaps": [
-        {"file": "8GEMSDOE_Hedge-v2_submission.tif", "peer_dots": 227507, "overlap_3px": 0.64912},
-        {"file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif", "peer_dots": 174232, "overlap_3px": 0.61826},
-        {"file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif", "peer_dots": 69281, "overlap_3px": 0.57750},
-        {"file": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif", "peer_dots": 123939, "overlap_3px": 0.55787}
-      ]
-    },
-    "KG2-MGHV-EXP-1": {
-      "file": "docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
-      "sha256": "cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e",
-      "positive_dots": 37654,
-      "verdict": "promote",
-      "passes_72_detector_registry_70pct_gate": true,
-      "max_3px_detector_overlap": 0.62679,
-      "top_4_detector_overlaps": [
-        {"file": "8GEMSDOE_Hedge-v2_submission.tif", "peer_dots": 227507, "overlap_3px": 0.62679},
-        {"file": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif", "peer_dots": 123939, "overlap_3px": 0.61845},
-        {"file": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif", "peer_dots": 123779, "overlap_3px": 0.61040},
-        {"file": "gemsdoe-ens12-adopted-7f00890a.tif", "peer_dots": 172974, "overlap_3px": 0.60511}
-      ]
-    },
-    "KG2-FVCA-SUBMOD-EXP-2": {
-      "file": "docs/downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif",
-      "sha256": "29128ad7a9290d2afb008e944ea20171d2224ba0b77ec81aadc2ce416a13491f",
-      "positive_dots": 38500,
-      "verdict": "negative",
-      "ok_to_submit": false,
-      "passes_focus9_70pct_gate": true,
-      "max_focus9_3px_overlap": 0.44738,
-      "overlap_3px_vs_g32_champion": 0.33364,
-      "passes_72_detector_registry_70pct_gate": false,
-      "max_3px_detector_overlap": 0.80681,
-      "stop_reason": "IR-KG2-SCARP-CONVERGENCE: unweighted supervised LightGBM+ExtraTrees on y=labels.tif converges onto exposed range-front scarps (80.68% within 3 px of 10GEMSDOE gems10-h25-ctx-ridge; 75.56% vs gems10-h28; 73.37% vs GEMSDOE32 H45). Stopped at 3/3 experiments without Perturb-to-Evade.",
-      "top_4_detector_overlaps": [
-        {"file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif", "peer_dots": 174232, "overlap_3px": 0.80681},
-        {"file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif", "peer_dots": 69281, "overlap_3px": 0.75564},
-        {"file": "gemsdoe32-h45-kernelspacing-37654dots-20261026T163401Z-2fe5944c-zeros.tif", "peer_dots": 37654, "overlap_3px": 0.73374},
-        {"file": "8GEMSDOE_Hedge-v2_submission.tif", "peer_dots": 227507, "overlap_3px": 0.69914}
-      ]
-    }
-  },
-  "pairwise_cross_lane_3px_overlap": {
-    "HTCADS_in_MGHV_3px": 0.41751,
-    "HTCADS_in_FVCA_3px": 0.50465,
-    "MGHV_in_HTCADS_3px": 0.29041,
-    "MGHV_in_FVCA_3px": 0.27490,
-    "FVCA_in_HTCADS_3px": 0.41639,
-    "FVCA_in_MGHV_3px": 0.32156
-  }
+  "status": "superseded",
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "warning": "Historical promotion/subset checks omitted a registered lattice; the archived results are not independently replayed or submission authority.",
+  "archive": "evidence/archive/cross_lane_72raster_audit.json",
+  "current_run_card": "evidence/run_card.json"
 }

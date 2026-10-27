@@ -6,14 +6,17 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from gems32.paths import data_dir  # noqa: E402
+
+
+def data_dir() -> Path:
+    """Match prepare_data.py: default to data/, or an explicit GEMS_DATA_DIR."""
+    return Path(os.environ.get("GEMS_DATA_DIR", ROOT / "data")).expanduser()
 
 
 def sha256_file(p: Path) -> str:
@@ -42,14 +45,15 @@ def fetch(repo: str, ref: str, path: str, dest: Path) -> None:
                     check=True,
                 )
         else:
-            import requests
+            # Public, immutable contents API; no extra requests dependency and
+            # no raw.githubusercontent.com dependency in restricted sandboxes.
+            from urllib.parse import quote
+            from urllib.request import Request, urlopen
 
-            url = f"https://raw.githubusercontent.com/{repo}/{ref}/{path}"
-            with requests.get(url, stream=True, timeout=120) as r:
-                r.raise_for_status()
-                with tmp.open("wb") as out:
-                    for chunk in r.iter_content(1 << 20):
-                        out.write(chunk)
+            url = f"https://api.github.com/repos/{repo}/contents/{quote(path)}?ref={quote(ref)}"
+            request = Request(url, headers={"Accept": "application/vnd.github.raw", "User-Agent": "gems-data-restorer"})
+            with urlopen(request, timeout=120) as source, tmp.open("wb") as out:
+                shutil.copyfileobj(source, out, 1 << 20)
         tmp.replace(dest)
     finally:
         tmp.unlink(missing_ok=True)
@@ -121,9 +125,11 @@ def main() -> None:
         storage_root = str(root)
     receipt = {
         "schema_version": 1,
+        "group_requested": args.group,
         "verified_files_count": len(results),
         "storage_root": storage_root,
         "files": results,
+        "scope": "This invocation only; mirror hashes are not organizer authentication.",
     }
     (ROOT / "data").mkdir(parents=True, exist_ok=True)
     (ROOT / "data" / "restore_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")

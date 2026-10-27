@@ -1,64 +1,126 @@
 {
-  "candidate_id": "EXP-2",
-  "slug": "htcads-exp-2-37654dots",
-  "content_digest8": "11a2f251",
-  "description": "Adds H-K2 FFT Updip Dip-Projected Gravity Migration + coverage-neutral zero-mean 1 m LiDAR Contour-Orthogonal Scarp Specialist + 300 m CELF (isotropic B=2.0 collar, 37,654 dots).",
-  "submission_name": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros",
-  "submission_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
-  "submission_note_length": 110,
-  "zeros_tif": {
-    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
-    "size_bytes": 204099,
+  "schema": "gems.validator.fail-closed.v2",
+  "raster_filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+  "raster_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+  "format_audit": {
+    "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "bytes": 204099,
     "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
-    "mode": "zeros",
-    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
-    "crs": "EPSG:32611",
-    "transform": [
-      100.0,
-      0.0,
-      243350.0,
-      0.0,
-      -100.0,
-      4508550.0
-    ],
-    "shape": [
-      3730,
-      3292
-    ],
-    "dtype": "float32",
-    "nodata": null,
-    "nodata_repr": "None",
-    "emitted_positive_pixels": 37654,
-    "emitted_mass": 37654.0,
-    "footprint_fraction": 0.007287,
-    "on_catalogue_positive_pixels": 0,
-    "in_footprint_finite_pixels": 5167373,
-    "nan_inside_footprint": 0,
-    "full_grid_nan_pixels": 0,
-    "in_footprint_min": 0.0,
-    "in_footprint_max": 1.0,
-    "full_grid_finite_pixels": 12279160,
-    "values_in_0_1": true,
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": null,
+    "portal_acceptance": "unknown; local format checks are not an organizer receipt",
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
     "checks": {
-      "exact_reference_grid_match": true,
-      "single_band": true,
-      "dtype_float32": true,
-      "dimensions_3730x3292": true,
-      "crs_epsg_32611": true,
-      "in_footprint_all_finite": true,
-      "in_footprint_zero_nan": true,
-      "in_footprint_zero_inf": true,
-      "in_footprint_zero_sentinel": true,
-      "in_footprint_range_0_1": true,
-      "outside_footprint_compliant": true,
-      "zero_on_catalogue_leakage": true,
-      "validator_range_0_1_guaranteed": true
-    },
-    "all_checks_passed": true
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must match the documented grid and expected footprint count; owner-mirror provenance is not organizer-authenticated",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside-footprint pixels are NaN; not proof of official compliance",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the owner-mirror template's NaN exterior",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to owner-mirror template; compress=deflate (template lzw)",
+        "hard_requirement": false
+      }
+    }
   },
-  "zeros_zip": {
-    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
-    "size_bytes": 168683,
-    "sha256": "fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698"
-  }
+  "local_format_valid": true,
+  "literal_lattice_witness": {
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "in_footprint_positive_pixels": 37654,
+    "within_3px_of_witness": 37642,
+    "directional_overlap": 0.9996813087586977,
+    "literal_duplicate": true,
+    "whole_array_finite_in_0_1": true,
+    "forced_minimum_overlap": 0.8234184947150369
+  },
+  "gates": {
+    "artifact_sha_matches_card": true,
+    "pinned_owner_mirror_template": true,
+    "local_grid_and_whole_array_range": true,
+    "literal_registered_lattice_overlap": false,
+    "complete_registry_surface_and_final_replayed": false,
+    "all_feature_canaries_independently_replayed": false,
+    "same_evaluator_current_best_paired_holdout_replayed": false,
+    "note_at_most_140_characters": true,
+    "separate_account_quota_selector_verified": false
+  },
+  "validated_ok_to_download_and_submit": false,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "automated_screen_only": true,
+  "portal_acceptance": "unknown",
+  "reasons": [
+    "literal registry duplicate: more than 70% of candidate dots are within 3 px of the registered lattice",
+    "complete registry/surface and final-dot replay is not implemented",
+    "feature-canary and current-best paired holdout replays are not attached to this exact artifact",
+    "current-account weekly allowance and separate selector are not verified"
+  ]
 }

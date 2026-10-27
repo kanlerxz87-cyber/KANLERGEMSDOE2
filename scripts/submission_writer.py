@@ -26,7 +26,7 @@ def main():
         "--outside",
         choices=("nan", "zero"),
         default="zero",
-        help="exterior encoding; zero is the strict all-finite upload-safe default",
+        help="exterior encoding; zero satisfies this project's strict all-finite local screen (portal acceptance unknown)",
     )
     args = ap.parse_args()
     if args.prediction.suffix == ".npy":

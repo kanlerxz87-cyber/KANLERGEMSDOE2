@@ -226,6 +226,8 @@ def _check_uniqueness(
     max_dots_spearman_peer = ""
     max_asym_3px_detector = -1.0
     max_asym_3px_peer = ""
+    max_asym_3px_all = -1.0
+    max_asym_3px_all_peer = ""
     max_sym_3px_all = -1.0
     max_sym_3px_peer = ""
     calibration_probes_logged = []
@@ -256,6 +258,9 @@ def _check_uniqueness(
             scratch_pad[ry + 3, rx + 3] = False
 
             ov_our_in_reg = float(hit.sum()) / max(n_our, 1)
+            if ov_our_in_reg > max_asym_3px_all:
+                max_asym_3px_all = ov_our_in_reg
+                max_asym_3px_all_peer = rec["name"]
             ov_reg_in_our = float(our_d3[ry, rx].sum()) / max(rec["n_dots"], 1)
             sym_ov = (
                 2.0 * ov_our_in_reg * ov_reg_in_our / (ov_our_in_reg + ov_reg_in_our)
@@ -290,14 +295,22 @@ def _check_uniqueness(
                 })
 
     top_peers.sort(key=lambda d: d["asym_3px_overlap"], reverse=True)
-    passed = bool(
-        max_cont_spearman < 0.90
-        and max_dots_spearman < 0.90
-        and max_asym_3px_detector <= 0.70
-        and max_sym_3px_all <= 0.70
+    # This legacy function is called AFTER placement, so it cannot establish
+    # the mandatory pre-placement top-K overlap check. Fail closed even when
+    # the final-dot literal metrics happen to pass.
+    literal_final_passed = bool(
+        registry and n_our > 0
+        and max_cont_spearman <= 0.90
+        and max_dots_spearman <= 0.90
+        and 0.0 <= max_asym_3px_all <= 0.70
     )
     return {
-        "passed": passed,
+        "passed": False,
+        "literal_final_passed": literal_final_passed,
+        "pre_placement_overlap_checked": False,
+        "stop_reason": "legacy check runs after placement; pre-placement overlap not established",
+        "final_dots_max_all_entry_3px_overlap": round(max_asym_3px_all, 6),
+        "final_dots_closest_all_entry_peer": max_asym_3px_all_peer,
         "unique_rasters_checked": len(registry),
         "pre_placement_surface_max_abs_spearman": round(max_cont_spearman, 6),
         "pre_placement_closest_peer": max_cont_peer,
@@ -315,6 +328,13 @@ def _check_uniqueness(
 def main() -> int:
     t_start = time.time()
     ddir = data_dir()
+    # The old runner placed dots before checking every registry entry and
+    # exempted a registered lattice. Never replay that unsafe order.
+    from gems.preflight import require_safe_legacy_runner
+    try:
+        require_safe_legacy_runner(ddir, ROOT, 37654)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
     wdir = work_dir()
     edir = evidence_dir()
 
@@ -841,7 +861,7 @@ def main() -> int:
             "max_wall_hours_allowed": 2.0,
         },
         "reference_0p2778_benchmark": {
-            "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 ORGANIZER-CONFIRMED)",
+            "name": "GEMSDOE32 h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros (0.2778 owner-reported; no submission receipt verified)",
             "holdout_hide_recover_uncensored_dti": round(ref_hr["pooled_dti"], 6),
             "holdout_hide_recover_ci95": [round(ref_hr["ci95_cluster_bootstrap"][0], 6), round(ref_hr["ci95_cluster_bootstrap"][1], 6)],
             "holdout_sgmc_calibrated_dti": round(ref_sg["sgmc_prevalence_calibrated_dti"], 6),
