@@ -47,6 +47,7 @@ CANDIDATES = {
     "KG2-DSLUP-session2": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
     "KG2-DARP-EXP1-session3-lane": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
     "KG2-HTCADS-session1": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "KG2-HYP1-binary-PR34": "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif",
 }
 
 
