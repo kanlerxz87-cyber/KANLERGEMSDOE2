@@ -57,8 +57,15 @@ def focus_table(rows: list[dict]) -> str:
         score = f'{r["owner_reported_score"]:.4f}'
         overlap = f'{100*r["max_directional_focus_overlap_within_3px"]:.2f}%'
         origin = 'NaN outside' if r['outside_footprint_all_nan'] else ('all-finite' if r['strict_whole_array_finite_0_1'] else 'other encoding')
+        local = DOCS / 'downloads' / name
+        if local.is_file():
+            if hashlib.sha256(local.read_bytes()).hexdigest() != r['sha256']:
+                raise SystemExit(f"Historical download differs from pinned evidence: {name}")
+            link = f'downloads/{name}'
+        else:
+            link = r['pinned_download_url']
         result.append(f'''<tr><td><strong><a href="{esc(r['site_url'])}">{esc(r['site'])} ↗</a></strong><small>{esc(origin)} · <a href="{esc(r['pinned_source_url'])}">pinned source</a></small></td>
-<td class="file"><a href="{esc(r['pinned_download_url'])}">{esc(name)}</a><small>Historical artifact · SHA-256 {esc(r['sha256'][:12])}…</small></td>
+<td class="file"><a href="{esc(link)}">{esc(name)}</a><small>Historical artifact · SHA-256 {esc(r['sha256'][:12])}…</small></td>
 <td><strong>{score}</strong><small>USER/OWNER-REPORTED<br>Receipt not available</small></td>
 <td><strong>No</strong><small>{overlap} within 3 px of {esc(r['nearest_focus_site'])}</small></td><td><span class="pill stop">Do not submit</span><small>Historical; not a new, cleared candidate</small></td></tr>''')
     return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">Historical file</th><th scope="col">Reported score</th><th scope="col">Unique vs. other focus sites?</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
@@ -140,7 +147,7 @@ def main() -> None:
 <section class="section"><div class="callout"><strong>Three-pass review record.</strong><p>Pass 1: restored and hashed inputs, audited bytes, repaired the false-positive gate and rebuilt the site. Pass 2: exercised adversarial and missing-evidence cases. Pass 3: rechecked data, links, generated pages and CI. See <a href="../evidence/current_run_card.json">the current run card</a> and repository tests.</p></div></section>'''
 
     DOCS.mkdir(exist_ok=True)
-    for name, title, content, js in (("index.html","Decision dashboard",home,FEED_SCRIPT),("executive-summary.html","Executive summary",summary,""),("research.html","Research",research,""),("irregularities.html","Open issues",irregular,"")):
+    for name, title, content, js in (("index.html","Decision dashboard",home,FEED_SCRIPT),("executive-summary.html","Executive summary",summary,""),("research.html","Research",research,""),("irregularities.html","Open issues",irregular,""),("submission-table.html","Historical submission comparison",summary,""),("audit-review.html","Open issues",irregular,"")):
         (DOCS / name).write_text(page(title,name,content,js),encoding="utf-8")
     feed = {
         "schema": "gems.current-status.v2", "generated_utc": card["generated_utc"],
@@ -152,7 +159,15 @@ def main() -> None:
     }
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print("Built four fail-closed pages from", audit["generated_utc"])
+    table_data = {
+        "schema": "gems.submission-comparison.v2", "generated_utc": card["generated_utc"],
+        "verdict": "negative", "ok_to_submit": False, "new_raster": None,
+        "leaderboard_estimate": None,
+        "warning": "Historical scores are user/owner reports without receipts; files are research only.",
+        "previous_artifact": prior, "focus_nine": audit["focus_nine"],
+    }
+    (ROOT / "evidence/submission_table_20261027.json").write_text(json.dumps(table_data, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    print("Built six fail-closed pages (including compatibility URLs) from", audit["generated_utc"])
 
 
 if __name__ == "__main__":
