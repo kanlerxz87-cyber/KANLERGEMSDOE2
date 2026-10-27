@@ -716,11 +716,15 @@ def evaluate_hide_and_recover(
             n_emit = int(p_sub.sum())
             mass_emit = float(n_emit)
             if n_t == 0:
-                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": mass_emit, "fn": 0.0, "n_truth": 0, "emitted": n_emit}
+                if n_emit > 0:
+                    py_sub, px_sub = np.nonzero(p_sub)
+                    p_blk = _spatial_block_index(py_sub + r0, px_sub + c0, (h, w), grid_n)
+                    np.add.at(fp_blk, p_blk, 1.0)
+                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": mass_emit, "fn": 0.0, "n_truth": 0, "emitted": n_emit, "mass": mass_emit}
                 continue
             if n_emit == 0:
                 np.add.at(fn_blk, t_blk, 1.0)
-                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": 0.0, "fn": float(n_t), "n_truth": n_t, "emitted": 0}
+                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": 0.0, "fn": float(n_t), "n_truth": n_t, "emitted": 0, "mass": 0.0}
                 continue
             dp_sub = distance_transform_edt(~p_sub)
             t_cred = kernel(dp_sub[cell.truth_coords]).astype(np.float64)
@@ -732,11 +736,15 @@ def evaluate_hide_and_recover(
             n_emit = int(pos_sub.sum())
             mass_emit = float(p_sub_f.sum())
             if n_t == 0:
-                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": mass_emit, "fn": 0.0, "n_truth": 0, "emitted": n_emit}
+                if n_emit > 0:
+                    py_sub, px_sub = np.nonzero(pos_sub)
+                    p_blk = _spatial_block_index(py_sub + r0, px_sub + c0, (h, w), grid_n)
+                    np.add.at(fp_blk, p_blk, p_sub_f[pos_sub])
+                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": mass_emit, "fn": 0.0, "n_truth": 0, "emitted": n_emit, "mass": mass_emit}
                 continue
             if n_emit == 0:
                 np.add.at(fn_blk, t_blk, 1.0)
-                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": 0.0, "fn": float(n_t), "n_truth": n_t, "emitted": 0}
+                folds[cell.key] = {"dti": 0.0, "tp": 0.0, "fp": 0.0, "fn": float(n_t), "n_truth": n_t, "emitted": 0, "mass": 0.0}
                 continue
             t_cred = _exact_soft_truth_credit(p_sub_f, ty_sub, tx_sub)
             py_sub, px_sub = np.nonzero(pos_sub)

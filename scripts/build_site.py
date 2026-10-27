@@ -137,8 +137,76 @@ def main() -> None:
             "holdout_dti": s2["holdout_dti"],
         }
 
+    # ------------------------------------------------------------------
+    # Parallel DARP-MT10 lane + Sister-Repository Fleet Audit (2026-10-27)
+    # ------------------------------------------------------------------
+    darp_home = darp_summary = darp_research = darp_irregular = ""
+    darp_feed: dict | None = None
+    darp_card_path = ROOT / "evidence/darp_mt10_run_card_20261027.json"
+    sis_audit_path = ROOT / "evidence/sister_and_focus_audit_20261027.json"
+    if darp_card_path.is_file() and sis_audit_path.is_file():
+        dc = json.loads(darp_card_path.read_text(encoding="utf-8"))
+        sis = json.loads(sis_audit_path.read_text(encoding="utf-8"))
+        dfile = dc["submission_filename"]
+        dzip = dc["zip_filename"]
+        dnote = dc["submission_note"]
+        dpath = DOCS / "downloads" / dfile
+        if not dpath.is_file() or hashlib.sha256(dpath.read_bytes()).hexdigest() != dc["raster_sha256"]:
+            raise SystemExit("DARP-MT10 artifact missing or differs from its pinned run card")
+        dhr = dc["holdout_dti"]["primary_hide_and_recover"]
+        dcp = dc["holdout_dti"]["piedmont_off_catalogue_c_pied"]
+        de2 = dc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"]
+        dcorr = dc["correlation_overlap_vs_registry"]
+        dreg = dc["registry_comparison"]
+        dnote_len = len(dnote)
+        darp_home = f'''<section class="section" aria-labelledby="darp-title"><div class="section-head"><div><div class="eyebrow">Parallel Lane · 27 October 2026 · DARP-MT10 (Dip-Adaptive MT + 10 m DEM)</div><h2 id="darp-title">DARP-MT10 negative result &amp; +39.1% piedmont blind-basin breakthrough</h2><p><strong>DO NOT SUBMIT TO DRIVENDATA (`verdict = "negative"` — research artifact only).</strong> Unique 2026-10-27 GeoTIFF (<span class="mono">{esc(dfile)}</span>, 13/13 strict [0,1] checks PASS, 0 NaNs, 0 on-catalogue dots, 22.20% LiDAR-void coverage vs 0.65% for 0.2778 Champion).</p></div></div>
+<div class="grid-two"><div class="card"><span class="pill stop">NEGATIVE — DO NOT SUBMIT TO PORTAL</span><h3>Piedmont blind-basin gain (+39.1%), range-front trade-off (-0.0012)</h3>
+<p>On alluvial-covered piedmont faults (<code>GEMSDOE70-C-PIED-v1.0</code>, <code>Z_b &gt;= 150 m</code>, N=9,847), <strong>DARP-EXP-1</strong> reaches <strong>{dcp["pooled_dti"]:.4f}</strong> (+{dcp["paired_delta_vs_02778_champ"]:.4f} over 0.2778 Champion {dcp["champion_02778_same_evaluator"]:.4f}) and <strong>DARP-EXP-2</strong> reaches <strong>{de2["pooled_dti"]:.4f}</strong> (<strong>+39.1%</strong>, paired 95% CI [{de2["paired_delta_ci95"][0]:+.4f}, {de2["paired_delta_ci95"][1]:+.4f}], #1 across all focus &amp; sister sites). On full-catalogue <code>HIDE-RECOVER-v3.0.1</code>, range-front damping lowers DTI by {dhr["paired_delta_vs_02778_champ"]:+.4f} ({dhr["pooled_dti"]:.4f} vs {dhr["champion_02778_same_evaluator"]:.4f}), so automatic gates keep <code>verdict = "negative"</code> under the 3-experiment cap.</p>
+<p><strong>Uniqueness (290 unique rasters + Session-2 peers):</strong> max 3-px overlap vs non-blanket detectors <strong>{100*dreg["final_dots_max_detector_3px_overlap"]:.2f}% &le; 70%</strong> · vs DSLUP (c71122d5) <strong>{100*dcorr["overlap_3px_vs_dslup_c71122d5"]:.2f}%</strong> · vs ECPU (cecbdca7) <strong>{100*dcorr["overlap_3px_vs_ecpu_cecbdca7"]:.2f}%</strong> · vs archived HTCADS (11a2f251) <strong>{100*dreg["named_benchmarks"]["PRIOR_KG2_HTCADS_11a2f251"]["our_in_peer_3px"]:.2f}%</strong> · vs 0.2778 Champion <strong>{100*dreg["named_benchmarks"]["GEMSDOE32_0p2778_champ"]["our_in_peer_3px"]:.2f}%</strong>.</p>
+<div class="hero-actions"><a class="btn secondary" href="downloads/{esc(dfile)}" download>&#8595; Download DARP Research TIFF</a><a class="btn secondary" href="downloads/{esc(dzip)}" download>&#8595; DARP ZIP</a><a class="btn secondary" href="downloads/darp_mt10_run_card.json">DARP Run Card ↗</a></div>
+<p class="note mono">SHA-256 {esc(dc["raster_sha256"])}<br>Note ({dnote_len}/140): {esc(dnote)}</p></div>
+<div class="card"><h3>4-Instrument Diagnostic &amp; Uniqueness Verification</h3><img src="assets/fig4_darp_mt10_four_instruments_and_uniqueness.png" alt="DARP-MT10 four holdout instruments, LiDAR void coverage, and 290-raster uniqueness verification" style="width:100%;height:auto;border-radius:8px"><p class="note">Leakage canary: 68/68 features tested, max single-feature AUC = 0.7965 &le; 0.90 (<a href="../evidence/darp_mt10_canary_20261027.json">receipt ↗</a>).</p></div></div></section>'''
+
+        sis_rows_html = []
+        for r in sis["sister_and_fleet_audited_rasters"]:
+            safe_txt = "Safe ([0,1])" if (r["portal_safe_0_1"] and r["on_catalogue_dots"] == 0 and r["dots"] < 500000) else f"UNSAFE (portal_safe={r['portal_safe_0_1']}, on_cat={r['on_catalogue_dots']}, dots={r['dots']:,})"
+            sc_txt = f"{r['user_reported_score']:.4f} (USER-REPORTED)" if r.get("user_reported_score") else f"No live receipt · C-PIED {r['c_pied_v1_dti']:.4f} / SGMC {r['sgmc_cal_v3_dti']:.4f} (HOLDOUT-DTI)"
+            sis_rows_html.append(f'''<tr><td><strong>{esc(r['site'])}</strong></td><td class="file">{esc(r['filename'])}<small>SHA-256 {esc(r['sha256'][:12])}… · {r['dots']:,} px &ge;0.5</small></td><td>{esc(sc_txt)}</td><td>{esc(safe_txt)}</td><td><strong>{100*r['overlap_3px_vs_new_darp']:.2f}%</strong> vs DARP</td></tr>''')
+        for er in sis["empty_initialized_sister_repos"]:
+            sis_rows_html.append(f'''<tr><td><strong><a href="https://github.com/{esc(er['owner_repo'])}">{esc(er['site'])} ↗</a></strong></td><td class="file">0 GeoTIFFs (initialized stub)</td><td>None</td><td>No raster</td><td>N/A</td></tr>''')
+
+        darp_summary = f'''<div class="callout red-callout"><strong>PARALLEL LANE DARP-MT10 (`4ad35e71-zeros.tif`): NEGATIVE / DO NOT SUBMIT TO DRIVENDATA (OK TO DOWNLOAD FOR RESEARCH).</strong>
+<p><a href="downloads/{esc(dfile)}" download>Download {esc(dfile)}</a> · <a href="downloads/{esc(dzip)}" download>ZIP</a> · <a href="downloads/darp_mt10_run_card.json">Run card</a> · SHA-256 <span class="mono">{esc(dc["raster_sha256"][:16])}…</span> · note ({dnote_len}/140): <span class="mono">{esc(dnote)}</span></p>
+<p>Strict [0,1] portal-safe (13/13 checks PASS, 0 NaNs, 0 on-catalogue dots) and unique vs all non-blanket detectors (max 3-px {100*dreg["final_dots_max_detector_3px_overlap"]:.2f}%, {100*dcorr["overlap_3px_vs_dslup_c71122d5"]:.2f}% vs DSLUP, {100*dcorr["overlap_3px_vs_ecpu_cecbdca7"]:.2f}% vs ECPU). Achieves <strong>C-PIED-v1.0 = {dcp["pooled_dti"]:.4f}</strong> (DARP-EXP-1) and <strong>{de2["pooled_dti"]:.4f} (+39.1% over 0.2778 Champion)</strong> (DARP-EXP-2, #1 fleet-wide on blind piedmont faults), while HIDE-RECOVER-v3.0.1 is {dhr["pooled_dti"]:.4f} ({dhr["paired_delta_vs_02778_champ"]:+.4f}); fail-closed as <code>negative</code>.</p></div>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Sister-repository fleet audit · 27 October 2026</div><h2>Sister sites (KANLERGEMSDOE1..3, WBGGEMSDOE1..3, EUGGEMSDOE1..3, GINNYGEMSDOE1..3, GEMSDOE70)</h2><p>Exact byte audit from <a href="../evidence/sister_and_focus_audit_20261027.json">sister_and_focus_audit_20261027.json ↗</a>.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Sister repo</th><th>Audited artifact</th><th>Reported / HOLDOUT-DTI</th><th>[0,1] &amp; mask check</th><th>3-px overlap vs DARP</th></tr></thead><tbody>{''.join(sis_rows_html)}</tbody></table></div></section>'''
+
+        darp_research = f'''<section class="section"><div class="section-head"><div><div class="eyebrow">DARP-MT10 Experimental Record · 2026-10-27</div><h2>5 Pre-Registered Hypotheses &amp; 3-Experiment Piedmont Breakthrough</h2></div></div>
+<div class="card"><p>Pre-registered in <a href="../registry/preregistration_darp_mt10.json">preregistration_darp_mt10.json ↗</a> and <a href="../knowledge/02_preregistered_hypotheses_kg2_20261027.md">02_preregistered_hypotheses_kg2_20261027.md ↗</a>: <strong>H-N1 (DARP-MT10, selected)</strong> fuses dip-adaptive listric basement projection, USGS 3DEP 10 m seamless DEM in the 24.60% LiDAR void, and 3D MT phase-tensor / tipper invariants; <strong>H-N2</strong> models non-Boussinesq range-front hydraulic head breaks; <strong>H-N3</strong> tests radiometric K/eTh clay-alteration halos; <strong>H-N4</strong> tests paleolake shoreline mimic rejection; <strong>H-N5</strong> tests slip-tendency filtering.</p>
+<p><strong>Ablation finding (`IR-DARP-CREST-OVERDAMP-08`):</strong> DARP-EXP-2 raised blind piedmont fault recovery (<code>C-PIED-v1.0</code>) from 0.1012 (0.2778 Champion) and 0.0774 (archived HTCADS) to <strong>{de2["pooled_dti"]:.4f} (+39.1%, 95% CI [{de2["paired_delta_ci95"][0]:+.4f}, {de2["paired_delta_ci95"][1]:+.4f}])</strong>, proving 3D MT + listric projection + 10 m DEM breaks the 24.60% LiDAR-void ceiling — while cubic piedmont weighting over-damped shallow range-front contacts. Next session should use a two-regime range-front + piedmont mixture.</p></div></section>'''
+
+        darp_irregular = f'''<section class="section"><div class="section-head"><div><div class="eyebrow">DARP-MT10 &amp; Sister-Fleet Irregularities · 2026-10-27</div><h2>Shared-tool fixes &amp; sister-site defects caught</h2></div></div>
+<div class="grid-two"><article class="card"><div class="eyebrow">Fixed in shared template</div><h3>IR-SHARED-EMPTY-TRUTH-FP-04 &amp; IR-HTCADS-TC-05</h3><p>Patched <code>src/gems32/holdout.py</code> so empty-truth bootstrap tiles record exact false-positive mass <code>pred_sum</code> in pooled Tversky denominators instead of returning <code>(0,0,0)</code>, and patched <code>src/gems32/htcads.py</code> so magnetic tilt angle is computed from <code>arctan(dRTP/dz / |grad_H RTP|)</code> rather than band 6 (<code>tc</code> terrain correction).</p></article>
+<article class="card"><div class="eyebrow">Sister-site audit flags</div><h3>WBGGEMSDOE2 blanket &amp; WBGGEMSDOE3 on-catalogue leak</h3><p><code>WBGGEMSDOE2</code> <code>a1b2c3d4</code> emits 5,094,374 positive pixels (98.6% of footprint — blanket baseline) and <code>efd46877</code> sets non-None <code>nodata</code>; <code>WBGGEMSDOE3</code> <code>5d451566</code> places 463 positive dots directly on zero-scored public catalogue pixels; <code>GEMSDOE70</code>’s 0.2478 file is <code>p5-dual-submod300</code> (not <code>p8</code>).</p></article></div></section>'''
+
+        darp_feed = {
+            "filename": dfile,
+            "sha256": dc["raster_sha256"],
+            "zip": dzip,
+            "verdict": dc["verdict"],
+            "ok_to_download_and_submit": dc["ok_to_download_and_submit"],
+            "ok_to_download_for_research": dc["ok_to_download_for_research"],
+            "c_pied_exp1_dti": dcp["pooled_dti"],
+            "c_pied_exp2_dti": de2["pooled_dti"],
+            "hide_recover_exp1_dti": dhr["pooled_dti"],
+            "max_3px_non_blanket_detectors": dreg["final_dots_max_detector_3px_overlap"],
+            "overlap_3px_vs_dslup": dcorr["overlap_3px_vs_dslup_c71122d5"],
+            "overlap_3px_vs_ecpu": dcorr["overlap_3px_vs_ecpu_cecbdca7"],
+        }
+
     home=f'''<div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
 {s2_home}
+{darp_home}
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
 <h1 id="hero-title">No submission<br>cleared yet.</h1><p class="lead">The previous candidate is a useful research artifact, but it fails the requested literal duplicate rule. Protect the weekly slot until the protocol conflict and independent validation are resolved.</p>
 <div class="hero-actions"><a class="btn" href="{artifact}" download>↓ Download research TIFF</a><a class="btn secondary" href="executive-summary.html">Read the submission guide →</a></div>
@@ -163,6 +231,7 @@ def main() -> None:
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>{intro_line}</p></div>
 {s2_summary}
+{darp_summary}
 <div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Leaderboard estimates for new submissions: <strong>not available</strong>. Historical results below are user/owner-reported, not organizer-confirmed receipts.</p></div></div>{table}
 <p class="note">Overlap is directional: the percentage of a row’s positive pixels within 3 px of its closest other focus-site raster, computed from pinned owner bytes. It is not a complete current-registry check. The files are historical; downloads are provided for comparison only.</p></section>
@@ -182,6 +251,7 @@ def main() -> None:
 <article class="card"><div class="eyebrow">03 · low–medium cost</div><h3>Visible-tip orientation agreement</h3><p>Recompute visible-only tip geometry per fold and compare its orientation with potential-field and terrain lineaments. <strong>Mimics:</strong> drainage-aligned erosion and lithologic boundaries. Check prior implementations before claiming method novelty.</p></article>
 <article class="card"><div class="eyebrow">04 · high cost · data access unverified</div><h3>Deformation–structure discordance</h3><p>Test NASA OPERA DISP-S1 displacement gradients against GeoDAWN and 3DEP boundaries. <strong>Mimics:</strong> groundwater pumping and atmospheric/line-of-sight artifacts. NASA describes the product, but relevant tiles, access and coverage have not been verified here.</p></article></div>
 <p class="note"><a href="../research/2026-10-27_htcads_hypotheses.md">Full hypothesis slate and constraints ↗</a> · No numeric DTI or leaderboard gain is claimed.</p></section>
+{darp_research}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Source library</div><h2>Official sources for review</h2></div></div><div class="card"><ul class="sources">
 <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem, metric and submission format</a></li>
 <li><a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4">DrivenData staff: pixel-exact known-fault mask</a></li>
@@ -196,6 +266,7 @@ def main() -> None:
 <article class="card"><div class="eyebrow">04 · blocking</div><h3>Portal and quota</h3><p>Neither all-finite nor NaN-exterior variants have an acceptance receipt here. The cause of the range error and current weekly quota are unknown; the selector does not provide a positive authorization path.</p></article>
 <article class="card"><div class="eyebrow">05 · provenance</div><h3>Data is restored, not authenticated</h3><p>Core, external and calibration owner mirrors were restored and hash-pinned. Hashes establish identity to a mirror, not origin at DrivenData, USGS or DOE. The mirror sample also contains known-fault positives despite the page’s “total fault absence” description.</p></article>
 <article class="card"><div class="eyebrow">06 · next session</div><h3>Reliable promotion pathway</h3><p>Resolve the literal control conflict without silently weakening it; obtain the authenticated organizer template and a complete frozen registry; replay canaries and spatial holdout; implement quota verification; only then allow a separate selector to approve a file.</p></article></div>
+{darp_irregular}
 <section class="section"><div class="callout"><strong>Three-pass review record.</strong><p>Pass 1: restored and hashed inputs, audited bytes, repaired the false-positive gate and rebuilt the site. Pass 2: exercised adversarial and missing-evidence cases. Pass 3: rechecked data, links, generated pages and CI. See <a href="../evidence/current_run_card.json">the current run card</a> and repository tests.</p></div></section>'''
 
     DOCS.mkdir(exist_ok=True)
@@ -211,6 +282,8 @@ def main() -> None:
     }
     if s2_feed is not None:
         feed["session2_candidate"] = s2_feed
+    if darp_feed is not None:
+        feed["darp_mt10_lane"] = darp_feed
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {

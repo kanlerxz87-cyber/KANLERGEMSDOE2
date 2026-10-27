@@ -62,5 +62,19 @@
         "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0884, 0.1061])"
       }
     }
+  },
+  "darp_mt10_lane": {
+    "filename": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
+    "sha256": "3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6",
+    "zip": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.zip",
+    "verdict": "negative",
+    "ok_to_download_and_submit": false,
+    "ok_to_download_for_research": true,
+    "c_pied_exp1_dti": 0.116858,
+    "c_pied_exp2_dti": 0.14075,
+    "hide_recover_exp1_dti": 0.098049,
+    "max_3px_non_blanket_detectors": 0.670792,
+    "overlap_3px_vs_dslup": 0.549503,
+    "overlap_3px_vs_ecpu": 0.542625
   }
 }

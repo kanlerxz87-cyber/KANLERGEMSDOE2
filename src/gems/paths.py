@@ -11,6 +11,16 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+def _resolve_default_data_dir() -> Path:
+    env = os.environ.get("GEMS_DATA_DIR")
+    if env:
+        return Path(env).expanduser()
+    cache = ROOT / ".cache" / "gems_data"
+    if (cache / "sample_submission.tif").exists() or (cache / "training_features.tif").exists():
+        return cache
+    return ROOT / "data"
+
+
 ROOT: Path = Path(__file__).resolve().parents[2]
 # Use the same resolver as restore_data.py, including legacy /core layouts.
 from gems32.paths import data_dir as _data_dir
