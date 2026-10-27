@@ -1,6 +1,6 @@
 {
   "schema": "kanlergemsdoe2.status_feed.v1",
-  "generated_utc": "2026-10-26T23:52:29.447729+00:00",
+  "generated_utc": "2026-10-27T17:28:01.385738+00:00",
   "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
   "validated_ok_to_download_and_submit": true,
   "human_intervention_required": false,
@@ -21,7 +21,12 @@
     "size_bytes": 204099,
     "emitted_dots": 37654,
     "portal_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
-    "portal_note_length": 110
+    "portal_note_length": 110,
+    "estimated_live_score_projection": {
+      "hr_fit": 0.3339,
+      "sgmc_fit": 0.3454,
+      "label": "PROJECTION (not a score); in-lineage calibrations, evidence/ledger_recomputation_20261027.json"
+    }
   },
   "holdout_dti": {
     "primary_hide_and_recover": {
@@ -134,5 +139,29 @@
       "portal_safe_0_1": false,
       "unique_among_focus9": false
     }
-  ]
+  ],
+  "cpr_lane_20261027": {
+    "lane_id": "KG2-CPR",
+    "verdict": "negative",
+    "do_not_submit": true,
+    "hide_recover_dti_cpr1": 0.147951,
+    "sgmc_cal_cpr1": 0.056742,
+    "max_3px_overlap": 0.780979,
+    "reason": "Rule-1 duplicate stop (78.1% > 70% vs gems10-h25-ctx-ridge) + blind SGMC regression; crest snapping falsified (paired delta -0.0080)",
+    "evidence": "evidence/cpr_experiments.json",
+    "run_card": "downloads/cpr_run_card.json"
+  },
+  "ledger_correction_20261027": {
+    "irregularity": "IR-CPR-LEDGER-01",
+    "r_squared": 0.999589,
+    "tp_w_px": 5210.4,
+    "k_hidden_px": 14019.8
+  },
+  "reverified_20261027": {
+    "promoted_sha256_ok": true,
+    "promoted_sgmc_cal_reproduced": 0.078913,
+    "champion_hr_reproduced": 0.099202,
+    "canary_max_auc": 0.795377,
+    "manifest_files_restored": 26
+  }
 }

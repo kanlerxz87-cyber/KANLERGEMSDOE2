@@ -116,7 +116,7 @@
     <div class="fig-block">
       <img src="assets/fig2_tversky_forensic_inversion.png" alt="Tversky ledger inversion of 0.2778 and dual orthogonal holdout benchmark">
       <div class="fig-caption">
-        <strong>Figure 2:</strong> Left: Exact linear <code>1 / DTI(N)</code> Tversky ledger inversion across the <code>H19-5</code> collar family (<code>44,090 &rarr; 40,199 &rarr; 37,654</code> dots, <code>R&sup2; = 0.9985</code>), proving 0&ndash;200 m catalogue-flank dots contribute ~0 true positives on the private expert test set while revealing <code>TP_w &approx; 5,151 px</code> and hidden truth <code>K &approx; 13,735 px</code>. Right: Dual orthogonal holdout dominance of <code>EXP-2</code> on both uncensored <code>GEMSDOE32-HIDE-RECOVER-v3.0</code> and blind off-catalogue <code>GEMSDOE32-SGMC-CAL-v3.0</code>.
+        <strong>Figure 2:</strong> Left: Exact linear <code>1 / DTI(N)</code> Tversky ledger inversion across the <code>H19-5</code> collar family (<code>44,090 &rarr; 40,199 &rarr; 37,654</code> dots, <code>R&sup2; = 0.9996</code>), proving 0&ndash;200 m catalogue-flank dots contribute ~0 true positives on the private expert test set while revealing <code>TP_w &approx; 5,210 px</code> and hidden truth <code>K &approx; 14,020 px</code>. Right: Dual orthogonal holdout dominance of <code>EXP-2</code> on both uncensored <code>GEMSDOE32-HIDE-RECOVER-v3.0</code> and blind off-catalogue <code>GEMSDOE32-SGMC-CAL-v3.0</code>.
       </div>
     </div>
 
@@ -232,6 +232,18 @@
         </tbody>
       </table>
     </div>
+  </section>
+
+  <section class="card">
+    <h2>Lane KG2-CPR (2026-10-27): Tested, Rejected by Automated Gates — Do Not Submit</h2>
+    <p>A fresh pre-registered lane (<code>registry/preregistration_cpr.json</code>) replaced binary training with a
+    <strong>soft DTI-credit regression target</strong> <code>y=k(d)</code>, swept the CELF dot budget on OOF cells, and tested 1-px crest snapping
+    (3 experiments, 340 s; <code>evidence/cpr_experiments.json</code>). Result: hide-and-recover HOLDOUT-DTI rose to <strong>0.1480</strong>
+    but blind SGMC-CAL fell to <strong>0.0567</strong> (below the 0.2778 champion's 0.0641) and 3-px dot overlap hit <strong>78.1% &gt; 70%</strong>
+    vs a prior supervised scarp raster — an automated <strong>Rule-1 duplicate stop</strong>. Crest snapping was falsified
+    (paired &Delta; &minus;0.0080). <strong>No CPR file is offered for download; the validated HTCADS EXP-2 GeoTIFF above remains the single
+    recommended submission</strong> (dual-holdout PROJECTION &asymp; 0.33&ndash;0.35 live, not a score). Run card:
+    <a href="downloads/cpr_run_card.json" download>cpr_run_card.json</a>.</p>
   </section>
 
   <section class="card">

@@ -160,12 +160,6 @@
       "oriented_auc": 0.539698
     },
     {
-      "feature": "sb_heatflow_excess",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.464369,
-      "oriented_auc": 0.535631
-    },
-    {
       "feature": "base_flexure_curv",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.526121,
@@ -206,6 +200,12 @@
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.520803,
       "oriented_auc": 0.520803
+    },
+    {
+      "feature": "hydro_conduit_coupled",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.520717,
+      "oriented_auc": 0.520717
     },
     {
       "feature": "gallardo_meju_xgrad",
@@ -262,12 +262,6 @@
       "oriented_auc": 0.508707
     },
     {
-      "feature": "hydro_conduit_coupled",
-      "group": "subsurface_geothermal_strain",
-      "raw_auc": 0.507504,
-      "oriented_auc": 0.507504
-    },
-    {
       "feature": "gdr_geotherm_upgrad",
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.493995,
@@ -308,7 +302,13 @@
       "group": "subsurface_geothermal_strain",
       "raw_auc": 0.498078,
       "oriented_auc": 0.501922
+    },
+    {
+      "feature": "sb_heatflow_excess",
+      "group": "subsurface_geothermal_strain",
+      "raw_auc": 0.5,
+      "oriented_auc": 0.5
     }
   ],
-  "elapsed_seconds": 155.75
+  "elapsed_seconds": 142.05
 }
