@@ -449,6 +449,18 @@ def main() -> None:
   </section>
 
   <section class="card">
+    <h2>How to Submit the Validated GeoTIFF to DrivenData (5 Steps, No Human Inspection)</h2>
+    <ol>
+      <li><strong>Download the submission file:</strong> click the green &#11015; Download KANLERGEMSDOE2 Unique .tif button above (or the &#128230; Portal Archive .zip &mdash; it contains the same single GeoTIFF). The file is <code>-zeros.tif</code>: every pixel is finite, all values are in <code>[0.0, 1.0]</code>, there are <code>0</code> NaNs anywhere, and it matches <code>sample_submission.tif</code> exactly (<code>EPSG:32611</code>, <code>3730 &times; 3292</code>, 100 m geotransform). This is what prevents the DrivenData <em>&quot;Predicted values must be in range [0, 1]&quot;</em> upload error.</li>
+      <li><strong>Open the DrivenData submission page:</strong> <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">New submission &mdash; DOE GEMS Prize Competition</a>.</li>
+      <li><strong>Upload the file:</strong> choose the single-band GeoTIFF <code>.tif</code> (or the <code>.zip</code> containing just that one GeoTIFF) in "File to submit".</li>
+      <li><strong>Paste the submission note (&le; 140 characters):</strong> click "COPY NOTE" on the gate banner above, then paste it into "Note (optional)" so you can tell this submission apart later (e.g. clustering with k=25). Current verified note: <code>{_esc(note)}</code>.</li>
+      <li><strong>Submit:</strong> the portal validates CRS/shape/geotransform automatically; upload only the <code>-zeros.tif</code> (never a <code>-nan.tif</code>) and confirm the upload succeeded.</li>
+    </ol>
+    <div class="callout" style="margin-top:0.8rem"><strong>Do not re-upload focus-site champions as new entries:</strong> every GEMSDOE24&ndash;36 best is an <code>H19-5</code> clone (94&ndash;100% 3-px overlap; two exact 0-XOR duplicate pairs) and several carry outside-footprint NaNs that the portal rejects. <strong>KANLERGEMSDOE2</strong> is the only validated unique entry (&le; 64.91% vs all 191 registry detectors, 39.66% vs the 0.2778 Champion) promoted by all 5 automated gates.</div>
+  </section>
+
+  <section class="card">
     <h2>Master Multi-Site Submission Table (KANLERGEMSDOE2 + All 9 Focus Sites)</h2>
     <p style="color:var(--muted);margin-top:0">
       Every score carries its mandatory Protocol Rule 3 label: <code>ORGANIZER-CONFIRMED</code> (live leaderboard receipt) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).

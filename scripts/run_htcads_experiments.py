@@ -47,6 +47,22 @@ _D3_OFFS: list[tuple[int, int]] = [
 _REGIONAL_BLOB_COLS = {20, 21, 22, 24, 25, 26, 27, 33, 35}
 
 
+def _current_git_branch() -> str:
+    \"\"\"Return the current git branch for Run Card metadata (never hardcodes a lane/branch name).\"\"\"
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True,
+            text=True,
+            cwd=ROOT,
+            check=True,
+        )
+        branch = out.stdout.strip()
+        return branch if branch else "unknown"
+    except Exception:
+        return "unknown"
+
+
 def _predict_chunked(model: lgb.LGBMClassifier, X: np.ndarray, cols: list[int] | None = None, chunk: int = 1_100_000) -> np.ndarray:
     n = X.shape[0]
     out = np.empty(n, dtype=np.float32)
@@ -859,7 +875,7 @@ def main() -> int:
         "schema": "gems.parallel_run_card.v1",
         "site": "KANLERGEMSDOE2",
         "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
-        "branch": "arena/1868484d-kanlergemsdoe2",
+        "branch": _current_git_branch(),
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "hypothesis": (
             f"H-K1 ({best_exp['experiment_id']}: {best_exp['name']}) — Hydrothermal-Tectonic Conduit & "
