@@ -3,6 +3,7 @@
 > ## CURRENT STATUS (Session 3, 2026-10-27): NOT OK TO DOWNLOAD AND SUBMIT
 >
 > - **Decision.** No GeoTIFF in this repository is OK to download and submit under the protocol as written. The literal all-registry rule (PR #25, in force) is failed by every candidate here: the registered spacing-5 lattice `13gems_20261001_r13-lattice-s5_v2_nan-outside.tif` covers 99.87% of the footprint within 3 px, so any 37,654-dot raster is forced to at least 82.34% overlap.
+> - **PR #36 off-catalogue 36GEMSDOE file (15,000 dots; its card said `promote`) — overridden: NOT OK.** Holdout not measured; 34% of dots placed in lattice-gap pixels to pass the 70% gate (66.00% measured); details in the appendix below.
 > - **Closest candidate (research-grade, NOT cleared):** [`kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3` · note (114/140). Session-3 recheck: witness overlap **99.98%**, Spearman vs witness 0.0005, format passes (EPSG:32611, 3730×3292, float32, `[0,1]`, no NaN inside footprint, zeros outside). It would clear only a control-separated reading that treats the lattice as a calibration control. **That reading is not adopted; it needs an owner decision.**
 > - **Why GEMSDOE32 scored 0.2778 (verified geometry, reported score).** GEMSDOE32 is an exact subset of GEMSDOE25 (verified): GEMSDOE25 minus its 6,436 dots within 2 px of known USGS/INGENIOUS faults. DrivenData staff confirmed known-fault pixels are masked pixel-exactly, while nearby off-fault predictions are penalized normally. Pruning those dots is the most plausible cause of the reported gain (inference). Details: [`knowledge/03_session3_forensics_0p2778_20261027.md`](knowledge/03_session3_forensics_0p2778_20261027.md) · [executive summary](docs/executive-summary.html) · [receipt](evidence/session3_independent_recheck_20261027.json).
 > - **Scores.** No leaderboard estimate exists for any new file. Focus-site numbers are USER/OWNER-REPORTED with no organizer receipt. Local HOLDOUT-DTI values are not calibrated to the leaderboard (the local evaluator gives the 0.2778 champion 0.0992). The public leaderboard observed 2026-10-27 shows #1 **0.4544** and #5 **0.3566** ([source](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/)); the brief's 0.4413 and 0.3195 are older snapshots.
@@ -118,3 +119,26 @@ See also [`PROMPT.md`](PROMPT.md).
 > 6. **BUDGET.** Stop after `3` experiments or `2` hours. Do not spend live DrivenData slots directly.
 
 </details>
+
+---
+
+## 📋 Current Session Appendix (2026-10-27) — off-catalogue 36GEMSDOE file (research only)
+
+**Status: NOT OK TO DOWNLOAD AND SUBMIT.** PR #36 (merged to `main`) generated this file and its run card said `promote`. Session review overrode that verdict. The run card in `evidence/current_run_card.json` is `negative` with `ok_to_submit: false`. The archived promote card is `evidence/superseded/current_run_card_pr36_promote_20261027.json`.
+
+| Property | Value |
+|---|---|
+| File (research download) | `docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif` |
+| SHA-256 | `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4` (matches the PR #36 card) |
+| Dots | 15,000 (the assigned budget is 37,654; the reduced count is itself a deviation from AGENTS.md) |
+| Format | single-band float32, EPSG:32611, values {0, 1}, no NaN; recomputed: format passes |
+| On-catalogue dots | 107 (the card reports 0; organizer masks known faults, so this is score-neutral but not as described) |
+| Lattice 3-px overlap | **66.00%** (limit 70%) — passes only because **34% (5,100)** of dots sit in lattice-gap pixels, as the generator's own docstring states |
+| Max non-lattice 3-px overlap, 12 restored registry rasters | 28.59% (card's 22.37% not reproduced) |
+| Holdout DTI | **not measured** (`null`) — no slot may be spent without a holdout result |
+| Note (≤140 chars) | `36GEMSDOE off-catalogue-blind-geothermal \| off-catalogue blind-geothermal dots; systematic grid + ji \| id 2ecaae7a056e \| not yet live-scored` |
+| Receipt | `evidence/off36_independent_check_20261027.json` (regenerate: `.venv/bin/python scripts/off36_recheck.py`) |
+
+Why the promote verdict was not adopted: (1) no holdout result; (2) placement chosen to pass the lattice gate, which AGENTS.md forbids; (3) the budget was cut to 15,000 to make the lattice bound passable; (4) the card's own limitations say the literal all-entries rule is still pending. Owner options: replay the file on a spatially blocked holdout (needs organizer-authenticated training data) and rule on the lattice control, or leave it as research.
+
+Official links: [DrivenData competition](https://www.drivendata.org/competitions/306/competition-doe-gems/) · [NLR official rules (PDF)](https://docs.nlr.gov/docs/fy26osti/96647.pdf).

@@ -256,6 +256,15 @@ def main() -> None:
 <p><a href="downloads/{esc(hf)}" download>Download {esc(hf)}</a> · SHA-256 <span class="mono">{esc(hc["sha256"][:16])}…</span> · format audit passes (EPSG:32611, 3730×3292, float32, values in [0,1], zeros outside).</p>
 <p>Independent recheck (directional 3-px overlap, this repository's definition): <strong>{100*hc["witness_overlap_fraction"]:.2f}%</strong> of its dots lie within 3&nbsp;px of the registered lattice (&gt;70%: literal duplicate). Its own claimed "&lt;2% vs all nine focus files" is <strong>not reproduced</strong>: the largest focus overlap is {100*focus_max:.2f}%. It also records <strong>{hc["on_catalogue_positive_pixels"]:,}</strong> dots on known-fault pixels, not the "0" it states. Those pixels are masked by the organizer, so they are score-neutral, but the claim is wrong.</p>
 <p>Holdout: not replayed (no HOLDOUT-DTI). Source: <a href="../evidence/session3_independent_recheck_20261027.json">receipt</a> · <a href="../research/2026-10-27_new_hypotheses.md">hypothesis note</a>.</p></div>'''
+    # PR #36 parallel 'off-catalogue' file (15,000 dots): its run card said promote; the
+    # independent recheck and the protocol do not support that. Research-only.
+    off36_block = ""
+    o36 = ROOT / "evidence/off36_independent_check_20261027.json"
+    if o36.is_file():
+        oc = json.loads(o36.read_text())
+        off36_block = f'''<div class="callout red-callout"><strong>PR #36 OFF-CATALOGUE FILE — NOT OK TO SUBMIT; research download only.</strong>
+<p><a href="downloads/{esc(oc["file"])}" download>Download {esc(oc["file"])}</a> · SHA-256 <span class="mono">{esc(oc["sha256"][:16])}…</span> · format passes (values {{0, 1}}, 0 NaN, {oc["dots"]:,} dots).</p>
+<p>Its run card (<a href="../evidence/superseded/current_run_card_pr36_promote_20261027.json">archived here</a>) said <code>promote</code>. That verdict is <strong>superseded</strong>: (1) its holdout DTI is <strong>not measured</strong> (<code>null</code>), and the protocol forbids spending a slot without a holdout result; (2) its own generator states that <strong>{100*oc["dots_in_lattice_gap_fraction"]:.0f}%</strong> of dots ({oc["dots_in_lattice_gap_pixels"]:,}) are placed in lattice-uncovered pixels so the lattice overlap stays under 70% (measured <strong>{100*oc["lattice_overlap_3px"]:.2f}%</strong>). Placement chosen to pass the gate is disallowed by AGENTS.md; (3) it reduced the dot budget to 15,000 from the assigned 37,654. Recomputed: {oc["on_catalogue_positive_pixels"]} on-catalogue dots (reported 0; organizer masks known faults); max non-lattice 3-px overlap vs the restored registry is {100*max(v for k,v in oc["per_raster_overlap_3px"].items() if "lattice" not in k):.2f}% (the card reported 22.37%, not reproduced). Receipt: <a href="../evidence/off36_independent_check_20261027.json">off36_independent_check_20261027.json</a>.</p></div>'''
     intro_line = ('No file in this repository is OK to download and submit under the protocol as written (literal all-registry rule, PR #25). The Session-2 file below is the closest candidate and remains research-grade until the owner rules on the lattice control.'
                   if s2_summary else 'At present there is <strong>no competition-ready file</strong>. The existing file below is available for research, not a weekly submission slot.')
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
@@ -263,6 +272,7 @@ def main() -> None:
 {why_block}
 {s2_summary}
 {hyp1_block}
+{off36_block}
 {darp_summary}
 <div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Leaderboard estimates for new submissions: <strong>not available</strong>. Historical results below are user/owner-reported, not organizer-confirmed receipts.</p></div></div>{table}
@@ -309,6 +319,12 @@ def main() -> None:
 {darp_irregular}
 <section class="section"><div class="callout"><strong>Three-pass review record.</strong><p>Pass 1: restored and hashed inputs, audited bytes, repaired the false-positive gate and rebuilt the site. Pass 2: exercised adversarial and missing-evidence cases. Pass 3: rechecked data, links, generated pages and CI. See <a href="../evidence/current_run_card.json">the current run card</a> and repository tests.</p></div></section>'''
 
+    howto = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>How to submit</span></div>
+<div class="page-intro"><div class="eyebrow">Status: NOT OK TO DOWNLOAD AND SUBMIT</div><h1>How to submit (when cleared).</h1><p>No file is cleared. The steps below apply only after the automated gates pass and the owner records a cleared decision. Current run card: <a href="../evidence/current_run_card.json">verdict negative, ok_to_submit false</a>.</p></div>
+<section class="section"><div class="card"><ol class="steps"><li>Confirm the file's SHA-256 and single-band grid against the card. Do not use a renamed or archived file.</li><li>Open DrivenData → Submit → Make new submission, upload the GeoTIFF (or a ZIP containing that one TIFF) and enter the ≤140-character note.</li><li>Record the organizer submission-page receipt (timestamp and SHA-256). Only that receipt makes a score ORGANIZER-CONFIRMED.</li></ol><p>Official competition page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">drivendata.org/competitions/306</a> · rules: <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">NLR GEMS official rules (PDF)</a>.</p></div></section>'''
+    (DOCS / "data").mkdir(exist_ok=True)
+    (DOCS / "data" / "current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    (DOCS / "submission-howto.html").write_text(page("How to submit", "submission-howto.html", howto, ""), encoding="utf-8")
     DOCS.mkdir(exist_ok=True)
     for name, title, content, js in (("index.html","Decision dashboard",home,FEED_SCRIPT),("executive-summary.html","Executive summary",summary,""),("research.html","Research",research,""),("irregularities.html","Open issues",irregular,""),("submission-table.html","Historical submission comparison",summary,""),("audit-review.html","Open issues",irregular,"")):
         (DOCS / name).write_text(page(title,name,content,js),encoding="utf-8")

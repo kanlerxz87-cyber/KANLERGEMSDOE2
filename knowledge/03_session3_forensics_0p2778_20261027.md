@@ -82,3 +82,11 @@ The owner's earlier upload was rejected with "Predicted values must be in range 
 - **C. Reduce the budget below 22,164.** Not recommended, because it passes only through placement gaming.
 
 Until the owner chooses, the site reports NOT OK TO DOWNLOAD AND SUBMIT for every file.
+
+## 10. PR #36 override (merged to main during this session)
+
+- PR #36 added `36GEMSDOE-off-catalogue-blind-geothermal-targeting-…-zeros.tif` (15,000 dots, SHA-256 `0e7e1da7…a446c4`) and a run card with `verdict: promote`, `ok_to_submit: true`.
+- Independent recheck (`scripts/off36_recheck.py` → `evidence/off36_independent_check_20261027.json`): lattice 3-px overlap 66.00%, with 5,100 of 15,000 dots (34%) in lattice-gap pixels; 107 on-catalogue dots (card: 0); max non-lattice overlap vs the 12 restored registry rasters 28.59% (card: 22.37%, not reproduced); holdout DTI not measured.
+- Decision: promote **not adopted**. Reasons: no holdout result (the brief requires one before spending a slot); placement chosen to pass the lattice gate (AGENTS.md prohibits); budget reduced to 15,000 from 37,654.
+- Authoritative card stays `negative` / `ok_to_submit: false`. Archived promote card: `evidence/superseded/current_run_card_pr36_promote_20261027.json`. `scripts/generate_unique_submission.py` is forced to negative and writes to `evidence/research/`.
+- Owner options: (a) spatially blocked holdout replay of this file (needs organizer-authenticated training data); (b) a written owner ruling on the lattice control. Until then it is research only.
