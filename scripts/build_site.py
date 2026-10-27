@@ -89,7 +89,56 @@ def main() -> None:
     artifact=f"downloads/{esc(prior['file'])}"
     table=focus_table(audit['focus_nine'])
 
+    # ------------------------------------------------------------------
+    # Session-2 (KG2-S2 DSLUP) candidate: rendered ONLY when its evidence
+    # and artifact are present and byte-identical to the pinned receipt.
+    # Both duplicate-rule readings are displayed; neither is hidden.
+    # ------------------------------------------------------------------
+    s2_home = s2_summary = ""
+    s2_feed: dict | None = None
+    s2_card_path = ROOT / "evidence/dslup_unique_slot_run_card.json"
+    if s2_card_path.is_file():
+        s2 = json.loads(s2_card_path.read_text())
+        s2_file = s2["submission_filename"]
+        s2_path = DOCS / "downloads" / s2_file
+        if not s2_path.is_file() or hashlib.sha256(s2_path.read_bytes()).hexdigest() != s2["raster_sha256"]:
+            raise SystemExit("Session-2 artifact missing or differs from its pinned run card")
+        disc = s2["literal_rule_disclosure"]
+        s2hr = s2["holdout_dti"]["primary_hide_and_recover"]
+        s2sg = s2["holdout_dti"]["secondary_off_catalogue_sgmc"]
+        s2reg = s2["registry_comparison"]
+        s2own = max(v["asym_3px_overlap_ours_in_peer"] for v in s2["overlap_vs_own_prior_rasters"].values() if v)
+        s2champ = s2["overlap_vs_0p2778_champion"]["asym_3px_overlap_ours_in_peer"]
+        s2lit = disc["this_file_literal_overlap_vs_lattice_witness"]
+        s2zip = s2["zip_filename"]
+        s2note = s2["submission_note"]
+        s2_home = f'''<section class="hero" aria-labelledby="s2-title" style="margin-bottom:1.2rem"><div><div class="eyebrow">Session 2 · 27 October 2026 · KG2-S2 DSLUP-3D lane</div><span class="status">New candidate — policy decision disclosed</span>
+<h1 id="s2-title">A new, maximally<br>decorrelated candidate.</h1>
+<p class="lead"><strong>{esc(s2_file)}</strong> — depth-scaled listric updip-gravity surface, re-emitted under a hard own-halo cap (&le;{s2["accepted_q_abs"]:,} of {s2["emitted_dots"]:,} dots near our prior rasters). It beats every raster this repository has evaluated on <strong>both</strong> blind holdouts with strictly positive paired 95% CIs, and is the least-duplicated candidate this fleet audit has seen: max 3-px overlap vs every <em>geological</em> detector {100*s2reg["final_dots_max_detector_3px_overlap"]:.2f}%, vs the 0.2778 champion {100*s2champ:.2f}%, vs our own prior files &le;{100*s2own:.2f}%.</p>
+<div class="hero-actions"><a class="btn" href="downloads/{esc(s2_file)}" download>&#8595; Download Session-2 GeoTIFF</a><a class="btn secondary" href="downloads/{esc(s2zip)}" download>&#8595; Portal ZIP</a><a class="btn secondary" href="downloads/dslup_run_card.json">Run card ↗</a></div>
+<p class="note"><strong>TWO VERDICTS, YOUR CALL (slot decisions are the coordinator's selector step):</strong> under the documented control-separated policy (space-filling calibration lattices excluded from the hard gate, null-calibrated on the 0.2778 champion) this file is <strong>PROMOTE — OK TO SUBMIT</strong>; under PR&nbsp;#25's literal all-registry reading it is a duplicate vs the registered lattice ({100*s2lit["fraction"]:.2f}%) — but so is <em>every possible</em> {s2lit["our_dots"]:,}-dot raster (forced minimum {100*s2lit["forced_minimum_for_any_raster_at_this_budget"]:.2f}%), including all nine historical champions. The literal rule and the standing unique-TIF mandate cannot both be satisfied at this budget.</p></div>
+<div class="hero-aside"><div class="eyebrow">Blind holdout (HOLDOUT-DTI, not a live score)</div><h3>Beats the 0.2778 proxy on both metrics</h3>
+<p>Hide-and-Recover <strong>{s2hr["pooled_dti"]:.4f}</strong> vs {s2hr["champion_02778_same_evaluator"]:.4f} (paired Δ {s2hr["paired_delta_vs_0p2778_ref"]:+.4f}, 95% CI [{s2hr["paired_delta_ci95"][0]:+.4f}, {s2hr["paired_delta_ci95"][1]:+.4f}])</p>
+<p>Blind SGMC-CAL <strong>{s2sg["sgmc_prevalence_calibrated_dti"]:.4f}</strong> vs {s2sg["champion_02778_same_evaluator"]:.4f} (paired Δ {s2sg["paired_delta_vs_0p2778_ref"]:+.4f}, 95% CI [{s2sg["paired_delta_ci95"][0]:+.4f}, {s2sg["paired_delta_ci95"][1]:+.4f}])</p>
+<p class="note">Historical-evaluator numbers (GEMSDOE32-HIDE-RECOVER/SGMC-CAL v3.0, N=22,232 / 62,703, n_boot=1000). No organizer receipt exists for any score here.</p>
+<div class="hash mono">{esc(s2_file)}<br>SHA-256 {esc(s2["raster_sha256"])}<br>Note ({s2["note_length"]}/140): {esc(s2note)}</div></div></section>'''
+        s2_summary = f'''<div class="callout"><strong>SESSION-2 CANDIDATE (two verdicts, fully disclosed):</strong><p><a href="downloads/{esc(s2_file)}" download>Download {esc(s2_file)}</a> · SHA-256 <span class="mono">{esc(s2["raster_sha256"][:16])}…</span> · note ({s2["note_length"]}/140): <span class="mono">{esc(s2note)}</span></p>
+<p>Control-separated policy (lattice = calibration control, champion-null calibrated): <strong>PROMOTE — OK TO SUBMIT</strong> · 5/5 gates · unique vs all {s2reg["unique_rasters_checked"]:,} geological rasters incl. our own (max {100*s2reg["final_dots_max_detector_3px_overlap"]:.2f}%). Literal all-registry reading (PR #25): duplicate vs the spacing-5 lattice ({100*s2lit["fraction"]:.2f}%), as is every possible raster at this budget (forced &ge;{100*s2lit["forced_minimum_for_any_raster_at_this_budget"]:.2f}%). HOLDOUT-DTI: Hide-Rec <strong>{s2hr["pooled_dti"]:.4f}</strong> [{s2hr["ci95"][0]:.4f}, {s2hr["ci95"][1]:.4f}], SGMC-CAL <strong>{s2sg["sgmc_prevalence_calibrated_dti"]:.4f}</strong> [{s2sg["ci95"][0]:.4f}, {s2sg["ci95"][1]:.4f}] — both above the 0.2778 proxy with strictly positive paired CIs. No leaderboard estimate is claimed; an OLS projection on 9 user-reported anchors (R²=0.956) would EXTRAPOLATE far outside its support and is recorded only inside the run card as a labeled projection, never a score.</p>
+<p><a href="../evidence/dslup_unique_slot_run_card.json">Run card</a> · <a href="../evidence/dslup_literal_rule_disclosure.json">Literal-rule disclosure</a> · <a href="../evidence/dslup_experiments.json">3 preregistered experiments (honest negatives on own-collision)</a> · <a href="../evidence/dslup_champion_mode_receipt.json">champion-mode receipt</a> · <a href="../evidence/leakage_canary_dslup.json">leakage canary (max AUC 0.7954)</a> · prereg: <a href="../registry/preregistration_dslup.json">frozen 2026-10-27</a>.</p></div>'''
+        s2_feed = {
+            "filename": s2_file, "sha256": s2["raster_sha256"], "zip": s2zip,
+            "emitted_dots": s2["emitted_dots"], "portal_note": s2note,
+            "verdict_control_separated_policy": "promote",
+            "verdict_literal_rule": "duplicate_vs_space_filling_lattice_as_is_every_possible_raster_at_this_budget",
+            "literal_overlap_vs_lattice": s2lit["fraction"],
+            "forced_minimum_any_raster": s2lit["forced_minimum_for_any_raster_at_this_budget"],
+            "max_overlap_vs_geological_detectors": s2reg["final_dots_max_detector_3px_overlap"],
+            "max_overlap_vs_own_prior_rasters": s2own,
+            "holdout_dti": s2["holdout_dti"],
+        }
+
     home=f'''<div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
+{s2_home}
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
 <h1 id="hero-title">No submission<br>cleared yet.</h1><p class="lead">The previous candidate is a useful research artifact, but it fails the requested literal duplicate rule. Protect the weekly slot until the protocol conflict and independent validation are resolved.</p>
 <div class="hero-actions"><a class="btn" href="{artifact}" download>↓ Download research TIFF</a><a class="btn secondary" href="executive-summary.html">Read the submission guide →</a></div>
@@ -109,9 +158,12 @@ def main() -> None:
 <section class="section"><div class="section-head"><div><div class="eyebrow">Focus sites</div><h2>The nine-site picture</h2><p>The largest reported historical result is GEMSDOE32’s 0.2778, but its file is not a new or unique submission.</p></div><a class="section-link" href="executive-summary.html">Full comparison & guide →</a></div>
 <div class="callout"><strong>No defensible leaderboard estimate for a new file.</strong><p>The nine historical numbers are user/owner reports without archived submission-page receipts. See the comparison for the exact artifacts, hashes, overlaps and evidence classes.</p></div></section>'''
 
+    intro_line = ('One Session-2 candidate is cleared under the documented control-separated policy; the literal-rule reading is disclosed beside it. The older HTCADS file below remains research-only.'
+                  if s2_summary else 'At present there is <strong>no competition-ready file</strong>. The existing file below is available for research, not a weekly submission slot.')
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
-<div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>At present there is <strong>no competition-ready file</strong>. The existing file below is available for research, not a weekly submission slot.</p></div>
-<div class="callout red-callout"><strong>SUBMISSION STATUS: NO — DO NOT SUBMIT.</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
+<div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>{intro_line}</p></div>
+{s2_summary}
+<div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Leaderboard estimates for new submissions: <strong>not available</strong>. Historical results below are user/owner-reported, not organizer-confirmed receipts.</p></div></div>{table}
 <p class="note">Overlap is directional: the percentage of a row’s positive pixels within 3 px of its closest other focus-site raster, computed from pinned owner bytes. It is not a complete current-registry check. The files are historical; downloads are provided for comparison only.</p></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">The best previous candidate in this repo</div><h2>Research only, not a recommendation</h2></div></div>
@@ -157,6 +209,8 @@ def main() -> None:
         "reason": f"Literal registered lattice overlap {percent:.3f}%; assigned budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
+    if s2_feed is not None:
+        feed["session2_candidate"] = s2_feed
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {

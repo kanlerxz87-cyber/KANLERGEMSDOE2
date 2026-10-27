@@ -1,0 +1,1317 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "site": "KANLERGEMSDOE2",
+  "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "branch": "arena/33f25930-kanlergemsdoe2",
+  "lane_id": "KG2-S2-DSLUP3D",
+  "generated_utc": "2026-10-27T17:58:46.251806+00:00",
+  "hypothesis": "KG2-S2 (EXP-A: DSLUP-Core) \u2014 Depth-Scaled Listric Updip Continuation & Blind-Basin Dual-Population Reallocation",
+  "mechanism": "Replaces the fixed 400 m FFT upward-continuation updip gravity crest migration of the promoted HTCADS-DualRegime lane with a locally depth-to-basement-scaled listric-dip 3-height (150/400/800 m) continuation crest-migration projector (per-pixel updip offset s = depth/tan(dip_eff)/100 m, dip_eff 62->38 deg listric, clipped 1.5-11 px) gated by multi-height strike coherence, substituted into both the 27-channel out-of-quadrant sharp GBDT and the first-principles Multi-Physics Conduit pillar, and allocates the 300 m submodular CELF budget as a dual population with a reserved concealed-basin hydro-geothermal tranche (deep basement outside 1 m LiDAR validity) packed before the main surface.",
+  "named_non_fault_mimic": "Shallow alluvial channel edges and fan-head trenches producing short-wavelength gravity-gradient texture over basins (suppressed by the KG2-S2-H3 multi-height strike-coherence gate: they lose strike between 150 m and 800 m continuation); Pleistocene Lake Lahontan shorelines & tufa (suppressed by the inherited contour-orthogonal LiDAR specialist and sinter>>tufa weighting); unfaulted intrusive contacts (curvilinear closed loops vs linear strike persistence under the coherence gate).",
+  "leakage_canary": {
+    "passed": true,
+    "max_single_feature_auc": 0.795377,
+    "max_feature_name": "vis_aniso_prior",
+    "total_features_tested": 50
+  },
+  "holdout_dti": {
+    "primary_hide_and_recover": {
+      "pooled_dti": 0.113495,
+      "ci95": [
+        0.100299,
+        0.127055
+      ],
+      "champion_02778_same_evaluator": 0.099202,
+      "per_quadrant_dti": {
+        "NW": 0.143415,
+        "NE": 0.098123,
+        "SW": 0.095534,
+        "SE": 0.124452
+      },
+      "paired_delta_vs_0p2778_ref": 0.014292,
+      "paired_delta_ci95": [
+        0.00329,
+        0.025805
+      ],
+      "win_prob_vs_ref": 0.994,
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.1003, 0.1271])"
+    },
+    "secondary_off_catalogue_sgmc": {
+      "raw_dti": 0.119211,
+      "sgmc_prevalence_calibrated_dti": 0.079698,
+      "ci95": [
+        0.070751,
+        0.087712
+      ],
+      "champion_02778_same_evaluator": 0.064121,
+      "paired_delta_vs_0p2778_ref": 0.015577,
+      "paired_delta_ci95": [
+        0.005835,
+        0.024348
+      ],
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0708, 0.0877])"
+    }
+  },
+  "structural_invariants": {
+    "median_d_known_px": 6.71,
+    "pct_le_2px_known": 0.0,
+    "pct_le_10px_known": 60.65,
+    "pct_in_lidar": 80.21
+  },
+  "registry_comparison": {
+    "passed": false,
+    "unique_rasters_checked": 1201,
+    "pre_placement_surface_max_abs_spearman": 0.46634,
+    "pre_placement_closest_peer": "GEMSDOE48__7303cda1__GEMSDOE48-H53-3SRC-DS-20261007-9242c831-diag-plausibility-nan.tif",
+    "final_dots_max_abs_spearman": 0.644427,
+    "final_dots_closest_spearman_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "final_dots_max_detector_3px_overlap": 0.989111,
+    "final_dots_closest_3px_detector_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "final_dots_max_harmonic_3px_overlap_all": 0.987502,
+    "final_dots_closest_harmonic_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "calibration_lattice_probes_logged": [
+      {
+        "name": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "n_dots": 206895,
+        "footprint_3px_coverage": 0.9986,
+        "asym_frac_in_3px": 0.999788,
+        "reverse_frac_reg_in_our_3px": 0.127625,
+        "harmonic_3px_overlap": 0.226355,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__1e8dc5e3__12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.32203,
+        "asym_frac_in_3px": 0.753625,
+        "reverse_frac_reg_in_our_3px": 0.311707,
+        "harmonic_3px_overlap": 0.441009,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__3a039614__12GEMSDOE_r6-nms3-h28-texture_8721329b55c7_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.30625,
+        "asym_frac_in_3px": 0.688798,
+        "reverse_frac_reg_in_our_3px": 0.301567,
+        "harmonic_3px_overlap": 0.419479,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__65595974__12GEMSDOE_r5-nms3-trace_055e9aac96b8_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.30743,
+        "asym_frac_in_3px": 0.680671,
+        "reverse_frac_reg_in_our_3px": 0.297087,
+        "harmonic_3px_overlap": 0.413637,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0a195a38__13gems-composite-20260928T040920Z.tif",
+        "n_dots": 338755,
+        "footprint_3px_coverage": 0.72262,
+        "asym_frac_in_3px": 0.929224,
+        "reverse_frac_reg_in_our_3px": 0.209951,
+        "harmonic_3px_overlap": 0.342514,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0bb2fae4__13gems_20261001_r11-greedy-mp_v2_zerofill.tif",
+        "n_dots": 272853,
+        "footprint_3px_coverage": 0.73665,
+        "asym_frac_in_3px": 0.946433,
+        "reverse_frac_reg_in_our_3px": 0.196956,
+        "harmonic_3px_overlap": 0.326058,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0d3a7e80__13gems-composite-plus-20260929T183249Z_allfinite.tif",
+        "n_dots": 380365,
+        "footprint_3px_coverage": 0.83479,
+        "asym_frac_in_3px": 0.938439,
+        "reverse_frac_reg_in_our_3px": 0.219584,
+        "harmonic_3px_overlap": 0.355893,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__2f15909f__13gems_20261001_r14-union-tips10-lat6_zerofill.tif",
+        "n_dots": 192231,
+        "footprint_3px_coverage": 0.76266,
+        "asym_frac_in_3px": 0.818877,
+        "reverse_frac_reg_in_our_3px": 0.240778,
+        "harmonic_3px_overlap": 0.372135,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__437245c5__13gems-composite-20260929T183221Z.tif",
+        "n_dots": 507776,
+        "footprint_3px_coverage": 0.86075,
+        "asym_frac_in_3px": 0.941573,
+        "reverse_frac_reg_in_our_3px": 0.183969,
+        "harmonic_3px_overlap": 0.307799,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__443e8e1c__13gems-r8-ensemble-20260930T014614Z_allfinite.tif",
+        "n_dots": 452679,
+        "footprint_3px_coverage": 0.75819,
+        "asym_frac_in_3px": 0.952887,
+        "reverse_frac_reg_in_our_3px": 0.236896,
+        "harmonic_3px_overlap": 0.379456,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__6d69c94d__13gems-toporef-holdoutref.tif",
+        "n_dots": 246469,
+        "footprint_3px_coverage": 0.6784,
+        "asym_frac_in_3px": 0.890025,
+        "reverse_frac_reg_in_our_3px": 0.196998,
+        "harmonic_3px_overlap": 0.322594,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__9f9dccae__13gems-r6-ensemble-20260929T182914Z.tif",
+        "n_dots": 344041,
+        "footprint_3px_coverage": 0.64397,
+        "asym_frac_in_3px": 0.93512,
+        "reverse_frac_reg_in_our_3px": 0.257865,
+        "harmonic_3px_overlap": 0.404254,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__4e50a598__gems-cleanup-a-20260928T195952Z-curv_scarp.tif",
+        "n_dots": 362327,
+        "footprint_3px_coverage": 0.88751,
+        "asym_frac_in_3px": 0.910315,
+        "reverse_frac_reg_in_our_3px": 0.16856,
+        "harmonic_3px_overlap": 0.28445,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__56b9beee__gems-tso1-20260929T014924Z-conj_alteration_mag.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45769,
+        "asym_frac_in_3px": 0.526584,
+        "reverse_frac_reg_in_our_3px": 0.152802,
+        "harmonic_3px_overlap": 0.236869,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__c1a0b186__gems-v1_conj_mag_asa_edge-20260929T054519Z-conj_mag_asa_edge.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45205,
+        "asym_frac_in_3px": 0.500876,
+        "reverse_frac_reg_in_our_3px": 0.146581,
+        "harmonic_3px_overlap": 0.226792,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__dfcb9e6a__gems-tso1-20260929T005627Z-conj_alteration_mag.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45889,
+        "asym_frac_in_3px": 0.527168,
+        "reverse_frac_reg_in_our_3px": 0.152802,
+        "harmonic_3px_overlap": 0.236929,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "18GEMSDOE__f2e3063e__18GEMSDOE_H19-C_20260930T212401Z_c11e495e.tif",
+        "n_dots": 513786,
+        "footprint_3px_coverage": 0.32798,
+        "asym_frac_in_3px": 0.728395,
+        "reverse_frac_reg_in_our_3px": 0.306824,
+        "harmonic_3px_overlap": 0.431772,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "5GEMSDOE__5b7d2fe2__gems-density-probe-20260925T184215Z-9cdae9b4.tif",
+        "n_dots": 5106385,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.125819,
+        "harmonic_3px_overlap": 0.223516,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "61GEMSDOE__1ec9ff5f__gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+        "n_dots": 311617,
+        "footprint_3px_coverage": 0.95746,
+        "asym_frac_in_3px": 0.941812,
+        "reverse_frac_reg_in_our_3px": 0.120292,
+        "harmonic_3px_overlap": 0.213336,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__404170e9__gems62f-h2r-ventcons-125890-20261012T012736Z-zeros.tif",
+        "n_dots": 125890,
+        "footprint_3px_coverage": 0.30429,
+        "asym_frac_in_3px": 0.581612,
+        "reverse_frac_reg_in_our_3px": 0.240678,
+        "harmonic_3px_overlap": 0.340467,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__800e2713__gems62b-tiltgrad-vote-scarpcorrob-120000-zeros.tif",
+        "n_dots": 120000,
+        "footprint_3px_coverage": 0.43685,
+        "asym_frac_in_3px": 0.74178,
+        "reverse_frac_reg_in_our_3px": 0.218508,
+        "harmonic_3px_overlap": 0.337576,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__bdcab731__gems62-h63m-multiline-corroborated-90000-zeros.tif",
+        "n_dots": 90000,
+        "footprint_3px_coverage": 0.36617,
+        "asym_frac_in_3px": 0.530913,
+        "reverse_frac_reg_in_our_3px": 0.183167,
+        "harmonic_3px_overlap": 0.272366,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE22__4934bb73__gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+        "n_dots": 335879,
+        "footprint_3px_coverage": 0.41165,
+        "asym_frac_in_3px": 0.820763,
+        "reverse_frac_reg_in_our_3px": 0.304324,
+        "harmonic_3px_overlap": 0.444015,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE22__509be169__gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+        "n_dots": 516738,
+        "footprint_3px_coverage": 0.53309,
+        "asym_frac_in_3px": 0.889494,
+        "reverse_frac_reg_in_our_3px": 0.246759,
+        "harmonic_3px_overlap": 0.386342,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__1374c176__gemsdoe23-h24-dispersed-habitat-20261002-ada8df14-allfinite.tif",
+        "n_dots": 100000,
+        "footprint_3px_coverage": 0.48596,
+        "asym_frac_in_3px": 0.691188,
+        "reverse_frac_reg_in_our_3px": 0.18059,
+        "harmonic_3px_overlap": 0.286361,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__1cd1123a__gemsdoe23-h30-arrangement-matched-habitat-20261002-0d4e02e8-allfinite.tif",
+        "n_dots": 91533,
+        "footprint_3px_coverage": 0.40994,
+        "asym_frac_in_3px": 0.722765,
+        "reverse_frac_reg_in_our_3px": 0.228606,
+        "harmonic_3px_overlap": 0.347348,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__7d19b90e__gemsdoe23-h29-dealiased-habitat-20261002-7bf9fac6-allfinite.tif",
+        "n_dots": 100000,
+        "footprint_3px_coverage": 0.48962,
+        "asym_frac_in_3px": 0.693021,
+        "reverse_frac_reg_in_our_3px": 0.1809,
+        "harmonic_3px_overlap": 0.286908,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE30__3b442e92__gemsdoe30-sgmc-hedge-d10-85k-20261003-ac08b41e.tif",
+        "n_dots": 85526,
+        "footprint_3px_coverage": 0.3189,
+        "asym_frac_in_3px": 0.539438,
+        "reverse_frac_reg_in_our_3px": 0.196069,
+        "harmonic_3px_overlap": 0.287603,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__0c1b5547__riftline-context-distance-20260925T011817Z-7b6010637a.tif",
+        "n_dots": 352506,
+        "footprint_3px_coverage": 0.39329,
+        "asym_frac_in_3px": 0.722712,
+        "reverse_frac_reg_in_our_3px": 0.245499,
+        "harmonic_3px_overlap": 0.366501,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__306ee1b1__coverage-v3-wide-20260925T054019Z-0ac095a7ed.tif",
+        "n_dots": 624025,
+        "footprint_3px_coverage": 0.61466,
+        "asym_frac_in_3px": 0.952754,
+        "reverse_frac_reg_in_our_3px": 0.220826,
+        "harmonic_3px_overlap": 0.358549,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__32a4a6d2__pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+        "n_dots": 155021,
+        "footprint_3px_coverage": 0.73386,
+        "asym_frac_in_3px": 0.778191,
+        "reverse_frac_reg_in_our_3px": 0.135169,
+        "harmonic_3px_overlap": 0.23033,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__fdd93116__pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+        "n_dots": 155021,
+        "footprint_3px_coverage": 0.73531,
+        "asym_frac_in_3px": 0.800791,
+        "reverse_frac_reg_in_our_3px": 0.137149,
+        "harmonic_3px_overlap": 0.234189,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__11025125__gemsdoe48-h48-1-unassigned_yager_mTheta_incl_conflict.tif",
+        "n_dots": 4256372,
+        "footprint_3px_coverage": 0.9916,
+        "asym_frac_in_3px": 0.976789,
+        "reverse_frac_reg_in_our_3px": 0.090251,
+        "harmonic_3px_overlap": 0.165234,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__1edd83ef__gemsdoe48-h56b-noflank-mtheta-5bb2c03c981e.tif",
+        "n_dots": 4467661,
+        "footprint_3px_coverage": 0.99549,
+        "asym_frac_in_3px": 0.985579,
+        "reverse_frac_reg_in_our_3px": 0.097624,
+        "harmonic_3px_overlap": 0.177652,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__35616cbb__gemsdoe48-h56b-plausibility-126ca59c2801.tif",
+        "n_dots": 4862052,
+        "footprint_3px_coverage": 0.99733,
+        "asym_frac_in_3px": 0.99992,
+        "reverse_frac_reg_in_our_3px": 0.114771,
+        "harmonic_3px_overlap": 0.205909,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__3d3ee663__gemsdoe48-h56b-noflank-plausibility-5bb2c03c981e.tif",
+        "n_dots": 5137016,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.126096,
+        "harmonic_3px_overlap": 0.223952,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__4ed17591__GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-unassigned-mtheta.tif",
+        "n_dots": 4830583,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.11437,
+        "harmonic_3px_overlap": 0.205264,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__9aa682f2__GEMSDOE48-H57-ds-relief-augmented-20261007-e6b785718c07-diag-conflict-k.tif",
+        "n_dots": 490789,
+        "footprint_3px_coverage": 0.38585,
+        "asym_frac_in_3px": 0.715435,
+        "reverse_frac_reg_in_our_3px": 0.264462,
+        "harmonic_3px_overlap": 0.386174,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__ba3de6db__gemsdoe48-h56b-mtheta-126ca59c2801.tif",
+        "n_dots": 4234841,
+        "footprint_3px_coverage": 0.98784,
+        "asym_frac_in_3px": 0.965024,
+        "reverse_frac_reg_in_our_3px": 0.087809,
+        "harmonic_3px_overlap": 0.160972,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__cd838daa__GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif",
+        "n_dots": 5167373,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.127843,
+        "harmonic_3px_overlap": 0.226704,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__d8969518__gemsdoe48-h48-1-unassigned_dempster_mTheta.tif",
+        "n_dots": 4238870,
+        "footprint_3px_coverage": 0.98813,
+        "asym_frac_in_3px": 0.966112,
+        "reverse_frac_reg_in_our_3px": 0.088128,
+        "harmonic_3px_overlap": 0.161522,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__34cf89f6__gemsdoe50-h57-scarpstep-80000-20261007T1830Z-allfinite.tif",
+        "n_dots": 80000,
+        "footprint_3px_coverage": 0.30215,
+        "asym_frac_in_3px": 0.569767,
+        "reverse_frac_reg_in_our_3px": 0.2278,
+        "harmonic_3px_overlap": 0.325472,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__4dd494d3__gemsdoe50-h59-topo-lineament-scatter-180k-20261007T170212Z-allfinite.tif",
+        "n_dots": 180000,
+        "footprint_3px_coverage": 0.63499,
+        "asym_frac_in_3px": 0.757848,
+        "reverse_frac_reg_in_our_3px": 0.162922,
+        "harmonic_3px_overlap": 0.268189,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__91635f3c__gemsdoe50-h56-scarpdisperse-90000-allfinite.tif",
+        "n_dots": 90000,
+        "footprint_3px_coverage": 0.32279,
+        "asym_frac_in_3px": 0.48388,
+        "reverse_frac_reg_in_our_3px": 0.202644,
+        "harmonic_3px_overlap": 0.285658,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__b0215bc5__gemsdoe50-h60-union-d2-75308-20261007T2250Z.tif",
+        "n_dots": 75308,
+        "footprint_3px_coverage": 0.31753,
+        "asym_frac_in_3px": 0.105991,
+        "reverse_frac_reg_in_our_3px": 0.042545,
+        "harmonic_3px_overlap": 0.060718,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE67__221a40c1__gemsdoe67-ovtr-ml-cover-tau3p0-20261012-zero.tif",
+        "n_dots": 167597,
+        "footprint_3px_coverage": 0.54629,
+        "asym_frac_in_3px": 0.863919,
+        "reverse_frac_reg_in_our_3px": 0.213351,
+        "harmonic_3px_overlap": 0.342195,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE68__46052bd3__gems68-autoctx-40000-20261012T014104Z-surface-zeros.tif",
+        "n_dots": 2583687,
+        "footprint_3px_coverage": 0.52961,
+        "asym_frac_in_3px": 0.704812,
+        "reverse_frac_reg_in_our_3px": 0.149575,
+        "harmonic_3px_overlap": 0.246779,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE76__dae729db__gems76-geophys-cataloguefree-rank-gate1-20261021.tif",
+        "n_dots": 2581646,
+        "footprint_3px_coverage": 0.73775,
+        "asym_frac_in_3px": 0.914458,
+        "reverse_frac_reg_in_our_3px": 0.172755,
+        "harmonic_3px_overlap": 0.290609,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__46646948__gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+        "n_dots": 201260,
+        "footprint_3px_coverage": 0.55306,
+        "asym_frac_in_3px": 0.640357,
+        "reverse_frac_reg_in_our_3px": 0.129539,
+        "harmonic_3px_overlap": 0.215487,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__8901ed1d__gems77-h77-urank-curvature-0d868dc271bb-research.tif",
+        "n_dots": 788984,
+        "footprint_3px_coverage": 0.78086,
+        "asym_frac_in_3px": 0.782148,
+        "reverse_frac_reg_in_our_3px": 0.12834,
+        "harmonic_3px_overlap": 0.220499,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__d83bd9f9__gems77-h82-ternaryentropy-20261021-RESEARCH-ONLY.tif",
+        "n_dots": 163311,
+        "footprint_3px_coverage": 0.3118,
+        "asym_frac_in_3px": 0.450629,
+        "reverse_frac_reg_in_our_3px": 0.210102,
+        "harmonic_3px_overlap": 0.286586,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE86__7b796cd4__gems86-faulthalo-4210938px-20261024T181838Z-219b3357-zeros.tif",
+        "n_dots": 1727048,
+        "footprint_3px_coverage": 0.42257,
+        "asym_frac_in_3px": 0.300127,
+        "reverse_frac_reg_in_our_3px": 0.088988,
+        "harmonic_3px_overlap": 0.137274,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "WBGGEMSDOE1__d9a0a223__wbg-c1-commutator-research-surface-20261026-acea88448272.tif",
+        "n_dots": 1029830,
+        "footprint_3px_coverage": 0.35449,
+        "asym_frac_in_3px": 0.609869,
+        "reverse_frac_reg_in_our_3px": 0.248305,
+        "harmonic_3px_overlap": 0.35292,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      }
+    ],
+    "top_10_closest_detector_peers": [
+      {
+        "peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+        "peer_dots": 37654,
+        "asym_3px_overlap": 0.989111,
+        "harmonic_3px_overlap": 0.987502,
+        "continuous_spearman": 0.127419,
+        "final_dots_spearman": 0.644427
+      },
+      {
+        "peer": "GEMSDOE3__943c6ce5__coverage-v3-fusion-20260925T054015Z-3ccf68834a.tif",
+        "peer_dots": 246258,
+        "asym_3px_overlap": 0.720587,
+        "harmonic_3px_overlap": 0.454795,
+        "continuous_spearman": 0.196401,
+        "final_dots_spearman": 0.042977
+      },
+      {
+        "peer": "GEMSDOE3__af8fd488__coverage-v3-ml-20260925T054017Z-92d5062aea.tif",
+        "peer_dots": 195126,
+        "asym_3px_overlap": 0.699607,
+        "harmonic_3px_overlap": 0.474046,
+        "continuous_spearman": 0.186563,
+        "final_dots_spearman": 0.045886
+      },
+      {
+        "peer": "GEMSDOE37__595b5b5c__gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif",
+        "peer_dots": 80000,
+        "asym_3px_overlap": 0.692463,
+        "harmonic_3px_overlap": 0.426539,
+        "continuous_spearman": 0.085611,
+        "final_dots_spearman": 0.011123
+      },
+      {
+        "peer": "17GEMSDOE__374c88b1__17GEMSDOE_E-proba-multiscale_20260930T044527Z.tif",
+        "peer_dots": 728138,
+        "asym_3px_overlap": 0.684628,
+        "harmonic_3px_overlap": 0.498344,
+        "continuous_spearman": 0.450555,
+        "final_dots_spearman": 0.070538
+      },
+      {
+        "peer": "GEMSDOE48__d27383bd__GEMSDOE48-H57-ds-relief-augmented-20261007-e6b785718c07-diag-plausibility.tif",
+        "peer_dots": 348661,
+        "asym_3px_overlap": 0.674404,
+        "harmonic_3px_overlap": 0.453888,
+        "continuous_spearman": 0.413001,
+        "final_dots_spearman": 0.039299
+      },
+      {
+        "peer": "GEMSDOE34__b6a73ed9__gems34-g34-5-habitat-ridge-hybrid-40k-20261004T200038Z.tif",
+        "peer_dots": 100988,
+        "asym_3px_overlap": 0.665507,
+        "harmonic_3px_overlap": 0.442092,
+        "continuous_spearman": 0.12754,
+        "final_dots_spearman": 0.011678
+      },
+      {
+        "peer": "5GEMSDOE__d65e1309__candidate_s5_dilational_top50k.tif",
+        "peer_dots": 277507,
+        "asym_3px_overlap": 0.660674,
+        "harmonic_3px_overlap": 0.446042,
+        "continuous_spearman": 0.212437,
+        "final_dots_spearman": 0.02061
+      },
+      {
+        "peer": "GEMSDOE45__6255d3e1__gems45-phase-parity-20261006-362e1338f293-research.tif",
+        "peer_dots": 82678,
+        "asym_3px_overlap": 0.656371,
+        "harmonic_3px_overlap": 0.467419,
+        "continuous_spearman": 0.117881,
+        "final_dots_spearman": 0.020991
+      },
+      {
+        "peer": "GEMSDOE22__1fdecbd4__gems22-h22-value-emit-20261002T015455Z-f6777492-allfinite.tif",
+        "peer_dots": 550000,
+        "asym_3px_overlap": 0.654778,
+        "harmonic_3px_overlap": 0.45485,
+        "continuous_spearman": 0.329439,
+        "final_dots_spearman": 0.061948
+      }
+    ],
+    "exact_sha256_unique": true
+  },
+  "correlation_overlap_vs_registry": {
+    "passed": false,
+    "unique_rasters_checked": 1201,
+    "pre_placement_surface_max_abs_spearman": 0.46634,
+    "pre_placement_closest_peer": "GEMSDOE48__7303cda1__GEMSDOE48-H53-3SRC-DS-20261007-9242c831-diag-plausibility-nan.tif",
+    "final_dots_max_abs_spearman": 0.644427,
+    "final_dots_closest_spearman_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "final_dots_max_detector_3px_overlap": 0.989111,
+    "final_dots_closest_3px_detector_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "final_dots_max_harmonic_3px_overlap_all": 0.987502,
+    "final_dots_closest_harmonic_peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "calibration_lattice_probes_logged": [
+      {
+        "name": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "n_dots": 206895,
+        "footprint_3px_coverage": 0.9986,
+        "asym_frac_in_3px": 0.999788,
+        "reverse_frac_reg_in_our_3px": 0.127625,
+        "harmonic_3px_overlap": 0.226355,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__1e8dc5e3__12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.32203,
+        "asym_frac_in_3px": 0.753625,
+        "reverse_frac_reg_in_our_3px": 0.311707,
+        "harmonic_3px_overlap": 0.441009,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__3a039614__12GEMSDOE_r6-nms3-h28-texture_8721329b55c7_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.30625,
+        "asym_frac_in_3px": 0.688798,
+        "reverse_frac_reg_in_our_3px": 0.301567,
+        "harmonic_3px_overlap": 0.419479,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "12GEMSDOE__65595974__12GEMSDOE_r5-nms3-trace_055e9aac96b8_allfinite.tif",
+        "n_dots": 103347,
+        "footprint_3px_coverage": 0.30743,
+        "asym_frac_in_3px": 0.680671,
+        "reverse_frac_reg_in_our_3px": 0.297087,
+        "harmonic_3px_overlap": 0.413637,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0a195a38__13gems-composite-20260928T040920Z.tif",
+        "n_dots": 338755,
+        "footprint_3px_coverage": 0.72262,
+        "asym_frac_in_3px": 0.929224,
+        "reverse_frac_reg_in_our_3px": 0.209951,
+        "harmonic_3px_overlap": 0.342514,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0bb2fae4__13gems_20261001_r11-greedy-mp_v2_zerofill.tif",
+        "n_dots": 272853,
+        "footprint_3px_coverage": 0.73665,
+        "asym_frac_in_3px": 0.946433,
+        "reverse_frac_reg_in_our_3px": 0.196956,
+        "harmonic_3px_overlap": 0.326058,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__0d3a7e80__13gems-composite-plus-20260929T183249Z_allfinite.tif",
+        "n_dots": 380365,
+        "footprint_3px_coverage": 0.83479,
+        "asym_frac_in_3px": 0.938439,
+        "reverse_frac_reg_in_our_3px": 0.219584,
+        "harmonic_3px_overlap": 0.355893,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__2f15909f__13gems_20261001_r14-union-tips10-lat6_zerofill.tif",
+        "n_dots": 192231,
+        "footprint_3px_coverage": 0.76266,
+        "asym_frac_in_3px": 0.818877,
+        "reverse_frac_reg_in_our_3px": 0.240778,
+        "harmonic_3px_overlap": 0.372135,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__437245c5__13gems-composite-20260929T183221Z.tif",
+        "n_dots": 507776,
+        "footprint_3px_coverage": 0.86075,
+        "asym_frac_in_3px": 0.941573,
+        "reverse_frac_reg_in_our_3px": 0.183969,
+        "harmonic_3px_overlap": 0.307799,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__443e8e1c__13gems-r8-ensemble-20260930T014614Z_allfinite.tif",
+        "n_dots": 452679,
+        "footprint_3px_coverage": 0.75819,
+        "asym_frac_in_3px": 0.952887,
+        "reverse_frac_reg_in_our_3px": 0.236896,
+        "harmonic_3px_overlap": 0.379456,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__6d69c94d__13gems-toporef-holdoutref.tif",
+        "n_dots": 246469,
+        "footprint_3px_coverage": 0.6784,
+        "asym_frac_in_3px": 0.890025,
+        "reverse_frac_reg_in_our_3px": 0.196998,
+        "harmonic_3px_overlap": 0.322594,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "13GEMSDOE__9f9dccae__13gems-r6-ensemble-20260929T182914Z.tif",
+        "n_dots": 344041,
+        "footprint_3px_coverage": 0.64397,
+        "asym_frac_in_3px": 0.93512,
+        "reverse_frac_reg_in_our_3px": 0.257865,
+        "harmonic_3px_overlap": 0.404254,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__4e50a598__gems-cleanup-a-20260928T195952Z-curv_scarp.tif",
+        "n_dots": 362327,
+        "footprint_3px_coverage": 0.88751,
+        "asym_frac_in_3px": 0.910315,
+        "reverse_frac_reg_in_our_3px": 0.16856,
+        "harmonic_3px_overlap": 0.28445,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__56b9beee__gems-tso1-20260929T014924Z-conj_alteration_mag.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45769,
+        "asym_frac_in_3px": 0.526584,
+        "reverse_frac_reg_in_our_3px": 0.152802,
+        "harmonic_3px_overlap": 0.236869,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__c1a0b186__gems-v1_conj_mag_asa_edge-20260929T054519Z-conj_mag_asa_edge.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45205,
+        "asym_frac_in_3px": 0.500876,
+        "reverse_frac_reg_in_our_3px": 0.146581,
+        "harmonic_3px_overlap": 0.226792,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "15GEMSDOE__dfcb9e6a__gems-tso1-20260929T005627Z-conj_alteration_mag.tif",
+        "n_dots": 99999,
+        "footprint_3px_coverage": 0.45889,
+        "asym_frac_in_3px": 0.527168,
+        "reverse_frac_reg_in_our_3px": 0.152802,
+        "harmonic_3px_overlap": 0.236929,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "18GEMSDOE__f2e3063e__18GEMSDOE_H19-C_20260930T212401Z_c11e495e.tif",
+        "n_dots": 513786,
+        "footprint_3px_coverage": 0.32798,
+        "asym_frac_in_3px": 0.728395,
+        "reverse_frac_reg_in_our_3px": 0.306824,
+        "harmonic_3px_overlap": 0.431772,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "5GEMSDOE__5b7d2fe2__gems-density-probe-20260925T184215Z-9cdae9b4.tif",
+        "n_dots": 5106385,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.125819,
+        "harmonic_3px_overlap": 0.223516,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "61GEMSDOE__1ec9ff5f__gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+        "n_dots": 311617,
+        "footprint_3px_coverage": 0.95746,
+        "asym_frac_in_3px": 0.941812,
+        "reverse_frac_reg_in_our_3px": 0.120292,
+        "harmonic_3px_overlap": 0.213336,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__404170e9__gems62f-h2r-ventcons-125890-20261012T012736Z-zeros.tif",
+        "n_dots": 125890,
+        "footprint_3px_coverage": 0.30429,
+        "asym_frac_in_3px": 0.581612,
+        "reverse_frac_reg_in_our_3px": 0.240678,
+        "harmonic_3px_overlap": 0.340467,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__800e2713__gems62b-tiltgrad-vote-scarpcorrob-120000-zeros.tif",
+        "n_dots": 120000,
+        "footprint_3px_coverage": 0.43685,
+        "asym_frac_in_3px": 0.74178,
+        "reverse_frac_reg_in_our_3px": 0.218508,
+        "harmonic_3px_overlap": 0.337576,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "62GEMSDOE__bdcab731__gems62-h63m-multiline-corroborated-90000-zeros.tif",
+        "n_dots": 90000,
+        "footprint_3px_coverage": 0.36617,
+        "asym_frac_in_3px": 0.530913,
+        "reverse_frac_reg_in_our_3px": 0.183167,
+        "harmonic_3px_overlap": 0.272366,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE22__4934bb73__gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+        "n_dots": 335879,
+        "footprint_3px_coverage": 0.41165,
+        "asym_frac_in_3px": 0.820763,
+        "reverse_frac_reg_in_our_3px": 0.304324,
+        "harmonic_3px_overlap": 0.444015,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE22__509be169__gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+        "n_dots": 516738,
+        "footprint_3px_coverage": 0.53309,
+        "asym_frac_in_3px": 0.889494,
+        "reverse_frac_reg_in_our_3px": 0.246759,
+        "harmonic_3px_overlap": 0.386342,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__1374c176__gemsdoe23-h24-dispersed-habitat-20261002-ada8df14-allfinite.tif",
+        "n_dots": 100000,
+        "footprint_3px_coverage": 0.48596,
+        "asym_frac_in_3px": 0.691188,
+        "reverse_frac_reg_in_our_3px": 0.18059,
+        "harmonic_3px_overlap": 0.286361,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__1cd1123a__gemsdoe23-h30-arrangement-matched-habitat-20261002-0d4e02e8-allfinite.tif",
+        "n_dots": 91533,
+        "footprint_3px_coverage": 0.40994,
+        "asym_frac_in_3px": 0.722765,
+        "reverse_frac_reg_in_our_3px": 0.228606,
+        "harmonic_3px_overlap": 0.347348,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE23__7d19b90e__gemsdoe23-h29-dealiased-habitat-20261002-7bf9fac6-allfinite.tif",
+        "n_dots": 100000,
+        "footprint_3px_coverage": 0.48962,
+        "asym_frac_in_3px": 0.693021,
+        "reverse_frac_reg_in_our_3px": 0.1809,
+        "harmonic_3px_overlap": 0.286908,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE30__3b442e92__gemsdoe30-sgmc-hedge-d10-85k-20261003-ac08b41e.tif",
+        "n_dots": 85526,
+        "footprint_3px_coverage": 0.3189,
+        "asym_frac_in_3px": 0.539438,
+        "reverse_frac_reg_in_our_3px": 0.196069,
+        "harmonic_3px_overlap": 0.287603,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__0c1b5547__riftline-context-distance-20260925T011817Z-7b6010637a.tif",
+        "n_dots": 352506,
+        "footprint_3px_coverage": 0.39329,
+        "asym_frac_in_3px": 0.722712,
+        "reverse_frac_reg_in_our_3px": 0.245499,
+        "harmonic_3px_overlap": 0.366501,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__306ee1b1__coverage-v3-wide-20260925T054019Z-0ac095a7ed.tif",
+        "n_dots": 624025,
+        "footprint_3px_coverage": 0.61466,
+        "asym_frac_in_3px": 0.952754,
+        "reverse_frac_reg_in_our_3px": 0.220826,
+        "harmonic_3px_overlap": 0.358549,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__32a4a6d2__pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+        "n_dots": 155021,
+        "footprint_3px_coverage": 0.73386,
+        "asym_frac_in_3px": 0.778191,
+        "reverse_frac_reg_in_our_3px": 0.135169,
+        "harmonic_3px_overlap": 0.23033,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE3__fdd93116__pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+        "n_dots": 155021,
+        "footprint_3px_coverage": 0.73531,
+        "asym_frac_in_3px": 0.800791,
+        "reverse_frac_reg_in_our_3px": 0.137149,
+        "harmonic_3px_overlap": 0.234189,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__11025125__gemsdoe48-h48-1-unassigned_yager_mTheta_incl_conflict.tif",
+        "n_dots": 4256372,
+        "footprint_3px_coverage": 0.9916,
+        "asym_frac_in_3px": 0.976789,
+        "reverse_frac_reg_in_our_3px": 0.090251,
+        "harmonic_3px_overlap": 0.165234,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__1edd83ef__gemsdoe48-h56b-noflank-mtheta-5bb2c03c981e.tif",
+        "n_dots": 4467661,
+        "footprint_3px_coverage": 0.99549,
+        "asym_frac_in_3px": 0.985579,
+        "reverse_frac_reg_in_our_3px": 0.097624,
+        "harmonic_3px_overlap": 0.177652,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__35616cbb__gemsdoe48-h56b-plausibility-126ca59c2801.tif",
+        "n_dots": 4862052,
+        "footprint_3px_coverage": 0.99733,
+        "asym_frac_in_3px": 0.99992,
+        "reverse_frac_reg_in_our_3px": 0.114771,
+        "harmonic_3px_overlap": 0.205909,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__3d3ee663__gemsdoe48-h56b-noflank-plausibility-5bb2c03c981e.tif",
+        "n_dots": 5137016,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.126096,
+        "harmonic_3px_overlap": 0.223952,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__4ed17591__GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-unassigned-mtheta.tif",
+        "n_dots": 4830583,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.11437,
+        "harmonic_3px_overlap": 0.205264,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__9aa682f2__GEMSDOE48-H57-ds-relief-augmented-20261007-e6b785718c07-diag-conflict-k.tif",
+        "n_dots": 490789,
+        "footprint_3px_coverage": 0.38585,
+        "asym_frac_in_3px": 0.715435,
+        "reverse_frac_reg_in_our_3px": 0.264462,
+        "harmonic_3px_overlap": 0.386174,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__ba3de6db__gemsdoe48-h56b-mtheta-126ca59c2801.tif",
+        "n_dots": 4234841,
+        "footprint_3px_coverage": 0.98784,
+        "asym_frac_in_3px": 0.965024,
+        "reverse_frac_reg_in_our_3px": 0.087809,
+        "harmonic_3px_overlap": 0.160972,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__cd838daa__GEMSDOE48-H56-OWDS-B2xH33D-20261007-1f7b5a4f18db-plausibility.tif",
+        "n_dots": 5167373,
+        "footprint_3px_coverage": 1.0,
+        "asym_frac_in_3px": 1.0,
+        "reverse_frac_reg_in_our_3px": 0.127843,
+        "harmonic_3px_overlap": 0.226704,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE48__d8969518__gemsdoe48-h48-1-unassigned_dempster_mTheta.tif",
+        "n_dots": 4238870,
+        "footprint_3px_coverage": 0.98813,
+        "asym_frac_in_3px": 0.966112,
+        "reverse_frac_reg_in_our_3px": 0.088128,
+        "harmonic_3px_overlap": 0.161522,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__34cf89f6__gemsdoe50-h57-scarpstep-80000-20261007T1830Z-allfinite.tif",
+        "n_dots": 80000,
+        "footprint_3px_coverage": 0.30215,
+        "asym_frac_in_3px": 0.569767,
+        "reverse_frac_reg_in_our_3px": 0.2278,
+        "harmonic_3px_overlap": 0.325472,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__4dd494d3__gemsdoe50-h59-topo-lineament-scatter-180k-20261007T170212Z-allfinite.tif",
+        "n_dots": 180000,
+        "footprint_3px_coverage": 0.63499,
+        "asym_frac_in_3px": 0.757848,
+        "reverse_frac_reg_in_our_3px": 0.162922,
+        "harmonic_3px_overlap": 0.268189,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__91635f3c__gemsdoe50-h56-scarpdisperse-90000-allfinite.tif",
+        "n_dots": 90000,
+        "footprint_3px_coverage": 0.32279,
+        "asym_frac_in_3px": 0.48388,
+        "reverse_frac_reg_in_our_3px": 0.202644,
+        "harmonic_3px_overlap": 0.285658,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE50__b0215bc5__gemsdoe50-h60-union-d2-75308-20261007T2250Z.tif",
+        "n_dots": 75308,
+        "footprint_3px_coverage": 0.31753,
+        "asym_frac_in_3px": 0.105991,
+        "reverse_frac_reg_in_our_3px": 0.042545,
+        "harmonic_3px_overlap": 0.060718,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE67__221a40c1__gemsdoe67-ovtr-ml-cover-tau3p0-20261012-zero.tif",
+        "n_dots": 167597,
+        "footprint_3px_coverage": 0.54629,
+        "asym_frac_in_3px": 0.863919,
+        "reverse_frac_reg_in_our_3px": 0.213351,
+        "harmonic_3px_overlap": 0.342195,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE68__46052bd3__gems68-autoctx-40000-20261012T014104Z-surface-zeros.tif",
+        "n_dots": 2583687,
+        "footprint_3px_coverage": 0.52961,
+        "asym_frac_in_3px": 0.704812,
+        "reverse_frac_reg_in_our_3px": 0.149575,
+        "harmonic_3px_overlap": 0.246779,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE76__dae729db__gems76-geophys-cataloguefree-rank-gate1-20261021.tif",
+        "n_dots": 2581646,
+        "footprint_3px_coverage": 0.73775,
+        "asym_frac_in_3px": 0.914458,
+        "reverse_frac_reg_in_our_3px": 0.172755,
+        "harmonic_3px_overlap": 0.290609,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__46646948__gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+        "n_dots": 201260,
+        "footprint_3px_coverage": 0.55306,
+        "asym_frac_in_3px": 0.640357,
+        "reverse_frac_reg_in_our_3px": 0.129539,
+        "harmonic_3px_overlap": 0.215487,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__8901ed1d__gems77-h77-urank-curvature-0d868dc271bb-research.tif",
+        "n_dots": 788984,
+        "footprint_3px_coverage": 0.78086,
+        "asym_frac_in_3px": 0.782148,
+        "reverse_frac_reg_in_our_3px": 0.12834,
+        "harmonic_3px_overlap": 0.220499,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE77__d83bd9f9__gems77-h82-ternaryentropy-20261021-RESEARCH-ONLY.tif",
+        "n_dots": 163311,
+        "footprint_3px_coverage": 0.3118,
+        "asym_frac_in_3px": 0.450629,
+        "reverse_frac_reg_in_our_3px": 0.210102,
+        "harmonic_3px_overlap": 0.286586,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "GEMSDOE86__7b796cd4__gems86-faulthalo-4210938px-20261024T181838Z-219b3357-zeros.tif",
+        "n_dots": 1727048,
+        "footprint_3px_coverage": 0.42257,
+        "asym_frac_in_3px": 0.300127,
+        "reverse_frac_reg_in_our_3px": 0.088988,
+        "harmonic_3px_overlap": 0.137274,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      },
+      {
+        "name": "WBGGEMSDOE1__d9a0a223__wbg-c1-commutator-research-surface-20261026-acea88448272.tif",
+        "n_dots": 1029830,
+        "footprint_3px_coverage": 0.35449,
+        "asym_frac_in_3px": 0.609869,
+        "reverse_frac_reg_in_our_3px": 0.248305,
+        "harmonic_3px_overlap": 0.35292,
+        "note": "Uniform 5-px calibration lattice covering 99.87% of footprint within 3 px (IR-REG-LATTICE-03); non-detector probe."
+      }
+    ],
+    "top_10_closest_detector_peers": [
+      {
+        "peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+        "peer_dots": 37654,
+        "asym_3px_overlap": 0.989111,
+        "harmonic_3px_overlap": 0.987502,
+        "continuous_spearman": 0.127419,
+        "final_dots_spearman": 0.644427
+      },
+      {
+        "peer": "GEMSDOE3__943c6ce5__coverage-v3-fusion-20260925T054015Z-3ccf68834a.tif",
+        "peer_dots": 246258,
+        "asym_3px_overlap": 0.720587,
+        "harmonic_3px_overlap": 0.454795,
+        "continuous_spearman": 0.196401,
+        "final_dots_spearman": 0.042977
+      },
+      {
+        "peer": "GEMSDOE3__af8fd488__coverage-v3-ml-20260925T054017Z-92d5062aea.tif",
+        "peer_dots": 195126,
+        "asym_3px_overlap": 0.699607,
+        "harmonic_3px_overlap": 0.474046,
+        "continuous_spearman": 0.186563,
+        "final_dots_spearman": 0.045886
+      },
+      {
+        "peer": "GEMSDOE37__595b5b5c__gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif",
+        "peer_dots": 80000,
+        "asym_3px_overlap": 0.692463,
+        "harmonic_3px_overlap": 0.426539,
+        "continuous_spearman": 0.085611,
+        "final_dots_spearman": 0.011123
+      },
+      {
+        "peer": "17GEMSDOE__374c88b1__17GEMSDOE_E-proba-multiscale_20260930T044527Z.tif",
+        "peer_dots": 728138,
+        "asym_3px_overlap": 0.684628,
+        "harmonic_3px_overlap": 0.498344,
+        "continuous_spearman": 0.450555,
+        "final_dots_spearman": 0.070538
+      },
+      {
+        "peer": "GEMSDOE48__d27383bd__GEMSDOE48-H57-ds-relief-augmented-20261007-e6b785718c07-diag-plausibility.tif",
+        "peer_dots": 348661,
+        "asym_3px_overlap": 0.674404,
+        "harmonic_3px_overlap": 0.453888,
+        "continuous_spearman": 0.413001,
+        "final_dots_spearman": 0.039299
+      },
+      {
+        "peer": "GEMSDOE34__b6a73ed9__gems34-g34-5-habitat-ridge-hybrid-40k-20261004T200038Z.tif",
+        "peer_dots": 100988,
+        "asym_3px_overlap": 0.665507,
+        "harmonic_3px_overlap": 0.442092,
+        "continuous_spearman": 0.12754,
+        "final_dots_spearman": 0.011678
+      },
+      {
+        "peer": "5GEMSDOE__d65e1309__candidate_s5_dilational_top50k.tif",
+        "peer_dots": 277507,
+        "asym_3px_overlap": 0.660674,
+        "harmonic_3px_overlap": 0.446042,
+        "continuous_spearman": 0.212437,
+        "final_dots_spearman": 0.02061
+      },
+      {
+        "peer": "GEMSDOE45__6255d3e1__gems45-phase-parity-20261006-362e1338f293-research.tif",
+        "peer_dots": 82678,
+        "asym_3px_overlap": 0.656371,
+        "harmonic_3px_overlap": 0.467419,
+        "continuous_spearman": 0.117881,
+        "final_dots_spearman": 0.020991
+      },
+      {
+        "peer": "GEMSDOE22__1fdecbd4__gems22-h22-value-emit-20261002T015455Z-f6777492-allfinite.tif",
+        "peer_dots": 550000,
+        "asym_3px_overlap": 0.654778,
+        "harmonic_3px_overlap": 0.45485,
+        "continuous_spearman": 0.329439,
+        "final_dots_spearman": 0.061948
+      }
+    ],
+    "exact_sha256_unique": true
+  },
+  "overlap_vs_own_prior_rasters": {
+    "11a2f251": {
+      "peer": "KANLERGEMSDOE2__d4f38198__kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+      "peer_dots": 37654,
+      "our_dots": 37654,
+      "asym_3px_overlap_ours_in_peer": 0.989111
+    },
+    "f5a469e94b14": {
+      "peer": "KANLERGEMSDOE2__f4faa336__kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
+      "peer_dots": 37654,
+      "our_dots": 37654,
+      "asym_3px_overlap_ours_in_peer": 0.421682
+    },
+    "cab53e1b": {
+      "peer": "KANLERGEMSDOE2__8fc0dc09__kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif",
+      "peer_dots": 38500,
+      "our_dots": 37654,
+      "asym_3px_overlap_ours_in_peer": 0.50239
+    }
+  },
+  "overlap_vs_0p2778_champion": {
+    "peer": "GEMSDOE32__gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+    "peer_dots": 37654,
+    "our_dots": 37654,
+    "asym_3px_overlap_ours_in_peer": 0.400303
+  },
+  "raster_sha256": "2eeb1300112108225b1a606512d6ec6b4a9add8c4e58843b6981caf6b06563d9",
+  "zip_sha256": "5c6daf2649c0463578978c48ce7bf59e6a99e93c8cf4365a7709c68c1c90d644",
+  "submission_filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.tif",
+  "zip_filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.zip",
+  "submission_name": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros",
+  "submission_note": "KANLERGEMS2 DSLUP-3D DSLUP-Core: depth-scaled listric updip continuation + 2200-dot blind-basin tranche (HR=0.1135)",
+  "note": "KANLERGEMS2 DSLUP-3D DSLUP-Core: depth-scaled listric updip continuation + 2200-dot blind-basin tranche (HR=0.1135)",
+  "note_length": 115,
+  "preregistered_gates": {
+    "uniqueness_pass_incl_own": false,
+    "hr_beats_ref_ci_positive": true,
+    "sgmc_beats_ref": true,
+    "all_pass": false
+  },
+  "validator_output": {
+    "validated_ok_to_download_and_submit": false,
+    "human_intervention_required": false,
+    "verdict": "negative",
+    "raster_filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.tif",
+    "raster_sha256": "2eeb1300112108225b1a606512d6ec6b4a9add8c4e58843b6981caf6b06563d9",
+    "gates": {
+      "gate_1_format_and_range_0_1": true,
+      "gate_2_leakage_canary_le_090": true,
+      "gate_3_registry_uniqueness": false,
+      "gate_4_holdout_beats_champion": true,
+      "gate_5_portal_metadata_le_140": true
+    },
+    "format_audit": {
+      "filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.tif",
+      "size_bytes": 204269,
+      "sha256": "2eeb1300112108225b1a606512d6ec6b4a9add8c4e58843b6981caf6b06563d9",
+      "mode": "zeros",
+      "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "shape": [
+        3730,
+        3292
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "nodata_repr": "None",
+      "emitted_positive_pixels": 37654,
+      "emitted_mass": 37654.0,
+      "footprint_fraction": 0.007287,
+      "on_catalogue_positive_pixels": 0,
+      "in_footprint_finite_pixels": 5167373,
+      "nan_inside_footprint": 0,
+      "full_grid_nan_pixels": 0,
+      "in_footprint_min": 0.0,
+      "in_footprint_max": 1.0,
+      "full_grid_finite_pixels": 12279160,
+      "values_in_0_1": true,
+      "checks": {
+        "exact_reference_grid_match": true,
+        "single_band": true,
+        "dtype_float32": true,
+        "dimensions_3730x3292": true,
+        "crs_epsg_32611": true,
+        "in_footprint_all_finite": true,
+        "in_footprint_zero_nan": true,
+        "in_footprint_zero_inf": true,
+        "in_footprint_zero_sentinel": true,
+        "in_footprint_range_0_1": true,
+        "outside_footprint_compliant": true,
+        "zero_on_catalogue_leakage": true,
+        "validator_range_0_1_guaranteed": true
+      },
+      "all_checks_passed": true
+    }
+  },
+  "ok_to_download_and_submit": false,
+  "verdict": "negative"
+}

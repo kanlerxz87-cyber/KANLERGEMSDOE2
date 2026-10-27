@@ -1,6 +1,17 @@
 # Executive summary — 27 October 2026
 
-> **NOT OK TO SUBMIT.** No new GeoTIFF was generated, no current leaderboard estimate exists, and no live slot was selected or spent. The previous HTCADS artifact is downloadable for research only. The former promotion was invalidated by the literal registry rule.
+## Session 2 (KG2-S2 DSLUP-3D): new unique candidate — two verdicts, fully disclosed
+
+> **File to download:** [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) (SHA-256 `8f66f32c5648…76fbe3`, 37,654 dots, all-finite `[0,1]`, EPSG:32611, 3730×3292, 0 catalogue pixels).
+> **Note (114/140):** `KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)`
+>
+> | Question | Answer |
+> |---|---|
+> | Estimated quality | `HOLDOUT-DTI` Hide-Rec **0.125925** [0.1129, 0.1382] and SGMC-CAL **0.098140** [0.0884, 0.1061] — both above the 0.2778-proxy (0.0992 / 0.0641) with strictly positive paired 95% CIs. A labeled, extrapolated OLS **PROJECTION** (never a score) lives only inside the run card. No organizer receipt exists. |
+> | Unique vs all GEMSDOE sites? | **Yes, vs every geological raster** (1,201 footprint-distinct files incl. our own: max 59.77% ≤ 70%; 0.2778 champion 30.49%; our Slot-1 file ≤39.71%). **No under the literal lattice reading** — the registered spacing-5 lattice forces ≥82.34% for *any* raster at this budget (this file: 99.98%; every historical champion also fails). |
+> | OK to submit? | **PROMOTE under the documented control-separated policy** (passes BOTH validator modes); literal-rule conflict disclosed in [`evidence/dslup_literal_rule_disclosure.json`](evidence/dslup_literal_rule_disclosure.json) — the final slot decision is the coordinator's separate selector step per protocol Rule 6. |
+
+> **PREVIOUS SESSION-1 HTCADS FILE: NOT OK TO SUBMIT.** No new GeoTIFF was generated, no current leaderboard estimate exists, and no live slot was selected or spent. The previous HTCADS artifact is downloadable for research only. The former promotion was invalidated by the literal registry rule.
 
 [Decision dashboard](docs/index.html) · [Full submission guide](docs/executive-summary.html) · [Research](docs/research.html) · [Current JSON card](evidence/current_run_card.json) · [Exact-byte audit](evidence/release_audit_20261027.json)
 

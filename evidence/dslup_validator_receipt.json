@@ -1,0 +1,64 @@
+{
+  "validated_ok_to_download_and_submit": false,
+  "human_intervention_required": false,
+  "verdict": "negative",
+  "raster_filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.tif",
+  "raster_sha256": "2eeb1300112108225b1a606512d6ec6b4a9add8c4e58843b6981caf6b06563d9",
+  "gates": {
+    "gate_1_format_and_range_0_1": true,
+    "gate_2_leakage_canary_le_090": true,
+    "gate_3_registry_uniqueness": false,
+    "gate_4_holdout_beats_champion": true,
+    "gate_5_portal_metadata_le_140": true
+  },
+  "format_audit": {
+    "filename": "kanlergems2-dslup-a-37654dots-20261027T175844Z-cf878d1f-zeros.tif",
+    "size_bytes": 204269,
+    "sha256": "2eeb1300112108225b1a606512d6ec6b4a9add8c4e58843b6981caf6b06563d9",
+    "mode": "zeros",
+    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 37654,
+    "emitted_mass": 37654.0,
+    "footprint_fraction": 0.007287,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "nan_inside_footprint": 0,
+    "full_grid_nan_pixels": 0,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "values_in_0_1": true,
+    "checks": {
+      "exact_reference_grid_match": true,
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  }
+}
