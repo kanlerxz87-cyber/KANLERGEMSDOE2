@@ -21,12 +21,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("prediction", type=Path, help="2D .npy or aligned single-band .tif")
     ap.add_argument("output", type=Path)
-    ap.add_argument("--template", type=Path, default=paths.DATA_DIR / "bridge/sample_submission.tif")
+    default_template = paths.DATA_DIR / "sample_submission.tif"
+    if not default_template.exists():
+        default_template = paths.DATA_DIR / "bridge/sample_submission.tif"  # legacy layout
+    ap.add_argument("--template", type=Path, default=default_template)
     ap.add_argument(
         "--outside",
         choices=("nan", "zero"),
         default="zero",
-        help="exterior encoding; zero is the strict all-finite upload-safe default",
+        help="exterior encoding; zero passes a strict whole-array check, but portal acceptance is unverified",
     )
     args = ap.parse_args()
     if args.prediction.suffix == ".npy":

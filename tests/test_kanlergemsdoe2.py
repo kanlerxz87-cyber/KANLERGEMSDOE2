@@ -41,31 +41,31 @@ def test_tversky_metric_soft_and_binary_equivalence() -> None:
     assert score_soft > 0.05
 
 
-def test_forensic_02778_linear_tversky_inversion() -> None:
-    """Verify exact R^2 > 0.998 linear 1/DTI(N) collar-pruning proof of 0.2778."""
-    n_dots = np.array([44090.0, 40199.0, 37654.0])
-    live_dti = np.array([0.2600, 0.2708, 0.2778])
-    inv = 1.0 / live_dti
-    slope, intercept = np.polyfit(n_dots, inv, 1)
-    pred = intercept + slope * n_dots
-    r2 = 1.0 - float(np.sum((inv - pred) ** 2) / np.sum((inv - inv.mean()) ** 2))
-    assert r2 > 0.998
-    tp_w = 0.2 / slope
-    k_hidden = intercept * tp_w / 0.8
-    assert 5000.0 <= tp_w <= 5300.0
-    assert 13000.0 <= k_hidden <= 14500.0
+def test_focus_lineage_is_geometric_not_hidden_truth_proof() -> None:
+    """A geometric identity is measurable; rounded-score fits do not reveal hidden truth."""
+    audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
+    geo = audit["focus_lineage_geometry"]
+    assert geo["g32_b2_vs_g25_d28_filtered_by_distance_gt_2px_xor"] == 0
+    assert geo["g25_to_g32_removed_pixels"] == 6436
+    assert geo["g32_not_in_g36_pixels"] == 0
+    assert geo["g36_extra_pixels_over_g32"] == 1200
+    assert "hidden-truth" in geo["caveat"]
+    retired = json.loads((ROOT / "evidence/nine_site_audit.json").read_text())
+    assert retired["status"] == "RETRACTED_AND_SUPERSEDED"
 
 
-def test_promoted_geotiff_and_zip_portal_safety() -> None:
-    """Verify Gate 1: promoted GeoTIFF & zip match sample_submission.tif, [0, 1], 0 NaNs, 0 catalogue px."""
+def test_archived_geotiff_and_zip_local_checks_but_no_authorization() -> None:
+    """Local TIFF/ZIP integrity does not imply portal acceptance or novelty."""
     rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
     val = json.loads((ROOT / "evidence" / "validator_receipt.json").read_text(encoding="utf-8"))
 
-    assert rc["verdict"] == "promote"
-    assert rc["ok_to_download_and_submit"] is True
-    assert val["validated_ok_to_download_and_submit"] is True
+    assert rc["verdict"] == "negative"
+    assert rc["ok_to_download_and_submit"] is False
+    assert val["validated_ok_to_download_and_submit"] is False
     assert val["human_intervention_required"] is False
-    assert all(val["gates"].values())
+    assert val["gates"]["local_grid_dtype_inside_range"] is True
+    assert val["gates"]["literal_witness_not_duplicate"] is False
+    assert val["gates"]["current_weekly_quota_verified"] is False
 
     tif_path = ROOT / "docs" / "downloads" / rc["submission_filename"]
     zip_path = ROOT / "docs" / "downloads" / rc["zip_filename"]
@@ -120,7 +120,8 @@ def test_rule4_leakage_canary_and_rule1_uniqueness_and_rule6_budget() -> None:
 
     rc = json.loads((ROOT / "evidence" / "run_card.json").read_text(encoding="utf-8"))
     reg = rc["registry_comparison"]
-    assert reg["passed"] is True
+    assert reg["passed"] is False
+    assert reg["literal_all_entry_overlap_vs_registered_lattice"] > 0.70
     assert reg["unique_rasters_checked"] >= 190
     assert reg["pre_placement_surface_max_abs_spearman"] < 0.90
     assert reg["final_dots_max_abs_spearman"] < 0.90
