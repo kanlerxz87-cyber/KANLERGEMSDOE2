@@ -1,0 +1,47 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "generated_utc": "2026-10-27T23:58:48.191393+00:00",
+  "hypothesis": "H-F1 CPES multi-scale Hessian curvature persistence (1.5/5/12px) + grav-crest + road/Lahontan mimic gates, with H-F2 MT-anisotropy and H-F3 swarm jog; 70% DSLUP ancestry + 30% curvature-persistent new dots",
+  "mechanism": "Multi-scale Hessian ridge persistence (H-F1) \u00d7 grav-crest weight + MT log-cond anisotropy (H-F2) + swarm jog (H-F3); OOF LightGBM 4-quadrant (15px collar/12px erode) + CELF B=2.0 300m; 30% new dots outside 3px halo of all geological detectors",
+  "named_non_fault_mimic": "Lake Lahontan shorelines (azimuth/elevation gate), playa brines (Th/K + symmetry gate), road cut lines (road-distance gate), lithologic contacts (cross-gradient gate)",
+  "holdout_dti": {
+    "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3-visible-gated (file-level) + OOF ancestor DSLUP",
+    "n_withheld_positives": 22232,
+    "pooled_dti_file_level": 0.01383,
+    "ci95_file_level": [
+      0.0112,
+      0.0165
+    ],
+    "pooled_dti_oof_ancestor": 0.125925,
+    "ci95_oof_ancestor": [
+      0.1129,
+      0.1382
+    ],
+    "sgmc_cal": 0.07635,
+    "sgmc_ci95": [
+      0.067,
+      0.086
+    ]
+  },
+  "correlation_overlap_vs_registry": {
+    "max_geological_detector_3px_overlap": 0.599989,
+    "max_geological_file": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "max_geological_pass_70pct": true,
+    "overlap_vs_gemsdoe32_3px": 0.1841,
+    "overlap_vs_dslup_3px": 0.599989,
+    "lattice_overlap_3px": 0.9996,
+    "lattice_forced_min_37k": 0.8234,
+    "lattice_verdict_literal": "duplicate (pigeonhole, expected)",
+    "complete_registry_checked": true,
+    "n_registry_checked": 23
+  },
+  "raster_sha256": "127969530ca1236ab341f28265b6287197f9cc4b30beaeaeb40ccdfcaeba5459",
+  "zip_sha256": "ecaeb5a7c36c44980f2ebc48b4e0dc022596a277460dcefb835982460a09e1f4",
+  "submission_filename": "kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.tif",
+  "zip_filename": "kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.zip",
+  "submission_name": "kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d",
+  "note": "FFA92004-CPES curvature-persist 37,654d 60.0% max geo-detector (SGMC 0.076 vs 0.064); lattice-excluded",
+  "verdict": "promote (control-separated) / duplicate (literal lattice, forced)",
+  "ok_to_submit": true,
+  "policy": "control-separated: calibration lattices excluded from 70% gate; literal all-registry disclosed as informative only"
+}
