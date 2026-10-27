@@ -244,6 +244,30 @@ def test_selector_remains_negative_even_with_fabricated_passing_flags(synthetic_
     assert not selector.verify_selector(tif, template, card)["gates"]["g4_registry_novelty"]
 
 
+def test_fold_array_cli_scores_without_authorizing(tmp_path: Path) -> None:
+    template = raster(tmp_path / "template.tif", np.zeros((220, 220)))
+    labels = np.zeros((220, 220), np.float32)
+    labels[10, 6:10] = 1
+    labels[10, 208:212] = 1
+    labels[208, 6:10] = 1
+    labels[208, 208:212] = 1
+    label_file = raster(tmp_path / "labels.tif", labels)
+    npz = tmp_path / "folds.npz"
+    zero = np.zeros_like(labels)
+    np.savez(npz, NW=zero, NE_LidarGapHeavy=zero, SW=zero, SE=zero)
+    command = [sys.executable, str(ROOT / "scripts/evaluate_holdout.py"), "--score-folds", str(npz),
+               "--template", str(template), "--labels", str(label_file)]
+    proc = subprocess.run(command, capture_output=True, text=True, check=True)
+    result = json.loads(proc.stdout)
+    assert result["label"] == "HOLDOUT-DTI" and result["n_withheld_positive_pixels"] == 16
+    assert result["dti"] == 0 and result["ok_to_submit"] is False
+    assert "were not certified" in result["provenance_warning"]
+    labels[2, 2] = np.nan
+    raster(label_file, labels)
+    bad = subprocess.run(command, capture_output=True, text=True)
+    assert bad.returncode != 0 and "finite binary" in bad.stderr
+
+
 def test_verify_kg2_cli_is_research_only() -> None:
     proc = subprocess.run([sys.executable, str(ROOT / "scripts/evaluate_holdout.py"), "--verify-kg2"],
                           capture_output=True, text=True, check=True)

@@ -144,3 +144,26 @@ def test_leaderboard_parser_fails_closed_on_bad_or_ambiguous_source() -> None:
                  sample.replace("0.4544", "0.1000"), sample.replace("</td></tr>", "</td><td>0.1234</td></tr>", 1)):
         with pytest.raises(ValueError):
             parse_leaderboard(text)
+
+
+def test_failed_leaderboard_refresh_preserves_last_good_snapshot(tmp_path, monkeypatch) -> None:
+    import pytest
+    from scripts import refresh_leaderboard as refresh
+
+    path = tmp_path / "snapshot.json"
+    path.write_text('{"observed_utc":"old"}\n')
+
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return None
+        def geturl(self):
+            return refresh.URL
+        def read(self, limit):
+            return b"<html>Login required</html>"
+
+    monkeypatch.setattr(refresh.urllib.request, "urlopen", lambda *args, **kwargs: Response())
+    with pytest.raises(ValueError):
+        refresh.refresh(path)
+    assert path.read_text() == '{"observed_utc":"old"}\n'

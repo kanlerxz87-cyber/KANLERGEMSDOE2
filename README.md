@@ -39,7 +39,7 @@ python scripts/validate_submission.py \
 
 The tests use synthetic data and bundled small artifacts. `scripts/restore_data.py --group all --target-dir data` can restore larger **third-party GitHub mirrors** by pinned SHA-256; mirror hashes do not prove official origin. Official inputs and account access still need independent verification. `scripts/audit_focus_history.py` re-downloads nine pinned GitHub TIFFs and checks their bytes, plus the local lattice; it does not replay all 360 registry entries or pre-placement continuous surfaces. Historical experiment/asset entrypoints are guarded. Do not run another candidate, adjust dots or silently exempt the lattice while the literal stop remains in force.
 
-The [public organizer leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) is the live source of truth. A daily GitHub Pages workflow attempts to refresh a timestamped public snapshot; if the source is unavailable or changes layout, it retains the previous dated snapshot rather than guessing. It does not access or spend account quota.
+The [public organizer leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) is the live source of truth. A daily GitHub Pages workflow attempts to refresh a timestamped public snapshot; if the source is unavailable or changes layout, it retains the previous dated snapshot rather than guessing. It does not access or spend account quota. Pages was last observed using the legacy `main /` source while an Actions deployment is also configured; the two can race. An attempted switch to the Actions source was blocked by GitHub's API rate limit, so verify deployment and configure a single source before relying on refreshes.
 
 ## Files to read first
 

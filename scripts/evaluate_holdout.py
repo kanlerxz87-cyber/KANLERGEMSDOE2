@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""One preregistered H24-MTR1 experiment; shared hide-and-recover + writer.
+"""Shared fold scoring and historical KG2 file verification, never upload.
 
-No upload, no score projections, no private metric, no hyperparameter search.
-Run cache_priority_registry.py and prepare_data.py first. A duplicate or canary
-failure halts before packaging. A negative scientific result is still published.
+The old model-generating driver is retired. Fold-array scoring does not prove
+feature lineage, leakage canaries, novelty, baseline replay or account quota.
 """
 
 from __future__ import annotations
@@ -82,11 +81,13 @@ def main():
         parser.error("Choose exactly one evaluation mode")
     if args.score_folds is not None:
         with rasterio.open(args.template) as t, rasterio.open(args.labels) as labels:
-            if (labels.shape, labels.crs, labels.transform, labels.count) != (t.shape, t.crs, t.transform, 1):
-                raise SystemExit("Labels do not match the single-band template grid")
+            if t.count != 1 or t.crs is None or (labels.shape, labels.crs, labels.transform, labels.count) != (t.shape, t.crs, t.transform, 1):
+                raise SystemExit("Labels do not match a single-band template grid with a CRS")
             fp = np.isfinite(t.read(1))
             raw = labels.read(1)
-            catalogue = fp & np.isfinite(raw) & (raw > 0)
+            if not np.isin(raw[fp], [0, 1]).all():
+                raise SystemExit("Labels inside the template footprint must be finite binary values")
+            catalogue = fp & (raw > 0)
         context = holdout.SegmentHoldout(fp, catalogue, buffer_px=15)
         with np.load(args.score_folds, allow_pickle=False) as archive:
             expected = [fold["name"] for fold in context.folds]
@@ -156,6 +157,9 @@ def main():
         print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
         return
     if args.run_gvc1:
+        from gems.protocol import retired_legacy_pipeline
+
+        retired_legacy_pipeline("evaluate_holdout --run-gvc1")
         from run_gvc1_pipeline import run_gvc1
 
         summary = run_gvc1(work_dir=args.work_dir)

@@ -48,7 +48,7 @@ _REGIONAL_BLOB_COLS = {20, 21, 22, 24, 25, 26, 27, 33, 35}
 
 
 def _current_git_branch() -> str:
-    \"\"\"Return the current git branch for Run Card metadata (never hardcodes a lane/branch name).\"\"\"
+    """Return the current git branch for run-card metadata."""
     try:
         out = subprocess.run(
             ["git", "rev-parse", "--abbrev-ref", "HEAD"],
