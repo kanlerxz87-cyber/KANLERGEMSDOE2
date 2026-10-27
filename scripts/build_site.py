@@ -299,7 +299,14 @@ def main() -> None:
             <td><a href="downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif" download><code>kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif</code></a><br><span style="color:var(--muted);font-size:0.78rem">SHA-256: <code>cf1d07726f5fb838dc75&hellip;</code> | 37,654 dots</span></td>
             <td><code>0.177056</code> <code>HOLDOUT-DTI (gems-segment-pooled-v1, N=60988, 95% CI [0.1637, 0.1908])</code></td>
             <td><code>0.062680</code> <code>HOLDOUT-DTI</code><br><span style="color:var(--muted);font-size:0.78rem">(-2.25% vs 0.2778 Champ 0.064121)</span></td>
-            <td><code>29.04% &le; 70%</code> vs HTCADS<br><code>&rho;_dots = +0.0396 &lt; 0.90</code></td>
+            <td><code>29.04% &le; 70%</code> vs HTCADS<br><code>62.68% &le; 70%</code> max 72-reg<br><code>&rho;_dots = +0.0396 &lt; 0.90</code></td>
+          </tr>
+          <tr>
+            <td><strong>KG2-FVCA-SUBMOD (EXP-2)</strong><br><span class="tag tag-bad">NEGATIVE &mdash; DO NOT SUBMIT</span></td>
+            <td><a href="downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif" download><code>kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif</code></a><br><span style="color:var(--muted);font-size:0.78rem">SHA-256: <code>29128ad7a9290d2afb00&hellip;</code> | 38,500 dots | <a href="downloads/fvca_run_card.json">Run Card</a></span></td>
+            <td><code>0.169279</code> <code>HOLDOUT-DTI (gems-segment-pooled-v1, N=60988, 95% CI [0.1554, 0.1834])</code><br><code>0.106071</code> (<code>EXP-3 CELF: 0.106529</code>) <code>HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232)</code></td>
+            <td><code>0.044042</code> <code>HOLDOUT-DTI</code><br><span style="color:var(--muted);font-size:0.78rem">95% CI [0.0378, 0.0516]</span></td>
+            <td><code>41.64%</code> vs HTCADS | <code>33.36%</code> vs G32<br><strong style="color:#f87171">STOP: <code>80.68% &gt; 70%</code> vs G10-H25</strong><br><span style="color:var(--muted);font-size:0.78rem">Supervised scarp convergence logged; audit only</span></td>
           </tr>
         </tbody>
       </table>
@@ -688,6 +695,18 @@ def main() -> None:
         ("IR-KG2-BUG-01..04", "Four Self-Caught Pass-1/2 Modeling Bugs Fixed Before Promotion", "FIXED IN PASS 2",
          "(1) Isotropic exp(-d_vis/L) in P_tip caused d=3 px annulus ring; (2) 50-km regional grids + tpi_1200m caused valley blobs; (3) +det_elev Hessian extracted mountain crests instead of scarp toes; (4) initial 0.058 P_tip scale pulled 77.8% of dots <=10 px.",
          "Fixed all four in src/gems32/htcads.py and scripts/run_htcads_experiments.py, lifting SGMC-CAL from 0.0522 -> 0.0789 and passing 5/5 gates."),
+        ("IR-KG2-TC-MISLABEL", "Competition Band 6 ('tc') Metadata Mislabel", "VERIFIED & FIXED",
+         "features.tif Band 6 ('tc') is GeoDAWN Radiometric Total Count (Spearman = 0.99995 with geodawn_rad_u8 TC), not magnetic tilt curvature.",
+         "Computed genuine potential-field tilt derivatives directly from B04/B05 and treated B06 strictly as radiometric TC in build_fvca_features.py."),
+        ("IR-KG2-BORDER-CLIFF", "-3.4028235e38 Footprint-Perimeter Sentinel Cliffs in B02-B05", "FIXED IN REPO",
+         "3,061 interior pixels along the footprint edge of features.tif carry raw float32 -3.4e38 nodata sentinels, creating artificial 1e36 gradient spikes.",
+         "Repaired via precomputed nearest-interior Euclidean distance-transform index lookup before all derivative/Laplacian filters."),
+        ("IR-KG2-SCARP-CONVERGENCE", "Unweighted Supervised GBDT Range-Front Scarp Convergence", "STOP LOGGED (NEGATIVE)",
+         "In parallel lane KG2-FVCA-SUBMOD, unweighted LightGBM+ExtraTrees on y=labels.tif lifted SegmentHoldout to 0.169279 (+0.0111 from geothermal back-projection), yet placed 80.68% of dots within 3 px of 10GEMSDOE gems10-h25-ctx-ridge.",
+         "Triggered automated Rule 1 duplicate stop without Perturb-to-Evade (evidence/fvca_run_card.json verdict='negative'); confirms why HTCADS Dual-Population Noisy-OR is required to pass <=70% (64.91%) and win blind SGMC-CAL (0.0789)."),
+        ("IR-KG2-LLI-BIAS-01", "LLI-S3 H19-5 Conditioning Bias on Independent ML Surfaces", "DOCUMENTED",
+         "GEMSDOE32's LLI-S3 strata depend solely on (d_catalogue, d_H19-5), under-projecting non-H19-5 detectors by 0.10-0.17 (projects 0.1319 for 0.2336-live 10GEMSDOE H28 and 0.0747 for 0.2478-live GEMSDOE70 family).",
+         "Strictly quarantined as a PROJECTION (never a score) with documented H19-5 conditioning caveat."),
     ]
 
     ir_rows = "".join(f"""
