@@ -1,0 +1,38 @@
+{
+  "schema": "kanlergemsdoe2.ledger_recomputation.v1",
+  "date": "2026-10-27",
+  "irregularity_id": "IR-CPR-LEDGER-01",
+  "method": "OLS of 1/DTI on N over the pure collar-pruning chain (44090,0.2600),(40199,0.2708),(37654,0.2778) ORGANIZER-CONFIRMED; DTI=TPw/(0.2N+0.8K)",
+  "recomputed": {
+    "r_squared": 0.999589,
+    "tp_w_px": 5210.4,
+    "k_hidden_px": 14019.8,
+    "slope": 3.8385112565931544e-05,
+    "intercept": 2.1526107578932745,
+    "tp_w_needed_at_37654_for_0p3195": 5989.6,
+    "tp_w_needed_at_37654_for_0p4413": 8272.9,
+    "implied_b2_weighted_recall_pct": 37.16
+  },
+  "previously_published": {
+    "r_squared": 0.998523,
+    "tp_w_px": 5151.3,
+    "k_hidden_px": 13734.71,
+    "sources": [
+      "evidence/nine_site_audit.json",
+      "README.md",
+      "docs/research.html",
+      "EXECUTIVE_SUMMARY.md (2026-10-26)"
+    ]
+  },
+  "rounding_sensitivity": "Perturbing each 4-dp score by +-0.00005 gives TPw in [5179.6,5241.5], K in [13875.7,14165.6]; previously published point values lie just outside this envelope, so they came from an undocumented variant. Qualitative conclusion (near-perfect linearity => ~zero TP in the 0-200 m collar) is unchanged; tests/test_kanlergemsdoe2.py range assertions (5000-5300, 13000-14500) pass under both.",
+  "projection_calibration": {
+    "hr_fit": "live = -0.1775 + 4.552*HR on anchors (0.093151,0.2477),(0.096743,0.2600),(0.098977,0.2708),(0.099202,0.2778); resid_sd=0.0038 (in-lineage only)",
+    "sgmc_fit": "live = -0.0296 + 4.753*SGMC-CAL on 8 focus anchors; resid_sd=0.0028 (in-lineage only)",
+    "htcads_exp2_projection": {
+      "hr_based": 0.3339,
+      "sgmc_based": 0.3454,
+      "label": "PROJECTION (not a score); both extrapolate beyond anchor range and across detector families"
+    },
+    "cpr_warning": "CPR-2 naive HR projection = 0.4986 vs SGMC projection = 0.2401; the contradiction proves single-evaluator projection is invalid across detector families. HTCADS EXP-2 is credible only because BOTH evaluators independently project >0.33."
+  }
+}

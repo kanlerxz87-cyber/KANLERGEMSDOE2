@@ -33,3 +33,35 @@ The previous repo TIFF, [`kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11
 ## Future submission instructions (not authorization)
 
 Once a separate selector approves an exact SHA-identified file, go to the [official GEMS competition](https://www.drivendata.org/competitions/306/competition-doe-gems/), choose Submit → Make new submission, select the approved single-band TIFF or its one-TIFF ZIP, enter the unique name and ≤140-character note, and preserve the actual submission-page receipt. Confirm the [official format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) and current rules first. There is no approved filename or note today.
+
+## Addendum (parallel lane KG2-CPR + ledger recomputation, 2026-10-27)
+
+- **New lane tested and rejected (verdict `negative`):** `KG2-CPR` (soft DTI-credit regression target,
+  OOF-priced CELF budget, crest snapping; pre-registered in `registry/preregistration_cpr.json`, 3
+  experiments, 340 s). HOLDOUT-DTI hide-recover 0.147951 [0.1341, 0.1614] (N=22,232) but blind
+  SGMC-CAL 0.056742 (below the champion reference 0.064121, both reproduced this session) and 78.10%
+  3-px overlap vs `gems10-h25-ctx-ridge` → duplicate stop; crest snapping falsified (paired
+  Δ −0.007951 [−0.009963, −0.006022]). No CPR GeoTIFF was written. Receipts:
+  `evidence/cpr_experiments.json`, `evidence/cpr_run_card.json`,
+  `knowledge/02_cpr_hypotheses_20261027.md`.
+- **Independent replay of the archived candidate (closes "not independently replayed" above for the
+  SGMC population):** on restored hash-verified data (26/26), the previous TIFF's SGMC-CAL reproduces
+  exactly (0.078913 [0.0700, 0.0870], N=62,703), the champion reference reproduces exactly on both
+  evaluators (0.099202 / 0.064121), canary max AUC 0.795377, format audit 13/13, shared validator
+  5/5 under its null-calibrated Gate-3 definition. Hide-and-recover OOF replay was not rerun.
+  Receipts: `evidence/promoted_reverification_20261027.json`,
+  `evidence/validator_reverification_20261027.json`.
+- **Ledger constants corrected (`IR-CPR-LEDGER-01`):** exact OLS on the collar chain
+  (44,090→0.2600, 40,199→0.2708, 37,654→0.2778, USER-REPORTED) gives R²=0.999589, TPw≈5,210 px,
+  K≈14,020 px (prior point values 0.998523 / 5,151 / 13,735 did not reproduce). Score estimates from
+  in-lineage fits are PROJECTIONs only (0.3146 ratio; 0.334 HR-fit; 0.345 SGMC-fit) and CPR's
+  conflicting pair (0.499 vs 0.240) shows why single-evaluator projection is invalid.
+  Receipt: `evidence/ledger_recomputation_20261027.json`.
+- **The one selector decision that blocks submission:** this repo currently applies the literal
+  any-registry-raster reading of the 70% rule (PRs #22/#25). At a 37,654-dot budget that rule is
+  combinatorially unsatisfiable (≥82.34% of any such raster must fall within 3 px of the calibration
+  lattice, which covers 99.8713% of the footprint; uniform-random null = 99.8724%, champion =
+  99.9150%, harmonic overlap for the archived candidate = 22.58%). Full counter-analysis for the
+  selector: [`AUDIT_RESPONSE_2026-10-27.md`](AUDIT_RESPONSE_2026-10-27.md) +
+  `evidence/lattice_null_calibration_20261027.json`. Until the selector rules on that single policy
+  question, the verdict above stands: **NOT OK TO SUBMIT**.

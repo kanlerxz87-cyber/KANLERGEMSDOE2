@@ -1,0 +1,84 @@
+{
+  "schema": "kanlergemsdoe2.preregistration_cpr.v1",
+  "frozen_utc": "2026-10-27",
+  "lane_id": "KG2-CPR",
+  "lane_name": "Credit-Priced Regression (soft DTI-credit target + rank-product fusion + OOF-priced dot budget + crest snapping)",
+  "protocol": "Parallel-Run Protocol Rules 1-6 (PROMPT.md). Max 3 experiments, max 2 h. Every number labeled HOLDOUT-DTI (evaluator, N, 95% CI) or ORGANIZER-CONFIRMED; projections labeled PROJECTION, never a score.",
+  "why_new_lane": "All three prior in-repo candidates (HTCADS-DualRegime EXP-2 promoted 2026-10-26, KG2-MGHV-EXP-1, KG2-FVCA-SUBMOD negative) train BINARY classifiers on dilated catalogue positives and fuse by weighted sum / Noisy-OR at a fixed inherited budget of 37,654 dots. KG2-CPR changes the learning target, the fusion algebra, and the emission budget rule simultaneously; it must still pass Rule 1 uniqueness (<=70% 3-px overlap, |Spearman|<0.90) against every restored registry raster INCLUDING the three prior in-repo candidates, or it is logged as a duplicate and stopped.",
+  "candidate_hypotheses_ranked": [
+    {
+      "rank": 1,
+      "id": "H-C1",
+      "name": "Soft DTI-credit regression target",
+      "layers": "Cached 36-channel subsurface/geothermal/strain stack + 10-channel 1 m LiDAR stack (src/gems32/htcads.py build_static_feature_stack) + fold-visible labels only",
+      "physical_signature": "Regressor target y(x)=k(d(x,visible fault)) with k the official 300 m triangular kernel (src/gems32/metric.py): the model predicts expected distance-weighted Tversky credit density, not binary fault presence. Binary training on 1-px-dilated positives rewards pixels up to 200 m off-trace equally with on-trace pixels, but the metric pays 1-d/3; the soft target prices that decay into the learned surface itself.",
+      "why_missing_from_catalogue": "Catalogue traces are mapped where scarps are exposed; off-catalogue blind faults share the same subsurface/thermal signature but weaker surface expression. A credit-density surface ranks faint-but-centered blind lineaments above strong-but-offset catalogue-flank responses, which binary dilation training cannot distinguish.",
+      "differs_from_repo": "No prior lane (HTCADS, KG2-MGHV, FVCA, DPRF1 in src/gems) uses a regression or kernel-weighted soft target; all use binary classifiers on dilated positives.",
+      "expected_dti_gain": "Moderate (+0.005..+0.02 HOLDOUT-DTI if centering is the binding error)",
+      "implementation_cost": "Low (LGBMRegressor on cached stack)",
+      "external_data_needed": "None"
+    },
+    {
+      "rank": 2,
+      "id": "H-C2",
+      "name": "OOF-priced dot budget (Dinkelbach marginal rule)",
+      "layers": "Emission stage only (CELF greedy order on the H-C1 surface)",
+      "physical_signature": "DTI = TPw/(0.2*N + 0.8*K) exactly (alpha=0.2, beta=0.8), so a marginal dot improves DTI iff its expected weighted-TP gain q > 0.2*DTI. The 37,654 budget was inherited from H19-5 collar pruning (ledger inversion R^2=0.9985), never priced for this surface. Sweep CELF prefix budgets on OOF cells only and pick N* by pooled OOF DTI.",
+      "why_missing_from_catalogue": "Budget pricing does not find new faults; it stops spending dots where the surface's marginal fault density falls below the metric's FP price, concentrating the same discoveries at higher precision.",
+      "differs_from_repo": "HTCADS EXP-3 tested a fixed marginal_bar=0.0020 with an anisotropic collar (negative vs EXP-2); no lane has swept the full budget curve on OOF cells for an independently trained surface.",
+      "expected_dti_gain": "Small-moderate (0..+0.01); also de-risks over-emission",
+      "implementation_cost": "Low (record CELF order once; prefixes are nested)",
+      "external_data_needed": "None"
+    },
+    {
+      "rank": 3,
+      "id": "H-C3",
+      "name": "Crest snapping (1-px non-max relocation)",
+      "layers": "Emission stage only (continuous surface + eligibility mask)",
+      "physical_signature": "After CELF selection, relocate each dot to the argmax of the continuous surface within Chebyshev distance 1 (eligibility- and collision-respecting, in CELF order). A 1-px mis-centering costs 33% of triangular-kernel credit; CELF's coverage objective is indifferent to which of two adjacent pixels carries the dot when their coverage discs overlap.",
+      "why_missing_from_catalogue": "Blind intrabasin faults have diffuse geophysical crests; snapping centers dots on the crest where the unmapped trace most plausibly sits.",
+      "differs_from_repo": "CELF in src/gems32/htcads.py has a local-peak candidate bonus but no post-selection relocation; no prior lane snaps emitted dots.",
+      "expected_dti_gain": "Small (0..+0.008)",
+      "implementation_cost": "Low",
+      "external_data_needed": "None"
+    },
+    {
+      "rank": 4,
+      "id": "H-C4",
+      "name": "Geodesic least-cost tip linkage",
+      "layers": "Fold-visible fault skeleton tips + cost = 1 - surface; Dijkstra/skimage MCP paths between strike-compatible tips <=3 km apart",
+      "physical_signature": "Relay ramps and step-overs connect en-echelon segments along curved least-cost corridors, not straight cones; emits budget-neutral swaps along optimal paths.",
+      "why_missing_from_catalogue": "Linking segments in step-overs are commonly buried under fan gravels between two mapped tips (Faulds & Hinz accommodation zones).",
+      "differs_from_repo": "HTCADS uses straight tip cones + relay bridges as features; no lane emits explicit geodesic paths.",
+      "expected_dti_gain": "Uncertain (-0.005..+0.015)",
+      "implementation_cost": "Medium-high; DEFERRED this session (only if CPR-1..3 finish inside budget with time to spare)",
+      "external_data_needed": "None"
+    },
+    {
+      "rank": 5,
+      "id": "H-C5",
+      "name": "OPERA DISP-S1 InSAR poroelastic barrier steps",
+      "layers": "NASA/JPL OPERA DISP-S1 Sentinel-1 displacement (external) + cond_surf",
+      "physical_signature": "Sub-200 m horizontal step edges in seasonal poroelastic deformation across fault-gouge aquifer barriers in playas with zero relief.",
+      "why_missing_from_catalogue": "Zero-relief playa barrier faults have no scarp, no gravity step at 100 m sampling, and no mapped trace.",
+      "differs_from_repo": "No lane uses InSAR. Same as prior H-K5.",
+      "expected_dti_gain": "Unknown",
+      "implementation_cost": "High; NOT VIABLE this session: ASF DAAC / OPERA hosts are outside the sandbox allowlist (github.com, codeload.github.com, api.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org). Free official source when on an unrestricted machine: https://www.earthdata.nasa.gov/esds/observational-products-for-end-users-from-remote-sensing-analysis-opera",
+      "external_data_needed": "NASA OPERA DISP-S1 via Earthdata/ASF DAAC (free, official; unobtainable from this sandbox)"
+    }
+  ],
+  "experiments": [
+    {"id": "CPR-1", "description": "H-C1 soft-credit regression (blind sharp cols + LiDAR specialist regressor + directional tip regressor) fused by rank-product with the label-free physical conduit index; CELF emission at fixed 37,654 dots, B=2.0 px visible-only collar. Control budget for comparability with HTCADS EXP-2."},
+    {"id": "CPR-2", "description": "CPR-1 surface + H-C2 OOF-priced budget: full CELF prefix curve over budgets [18000,24000,30000,34000,37654,42000,46000] evaluated on OOF hide-and-recover cells; live emission at OOF-optimal N*."},
+    {"id": "CPR-3", "description": "CPR-2 + H-C3 crest snapping of the CELF order before prefix truncation; evaluated at N* and at 37,654 to isolate the snapping effect."}
+  ],
+  "promotion_gates": {
+    "gate_1_format": "audit_geotiff 13/13: EPSG:32611, 3730x3292, float32, nodata None, all finite, min>=0, max<=1, 0 on-catalogue dots",
+    "gate_2_canary": "evidence/leakage_canary.json passed (max single-feature AUC <= 0.90) — rerun on restored data before training",
+    "gate_3_uniqueness": "Rule 1 vs every restored registry raster (scored/ + scored_extra/ focus-9 champions + all docs/downloads/*.tif incl. prior promoted HTCADS EXP-2): max 3-px overlap <= 0.70 AND max |Spearman| < 0.90 on surface and final dots",
+    "gate_4_holdout": "Pooled HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0) point estimate must EXCEED prior repo best 0.112353 (HTCADS EXP-2, same evaluator) AND paired cluster-bootstrap delta vs the 0.2778 champion reference (0.099202) must have 95% CI strictly > 0. SGMC-CAL-v3.0 reported as secondary; a large SGMC regression vs HTCADS EXP-2 (0.078913) flags catalogue-bias overfit (cf. FVCA negative).",
+    "gate_5_metadata": "Portal note <=140 chars; filename unique (sha256 not in registry/comparison_registry.json or any restored raster)"
+  },
+  "fallback": "If no CPR experiment passes all gates, verdict=negative for KG2-CPR, the previously promoted HTCADS EXP-2 TIF (unsubmitted, sha256 f482d3bad4b3...) remains the single recommended download, and CPR rasters are NOT placed in docs/downloads as submittable.",
+  "named_non_fault_mimic": "Lake Lahontan shoreline terraces and fan-head trench scarps produce centered soft-credit responses on piedmont channels; mitigated by subsurface rank-product terms (a shoreline with no gravity/MT step is down-weighted multiplicatively) and by the B=2 collar + SGMC secondary check."
+}

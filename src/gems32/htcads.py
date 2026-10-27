@@ -906,8 +906,15 @@ def emit_submodular_celf(
     max_dots: int = 37654,
     marginal_bar: float = 0.0,
     candidate_pool_size: int = 260_000,
-) -> np.ndarray:
-    """Exact 25-offset Euclidean 300 m Submodular Expected-DTI (`CELF`) greedy allocator."""
+    return_order: bool = False,
+):
+    """Exact 25-offset Euclidean 300 m Submodular Expected-DTI (`CELF`) greedy allocator.
+
+    With ``return_order=True`` also returns the greedy selection order as flat
+    pixel indices; every prefix of that order is exactly the emission that a
+    smaller ``max_dots`` would have produced (greedy nestedness), which lets
+    callers sweep dot budgets from a single allocation run.
+    """
     H, W = pi_2d.shape
     pi_clean = np.where(np.isfinite(pi_2d) & (pi_2d > 0.0), pi_2d, 0.0).astype(np.float32)
 
@@ -922,7 +929,8 @@ def emit_submodular_celf(
 
     flat_cand = np.flatnonzero(cand_score.ravel() > max(marginal_bar, 1e-9))
     if flat_cand.size == 0:
-        return np.zeros((H, W), dtype=bool)
+        empty = np.zeros((H, W), dtype=bool)
+        return (empty, np.empty(0, dtype=np.int64)) if return_order else empty
     if flat_cand.size > candidate_pool_size:
         scores_sub = init_gain.ravel()[flat_cand]
         keep = np.argpartition(scores_sub, -candidate_pool_size)[-candidate_pool_size:]
@@ -944,6 +952,7 @@ def emit_submodular_celf(
     heapq.heapify(heap)
 
     selected = np.zeros(H * W, dtype=bool)
+    order: list[int] = []
     n_sel = 0
     step = 0
 
@@ -954,6 +963,7 @@ def emit_submodular_celf(
             break
         if last_s == step:
             selected[fidx] = True
+            order.append(int(fidx))
             n_sel += 1
             step += 1
             nbr = pidx + offs_pad
@@ -966,4 +976,5 @@ def emit_submodular_celf(
             if new_g >= marginal_bar and new_g > 1e-12:
                 heapq.heappush(heap, (-new_g, step, pidx, fidx))
 
-    return selected.reshape((H, W))
+    out = selected.reshape((H, W))
+    return (out, np.asarray(order, dtype=np.int64)) if return_order else out
