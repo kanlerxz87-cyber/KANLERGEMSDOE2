@@ -1,0 +1,26 @@
+# Python & virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Large cached datasets & working intermediates (SHA-256 verified via scripts/restore_data.py)
+.cache/
+data/raw/
+data/bridge/
+data/external/
+*.partial
+*.assembling
+*.npy
+*.npz
+
+# OS & editor files
+.DS_Store
+Thumbs.db

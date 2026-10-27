@@ -1,0 +1,11 @@
+lightgbm==4.7.0
+matplotlib==3.11.2
+numpy==2.4.6
+pandas==3.1.0
+pyproj==3.7.2
+pytest==9.1.1
+rasterio==1.4.4
+scikit-image==0.26.0
+scikit-learn==1.9.1
+scipy==1.17.1
+shapely==2.2.0
