@@ -29,6 +29,10 @@ Four ranked, concrete hypotheses with physical signatures, named non-fault mimic
 
 The previous HTCADS receipt reports **HOLDOUT-DTI 0.112353**, evaluator `GEMSDOE32-HIDE-RECOVER-v3.0`, **22,232 withheld-positive occurrences**, 95% CI **[0.098995, 0.125743]**. This is a historical, unreplayed holdout, not an organizer score or reliable leaderboard projection. The 30-column base feature cache was restored/prepared; the HTCADS-specific model/OOF caches and independent canary/holdout replay were not recreated because the literal preflight already requires stopping.
 
+## Parallel lane addendum (2026-10-27, KG2-ECPU — negative, decision unchanged)
+
+A preregistered effort-corrected PU lane (`registry/preregistration_ecpu_20261027.json`) ran 3 experiments + an unweighted ablation twin on the shared evaluators. Best arm: **HOLDOUT-DTI 0.0848** (`GEMSDOE32-HIDE-RECOVER-v3.0`, OOF, N=22,232) / **0.0644** (`GEMSDOE32-SGMC-CAL-v3.0`, N=62,703) — below both the champion procedure (0.0992) and the archived HTCADS receipt (0.1124 / 0.0789). **Verdict: negative; do not submit the ECPU TIFF** (`docs/downloads/kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif`, retained only as a negative deliverable). Full report, receipts and merge-alignment errata: [`ECPU_LANE_2026-10-27.md`](ECPU_LANE_2026-10-27.md). This addendum does not modify the **NOT OK TO SUBMIT** decision above.
+
 ## Reproduce the audit (no upload)
 
 Python 3.11, GDAL-compatible rasterio wheels, GitHub access, and several GB of free disk/RAM are needed for bulk data. Source hashes establish identity to owner mirrors—not authenticity of organizer/USGS/DOE origin. Bulk data and `.venv` are ignored and must be restored again in a fresh workspace.
