@@ -1,0 +1,95 @@
+{
+  "schema": "kanlergemsdoe2.official_sources.v1",
+  "verified_on_utc": "2026-10-27",
+  "method": "Each entry was fetched with fetch_page on 2026-10-27 (UTC). 'quote' is copied from the fetched text. Items marked NOT-VERIFIED were not reachable or not checked.",
+  "sources": [
+    {
+      "id": "OS-1",
+      "title": "GEMS Prize problem description (metric, submission format)",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "claims_verified": [
+        "Metric is a distance-weighted Tversky index with alpha = 0.2 and beta = 0.8.",
+        "Triangular kernel k(d) = max(1 - d/R, 0) with R = 300 m (3 px at 100 m).",
+        "Submission is float32, single layer, values between 0 and 1, EPSG 32611, 100 m, same bounds as training data.",
+        "Data outside the bounds is null or nan."
+      ],
+      "quote": "Your submission contains a single layer with datatype of 32-bit float (`float32`) with values between 0 and 1 ... data outside the bounds is null or nan.",
+      "irregularity": "IRR-2026-10-27-02: the repo's promoted file zero-fills outside the footprint instead of NaN. The published wording calls for null/nan outside bounds; its relationship to the irregular footprint and portal acceptance of zeros remain unverified."
+    },
+    {
+      "id": "OS-2",
+      "title": "GEMS Prize Official Rules (PDF, September 2026)",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "claims_verified": [
+        "Three submissions per week (cited as 'three submissions per week' in Section 3.2 Process Overview).",
+        "Public-leaderboard scores may differ from final private-leaderboard scores.",
+        "First-round prize rankings use the selected final submissions against the private test set.",
+        "Competitors must choose a single submission for scoring across both rounds (stated on the OS-1 problem-description page, not in this PDF)."
+      ],
+      "quote": "You can make multiple submissions, subject to the limits specified on the competition website (three submissions per week).",
+      "irregularity": null
+    },
+    {
+      "id": "OS-3",
+      "title": "GEMS Prize public leaderboard (snapshot 2026-10-27)",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "snapshot_values_used": {
+        "rank_1": 0.4544,
+        "rank_2": 0.3916,
+        "rank_5": 0.3566,
+        "rank_10": 0.3379,
+        "rank_20": 0.3273,
+        "rank_25": 0.3195,
+        "rank_30": 0.3113,
+        "rank_48": 0.2874,
+        "rank_50": 0.2857
+      },
+      "claims_verified": [
+        "The current public #1 is 0.4544 (the prompt states 0.4413).",
+        "The current public #5 is 0.3566 (the prompt states #5 = 0.3195).",
+        "0.3195 is the score at rank #25 on this snapshot.",
+        "Rank #50 is 0.2857, so the 0.2778 GEMSDOE32 score is below rank #50 on this snapshot."
+      ],
+      "quote": "| #25 | ... kpomazi ... | 0.3195 |  |   |  #50 | ... jfper21 ... | 0.2857 |",
+      "irregularity": "IRR-2026-10-27-01: the prompt's leaderboard figures (#1 = 0.4413, #5 = 0.3195) do not match this snapshot (#1 = 0.4544, #5 = 0.3566, 0.3195 = #25). Snapshot time is not stated on the page; ranks will move."
+    },
+    {
+      "id": "OS-4",
+      "title": "DrivenData forum: known USGS/INGENIOUS fault pixels are masked when scoring",
+      "url": "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516",
+      "claims_verified": [
+        "Staff (chrisk-dd, Sep 16) say pixels corresponding to known USGS/INGENIOUS faults are masked / excluded from evaluation, so they do not count toward penalty terms.",
+        "Staff say re-evaluation will also mask the existing USGS/INGENIOUS faults."
+      ],
+      "quote": "Pixels corresponding to known USGS/INGENIOUS faults are masked / excluded from evaluation, so they do not count towards penalty terms.",
+      "irregularity": null
+    },
+    {
+      "id": "OS-5",
+      "title": "DrivenData reference solution (GitHub)",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
+      "claims_verified": [
+        "Repository exists; contains unet-mc-cv-reference-solution.ipynb and no standalone scorer.",
+        "The notebook trains with segmentation_models_pytorch TverskyLoss(alpha=0.2, beta=0.8), which is a patch-level loss, not the distance-weighted DTI used for scoring."
+      ],
+      "quote": "from segmentation_models_pytorch.losses import TverskyLoss ... alpha = 0.2 ... beta = 0.8",
+      "irregularity": "IRR-2026-10-27-03: the official distance-weighted scorer is not public in this repo; the repo's DTI is a transcription of the OS-1 equations and is NOT an organizer-validated scorer."
+    },
+    {
+      "id": "OS-6",
+      "title": "DrivenData data page (training data)",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/data/",
+      "claims_verified": ["NOT-VERIFIED this session: the page requires login. Prior-session notes say it redirects to login; the restored files are owner-supplied mirrors (see registry/data_manifest.json)."],
+      "quote": null,
+      "irregularity": "IRR-2026-10-27-04: competition inputs come from owner-mirror GitHub repos, pinned by SHA-256, not from organizer downloads."
+    },
+    {
+      "id": "OS-7",
+      "title": "GeoDAWN USGS data release (DOI 10.5066/P93LGLVQ)",
+      "url": "https://doi.org/10.5066/P93LGLVQ",
+      "claims_verified": ["Cited by OS-2 PDF footnote 3 as the GeoDAWN source; the DOI string appears verbatim in the rules PDF."],
+      "quote": "[https://doi.org/10.5066/P93LGLVQ](https://doi.org/10.5066/P93LGLVQ)",
+      "irregularity": null
+    }
+  ]
+}

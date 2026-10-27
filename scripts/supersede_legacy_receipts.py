@@ -99,6 +99,57 @@ def main() -> None:
     old["superseded_notice"] = legacy["superseded_notice"]
     write("evidence/nine_site_forensic_20261026.json", old)
 
+    # These additional historical receipts can be present after concurrent main updates.
+    table_path = ROOT / "evidence/submission_table_20261027.json"
+    if table_path.exists():
+        table = load("evidence/submission_table_20261027.json")
+        table["superseded_notice"] = REASON
+        old_candidate = table.pop("promoted", table.get("historical_candidate", {}))
+        old_candidate["verdict"] = "negative"
+        old_candidate["ok_to_submit"] = False
+        old_candidate["historical_lattice_note"] = old_candidate.get("historical_lattice_note", old_candidate.get("lattice_overlap_note"))
+        old_candidate["lattice_overlap_note"] = "99.968% overlap triggers the literal any-registry stop; no control exemption applies."
+        if "projection" in old_candidate:
+            old_candidate["historical_quarantined_projection"] = old_candidate.pop("projection")
+        if "rank_context" in old_candidate:
+            old_candidate["historical_quarantined_rank_context"] = old_candidate.pop("rank_context")
+        if "historical_quarantined_projection" in old_candidate:
+            old_candidate["historical_quarantined_projection"]["status"] = "unvalidated historical arithmetic; not a score or reliable forecast"
+        table["historical_candidate"] = old_candidate
+        for row in table.get("irregularities", []):
+            if row["id"] == "IRR-2026-10-27-06":
+                row["finding"] = "The lattice overlap triggers the literal rule even though a space-filling control is not geological copying."
+            elif row["id"] == "IRR-2026-10-27-02":
+                row["finding"] = "The historical GeoTIFF zero-fills outside the footprint; official bounds wording and portal acceptance are not independently resolved. DO NOT SUBMIT."
+        write("evidence/submission_table_20261027.json", table)
+
+    focus_path = ROOT / "evidence/focus_site_audit_20261027.json"
+    if focus_path.exists():
+        focus = load("evidence/focus_site_audit_20261027.json")
+        focus["superseded_notice"] = REASON
+        for row in focus.get("files", []):
+            if row.get("label") == "KANLERGEMSDOE2 promoted EXP-2":
+                row["label"] = "KANLERGEMSDOE2 historical EXP-2 (negative)"
+        for row in focus.get("pairwise_overlap", []):
+            for key in ("a", "b"):
+                if row.get(key) == "KANLERGEMSDOE2 promoted EXP-2":
+                    row[key] = "KANLERGEMSDOE2 historical EXP-2 (negative)"
+        for row in focus.get("promoted_vs_all", []):
+            if "lattice" in row.get("against", ""):
+                row["note"] = "Space-filling lattice still triggers the literal all-entry duplicate rule."
+        write("evidence/focus_site_audit_20261027.json", focus)
+
+    records_path = ROOT / "evidence/focus_site_files.json"
+    if records_path.exists():
+        records = load("evidence/focus_site_files.json")
+        records["superseded_notice"] = "Historical files only; no submission is authorized. All-finite encoding is not a portal-acceptance guarantee."
+        for row in records.get("records", []):
+            role = row.get("role", "")
+            if "portal-safe" in role:
+                row.setdefault("historical_role", role)
+                row["role"] = role.replace("portal-safe", "all-finite")
+        write("evidence/focus_site_files.json", records)
+
     current = load("run_card.json")
     write("docs/downloads/htcads_run_card.json", current)
     report = load("docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-validation.json")

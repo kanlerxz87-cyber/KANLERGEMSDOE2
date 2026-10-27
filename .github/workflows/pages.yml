@@ -33,8 +33,9 @@ jobs:
         run: python scripts/build_site.py
       - name: Stage static Pages artifact
         run: |
-          mkdir -p _site
-          cp -R docs/. _site/
+          mkdir -p _site/docs
+          cp index.html .nojekyll _site/
+          cp -R docs/. _site/docs/
           cp _site/index.html _site/404.html
       - uses: actions/upload-pages-artifact@v3
         with:

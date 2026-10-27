@@ -7,6 +7,7 @@ candidate requires a new, independently replayed selector before changing it.
 from __future__ import annotations
 
 import csv
+import hashlib
 import html
 import json
 from pathlib import Path
@@ -77,11 +78,14 @@ def main() -> None:
 
     table_rows = []
     for r in rows:
+        local_file = DOCS / "downloads" / r["file"]
+        if not local_file.is_file() or hashlib.sha256(local_file.read_bytes()).hexdigest() != r["file_audit"]["sha256"]:
+            raise SystemExit(f"Historical download missing or checksum changed: {r['file']}")
         comp = r["focus_site_comparisons"][0]
         overlap = comp["fraction_candidate_dots_within_3px"] * 100
         exact = " · exact footprint duplicate" if comp["same_footprint_pixels"] else ""
         finite = "All cells finite" if r["file_audit"]["all_cells_finite_and_in_range"] else "Contains non-finite cells"
-        table_rows.append(f'''<tr><td><a href="{esc(r['site_url'])}"><b>{esc(r['site'])} ↗</b></a></td><td><a class="mono file-name" href="{esc(r['blob_url'])}">{esc(r['file'])}</a><small>{finite}; historical file</small></td><td><strong>{esc(r['reported_value'])}</strong><small>USER/OWNER REPORT<br>no receipt verified</small></td><td><b class="red">No</b><small>{overlap:.2f}% near {esc(comp['site'])}{exact}</small></td><td><span class="mini-danger">DO NOT SUBMIT</span></td></tr>''')
+        table_rows.append(f'''<tr><td><a href="{esc(r['site_url'])}"><b>{esc(r['site'])} ↗</b></a></td><td><a class="mono file-name" href="downloads/{esc(r['file'])}" download>{esc(r['file'])} ↓</a><small>{finite}; historical file · <a href="{esc(r['blob_url'])}">pinned source ↗</a></small></td><td><strong>{esc(r['reported_value'])}</strong><small>USER/OWNER REPORT<br>no receipt verified</small></td><td><b class="red">No</b><small>{overlap:.2f}% near {esc(comp['site'])}{exact}</small></td><td><span class="mini-danger">DO NOT SUBMIT</span></td></tr>''')
     table_html = "\n".join(table_rows)
     summary = f'''
 <div class="page-heading"><div class="eyebrow">DECISION BRIEF / 27 OCT 2026</div><h1>Executive summary</h1><p>The best file to submit under the current protocol is <strong>none</strong>. These are historical comparisons, not an invitation to resubmit someone else's raster.</p></div>
@@ -99,14 +103,21 @@ def main() -> None:
 <section class="panel"><div class="eyebrow">OFFICIAL SOURCES</div><h2>Evidence to review</h2><div class="source-list"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"><b>DrivenData problem &amp; metric</b><span>Task, weighted Tversky, grid and submission format ↗</span></a><a href="https://github.com/drivendataorg/gems-prize-reference-solution"><b>Official reference solution</b><span>Baseline model and CPU/GPU environment ↗</span></a><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and"><b>USGS GeoDAWN</b><span>Survey properties, resolution and licensing ↗</span></a><a href="https://gdr.openei.org/submissions/1391"><b>DOE INGENIOUS dataset</b><span>Thermal, geophysical, volcanic and paleo-geothermal data; CC BY 4.0 ↗</span></a><a href="https://www.osti.gov/dataexplorer/biblio/dataset/1148722"><b>DOE geothermal structural inventory</b><span>Documented fault tips, intersections and stepovers ↗</span></a></div></section>'''
 
     irregular = f'''
-<div class="page-heading"><div class="eyebrow">AUDIT TRAIL / ACTION ITEMS</div><h1>Known limitations</h1><p>Failures and uncertainty are part of the result. No human inspector is used to override the gates.</p></div>
+<div class="page-heading"><div class="eyebrow">AUDIT TRAIL / ACTION ITEMS</div><h1>Known limitations</h1>{badge}<p>Failures and uncertainty are part of the result. No human inspector is used to override the gates.</p></div>
 <section class="panel"><div class="eyebrow">IR-01 / HARD STOP</div><h2>The lattice makes the literal test unusually restrictive</h2><p>The verified registry lattice covers <strong>{audit['registry_lattice']['covered_within_3px']:,} of {audit['registry_lattice']['footprint_pixels']:,}</strong> footprint pixels within 3 pixels. Only <strong>{audit['registry_lattice']['uncovered_within_3px']:,}</strong> pixels are outside that radius. For any {candidate['file_audit']['positive_pixels_inside']:,}-dot candidate, at least <strong>{100*candidate['pigeonhole_min_overlap_fraction']:.2f}%</strong> must overlap by the pigeonhole principle; this candidate actually overlaps <strong>{lattice:.3f}%</strong>.</p><p>This does not prove geological copying: the lattice is a space-filling calibration pattern. It nevertheless triggers the user's unqualified “any registry raster” stop. A better scientific comparator policy requires an explicit protocol change; this project must not create an exception on its own.</p></section>
 <section class="section-grid"><article class="panel"><div class="eyebrow">IR-02 / EVIDENCE</div><h2>Historical approval was invalid</h2><p>Prior code excluded the lattice, reported detector-only passing results, and labeled owner-supplied values as organizer-confirmed. The old approval flags have been superseded. The re-audit checks nine historical rasters plus the lattice; it does not claim a complete registry replay or recomputed pre-placement surface.</p><a class="plain-link" href="data/focus_audit.json">View exact re-audit JSON →</a></article><article class="panel"><div class="eyebrow">IR-03 / ACCESS</div><h2>Official input and quota access</h2><p>The official data and submission pages redirect to login. A public GitHub mirror restored the feature, template and label files, with hashes checked; identical hashes do not prove organizer origin or permission. The prepared feature-stack hash matches the historical cache. Official files, independent source verification and account quota remain unavailable here.</p></article></section>
 <section class="panel"><div class="eyebrow">IR-04 / INFERENCE</div><h2>A holdout is not the leaderboard</h2><p>Mapped-fault hide-and-recover is an imperfect proxy for newly expert-mapped faults. Scores from different evaluators or label populations are not directly comparable. Neither a historical point estimate nor a fit to a few reported values establishes performance on hidden test data.</p><p>The selector is intentionally fail-closed until a complete independent replay and a legitimate account quota adapter exist. The static leaderboard snapshot is dated {timestamp}; <a href="{official}">the organizer's live page</a> remains the source of truth.</p></section>'''
 
-    for name, title, body in [("index.html", "Overview", hero), ("executive-summary.html", "Executive summary", summary),
-                              ("research.html", "Research", research), ("irregularities.html", "Limitations", irregular)]:
-        (DOCS / name).write_text(page(title, name, body), encoding="utf-8")
+    for name, title, active, body in [
+        ("index.html", "Overview", "index.html", hero),
+        ("executive-summary.html", "Executive summary", "executive-summary.html", summary),
+        # Preserve the historic URLs while replacing their unsafe stale content.
+        ("submission-table.html", "Submission table", "executive-summary.html", summary),
+        ("research.html", "Research", "research.html", research),
+        ("irregularities.html", "Limitations", "irregularities.html", irregular),
+        ("audit-review.html", "Audit review", "irregularities.html", irregular),
+    ]:
+        (DOCS / name).write_text(page(title, active, body), encoding="utf-8")
 
     (DOCS / "data/focus_audit.json").write_text(json.dumps(audit, indent=2, allow_nan=False) + "\n")
     status = {"schema": "kanlergems2.status.v2", "generated_utc": card["generated_utc"],
@@ -130,7 +141,8 @@ def main() -> None:
     md_rows = []
     for r in rows:
         comp = r["focus_site_comparisons"][0]
-        md_rows.append(f"| [{r['site']}]({r['site_url']}) | [{r['file']}]({r['blob_url']}) | {r['reported_value']} (unverified user/owner report) | No — {100*comp['fraction_candidate_dots_within_3px']:.2f}% vs {comp['site']} | **NO** |")
+        format_text = "all cells finite in [0,1]" if r["file_audit"]["all_cells_finite_and_in_range"] else "non-finite cells outside footprint"
+        md_rows.append(f"| [{r['site']}]({r['site_url']}) | [{r['file']}](docs/downloads/{r['file']}) ([pinned source]({r['blob_url']})) | {r['reported_value']} (unverified user/owner report) | {format_text} | No — {100*comp['fraction_candidate_dots_within_3px']:.2f}% vs {comp['site']} | **NO** |")
     md = f'''# Executive summary and submission guide
 
 ## **DO NOT SUBMIT — no candidate is approved**
@@ -139,8 +151,8 @@ The existing [HTCADS research TIFF](docs/downloads/{card['submission_name']}) is
 
 Prior recorded **{hold_text}** (not independently replayed this session) is an internal estimate, not a leaderboard forecast. **Estimated organizer score: unavailable.** The leaderboard snapshot observed {timestamp} was public #1 {rank1:.4f} and #5 {rank5:.4f}; [check live](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). These are official public observations, not a submission-page receipt for our file.
 
-| Site | Historical file for audit | Value supplied by user/owner | Unique vs other eight sites? | OK to submit? |
-|---|---|---|---|---|
+| Site | Historical file for audit | Value supplied by user/owner | Local format diagnostic | Unique vs other eight sites? | OK to submit? |
+|---|---|---|---|---|---|
 {chr(10).join(md_rows)}
 
 The historical values are **not verified organizer receipts**. Uniqueness here is the directional within-3-pixel rule, not just file-hash inequality. GEMSDOE25 and GEMSDOE30 have identical footprint predictions. No older file is recommended for resubmission.
