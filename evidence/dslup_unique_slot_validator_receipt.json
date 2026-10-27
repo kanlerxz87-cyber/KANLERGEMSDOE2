@@ -1,65 +1,81 @@
 {
-  "validated_ok_to_download_and_submit": true,
-  "human_intervention_required": false,
-  "verdict": "promote",
-  "validation_mode": "unique-slot",
-  "raster_filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
-  "raster_sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
-  "gates": {
+  "schema": "gems.superseded-historical-validator.v1",
+  "supersession_notice": "SUPERSEDED: historical control-separated approval was invalid. The literal all-registry witness fails; no independent holdout, complete registry, current quota or portal acceptance is verified. The TIFF is research only; do not submit.",
+  "superseded_by": "evidence/dslup_literal_revalidation_20261027.json",
+  "original_receipt_sha256_before_supersession": "3ce669d1c063a4b5c99d30b68339cef2983cf2562af3d6e9b97e1182b5003196",
+  "historical_verdict_at_creation": "promote",
+  "historical_validated_ok_to_download_and_submit": true,
+  "historical_validation_mode": "unique-slot",
+  "historical_gates": {
     "gate_1_format_and_range_0_1": true,
     "gate_2_leakage_canary_le_090": true,
     "gate_3_registry_uniqueness": true,
     "gate_4_holdout_beats_champion": true,
     "gate_5_portal_metadata_le_140": true
   },
-  "format_audit": {
-    "filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
-    "size_bytes": 217858,
-    "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
-    "mode": "zeros",
-    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
-    "crs": "EPSG:32611",
-    "transform": [
-      100.0,
-      0.0,
-      243350.0,
-      0.0,
-      -100.0,
-      4508550.0
-    ],
-    "shape": [
-      3730,
-      3292
-    ],
-    "dtype": "float32",
-    "nodata": null,
-    "nodata_repr": "None",
-    "emitted_positive_pixels": 37654,
-    "emitted_mass": 37654.0,
-    "footprint_fraction": 0.007287,
-    "on_catalogue_positive_pixels": 0,
-    "in_footprint_finite_pixels": 5167373,
-    "nan_inside_footprint": 0,
-    "full_grid_nan_pixels": 0,
-    "in_footprint_min": 0.0,
-    "in_footprint_max": 1.0,
-    "full_grid_finite_pixels": 12279160,
-    "values_in_0_1": true,
-    "checks": {
-      "exact_reference_grid_match": true,
-      "single_band": true,
-      "dtype_float32": true,
-      "dimensions_3730x3292": true,
-      "crs_epsg_32611": true,
-      "in_footprint_all_finite": true,
-      "in_footprint_zero_nan": true,
-      "in_footprint_zero_inf": true,
-      "in_footprint_zero_sentinel": true,
-      "in_footprint_range_0_1": true,
-      "outside_footprint_compliant": true,
-      "zero_on_catalogue_leakage": true,
-      "validator_range_0_1_guaranteed": true
+  "current_validation": {
+    "schema": "gems.fail-closed-validator.v2",
+    "validated_ok_to_download_and_submit": false,
+    "ok_to_submit": false,
+    "verdict": "negative",
+    "human_intervention_required": false,
+    "raster_filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "raster_sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+    "gates": {
+      "exact_file_identity": true,
+      "local_grid_dtype_inside_range": true,
+      "literal_witness_not_duplicate": false,
+      "complete_current_registry_replayed": false,
+      "surface_before_placement_replayed": false,
+      "independent_canary_and_holdout_replay": false,
+      "current_weekly_quota_verified": false
     },
-    "all_checks_passed": true
-  }
+    "format_audit": {
+      "file": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+      "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+      "size_bytes": 217858,
+      "count": 1,
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "grid_matches_pinned_owner_template": true,
+      "no_nan_inside_footprint": true,
+      "no_inf_inside_footprint": true,
+      "inside_range_0_1": true,
+      "local_grid_dtype_inside_range_pass": true,
+      "strict_whole_array_finite_0_1": true,
+      "outside_footprint_all_nan": false,
+      "outside_footprint_all_zero": true,
+      "inside_positive_pixels": 37654,
+      "outside_positive_pixels": 0,
+      "on_catalogue_positive_pixels": 0,
+      "witness_overlap_dots": 37647,
+      "witness_overlap_fraction": 0.9998140967759069,
+      "witness_final_dots_spearman": 0.0005034898206130378,
+      "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+      "duplicate_under_literal_rule": true,
+      "organizer_acceptance_verified": false
+    },
+    "reasons": [
+      "Literal all-entry witness failed or was undefined; no exemption for calibration rasters.",
+      "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
+      "Complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+    ],
+    "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
+  },
+  "validated_ok_to_download_and_submit": false,
+  "ok_to_submit": false,
+  "verdict": "negative"
 }

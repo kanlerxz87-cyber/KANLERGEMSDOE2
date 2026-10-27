@@ -165,6 +165,10 @@ def _overlap_vs_named(dots_2d: np.ndarray, registry: list[dict], name_tag: str) 
 
 
 def main() -> int:
+    # Historical method code is retained for forensics only. These were not the
+    # assigned lane and their former gates omitted the literal lattice witness.
+    # Stop before fitting, placement, or writing artifacts; importing helpers is OK.
+    raise SystemExit("Archived parallel lane disabled: not the assigned lane; literal registry preflight and independent replay required")
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

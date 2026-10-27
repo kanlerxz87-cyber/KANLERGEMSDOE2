@@ -63,7 +63,10 @@ def test_run_card_and_parallel_run_protocol_gates() -> None:
     card = json.loads((ROOT / "run_card.json").read_text())
     card_ev = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
     card_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
-    assert card == card_ev == card_docs
+    current = json.loads((ROOT / "evidence/current_run_card.json").read_text())
+    assert card == card_ev  # archived KG2 copies retain their historical identity
+    assert card_docs == current  # public feed always points to the current decision
+    assert card_docs["verdict"] == "negative" and card_docs["ok_to_submit"] is False
 
     required = {
         "hypothesis",

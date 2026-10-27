@@ -202,15 +202,17 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
     builder = importlib.import_module('build_site')
     evidence = tmp_path / 'evidence'
     evidence.mkdir()
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
+    (evidence / 'release_recheck_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'promote', 'ok_to_submit': True}))
+    (evidence / 'dslup_literal_revalidation_20261027.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
     monkeypatch.setattr(builder, 'DOCS', tmp_path / 'docs')
     with pytest.raises(SystemExit, match='refusing stale or positive card'):
         builder.main()
-    real = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps(real))
-    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
+    real = json.loads((ROOT / 'evidence/release_recheck_20261027.json').read_text())
+    (evidence / 'release_recheck_20261027.json').write_text(json.dumps(real))
+    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False, 'generated_utc': real['generated_utc']}))
+    (evidence / 'dslup_literal_revalidation_20261027.json').write_text((ROOT / 'evidence/dslup_literal_revalidation_20261027.json').read_text())
     with pytest.raises(SystemExit, match='artifact missing or differs'):
         builder.main()
 

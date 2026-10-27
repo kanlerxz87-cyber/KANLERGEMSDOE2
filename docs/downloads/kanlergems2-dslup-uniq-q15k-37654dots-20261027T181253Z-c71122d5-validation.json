@@ -1,4 +1,7 @@
 {
+  "supersession_notice": "SUPERSEDED: historical control-separated approval was invalid. The literal all-registry witness fails; no independent holdout, complete registry, current quota or portal acceptance is verified. The TIFF is research only; do not submit.",
+  "current_literal_revalidation": "../../evidence/dslup_literal_revalidation_20261027.json",
+  "ok_to_submit": false,
   "candidate_id": "EXP-A-DSTAR",
   "slug": "dslup-uniq-q15k-37654dots",
   "content_digest8": "c71122d5",

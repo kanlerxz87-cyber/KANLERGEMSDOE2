@@ -1,0 +1,56 @@
+{
+  "schema": "gems.independent-witness-review.v1",
+  "generated_utc": "2026-10-27T23:50:40.662107+00:00",
+  "method": "Euclidean distance transform, compared against independently implemented binary dilation audit",
+  "source": "Hash-pinned owner mirrors, not authenticated organizer data",
+  "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "independent_preflight": {
+    "footprint_pixels": 5167373,
+    "covered_pixels_within_3px": 5160724,
+    "uncovered_pixels": 6649,
+    "candidate_dot_budget": 37654,
+    "minimum_overlapping_dots": 31005,
+    "minimum_directional_overlap": 0.8234184947150369,
+    "forced_duplicate": true
+  },
+  "candidates": [
+    {
+      "file": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+      "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+      "dots": 37654,
+      "within_3px": 37647,
+      "overlap_fraction": 0.9998140967759069,
+      "duplicate": true
+    },
+    {
+      "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+      "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+      "dots": 37654,
+      "within_3px": 37642,
+      "overlap_fraction": 0.9996813087586977,
+      "duplicate": true
+    },
+    {
+      "file": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",
+      "sha256": "3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6",
+      "dots": 37654,
+      "within_3px": 37636,
+      "overlap_fraction": 0.9995219631380464,
+      "duplicate": true
+    },
+    {
+      "file": "kanlergems2-ecpu-exp-1-37654dots-20261027T172822Z-cecbdca7-zeros.tif",
+      "sha256": "5c83f85c72825752c6d320152b9d90f7233de2a181a0acd8ef9d6fd7e569d15d",
+      "dots": 37654,
+      "within_3px": 37645,
+      "overlap_fraction": 0.9997609815690233,
+      "duplicate": true
+    }
+  ],
+  "matches_release_recheck": true,
+  "complete_registry_replayed": false,
+  "holdout_or_leakage_replayed": false,
+  "portal_or_quota_checked": false,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}
