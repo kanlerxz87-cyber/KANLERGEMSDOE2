@@ -1,0 +1,36 @@
+{
+  "generated_utc": "2026-10-26T23:05:00+00:00",
+  "merged_parent_commit": "b9a759a",
+  "promoted_lane": "KG2-MGHV-EXP-1",
+  "promoted_file": "docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif",
+  "promoted_holdout_dti": 0.1770558316101688,
+  "promoted_evaluator": "gems-segment-pooled-v1",
+  "prior_parallel_kanler_lanes_preserved_in_git_history_b9a759a": [
+    {
+      "lane": "KANLER-EXT-CORROB (commit 12493f3)",
+      "file": "kanler-ext-mcsup-44090d-20261026T223149Z-5553e712b0-allfinite.tif",
+      "positive_dots": 44090,
+      "reported_oof_dti": 0.1264,
+      "verdict": "negative",
+      "kg2_exp1_3px_overlap": 0.2578,
+      "kg2_exp1_abs_spearman": 0.0206
+    },
+    {
+      "lane": "KANLER-E1-XG-HGB",
+      "file": "kanler-e1-xg-hgb-37654d-20261026T214616Z-7ab68c3efd-allfinite.tif",
+      "positive_dots": 37654,
+      "reported_oof_dti": 0.1252,
+      "verdict": "negative",
+      "kg2_exp1_3px_overlap": 0.2792,
+      "kg2_exp1_abs_spearman": 0.0331
+    },
+    {
+      "lane": "KANLER-BLINDBASIN-VENT-GRAVITY",
+      "file": "kanlergemsdoe2-blindbasin-vent-gravity-20261026-2858780e-zeros.tif",
+      "positive_dots": 37654,
+      "verdict": "negative",
+      "kg2_exp1_3px_overlap": 0.1094,
+      "kg2_exp1_abs_spearman": 0.0022
+    }
+  ]
+}

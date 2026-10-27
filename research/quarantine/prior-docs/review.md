@@ -1,5 +1,0 @@
-# Three-pass review
-
-1. **Implementation:** audited the initially empty checkout; collected nine commit-pinned source trees and README/site snapshots; collected official reference README; built executive summary, guide, research queue and negative run card. No TIFF or holdout claimed.
-2. **Bug review:** strengthened the evidence gate to reject missing DTI/CI, absent fold-local evidence and missing baseline identity, in addition to NaN, missing validators and duplicates. Verified with nine unit tests. Promotion never authorizes upload. These tests exercise gate logic, not geological performance.
-3. **Requirements review:** confirmed all nine sites appear, no fake download link or invented estimate is shown, source classes are explicit and no slots used. Full scientific task remains incomplete: no assigned lane, local cache/data, complete registry comparisons, canaries or holdout experiments. The README contains an operational transcription, not the full verbatim multi-page prompt. External source availability and leaderboard not verified. GitHub Pages deployment is tracked separately from local site generation.

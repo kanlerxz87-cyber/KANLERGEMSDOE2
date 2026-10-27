@@ -1,0 +1,109 @@
+{
+  "schema_version": "kanlergems2.preregistration.v1",
+  "frozen_utc": "2026-10-26T21:46:00Z",
+  "lane_id": "HTCADS-K2",
+  "lane_paragraph": "Hydrothermal-Tectonic Conduit & Anisotropic Dilational Step-Over Synthesis (HTCADS): We target blind Basin-and-Range and Walker Lane geothermal fault conduits and low-slip Quaternary accommodation structures by fusing (1) Fourier upward-continued dip-projected potential-field ridges and Gallardo-Meju gravity-magnetic cross-gradient alignment, (2) shallow hydrothermal magnetite-destruction troughs, K-on-Th potassic metasomatism, MT clay-cap lateral boundaries, and up-hydraulic-gradient advective back-projection of INGENIOUS 2 m thermal probes, geothermometer wells/springs, heat-flow highs, and sinter/breccia vents gated strictly onto 1D structural ridges, (3) GPS transtensional dilational-shear strain coupling, USGS 3D slip/dilation tendency, and fold-visible fault-tip/relay-ramp stress lobes, and (4) a strictly quarantined, zero-mean quantile-debiased 1 m LiDAR contour-orthogonal asymmetric scarp specialist, allocated via exact 25-offset Euclidean 300 m Dinkelbach-CELF submodular expected-DTI maximization outside an anisotropic flank-depleting / tip-preserving catalogue collar.",
+  "protocol_constraints": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "max_surface_abs_spearman": 0.90,
+    "max_dots_abs_spearman": 0.90,
+    "max_detector_3px_dot_overlap": 0.70,
+    "max_single_feature_canary_auc": 0.90
+  },
+  "candidate_hypotheses_ranked": [
+    {
+      "rank": 1,
+      "id": "H-K1",
+      "name": "HTCADS — Hydrothermal-Alteration Demagnetization & Transtensional Step-Over Synthesis with Regime-Debiased Submodular Allocation",
+      "selected_for_validation": true,
+      "layers": [
+        "training_features.tif (19 official bands: rtp, tmi, tmi_hg, tmi_vg, tc, iso_grav_anom, iso_grav_anom_hg, iso_grav_anom_vg, depth_to_base_surf, cond_surf, det_elev, det_elev_slope, geod_2ndinv, geod_shearrate, geod_dilaterate, deq_n100a15, ieq_n100a15)",
+        "external/geodawn_rad_u8.tif & geodawn_extensions_u8.tif (USGS GeoDAWN DOI 10.5066/P93LGLVQ: K, Th, U, TC, Th/K, U/K, U/Th, TMI_up150)",
+        "external/gdr_wellspring_in_footprint.csv, 2m_temperature_probe_INGENIOUS_regional_data.zip, paleo_geothermal_regional.zip, gdr_volcanic_vents_in_footprint.csv (DOE GDR 1391 DOI 10.15121/1881483)",
+        "external/sb_heat_flow_in_footprint.csv & sb_slip_tendency_in_footprint.csv (USGS ScienceBase INGENIOUS compilations)",
+        "external/lidar_scarp_features_u8.tif (USGS 3DEP 1 m LiDAR scarp stack — quarantined inside zero-mean E_surf specialist only)",
+        "Fold-visible existing_faults.tif ONLY (zero SGMC in features or training)"
+      ],
+      "physical_signature": "Multi-pillar log-odds synthesis of (P1) updip-projected gravity/magnetic steerable Hessian ridges + Gallardo-Meju cross-gradient cos^2 alignment + Verduzco tilt zero-crossing sharpness, (P2) hydrothermal magnetite-destruction trough -(tmi - TMI_up150) + K-on-Th residual + MT lateral conductivity gradient + up-hydraulic-gradient back-projected thermal/geothermometer plumes gated onto 1D structural ridges, (P3) transtensional strain rate (shearrate * relu(dilaterate)) + 3D slip/dilation tendency + fold-visible anisotropic fault-tip/step-over stress lobes, and (P4) contour-orthogonal asymmetric 1 m LiDAR scarplets centered to zero log-odds excess so the 24.6% non-LiDAR basins suffer zero root-split starvation.",
+      "why_catches_unmapped_not_catalogued": "USGS/INGENIOUS mappers digitized tall (>3-5 m) range-front scarps; ~75% of Great Basin geothermal systems are blind (Faulds & Hinz, 2015), hosted on intrabasin step-overs, horse-tail fault tips, and piedmont accommodation zones beneath Holocene alluvium where tall DEM scarps are absent but coincident basement cross-gradient steps, shallow hydrothermal demagnetization/K-alteration, and transtensional dilation localize fluid upflow.",
+      "differs_from_prior_repos": "100% de-novo (0 pixel reuse from H19-5/d2.8/B2); eliminates GEMSDOE32 H38's LiDAR coverage starvation via strict E_sub (100% LiDAR-blind) + zero-mean E_surf separation; eliminates GEMSDOE36/24 radial thermal blob dilution via 1D structural ridge gating; replaces isotropic B=2 truncation with anisotropic flank-depleting (d_flank > 2.2 px) / tip-preserving (d_tip > 1.4 px) collar + Dinkelbach marginal-DTI CELF packing.",
+      "expected_dti_improvement": "+0.015 to +0.030 HOLDOUT-DTI on GEMSDOE32-HIDE-RECOVER-v3.0 over 0.2778 Champion proxy (0.0992) AND simultaneous positive gain on blind GEMSDOE32-SGMC-CAL-v3.0 (>0.0641).",
+      "implementation_cost": "Medium (~5 min CPU end-to-end)",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 2,
+      "id": "H-K2",
+      "name": "WUDP — Wavelet/Fourier Multi-Height Upward-Continuation Fault-Dip Plane Projector",
+      "selected_for_validation": false,
+      "note": "Core Fourier upward-continuation crest-migration vector (z = 0, 150, 400 m) folded directly into Pillar 1 of H-K1 EXP-2.",
+      "layers": ["tmi", "TMI_up150", "rtp", "iso_grav_anom", "depth_to_base_surf"],
+      "physical_signature": "Lateral crest-migration vector across FFT upward-continuation heights to project hanging-wall gravity/magnetic gradient maxima updip onto the sub-alluvial surface fault emergence line.",
+      "why_catches_unmapped_not_catalogued": "Range-front and intrabasin normal faults dip 50-65 deg; raw gravity gradient crests sit 0.5-1.5 km basinward over the hanging-wall half-graben, missing the 300 m DTI kernel.",
+      "differs_from_prior_repos": "Replaces GEMSDOE92's uniform topographic upslope shift (0.0255 live) with physical potential-field upward-continuation crest migration.",
+      "expected_dti_improvement": "+0.005 to +0.012 HOLDOUT-DTI",
+      "implementation_cost": "Low-Medium",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 3,
+      "id": "H-K3",
+      "name": "MTSE — Magnetotelluric Clay-Cap Lateral Resistivity Boundary & Microseismic Swarm Coupling",
+      "selected_for_validation": false,
+      "note": "Core lateral conductivity gradient |grad(log1p(cond_surf))| x seismic swarm density folded into Pillar 2/3 of H-K1.",
+      "layers": ["cond_surf", "geod_shearrate", "geod_dilaterate", "deq_n100a15", "ieq_n100a15"],
+      "physical_signature": "Steerable ridge of horizontal log-conductivity gradient co-aligned with basement steps and active microseismic swarm intensity.",
+      "why_catches_unmapped_not_catalogued": "Buried creeping hydrothermal fault gouge juxtaposes resistive horst blocks against conductive smectite clay caps without preserving a surface scarp.",
+      "differs_from_prior_repos": "Targets lateral conductivity boundaries rather than GEMSDOE26's interior conductivity maxima (playa evaporite mimic).",
+      "expected_dti_improvement": "+0.003 to +0.008 HOLDOUT-DTI",
+      "implementation_cost": "Low",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 4,
+      "id": "H-K4",
+      "name": "AFDK — Alluvial-Fan Drainage-Azimuth Vorticity & Piedmont Knickzone Tensor",
+      "selected_for_validation": false,
+      "layers": ["det_elev", "det_elev_slope", "external/lidar_scarp_features_u8.tif", "USGS 3DEP 1/3 arc-second (10 m) seamless DEM"],
+      "physical_signature": "Cross-strike vorticity of ephemeral wash channel azimuths and longitudinal stream-profile knickzones along piedmont slope breaks.",
+      "why_catches_unmapped_not_catalogued": "Low-slip (<0.05 mm/yr) oblique Walker Lane faults in unconsolidated fanglomerate lose vertical scarps to erosion while preserving aligned channel deflections.",
+      "differs_from_prior_repos": "Measures transverse drainage-azimuth rotation rather than vertical scarp step height.",
+      "expected_dti_improvement": "+0.002 to +0.006 HOLDOUT-DTI",
+      "implementation_cost": "Medium",
+      "external_data_obtainable_in_sandbox": false,
+      "official_external_source_needed": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/ (USGS 3DEP 10 m seamless DEM; free public domain, blocked by sandbox outbound host allowlist in this session)"
+    },
+    {
+      "rank": 5,
+      "id": "H-K5",
+      "name": "IPGC — OPERA Sentinel-1 InSAR Poroelastic Aquifer-Barrier Phase-Gradient Detector",
+      "selected_for_validation": false,
+      "layers": ["NASA/JPL OPERA DISP-S1 North America vertical/LOS surface displacement", "cond_surf", "iso_grav_anom_hg"],
+      "physical_signature": "Sub-200 m horizontal step discontinuities in seasonal poroelastic ground deformation across impermeable fault-gouge aquifer barriers.",
+      "why_catches_unmapped_not_catalogued": "Completely blind intrabasin hydraulic-barrier faults beneath flat playas lack both topographic relief and shallow bedrock steps but compartmentalize seasonal aquifer head.",
+      "differs_from_prior_repos": "Uses time-series interferometric deformation step edges rather than static long-wavelength GPS strain grids.",
+      "expected_dti_improvement": "+0.008 to +0.020 HOLDOUT-DTI",
+      "implementation_cost": "High",
+      "external_data_obtainable_in_sandbox": false,
+      "official_external_source_needed": "https://asf.alaska.edu/datasets/daac/opera/ (NASA ASF DAAC OPERA DISP-S1; free official public data, blocked by sandbox outbound host allowlist in this session)"
+    }
+  ],
+  "preregistered_experiments": [
+    {
+      "id": "EXP-1",
+      "name": "HTCADS-SubsurfGeo (100%-Coverage LiDAR-Blind Subsurface + Hydrothermal Conduit + Stress/Tip OOF + 300m CELF)",
+      "description": "4-quadrant spatially-blocked OOF ensemble (1.5 km collar) on Pillars 1+2+3 only (zero 1 m LiDAR inputs) with exact 25-offset Euclidean 300 m CELF submodular allocation at K=37,654 dots and B=2.0 collar."
+    },
+    {
+      "id": "EXP-2",
+      "name": "HTCADS-DualRegime (Quantile-Debiased E_sub + Zero-Mean Contour-Orthogonal 1m LiDAR E_surf + Updip Projection + Multi-Pillar Corroboration)",
+      "description": "Combines OOF E_sub (100% LiDAR-blind with FFT upward-continuation updip projection) and OOF E_surf (zero-mean within-LiDAR rank log-odds excess, neutral 0.0 outside LiDAR) gated by multi-pillar physical corroboration + exact 300 m CELF at K=37,654 dots and B=2.0 collar."
+    },
+    {
+      "id": "EXP-3",
+      "name": "HTCADS-DinkelbachAniso (Anisotropic Flank-Depleting d_flank>2.25 / Tip-Preserving d_tip>1.4 Collar + Dinkelbach Marginal-DTI Optimal Allocation)",
+      "description": "Applies anisotropic structural collar physics (stripping cross-strike scarp-apron false positives out to 225 m while preserving corroborated along-strike fault-tip propagation zones at 140-225 m) and Dinkelbach marginal expected-DTI break-even stopping around the optimal 36k-39k dot regime."
+    }
+  ]
+}

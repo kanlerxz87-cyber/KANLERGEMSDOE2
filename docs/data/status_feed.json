@@ -1,0 +1,138 @@
+{
+  "schema": "kanlergemsdoe2.status_feed.v1",
+  "generated_utc": "2026-10-26T23:52:29.447729+00:00",
+  "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "validated_ok_to_download_and_submit": true,
+  "human_intervention_required": false,
+  "verdict": "promote",
+  "gates": {
+    "gate_1_format_and_range_0_1": true,
+    "gate_2_leakage_canary_le_090": true,
+    "gate_3_registry_uniqueness": true,
+    "gate_4_holdout_beats_champion": true,
+    "gate_5_portal_metadata_le_140": true
+  },
+  "promoted_submission": {
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "download_path": "downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "zip_path": "downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
+    "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "zip_sha256": "fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698",
+    "size_bytes": 204099,
+    "emitted_dots": 37654,
+    "portal_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
+    "portal_note_length": 110
+  },
+  "holdout_dti": {
+    "primary_hide_and_recover": {
+      "pooled_dti": 0.112353,
+      "ci95": [
+        0.098995,
+        0.125743
+      ],
+      "champion_02778_same_evaluator": 0.099202,
+      "per_quadrant_dti": {
+        "NW": 0.143132,
+        "NE": 0.095982,
+        "SW": 0.093681,
+        "SE": 0.124048
+      },
+      "paired_delta_vs_0p2778_ref": 0.01315,
+      "paired_delta_ci95": [
+        0.001893,
+        0.024978
+      ],
+      "win_prob_vs_ref": 0.992,
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.0990, 0.1257])"
+    },
+    "secondary_off_catalogue_sgmc": {
+      "raw_dti": 0.118056,
+      "sgmc_prevalence_calibrated_dti": 0.078913,
+      "ci95": [
+        0.070026,
+        0.087012
+      ],
+      "champion_02778_same_evaluator": 0.064121,
+      "paired_delta_vs_0p2778_ref": 0.014792,
+      "paired_delta_ci95": [
+        0.004999,
+        0.023693
+      ],
+      "ci95_strictly_positive": true,
+      "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0700, 0.0870])"
+    }
+  },
+  "uniqueness_summary": {
+    "unique_rasters_checked": 192,
+    "overlap_3px_vs_0p2778_champion": 0.396638,
+    "max_3px_overlap_vs_all_detectors": 0.649121,
+    "pre_placement_max_abs_spearman": 0.179514,
+    "final_dots_max_abs_spearman": 0.073708
+  },
+  "focus_9_champions": [
+    {
+      "site": "GEMSDOE32",
+      "file": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "live_score_organizer_confirmed": 0.2778,
+      "portal_safe_0_1": true,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE36",
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "live_score_organizer_confirmed": 0.275,
+      "portal_safe_0_1": true,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE28",
+      "file": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "live_score_organizer_confirmed": 0.271,
+      "portal_safe_0_1": false,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE31",
+      "file": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "live_score_organizer_confirmed": 0.2708,
+      "portal_safe_0_1": false,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE33",
+      "file": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "live_score_organizer_confirmed": 0.2632,
+      "portal_safe_0_1": true,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE25",
+      "file": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "live_score_organizer_confirmed": 0.26,
+      "portal_safe_0_1": false,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE30",
+      "file": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "live_score_organizer_confirmed": 0.26,
+      "portal_safe_0_1": true,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE24",
+      "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "live_score_organizer_confirmed": 0.2477,
+      "portal_safe_0_1": false,
+      "unique_among_focus9": false
+    },
+    {
+      "site": "GEMSDOE27",
+      "file": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "live_score_organizer_confirmed": 0.2449,
+      "portal_safe_0_1": false,
+      "unique_among_focus9": false
+    }
+  ]
+}

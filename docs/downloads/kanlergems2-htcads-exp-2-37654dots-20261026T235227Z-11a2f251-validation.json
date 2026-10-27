@@ -1,0 +1,64 @@
+{
+  "candidate_id": "EXP-2",
+  "slug": "htcads-exp-2-37654dots",
+  "content_digest8": "11a2f251",
+  "description": "Adds H-K2 FFT Updip Dip-Projected Gravity Migration + coverage-neutral zero-mean 1 m LiDAR Contour-Orthogonal Scarp Specialist + 300 m CELF (isotropic B=2.0 collar, 37,654 dots).",
+  "submission_name": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros",
+  "submission_note": "KANLERGEMS2 HTCADS-DualRegime: 50ch updip-grav+GDR1391+MT+orthoLiDAR NoisyOR+300m CELF (37654 dots, HR=0.1124)",
+  "submission_note_length": 110,
+  "zeros_tif": {
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
+    "size_bytes": 204099,
+    "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
+    "mode": "zeros",
+    "geometry_reference": "/home/user/KANLERGEMSDOE2/.cache/gems_data/sample_submission.tif",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "shape": [
+      3730,
+      3292
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nodata_repr": "None",
+    "emitted_positive_pixels": 37654,
+    "emitted_mass": 37654.0,
+    "footprint_fraction": 0.007287,
+    "on_catalogue_positive_pixels": 0,
+    "in_footprint_finite_pixels": 5167373,
+    "nan_inside_footprint": 0,
+    "full_grid_nan_pixels": 0,
+    "in_footprint_min": 0.0,
+    "in_footprint_max": 1.0,
+    "full_grid_finite_pixels": 12279160,
+    "values_in_0_1": true,
+    "checks": {
+      "exact_reference_grid_match": true,
+      "single_band": true,
+      "dtype_float32": true,
+      "dimensions_3730x3292": true,
+      "crs_epsg_32611": true,
+      "in_footprint_all_finite": true,
+      "in_footprint_zero_nan": true,
+      "in_footprint_zero_inf": true,
+      "in_footprint_zero_sentinel": true,
+      "in_footprint_range_0_1": true,
+      "outside_footprint_compliant": true,
+      "zero_on_catalogue_leakage": true,
+      "validator_range_0_1_guaranteed": true
+    },
+    "all_checks_passed": true
+  },
+  "zeros_zip": {
+    "filename": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip",
+    "size_bytes": 168683,
+    "sha256": "fc909b4b065e132d1672ea3298645de818da98358605a45f0b1d0c5c67778698"
+  }
+}

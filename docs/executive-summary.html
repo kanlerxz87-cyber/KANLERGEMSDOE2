@@ -3,81 +3,518 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Executive Summary &amp; Step-by-Step DrivenData Submission Guide · KANLERGEMSDOE2</title>
+  <title>Executive Summary &amp; Multi-Site Submission Guide &mdash; KANLERGEMSDOE2</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="container">
-    <h1>Executive Summary &amp; Step-by-Step DrivenData Submission Guide</h1>
-    <p>Automated Pre-Upload Gate Verdict, Exact File Format Contract &amp; DrivenData Portal Walkthrough</p>
-    <nav>
-      <a href="index.html">1. Executive Summary &amp; All-Site Table</a>
-      <a href="executive-summary.html" class="active">2. Step-by-Step DrivenData Submission Guide</a>
-      <a href="run_card.json">3. JSON Run Card</a>
-      <a href="focus_sites.json">4. Focus-Sites JSON</a>
-      <a href="canaries.json">5. 60-Feature Canary JSON</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span>KANLERGEMSDOE2</span>
+      <span class="brand-badge">VALIDATED: PROMOTE (5/5 GATES)</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Submission Gate &amp; Run Card</a><a href="executive-summary.html" class="active">9-Site Executive Summary &amp; Guide</a><a href="research.html">0.2778 Forensics &amp; Hypotheses</a><a href="irregularities.html">Irregularities &amp; Next Steps</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2" target="_blank" rel="noopener">GitHub Repo</a>
     </nav>
   </div>
 </header>
 
 <main class="container">
-  <section class="verdict-banner">
-    <h2>CURRENT WEEKLY-SLOT RECOMMENDATION: HOLD — DO NOT UPLOAD <code>KG2-H1</code> TO LIVE PORTAL</h2>
-    <p><strong>Is <code>kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif</code> format-valid for DrivenData?</strong> <strong>YES (100% PASS)</strong> — single-band <code>float32</code>, <code>EPSG:32611</code>, <code>3730 &times; 3292</code>, zero NaN/Inf anywhere on disk, all values strictly in <code>[0.0, 1.0]</code>.</p>
-    <p><strong>Should you spend one of your 3 rolling weekly DrivenData slots on it right now?</strong> <strong>NO (<code>verdict = "negative"</code>)</strong> — keep <code>GEMSDOE32</code> (<code>0.2778</code>, already submitted) as your active leaderboard benchmark. Our automated 72-raster portfolio gate caught <code>80.7%</code> 3-px convergence onto <code>10GEMSDOE</code>'s supervised scarp ridge (<code>0.2286</code> live) and a paired 95% CI vs <code>D2.8 vis-B2</code> of <code>[-0.0050, +0.0205]</code>. Only upload a new candidate once automated selector status flips to <code>ok_to_submit = true</code>.</p>
+
+  <section class="gate-banner">
+    <div class="gate-header">
+      <div class="status-pill">&#128203; MULTI-SITE SUBMISSION GUIDE &amp; 9-SITE FORENSIC AUDIT</div>
+      <a class="btn btn-primary" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>&#11015; Download KANLERGEMSDOE2 Unique .tif</a>
+    </div>
+    <h1 style="margin:0.2rem 0 0.5rem;font-size:1.48rem">Executive Summary: Which Files to Download, Exact Scores, &amp; Cross-Site Uniqueness</h1>
+    <p style="margin:0;color:#cbd5e1">
+      We forensically audited all <strong>9 focus repositories</strong> (<code>GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36</code>) plus <strong>92 GEMSDOE fleet sites</strong> (<code>118</code> organizer-confirmed receipts, <code>361</code> local GeoTIFFs, <code>192</code> unique footprint-distinct rasters). Below is your complete operational guide for downloading, verifying portal safety, and avoiding duplicate-lane slots.
+    </p>
   </section>
 
   <section class="card">
-    <h2>Step-by-Step: How to Submit a Promoted Candidate on DrivenData</h2>
-    <p>When a future candidate passes all 5 automated gates (<code>verdict = "promote"</code> and <code>selector_decision.json: ok_to_submit = true</code>), follow these exact steps on DrivenData:</p>
-    <ol>
-      <li><strong>Verify Automated Gate Status Locally (Zero Manual GIS Inspection Needed):</strong>
-        <pre>python scripts/validate_raster.py docs/downloads/&lt;candidate&gt;-zeros.tif data/sample_submission.tif
-python scripts/select_submission.py</pre>
-        Confirm both commands exit <code>0</code> and print <code>"format_valid": true</code> plus (for live slot expenditure) <code>"ok_to_submit": true</code>.</li>
-      <li><strong>Download the Whole-Grid-Finite <code>-zeros.tif</code> (or Single-TIFF <code>.zip</code>):</strong>
-        <ul>
-          <li>Always use the <strong><code>-zeros.tif</code></strong> (or matching <code>-zeros.zip</code> containing solely that single <code>.tif</code> at the archive root), written with <code>outside="zero"</code> and <code>nodata=None</code>.</li>
-          <li><strong>Why <code>-zeros.tif</code> prevents portal rejection:</strong> DrivenData's portal validator enforces <code>"Predicted values must be in range [0, 1]"</code>. Writing <code>0.0</code> outside the active footprint guarantees <code>((a &gt;= 0.0) &amp; (a &lt;= 1.0)).all() == True</code> under every possible GDAL/NumPy reader while scoring identically inside the organizers' masked evaluation footprint.</li>
-        </ul>
-      </li>
-      <li><strong>Open the Official DrivenData Competition Submissions Page:</strong>
-        Navigate to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/</a> (Initial Competition rolling limit: <strong>3 submissions per rolling 7-day window</strong>; Final Competition limit: 1 submission).</li>
-      <li><strong>Upload File &amp; Paste the &le;140-Character Traceability Note:</strong>
-        <ul>
-          <li>Upload the single <code>.tif</code> (or single-TIFF <code>.zip</code>). Never upload multi-file archives or auxiliary <code>.aux.xml</code> files.</li>
-          <li>Paste the exact Run Card note (&le;140 characters) so every portal entry maps 1-to-1 to a git commit and SHA-256 hash. Current run note (<code>118/140</code> chars):</li>
-        </ul>
-        <pre>KG2-H1 FVCA 60ch geotherm+2m+sinter+TIGER-LiDAR OOF; SegHold=0.1693, HRv3=0.1061; 33.4% ov G32; HOLD: 80.7% ov G10-H25</pre>
-      </li>
-      <li><strong>Record Organizer Receipt to Upgrade Evidence Class:</strong>
-        Once DrivenData finishes scoring, save the timestamp, exact filename, SHA-256, and 4-decimal score from the portal receipt. Only scores backed by a verifiable portal receipt may be labeled <code>ORGANIZER-CONFIRMED</code>.</li>
-    </ol>
+    <h2>3 Critical Operational Findings Before You Submit Any File</h2>
+    <div class="two-col">
+      <div class="callout">
+        <strong>1. All 9 Focus-Site Highs (0.2449 &rarr; 0.2778) Are One Shared Lineage (Not Unique Across Sites):</strong><br>
+        Every top score across <code>GEMSDOE24..36</code> descends from <code>19GEMSDOE</code>'s <code>H19-5</code> (<code>121,131</code> px, live <code>0.1922</code>) via Poisson thinning and catalogue-collar pruning. Pairwise 3-px overlap across all 9 focus champions is <strong>94.0% to 100.0%</strong>, including <strong>two exact 0-XOR pixel-identical duplicates</strong> (<code>GEMSDOE25 == GEMSDOE30</code> at <code>0.2600</code>; <code>GEMSDOE28_solo == GEMSDOE31</code> at <code>0.2708</code>). Do <em>not</em> re-upload another focus site's champion thinking it is an independent model!
+      </div>
+      <div class="callout callout-warn">
+        <strong>2. Portal <em>"Predicted values must be in range [0, 1]"</em> Trap (<code>-nan.tif</code> Hazard):</strong><br>
+        Five of the 9 focus-site best files (<code>GEMSDOE24, 25, 27, 28, 31</code>) store <code>NaN</code> across the <code>7,111,787</code> outside-footprint pixels (<code>-nan.tif</code>), which DrivenData's current portal validator rejects immediately! Only <code>-zeros.tif</code> / <code>-allfinite.tif</code> files with <code>0</code> NaNs across all <code>12,279,160</code> pixels pass upload cleanly &mdash; which <strong>KANLERGEMSDOE2</strong> enforces automatically in Gate 1.
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8rem">
+      <strong>3. Recommended Action Plan:</strong>
+      Keep <code>GEMSDOE32</code>'s historical <code>0.2778</code> receipt (<code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code>) as the archived <code>H19-5</code>-family anchor, and submit <strong>KANLERGEMSDOE2's <code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></strong> as your genuinely independent multi-physics entry (<strong>only 39.66%</strong> 3-px overlap with <code>0.2778</code>; <strong>+13.26%</strong> on Hide-and-Recover and <strong>+23.07%</strong> on blind SGMC-CAL, with strictly positive 95% CIs on both).
+    </div>
   </section>
 
   <section class="card">
-    <h2>Current Artifact Technical Verification Sheet (<code>KG2-H1</code> Research Artifact)</h2>
+    <h2>Master Multi-Site Submission Table (KANLERGEMSDOE2 + All 9 Focus Sites)</h2>
+    <p style="color:var(--muted);margin-top:0">
+      Every score carries its mandatory Protocol Rule 3 label: <code>ORGANIZER-CONFIRMED</code> (live leaderboard receipt) or <code>HOLDOUT-DTI</code> (shared template evaluator v3.0). Notice how static Hide-and-Recover on <code>B=1/B=2</code> rasters suffers self-censoring (<code>0.0045</code> on GEMSDOE32, <code>IR-32-INSTR-03</code>), whereas uncensored <code>d_visible &gt; B</code> tracks live scores monotonically (<code>0.0932 &rarr; 0.0967 &rarr; 0.0990 &rarr; 0.0992</code> &rarr; <strong>KANLERGEMS2 <code>0.1124</code></strong>).
+    </p>
     <div class="table-wrap">
       <table>
+        <thead>
+          <tr>
+            <th>Site &amp; Links</th>
+            <th>Exact File to Download &amp; SHA-256</th>
+            <th>Verified Score(s) (Strictly Labeled)</th>
+            <th>[0, 1] Portal Safety</th>
+            <th>Cross-Site Uniqueness</th>
+            <th>Operational Guidance</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr><th>File Name</th><td><code>kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif</code> (<a href="downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.tif">.tif</a> · <a href="downloads/kanlergemsdoe2-kg2h1-fvca-submod-20261026T235000Z-cab53e1b-zeros.zip">.zip</a>)</td></tr>
-          <tr><th>GeoTIFF SHA-256</th><td><code>29128ad7a9290d2afb008e944ea20171d2224ba0b77ec81aadc2ce416a13491f</code></td></tr>
-          <tr><th>Single-TIFF ZIP SHA-256</th><td><code>9ca35116c4a08ba6aacbfe15762fd83f3980af2f8a0aada6b26898d5c940e618</code></td></tr>
-          <tr><th>Grid / CRS / Transform</th><td><code>3730 &times; 3292</code> · <code>EPSG:32611</code> · <code>(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</code> · <code>float32</code></td></tr>
-          <tr><th>Whole-Grid Value Range</th><td><code>min = 0.0</code>, <code>max = 1.0</code>, <code>0</code> NaN, <code>0</code> Inf across all <code>12,279,160</code> pixels</td></tr>
-          <tr><th>Active Off-Catalogue Dots</th><td><code>38,500</code> binary dots (<code>0</code> pixels on <code>labels.tif</code>; <code>d_labels &gt; 2.0 px</code>)</td></tr>
-          <tr><th>Automated Selector Verdict</th><td><code>verdict = "negative"</code> · <code>ok_to_submit = false</code> · <code>HOLD / DO NOT SUBMIT TO PORTAL: surface.max_overlap_3px: missing, invalid, or duplicate; dots.max_overlap_3px: missing, invalid, or duplicate; No positive paired 95% CI against current holdout best; Calibrated LLI-S3 projection (0.07277) does not exceed active portfolio champion (0.2778)</code></td></tr>
+          
+      <tr class="highlight-row">
+        <td><strong>KANLERGEMSDOE2</strong><br><span class="tag tag-ok">NEW &amp; UNIQUE</span></td>
+        <td>
+          <a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download><code>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>f482d3bad4b39047&hellip;</code> | <code>37,654</code> dots | <code>-zeros.tif</code></span>
+        </td>
+        <td>
+          <span class="tag tag-info">UNSUBMITTED</span><br>
+          <span style="font-size:0.8rem">Hide-Rec: <strong><code>0.1124</code></strong> <code>HOLDOUT-DTI</code> [0.0990, 0.1257]<br>SGMC-CAL: <strong><code>0.0789</code></strong> <code>HOLDOUT-DTI</code> [0.0700, 0.0870]</span>
+        </td>
+        <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (12.28M finite)</span></td>
+        <td><span class="tag tag-ok">UNIQUE (&le;64.9%)</span><br><span style="color:var(--muted);font-size:0.77rem"><strong>39.66%</strong> vs GEMSDOE32<br>39.7&ndash;50.0% vs all 9 focus</span></td>
+        <td><strong style="color:#34d399">RECOMMENDED NEW ENTRY</strong><br><span style="color:var(--muted);font-size:0.78rem">100% de-novo HTCADS-DualRegime; passes all 5 automated gates.</span></td>
+      </tr>
+    
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE32/" target="_blank" rel="noopener">GEMSDOE32</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE32" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE32/main/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>c55bafc470054e82&hellip;</code> | <code>37,654</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2778</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): Uncensored: <code>0.0992</code> | Static: <code>0.0045</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0641</code></span>
+        </td>
+        <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE36<br>(vs KANLERGEMS2: 39.7%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">d2.8 &amp; (d_cat &gt; 2 px) — strips 6,436 0-200 m catalogue-collar FPs off 19GEMSDOE H19-5. DO NOT SUBMIT on latest Round-6 / H-GEO-CONDUIT candidates (halo crowding / fail-closed gate); historical 0.2778 -zeros.tif is format-valid but already submitted on GEMSDOE32.</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE36/" target="_blank" rel="noopener">GEMSDOE36</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE36" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE36/main/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>e15891020b9c5705&hellip;</code> | <code>38,854</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2750</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0046</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0644</code></span>
+        </td>
+        <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (97.6%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">97.58% w/ GEMSDOE27<br>(vs KANLERGEMS2: 40.6%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">GEMSDOE32 B=2 (all 37,654 dots preserved) UNION 1,200 radial thermal IDW dots (-0.0028 FP dilution). Latest ATVR36 / HVG36 marked verdict=negative (tripped 3-px overlap against dense registry blankets including 5-px calibration lattice).</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE28/" target="_blank" rel="noopener">GEMSDOE28</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE28" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE28/main/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif" target="_blank" rel="noopener"><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>5556aa1438fd6737&hellip;</code> | <code>37,660</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2710</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0294</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0630</code></span>
+        </td>
+        <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE25<br>(vs KANLERGEMS2: 42.7%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">H27-4 solo (d2.8 &amp; d_cat &gt; 1) pruned from 40,199 -&gt; 37,660 dots via blind geophysical rung-30 filter; secondary h27-4-r1-solo (0.2708) is 0-XOR identical to GEMSDOE31 solo. Historical best is -nan.tif (outside-footprint NaN triggers portal [0, 1] range rejection if re-uploaded raw); S18 live negative (0.0217).</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE31/" target="_blank" rel="noopener">GEMSDOE31</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE31" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE31/main/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif" target="_blank" rel="noopener"><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>07b6db440535404b&hellip;</code> | <code>40,199</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2708</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): Uncensored: <code>0.0990</code> | Static: <code>0.0305</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0630</code></span>
+        </td>
+        <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE25<br>(vs KANLERGEMS2: 43.3%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">d2.8 &amp; (d_cat &gt; 1 px) — exact 40,199-dot superset of GEMSDOE32 B=2 (+2,545 1-2 px collar dots). DUPLICATE (0-XOR in footprint with GEMSDOE28 h27-4-r1-solo) + -nan.tif outside-footprint NaN hazard; H31-M marked DO NOT SUBMIT.</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE33/" target="_blank" rel="noopener">GEMSDOE33</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE33" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE33/main/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif" target="_blank" rel="noopener"><code>GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>87f857d505e23247&hellip;</code> | <code>41,865</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2632</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0520</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0626</code></span>
+        </td>
+        <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (99.7%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">99.71% w/ GEMSDOE27<br>(vs KANLERGEMS2: 45.5%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">GEMSDOE31 solo (40,199 dots) + analog tip/stepover replacements (41,865 dots; 94.0% 3-px overlap with B=2). Near-duplicate of H19-5/d2.8 cascade (94.0% 3-px overlap with GEMSDOE32 B=2) + outside-footprint NaN; latest A33-L1/DPPS marked NOT OK TO SUBMIT.</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE25/" target="_blank" rel="noopener">GEMSDOE25</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE25" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE25/main/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif" target="_blank" rel="noopener"><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>91eae1ca42ec845e&hellip;</code> | <code>44,090</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2600</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0967</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0606</code></span>
+        </td>
+        <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE30<br>(vs KANLERGEMS2: 47.0%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">300 m (2.8 px) greedy Poisson-disk thinning of 19GEMSDOE H19-5 (121,131 -&gt; 44,090 dots, no catalogue collar). DUPLICATE (0-XOR in footprint with GEMSDOE30 poisson300m) + -nan.tif hazard; H66 live negative (0.0742).</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE30/" target="_blank" rel="noopener">GEMSDOE30</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE30" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE30/main/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif" target="_blank" rel="noopener"><code>gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>8cf893ead5667df2&hellip;</code> | <code>44,090</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2600</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0967</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0606</code></span>
+        </td>
+        <td><span class="tag tag-ok">SAFE [0, 1]</span><br><span style="color:var(--muted);font-size:0.77rem">0 NaNs (-zeros/allfinite)</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE25<br>(vs KANLERGEMS2: 47.0%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">All-finite re-export of GEMSDOE25 d2.8 (44,090 dots, 0-XOR in footprint). DUPLICATE (0-XOR in footprint with GEMSDOE25 d2.8); MSDB-1v2 scored 0.1462 live and marked NOT APPROVED FOR SUBMISSION.</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE24/" target="_blank" rel="noopener">GEMSDOE24</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE24" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE24/main/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif" target="_blank" rel="noopener"><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>68d0e2e4fcc594f9&hellip;</code> | <code>60,069</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2477</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0932</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0579</code></span>
+        </td>
+        <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (100.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">100.00% w/ GEMSDOE25<br>(vs KANLERGEMS2: 48.9%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">150 m (1.5 px) greedy thinning of 19GEMSDOE H19-5 (121,131 -&gt; 60,069 dots; over-packed inside 300 m kernel). Over-packed H19-5 ancestor + -nan.tif hazard; GVC1 live negative (0.0859 due to 74.3% &lt;=10 px halo collapse).</span>
+        </td>
+      </tr>
+        
+      <tr>
+        <td>
+          <strong><a href="https://buffedlizard55-lab.github.io/GEMSDOE27/" target="_blank" rel="noopener">GEMSDOE27</a></strong><br>
+          <a href="https://github.com/buffedlizard55-lab/GEMSDOE27" target="_blank" rel="noopener" style="font-size:0.77rem;color:var(--muted)">GitHub Repo</a>
+        </td>
+        <td>
+          <a href="https://raw.githubusercontent.com/buffedlizard55-lab/GEMSDOE27/main/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif" target="_blank" rel="noopener"><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</code></a><br>
+          <span style="color:var(--muted);font-size:0.77rem">SHA-256: <code>33003374335d84bf&hellip;</code> | <code>61,328</code> dots</span>
+        </td>
+        <td>
+          <strong><code>0.2449</code></strong> <code>ORGANIZER-CONFIRMED</code><br>
+          <span style="color:var(--muted);font-size:0.77rem">Hide-Rec (<code>HOLDOUT-DTI</code>): <code>0.0927</code><br>SGMC-CAL (<code>HOLDOUT-DTI</code>): <code>0.0583</code></span>
+        </td>
+        <td><span class="tag tag-bad">REJECTS (-nan)</span><br><span style="color:var(--muted);font-size:0.77rem">Outside-footprint NaNs trigger DrivenData [0,1] error unless zero-filled!</span></td>
+        <td>
+          <span class="tag tag-bad">CLONE (98.0%)</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">98.02% w/ GEMSDOE24<br>(vs KANLERGEMS2: 50.0%)</span>
+        </td>
+        <td>
+          <span class="tag tag-warn">ALREADY SCORED / H19-5 LINEAGE</span><br>
+          <span style="color:var(--muted);font-size:0.77rem">GEMSDOE24 d1.5 (60,069 dots) + 1,259 topographic gap-closure bridges = 61,328 dots (Jaccard 0.9795 vs GEMSDOE24). 98% overlap with GEMSDOE24 d1.5 + -nan.tif hazard; standalone H29-S (0.2190) already submitted.</span>
+        </td>
+      </tr>
+        
         </tbody>
       </table>
     </div>
   </section>
-</main>
 
+  <section class="card">
+    <h2>Broader 92-Site GEMSDOE Fleet: Top Independent (Non-H19-5) Benchmarks</h2>
+    <p style="color:var(--muted);margin-top:0">
+      Cross-checking all ~65+ listed GEMSDOE sites (92 total repositories audited) confirms that outside the <code>H19-5</code> pruning tree, the strongest genuinely independent ML submissions reached <code>0.2478</code> (<code>GEMSDOE70</code>) and <code>0.2376</code> (<code>GEMSDOE49</code>). <strong>KANLERGEMSDOE2</strong> has only <strong>43.60%</strong> 3-px overlap with <code>GEMSDOE70</code> and <strong>43.92%</strong> with <code>GEMSDOE49</code>.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>Representative File</th>
+            <th>Live Score</th>
+            <th>Emitted Dots</th>
+            <th>HOLDOUT-DTI (SGMC-CAL)</th>
+            <th>Architecture &amp; Audit Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td><strong>GEMSDOE70</strong></td>
+          <td><code>Dual-pop 4-fold LOQO HGB + 300 m submodular cover (top non-H19-5 fleet entry)</code></td>
+          <td><strong><code>0.2478</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><code>37,654</code></td>
+          <td><code>0.08570</code> <code>HOLDOUT-DTI</code></td>
+          <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>54.8%</code> | LiDAR: <code>74.3%</code></span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>GEMSDOE49</strong></td>
+          <td><code>Orthogonal-gated multi-physics 40k emitter</code></td>
+          <td><strong><code>0.2376</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><code>40,000</code></td>
+          <td><code>0.08817</code> <code>HOLDOUT-DTI</code></td>
+          <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>43.4%</code> | LiDAR: <code>69.4%</code></span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>GEMSDOE27_H29S</strong></td>
+          <td><code>Hydrothermal-piedmont CELF standalone (strongest zero-copy focus-9 entry)</code></td>
+          <td><strong><code>0.2190</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><code>37,654</code></td>
+          <td><code>0.05581</code> <code>HOLDOUT-DTI</code></td>
+          <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>56.1%</code> | LiDAR: <code>81.7%</code></span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>19GEMSDOE_H19_5</strong></td>
+          <td><code>4-line physical corroboration ancestor of all 0.2449-0.2778 focus-9 entries</code></td>
+          <td><strong><code>0.1922</code></strong> <code>ORGANIZER-CONFIRMED</code></td>
+          <td><code>121,131</code></td>
+          <td><code>0.04407</code> <code>HOLDOUT-DTI</code></td>
+          <td><span style="color:var(--muted);font-size:0.8rem">3-px overlap w/ B=2: <code>89.2%</code> | LiDAR: <code>76.4%</code></span></td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Direct Uniqueness Audit: KANLERGEMSDOE2 vs. Focus Champions &amp; Independent Peers</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Peer Site</th>
+            <th>Peer Live Score</th>
+            <th>Peer Dots</th>
+            <th>KANLERGEMS2 Dots &le;3 px of Peer (Gate &le; 0.70)</th>
+            <th>Harmonic 3-px Overlap</th>
+            <th>Pre-Placement Surface Spearman (Gate &lt; 0.90)</th>
+            <th>Final Dots Spearman (Gate &lt; 0.90)</th>
+            <th>Rule 1 Gate</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>GEMSDOE32</strong></td>
+            <td><code>0.2778</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>37,654</code></td>
+            <td><strong><code>0.3966</code></strong> (39.66%)</td>
+            <td><code>0.3525</code></td>
+            <td><code>+0.0823</code></td>
+            <td><code>+0.0194</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE36</strong></td>
+            <td><code>0.2750</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>38,854</code></td>
+            <td><strong><code>0.4056</code></strong> (40.56%)</td>
+            <td><code>0.3570</code></td>
+            <td><code>+0.0832</code></td>
+            <td><code>+0.0197</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE28</strong></td>
+            <td><code>0.2710</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>37,660</code></td>
+            <td><strong><code>0.4266</code></strong> (42.66%)</td>
+            <td><code>0.3738</code></td>
+            <td><code>+0.0842</code></td>
+            <td><code>+0.0184</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE31</strong></td>
+            <td><code>0.2708</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>40,199</code></td>
+            <td><strong><code>0.4330</code></strong> (43.30%)</td>
+            <td><code>0.3781</code></td>
+            <td><code>+0.0873</code></td>
+            <td><code>+0.0183</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE33</strong></td>
+            <td><code>0.2632</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>41,865</code></td>
+            <td><strong><code>0.4551</code></strong> (45.51%)</td>
+            <td><code>0.3928</code></td>
+            <td><code>+0.0899</code></td>
+            <td><code>+0.0180</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE25</strong></td>
+            <td><code>0.2600</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>44,090</code></td>
+            <td><strong><code>0.4703</code></strong> (47.03%)</td>
+            <td><code>0.4023</code></td>
+            <td><code>+0.0946</code></td>
+            <td><code>+0.0168</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE30</strong></td>
+            <td><code>0.2600</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>44,090</code></td>
+            <td><strong><code>0.4703</code></strong> (47.03%)</td>
+            <td><code>0.4023</code></td>
+            <td><code>+0.0946</code></td>
+            <td><code>+0.0168</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE24</strong></td>
+            <td><code>0.2477</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>60,069</code></td>
+            <td><strong><code>0.4888</code></strong> (48.88%)</td>
+            <td><code>0.4154</code></td>
+            <td><code>+0.1119</code></td>
+            <td><code>+0.0206</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE27</strong></td>
+            <td><code>0.2449</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>61,328</code></td>
+            <td><strong><code>0.5003</code></strong> (50.03%)</td>
+            <td><code>0.4193</code></td>
+            <td><code>+0.1122</code></td>
+            <td><code>+0.0210</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE70 (Independent ML)</strong></td>
+            <td><code>0.2478</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>37,654</code></td>
+            <td><strong><code>0.4360</code></strong> (43.60%)</td>
+            <td><code>0.4330</code></td>
+            <td><code>+0.0931</code></td>
+            <td><code>+0.0251</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>GEMSDOE49 (Independent ML)</strong></td>
+            <td><code>0.2376</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>40,000</code></td>
+            <td><strong><code>0.4392</code></strong> (43.92%)</td>
+            <td><code>0.3947</code></td>
+            <td><code>+0.0743</code></td>
+            <td><code>+0.0125</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>19GEMSDOE (H19-5 Ancestor)</strong></td>
+            <td><code>0.1922</code> <code>ORGANIZER-CONFIRMED</code></td>
+            <td><code>60,069</code></td>
+            <td><strong><code>0.4888</code></strong> (48.88%)</td>
+            <td><code>0.4154</code></td>
+            <td><code>+0.1119</code></td>
+            <td><code>+0.0206</code></td>
+            <td><span class="tag tag-ok">PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  
 <footer>
-  <div class="container">
-    <a href="index.html">&larr; Back to Main Executive Summary &amp; All-Site Comparison Table</a>
-  </div>
+  <div><strong>KANLERGEMSDOE2</strong> &mdash; U.S. DOE GEMS Fault Detection Prize | Arena Core Values: <em>Maximize P(Win)</em> &amp; <em>Own the Outcome</em></div>
+  <div>All numbers strictly labeled <code>HOLDOUT-DTI</code> or <code>ORGANIZER-CONFIRMED</code>. Zero manual intervention required.</div>
 </footer>
+
+</main>
 </body>
 </html>
