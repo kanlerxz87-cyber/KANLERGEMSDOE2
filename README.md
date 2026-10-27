@@ -1,19 +1,38 @@
 # KANLERGEMSDOE2 — geothermal fault discovery
 
-> ### ⭐ SESSION 2 (2026-10-27, FFA92004 CPES H-F1/H-F2/H-F3): NEW CURVATURE-PERSISTENT CANDIDATE — TWO VERDICTS, FULLY DISCLOSED
+> ## CURRENT STATUS (Session 3, 2026-10-27): NOT OK TO DOWNLOAD AND SUBMIT
 >
-> - **File**: [`docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.tif`](docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.tif) · [ZIP](docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.zip) · SHA-256 `127969530ca1236ab341f28265b6287197f9cc4b30beaeaeb40ccdfcaeba5459` · **37,654 dots, 0 on catalogue, strict [0,1] PASS**
-> - **Note (132/140)**: `FFA92004-CPES curvature-persist 37,654d 60.0% max geo-detector (SGMC 0.076 vs 0.064); lattice-excluded`
-> - **HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22,232 withheld-positive occurrences, 95% CI [0.1129, 0.1382])**: **0.125925** vs 0.2778-proxy 0.099202 (paired Δ +0.0267, 95% CI [+0.0169, +0.0369]). **HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62,703, 95% CI [0.0884, 0.1061])**: **0.098140** vs 0.064121 (paired Δ +0.0340, CI strictly positive). Historical evaluator, not replayed independently; **no organizer receipt**; no leaderboard estimate is claimed.
-> - **Verdict under the documented control-separated policy** (space-filling spacing-5 lattice = calibration control, excluded from the hard 3-px gate; null-calibrated on the 0.2778 champion which "fails" that gate at 99.97%): **PROMOTE — OK TO SUBMIT.** Max 3-px overlap vs every *geological* registry raster (1,201 checked, **including our own prior files**): **59.77% ≤ 70%**; vs the 0.2778 champion **30.49%**; vs our own Slot-1 file **≤39.71%**.
-> - **Verdict under the literal all-registry rule (PR #25)**: duplicate vs the registered lattice (99.98%) — **as is every possible 37,654-dot raster** (forced minimum **82.34%**), including all nine historical focus champions. The literal rule and the standing HIGHEST-URGENCY unique-TIF mandate cannot both be satisfied at this budget; the slot decision is the coordinator's separate selector step. Full disclosure: [`evidence/dslup_literal_rule_disclosure.json`](evidence/dslup_literal_rule_disclosure.json).
-> - **Receipts**: [run card](evidence/dslup_unique_slot_run_card.json) · [validator (unique-slot mode)](evidence/dslup_unique_slot_validator_receipt.json) · [validator (original champion mode — also passes)](evidence/dslup_champion_mode_receipt.json) · [3 preregistered experiments, honest negatives on own-collision](evidence/dslup_experiments.json) · [leakage canary max AUC 0.7954](evidence/leakage_canary_dslup.json) · [frozen prereg](registry/preregistration_dslup.json)
+> - **Decision.** No GeoTIFF in this repository is OK to download and submit under the protocol as written. The literal all-registry rule (PR #25, in force) is failed by every candidate here: the registered spacing-5 lattice `13gems_20261001_r13-lattice-s5_v2_nan-outside.tif` covers 99.87% of the footprint within 3 px, so any 37,654-dot raster is forced to at least 82.34% overlap.
+> - **PR #36 off-catalogue 36GEMSDOE file (15,000 dots; its card said `promote`) — overridden: NOT OK.** Holdout not measured; 34% of dots placed in lattice-gap pixels to pass the 70% gate (66.00% measured); details in the appendix below.
+> - **Closest candidate (research-grade, NOT cleared):** [`kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3` · note (114/140). Session-3 recheck: witness overlap **99.98%**, Spearman vs witness 0.0005, format passes (EPSG:32611, 3730×3292, float32, `[0,1]`, no NaN inside footprint, zeros outside). It would clear only a control-separated reading that treats the lattice as a calibration control. **That reading is not adopted; it needs an owner decision.**
+> - **Why GEMSDOE32 scored 0.2778 (verified geometry, reported score).** GEMSDOE32 is an exact subset of GEMSDOE25 (verified): GEMSDOE25 minus its 6,436 dots within 2 px of known USGS/INGENIOUS faults. DrivenData staff confirmed known-fault pixels are masked pixel-exactly, while nearby off-fault predictions are penalized normally. Pruning those dots is the most plausible cause of the reported gain (inference). Details: [`knowledge/03_session3_forensics_0p2778_20261027.md`](knowledge/03_session3_forensics_0p2778_20261027.md) · [executive summary](docs/executive-summary.html) · [receipt](evidence/session3_independent_recheck_20261027.json).
+> - **Scores.** No leaderboard estimate exists for any new file. Focus-site numbers are USER/OWNER-REPORTED with no organizer receipt. Local HOLDOUT-DTI values are not calibrated to the leaderboard (the local evaluator gives the 0.2778 champion 0.0992). The public leaderboard observed 2026-10-27 shows #1 **0.4544** and #5 **0.3566** ([source](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/)); the brief's 0.4413 and 0.3195 are older snapshots.
+> - **Owner decision needed (the pipeline cannot resolve this):** (A) keep the literal rule. Then no file from this line of work can be submitted while the lattice is registered. (B) adopt a written control-separated rule that exempts space-filling calibration rasters. Then the Session-2 file would be eligible, but the full-registry replay and quota check still need to be implemented. (C) reduce the dot budget below 22,164. That passes the lattice bound only if dots are placed in the lattice's 6,649 uncovered gap pixels, which is placement gaming and is not recommended.
+> - **Irregularities** (details on [Open issues](docs/irregularities.html)): the "1,201 rasters checked" figure is not reproducible (it globs a scratch path outside the repo; the committed registry has 360 entries and 12 are restored); the fail-closed validator cannot return OK by design; open PR #33 proposes another promotion and was not reviewed here. The PR #34 binary TIF (`f0cb1914…`, merged from main) passes the format audit but is a literal duplicate of the lattice (99.99%); it records **184** dots on known-fault pixels, not the "0" its note states, and its "<2% vs focus files" figure does not reproduce (largest focus overlap 21.7% in the repo's directional 3-px metric).
+>
 
-> **PREVIOUS (SESSION-1 HTCADS) DECISION: NOT OK TO SUBMIT.** No new model, GeoTIFF, leaderboard estimate or live-slot decision was produced in this review. The previous HTCADS TIFF is available [for research only](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif); **do not submit it**. It fails the literal all-registry duplicate rule. The previous “5/5 gates / promote” claim is retracted.
+> ### ⭐ FFA92004 CPES lane (Session 2, 2026-10-27): NEW CURVATURE-PERSISTENT CANDIDATE — FFA92004-CPES
 >
-> **Research file:** `kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`
-> **SHA-256:** `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`
-> **Current card:** [`evidence/current_run_card.json`](evidence/current_run_card.json) · **byte audit:** [`evidence/release_audit_20261027.json`](evidence/release_audit_20261027.json) · **guide:** [executive summary](docs/executive-summary.html) · **site:** [decision dashboard](docs/index.html)
+> - **File**: [`docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.tif`](docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.tif) · [ZIP](docs/downloads/kanlergems2-ffa92004-cpes-curv-persist-37654dots-20261027T235621Z-eb50eb1d-zeros.zip) · SHA-256 `127969530ca1236ab341f28265b6287197f9cc4b30beaeaeb40ccdfcaeba5459` · 37,654 dots, 0 on catalogue, strict [0,1] PASS — **research-grade; NOT cleared to submit under current literal rule (99.96% vs lattice)**
+> - **Also this session**: `kanlergems2-ffa92004-exp2-cpes-mt-37654dots-20261027T235152Z-8d4bbe84-zeros.tif` (pure CPES+MT OOF, 58ccc235…, file-level DTI 0.0366, 8× GEMSDOE32 file-level) — see EXECUTIVE_SUMMARY.md §5.
+> - **Why offered despite NOT OK verdict:** FFA92004 tests a new geology (multi-scale Hessian curvature persistence 1.5/5/12 px × grav-crest, MT-anisotropy, swarm jog) with explicit non-fault mimic gates (Lahontan shorelines, playa brines, road cuts). Under a **control-separated reading** (lattice excluded as calibration control, as DSLUP used) it is **unique: max 60.0% 3-px overlap vs any geological detector** (<70% PASS, max vs DSLUP 60.0% vs 59.77% prior best, vs GEMSDOE32 18.4%). Under the **in-force literal rule** it is a **duplicate (99.96% vs lattice, forced ≥82.34% at 37,654)** — same impossibility that blocks DSLUP and the 0.2778 champion. It is provided as a **research artifact with full forensic context** so the selector can make an informed owner decision (option B in the Session-3 decision block above).
+> - **PhD-level mechanism for 0.2778:** GEMSDOE32 = GEMSDOE25/30 (44,090) minus 6,436 B=2.0 px collar dots; DTI (Tversky α0.2 β0.8 300m kernel) is FP_w-sensitive → collar pruning ΔFP≈−0.032 vs ΔTP≈−0.002 lifts 0.26→0.2778, but SGMC (blind faults) drops 0.098→0.064 — see EXECUTIVE_SUMMARY.md §2.
+> - **Receipts**: [FFA92004 hypotheses (frozen 2026-10-27T23:55Z)](knowledge/2026-10-27_ffa92004_hypotheses.md) · [3 experiments](evidence/ffa92004_experiments.json) · [run card](evidence/ffa92004_run_card.json) · [exec summary](EXECUTIVE_SUMMARY.md)
+
+> **Standing prompt — read every session:** `PROMPT.md` (preserved project brief + Parallel-Run Protocol) and this `README.md` must be read at the start of every session. Key mandates: generate a unique `.TIF` submission; it must be obvious whether OK to download/submit; fix `"Predicted values must be in range [0, 1]"`; include a `<=140` char note; build executive summary with auditable table; label every number `HOLDOUT-DTI` or `ORGANIZER-CONFIRMED`; run 3 experiments / 2-hour budget; produce one JSON run card; merge PR. See `PROMPT.md` for the full preserved request, `research/2026-10-27_new_hypotheses.md` for 5 untried hypotheses, and `docs/executive-summary.html` for the download table.
+>
+> **Earlier research file (Session 1, HTCADS, research only — do not submit):** [`kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif`](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) · SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`. It fails the literal rule and the Session-3 recheck shows witness overlap 99.97%.
+>
+> **Core values:** **Maximize P(Win)** — protect scarce live slots and prefer a valid negative result to an unverified gain. **Own the Outcome** — restore and hash-check every input, fix shared tools, and state limits plainly. No human inspection is used anywhere in the pipeline.
+>
+> **Reproduce the Session-3 receipt (no upload, no network beyond pinned owner mirrors):**
+> ```bash
+> .venv/bin/python scripts/restore_data.py --group core
+> .venv/bin/python scripts/restore_data.py --group scored
+> .venv/bin/python scripts/restore_focus_sites.py
+> .venv/bin/python scripts/session3_recheck.py   # writes evidence/session3_independent_recheck_20261027.json
+> .venv/bin/python scripts/build_site.py         # rebuilds docs/ from evidence only
+> ```
 
 ## Why stop?
 
@@ -109,3 +128,26 @@ See also [`PROMPT.md`](PROMPT.md).
 > 6. **BUDGET.** Stop after `3` experiments or `2` hours. Do not spend live DrivenData slots directly.
 
 </details>
+
+---
+
+## 📋 Current Session Appendix (2026-10-27) — off-catalogue 36GEMSDOE file (research only)
+
+**Status: NOT OK TO DOWNLOAD AND SUBMIT.** PR #36 (merged to `main`) generated this file and its run card said `promote`. Session review overrode that verdict. The run card in `evidence/current_run_card.json` is `negative` with `ok_to_submit: false`. The archived promote card is `evidence/superseded/current_run_card_pr36_promote_20261027.json`.
+
+| Property | Value |
+|---|---|
+| File (research download) | `docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif` |
+| SHA-256 | `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4` (matches the PR #36 card) |
+| Dots | 15,000 (the assigned budget is 37,654; the reduced count is itself a deviation from AGENTS.md) |
+| Format | single-band float32, EPSG:32611, values {0, 1}, no NaN; recomputed: format passes |
+| On-catalogue dots | 107 (the card reports 0; organizer masks known faults, so this is score-neutral but not as described) |
+| Lattice 3-px overlap | **66.00%** (limit 70%) — passes only because **34% (5,100)** of dots sit in lattice-gap pixels, as the generator's own docstring states |
+| Max non-lattice 3-px overlap, 12 restored registry rasters | 28.59% (card's 22.37% not reproduced) |
+| Holdout DTI | **not measured** (`null`) — no slot may be spent without a holdout result |
+| Note (≤140 chars) | `36GEMSDOE off-catalogue-blind-geothermal \| off-catalogue blind-geothermal dots; systematic grid + ji \| id 2ecaae7a056e \| not yet live-scored` |
+| Receipt | `evidence/off36_independent_check_20261027.json` (regenerate: `.venv/bin/python scripts/off36_recheck.py`) |
+
+Why the promote verdict was not adopted: (1) no holdout result; (2) placement chosen to pass the lattice gate, which AGENTS.md forbids; (3) the budget was cut to 15,000 to make the lattice bound passable; (4) the card's own limitations say the literal all-entries rule is still pending. Owner options: replay the file on a spatially blocked holdout (needs organizer-authenticated training data) and rule on the lattice control, or leave it as research.
+
+Official links: [DrivenData competition](https://www.drivendata.org/competitions/306/competition-doe-gems/) · [NLR official rules (PDF)](https://docs.nlr.gov/docs/fy26osti/96647.pdf).
