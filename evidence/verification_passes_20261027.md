@@ -26,3 +26,8 @@ parallel PR #36 artifact existed before this integration and is research only.
 
 This record does not assert organizer acceptance, full-registry replay,
 account quota verification, or source authenticity of owner mirrors.
+
+GitHub Pages setting recheck: main-root legacy publication and an Actions deploy
+coexist. The attempt to switch to Actions returned HTTP 403 for the integration;
+the published feed is not guaranteed current until repository administration
+resolves the source. See `pages_deployment_20261027.json`.

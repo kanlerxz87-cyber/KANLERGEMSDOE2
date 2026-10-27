@@ -1,0 +1,15 @@
+{
+  "schema": "gems.pages-deployment-audit.v1",
+  "observed_utc": "2026-10-27T23:59:38.916710+00:00",
+  "repository": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "github_pages_build_type": "legacy",
+  "github_pages_source": {
+    "branch": "main",
+    "path": "/"
+  },
+  "actions_pages_workflow": ".github/workflows/pages.yml",
+  "risk": "Legacy branch publication and Actions deployment can compete; scheduled leaderboard refresh may not be the version actually served. Treat feed as dated, not guaranteed live.",
+  "setting_change_attempt": "PUT /repos/kanlerxz87-cyber/KANLERGEMSDOE2/pages build_type=workflow",
+  "attempt_result": "HTTP 403 Resource not accessible by integration; no setting was changed.",
+  "resolution": "A repository administrator must grant the integration appropriate Pages administration or set Pages source to GitHub Actions; then verify a fresh deployment and feed."
+}
