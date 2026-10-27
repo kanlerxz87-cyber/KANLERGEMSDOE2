@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""KG2-CPR lane: Credit-Priced Regression — 3 pre-registered experiments (registry/preregistration_cpr.json).
+"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+
+KG2-CPR lane: Credit-Priced Regression — 3 pre-registered experiments (registry/preregistration_cpr.json).
 
 CPR-1: soft DTI-credit regression target y=k(d) (official 300 m triangular kernel) +
        rank-product fusion (regressor x physical conduit x LiDAR specialist) +
@@ -155,6 +157,17 @@ def _collect_registry(foot: np.ndarray, ddir: Path) -> tuple[list[dict], np.ndar
 
 
 def main() -> int:
+    # Historical implementation is not an authorized execution path. It used
+    # a partial/control-exempt registry and could place dots before novelty
+    # screening. The currently assigned fixed-budget lane is blocked.
+    raise SystemExit(
+        "Archived runner disabled: not the assigned lane and no literal all-registry "
+        "pre-placement/holdout replay. No training, emission, or submission performed."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained for historical review; not a safe or authorized entry point."""
     t_start = time.time()
     ddir, wdir, edir = data_dir(), work_dir(), evidence_dir()
 

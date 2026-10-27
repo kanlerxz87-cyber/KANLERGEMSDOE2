@@ -1,5 +1,15 @@
 # New geological hypotheses — 27 October 2026 (untried in this repo)
 
+> **2026-10-27 correction — literal audit:** The parallel TIFF described below is
+> research-only and **DO NOT SUBMIT**. Its recorded claim of literal uniqueness
+> omitted the registered lattice. Reopening its exact SHA-pinned bytes found
+> 37,652 / 37,654 = **99.9947%** overlap with that lattice and **184**
+> positive pixels on the restored catalogue (not zero). The prior uniqueness
+> and zero-catalogue statements below are superseded, not a release gate.
+> See [`evidence/parallel_hypothesis1_literal_audit_20261027.json`](../evidence/parallel_hypothesis1_literal_audit_20261027.json).
+> No independent holdout, pre-placement surface, or full-registry replay was done.
+
+
 Status: hypotheses ranked, not fitted; no model trained; no holdout replay performed; no leaderboard projection claimed. All sources verified to the level available; no external download executes in sandbox.
 
 ## Ranking (expected DTI gain / cost / novelty vs this repo)

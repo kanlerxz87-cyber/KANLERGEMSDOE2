@@ -1,132 +1,49 @@
 #!/usr/bin/env python3
-"""Automated End-to-End Submission Gate Validator (Zero Human Intervention Required).
+"""Compatibility entry point for the shared, fail-closed submission validator.
 
-Validates a candidate GeoTIFF + run card across all 5 mandatory automated gates:
-  Gate 1 (FORMAT & [0,1] RANGE): 13 GeoTIFF checks against sample_submission.tif, 0 NaNs across all
-         12,279,160 cells, values strictly in [0.0, 1.0], 0 pixels on existing_faults.tif.
-  Gate 2 (LEAKAGE CANARY): Every individual feature tested alone on spatially-blocked holdout has AUC <= 0.90.
-  Gate 3 (LANE UNIQUENESS): Pre-placement surface & final dots satisfy |Spearman| < 0.90 and 3-px dot
-         overlap <= 0.70 against all geological detector rasters across all 9 focus sites + scored archive
-         (with space-filling uniform calibration grids evaluated via null-calibrated excess).
-  Gate 4 (HOLDOUT PERFORMANCE): Beats the 0.2778 Champion benchmark on leak-free Hide-and-Recover v3.0
-         (with strictly positive paired 95% CI) AND beats Champion on blind off-catalogue SGMC-CAL v3.0.
-  Gate 5 (PORTAL METADATA): Non-empty unique submission name and note <= 140 characters.
+The former KG2-S2 validator trusted self-reported gate results and exempted
+registered lattice controls.  Neither behavior is authorized.  The historical
+``--mode`` option is accepted for script compatibility but cannot relax any
+gate; both modes use exactly the same literal-witness screening as
+``validate_submission.py``.  Until complete independent replay is implemented,
+no mode authorizes an upload.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
-import numpy as np
-import rasterio
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-
-from gems32.paths import data_dir  # noqa: E402
-from gems32.submission import audit_geotiff  # noqa: E402
+from validate_submission import ROOT, validate_all_gates as _validate_shared
 
 
-def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None, mode: str = "champion") -> dict:
-    """Validate all 5 gates.
-
-    ``mode="champion"`` (default, unchanged): Gate 4 requires HR pooled DTI > champion proxy AND
-    strictly positive paired 95% CI AND SGMC-CAL > champion.
-
-    ``mode="unique-slot"`` (IR-KG2S2-GATE-UNIQSLOT-02, 2026-10-27): promotion bar for a SECOND
-    portfolio slot when a prior promoted submission from this repository is already pending on the
-    portal and the new raster must additionally be unique against our OWN prior rasters. Gate 4
-    becomes: HR pooled DTI point estimate > champion proxy AND SGMC-CAL > champion AND the SGMC-CAL
-    paired 95% CI vs champion strictly positive (SGMC-CAL is the blind metric that tracks
-    ORGANIZER-CONFIRMED live scores across the nine anchor sites, R^2 = 0.956). Gate 3 additionally
-    requires max 3-px overlap vs our own prior rasters <= 0.70. HR CI-positivity is reported as
-    informational, not gating.
-    """
-    ddir = ddir or data_dir()
-    sample_tif = ddir / "sample_submission.tif"
-    labels_tif = ddir / "labels.tif"
-    with rasterio.open(sample_tif) as ds:
-        foot = np.isfinite(ds.read(1))
-    with rasterio.open(labels_tif) as ds:
-        labels = (ds.read(1) > 0) & foot
-
-    fmt = audit_geotiff(tif_path, foot, labels, mode="zeros", template_tif=sample_tif)
-    card = json.loads(run_card_path.read_text(encoding="utf-8"))
-
-    sha_matches = fmt["sha256"] == card["raster_sha256"]
-    canary = card["leakage_canary"]
-    canary_ok = bool(canary["passed"] and float(canary["max_single_feature_auc"]) <= 0.90)
-
-    uniq = card["registry_comparison"]
-    uniq_ok = bool(
-        float(uniq["pre_placement_surface_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_abs_spearman"]) < 0.90
-        and float(uniq["final_dots_max_detector_3px_overlap"]) <= 0.70
-        and bool(uniq["exact_sha256_unique"])
+def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = None,
+                       mode: str = "champion") -> dict:
+    if mode not in {"champion", "unique-slot"}:
+        raise ValueError("Unsupported historical validation mode")
+    result = _validate_shared(tif_path, run_card_path, ddir)
+    result["legacy_mode_ignored"] = mode
+    result["reasons"].append(
+        "The historical KG2-S2 mode does not exempt any registry raster or confer promotion."
     )
-    if mode == "unique-slot":
-        own = card.get("overlap_vs_own_prior_rasters") or {}
-        own_max = max(
-            (float(v["asym_3px_overlap_ours_in_peer"]) for v in own.values() if v),
-            default=1.0,
-        )
-        uniq_ok = bool(uniq_ok and own_max <= 0.70)
-
-    hr = card["holdout_dti"]["primary_hide_and_recover"]
-    sg = card["holdout_dti"]["secondary_off_catalogue_sgmc"]
-    if mode == "unique-slot":
-        holdout_ok = bool(
-            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-            and float(sg["paired_delta_ci95"][0]) > 0.0
-        )
-    else:
-        holdout_ok = bool(
-            float(hr["pooled_dti"]) > float(hr["champion_02778_same_evaluator"])
-            and float(hr["paired_delta_ci95"][0]) > 0.0
-            and float(sg["sgmc_prevalence_calibrated_dti"]) > float(sg["champion_02778_same_evaluator"])
-        )
-
-    note = str(card.get("submission_note", ""))
-    meta_ok = bool(card.get("submission_name") and 0 < len(note) <= 140)
-
-    gates = {
-        "gate_1_format_and_range_0_1": bool(fmt["all_checks_passed"] and sha_matches),
-        "gate_2_leakage_canary_le_090": canary_ok,
-        "gate_3_registry_uniqueness": uniq_ok,
-        "gate_4_holdout_beats_champion": holdout_ok,
-        "gate_5_portal_metadata_le_140": meta_ok,
-    }
-    all_ok = all(gates.values())
-    return {
-        "validated_ok_to_download_and_submit": all_ok,
-        "human_intervention_required": False,
-        "verdict": "promote" if all_ok else "negative",
-        "validation_mode": mode,
-        "raster_filename": tif_path.name,
-        "raster_sha256": fmt["sha256"],
-        "gates": gates,
-        "format_audit": fmt,
-    }
+    return result
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tif", type=Path, required=True)
-    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence" / "run_card.json")
-    ap.add_argument("--out", type=Path, default=None)
-    ap.add_argument("--mode", choices=["champion", "unique-slot"], default="champion")
+    ap.add_argument("--run-card", type=Path, default=ROOT / "evidence/run_card.json")
+    ap.add_argument("--data-dir", type=Path, default=None)
+    ap.add_argument("--out", type=Path)
+    ap.add_argument("--mode", choices=("champion", "unique-slot"), default="champion")
     args = ap.parse_args()
-
-    res = validate_all_gates(args.tif, args.run_card, mode=args.mode)
-    txt = json.dumps(res, indent=2)
-    if args.out is not None:
+    result = validate_all_gates(args.tif, args.run_card, args.data_dir, args.mode)
+    text = json.dumps(result, indent=2, allow_nan=False)
+    if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(txt + "\n", encoding="utf-8")
-    print(txt)
-    return 0 if res["validated_ok_to_download_and_submit"] else 1
+        args.out.write_text(text + "\n", encoding="utf-8")
+    print(text)
+    return 0 if result["ok_to_submit"] else 1
 
 
 if __name__ == "__main__":

@@ -1,3 +1,12 @@
+CORRECTION — 2026-10-27: RESEARCH ONLY / DO NOT SUBMIT.
+The historical claims below are superseded. Independent SHA-pinned byte audit
+found 37,652/37,654 dots (99.9947%) within 3 px of a registered lattice,
+and 184 positive pixels on the restored known-fault catalogue. It fails the
+literal uniqueness rule; no holdout, surface or full-registry replay, portal
+acceptance, or current quota was verified. No ZIP is supplied for this TIFF.
+Evidence: evidence/parallel_hypothesis1_literal_audit_20261027.json
+
+----- HISTORICAL NOTE (superseded, retained for audit) -----
 KANLERGEMSDOE2 UNIQUE SUBMISSION CANDIDATE — SESSION 2 (2026-10-27)
 Filename: kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif
 SHA-256: f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539

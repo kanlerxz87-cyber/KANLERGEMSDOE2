@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Execute preregistered KG2-S2 DSLUP-3D experiments (EXP-A, EXP-B, EXP-C) + Run Card.
+"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+
+Execute preregistered KG2-S2 DSLUP-3D experiments (EXP-A, EXP-B, EXP-C) + Run Card.
 
 Lane (frozen in registry/preregistration_dslup.json BEFORE any experiment ran):
   Depth-Scaled Listric Updip Continuation & Blind-Basin Dual-Population Reallocation.
@@ -165,6 +167,17 @@ def _overlap_vs_named(dots_2d: np.ndarray, registry: list[dict], name_tag: str) 
 
 
 def main() -> int:
+    # Historical implementation is not an authorized execution path. It used
+    # a partial/control-exempt registry and could place dots before novelty
+    # screening. The currently assigned fixed-budget lane is blocked.
+    raise SystemExit(
+        "Archived runner disabled: not the assigned lane and no literal all-registry "
+        "pre-placement/holdout replay. No training, emission, or submission performed."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained for historical review; not a safe or authorized entry point."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()
