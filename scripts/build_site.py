@@ -479,7 +479,22 @@ def main() -> None:
         raise SystemExit("Stop evidence changed; rerun review before building")
     if len(audit["focus_nine"]) != 9:
         raise SystemExit("The focus-site comparison is incomplete")
-    table = focus_table(audit["focus_nine"])
+    replay = json.loads((ROOT / "evidence/review_20261028_replay.json").read_text())
+    hptr_record = json.loads((ROOT / "evidence/session3_hptr_run_card_20261027.json").read_text())
+    hptr_path = DOCS / "downloads" / hptr_record["raster_filename"]
+    hptr_audit = replay["hptr_exact_bytes"]
+    if (replay.get("verdict") != "negative" or replay.get("ok_to_submit") is not False
+            or replay.get("preflight") != pre or replay.get("geometry") != audit["focus_lineage_geometry"]
+            or not hptr_audit.get("duplicate_under_literal_rule")
+            or hptr_audit.get("sha256") != hptr_record.get("raster_sha256")
+            or not hptr_path.is_file() or hashlib.sha256(hptr_path.read_bytes()).hexdigest() != hptr_audit["sha256"]):
+        raise SystemExit("Independent replay is missing or inconsistent; refuse publication")
+    keys = ("site", "sha256", "nearest_focus_site", "max_directional_focus_overlap_within_3px")
+    fresh, previous = replay.get("focus_nine", []), audit["focus_nine"]
+    if len(fresh) != len(previous) or any(
+            any(a.get(k) != b.get(k) for k in keys) for a, b in zip(fresh, previous)):
+        raise SystemExit("Focus-site replay differs from the published comparison")
+    table = focus_table(previous)
     hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
@@ -488,13 +503,14 @@ def main() -> None:
     # The underlying receipts remain linked, but are not independently replayed.
     archive = ("<section class=\"section\"><div class=\"callout red-callout\">"
                "<strong>KG2-S3-HPTR and other previous lanes: DO NOT SUBMIT.</strong> "
-               "Historical results are not independently replayed. SGMC prevalence-calibrated "
+               "Historical procedure proxies do not demonstrate a leaderboard win. SGMC prevalence-calibrated "
                "figures are projections, not measured HOLDOUT-DTI or leaderboard scores; "
                "they are not HOLDOUT-DTI or leaderboard estimates. "
                "<a href=\"downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif\" download>HPTR research TIFF only</a> · "
                "<a href=\"../evidence/hptr_revalidation_20261028.json\">Fresh validator output</a> · "
                "<a href=\"../evidence/session3_hptr_run_card_20261027.json\">Archived HPTR card</a> · "
-               "<a href=\"../evidence/release_audit_20261028.json\">Fresh byte audit</a></div></section>")
+               "<a href=\"../evidence/release_audit_20261028.json\">Fresh byte audit</a> · "
+               "<a href=\"../evidence/review_20261028_replay.json\">Independent replay</a></div></section>")
     hptr_home = hptr_summary = hptr_research = hptr_irregular = archive
     lope_home = lope_summary = lope_irregular = ""
     trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ""
