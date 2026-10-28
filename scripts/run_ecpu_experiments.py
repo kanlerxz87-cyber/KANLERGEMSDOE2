@@ -103,6 +103,10 @@ def _emit_stratified(pi2d, elig2d, e2d, ridge2d=None):
 
 
 def main() -> int:
+    # Historical method code is retained for forensics only. These were not the
+    # assigned lane and their former gates omitted the literal lattice witness.
+    # Stop before fitting, placement, or writing artifacts; importing helpers is OK.
+    raise SystemExit("Archived parallel lane disabled: not the assigned lane; literal registry preflight and independent replay required")
     t_start = time.time()
     ddir, wdir, edir = data_dir(), work_dir(), evidence_dir()
     canary = json.loads((edir / "ecpu_leakage_canary_20261027.json").read_text())

@@ -52,11 +52,11 @@ def test_candidates_are_format_valid_but_literal_duplicates() -> None:
 
 def test_status_feed_never_marks_a_candidate_ok() -> None:
     feed = json.loads(FEED.read_text(encoding="utf-8"))
-    assert feed["ok_to_submit"] is False
-    assert feed["validated_ok_to_download_and_submit"] is False
-    s2 = feed["session2_candidate"]
-    assert s2["ok_to_download_and_submit"] is False
-    assert s2["verdict_control_separated_policy"].startswith("would_promote")
+    assert feed["submission"]["ok_to_submit"] is False
+    assert feed["submission"]["verdict"] == "negative"
+    assert feed["archived_dslup"]["ok_to_submit"] is False
+    assert feed["archived_reduced_budget"]["ok_to_submit"] is False
+    assert feed["archived_reduced_budget"]["full_registry_cleared"] is False
 
 
 def test_pr34_candidate_irregularities_are_recorded() -> None:

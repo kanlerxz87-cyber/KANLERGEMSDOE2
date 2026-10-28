@@ -1,10 +1,16 @@
 {
+  "supersession_notice": "SUPERSEDED: historical control-separated approval was invalid. The literal all-registry witness fails; no independent holdout, complete registry, current quota or portal acceptance is verified. The TIFF is research only; do not submit.",
+  "superseded_by": "evidence/current_run_card.json",
+  "literal_revalidation": "evidence/dslup_literal_revalidation_20261027.json",
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "ok_to_download_and_submit": false,
+  "ok_to_download_for_research": true,
   "schema": "gems.parallel_run_card.v1",
   "site": "KANLERGEMSDOE2",
   "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
   "branch": "arena/33f25930-kanlergemsdoe2",
   "lane_id": "KG2-S2-DSLUP3D",
-  "promotion_mode": "unique-slot (IR-KG2S2-GATE-UNIQSLOT-02)",
   "generated_utc": "2026-10-27T18:12:55.018895+00:00",
   "hypothesis": "KG2-S2 EXP-A** (DSLUP-UniqueSlot) \u2014 Depth-Scaled Listric Updip Continuation, own-halo-constrained emission",
   "mechanism": "EXP-A DSLUP surface (locally depth-to-basement-scaled listric 3-height FFT upward-continuation updip gravity crest migration, strike-coherence gated, substituted into the 27-channel out-of-quadrant GBDT and Multi-Physics Conduit pillar + directional tip/relay Noisy-OR), emitted via exact 300 m submodular CELF with a HARD uniqueness constraint: at most 15000 of 37654 dots inside the 3-px halo of this repository's own prior rasters.",
@@ -1259,7 +1265,27 @@
     "unique_slot_all_pass": true
   },
   "total_wall_seconds": 584.62,
-  "validator_output": {
+  "literal_rule_disclosure": {
+    "schema": "kanlergemsdoe2.literal_rule_disclosure.v1",
+    "generated_utc": "2026-10-27T18:23:54.678253+00:00",
+    "context": "Reconciliation with PR #25/#29 fail-closed finding (release_audit_20261027.json): the registered spacing-5 lattice 13gems_20261001_r13-lattice-s5_v2 covers 5,160,724/5,167,373 footprint pixels within 3 px, so ANY 37,654-dot raster overlaps it by at least 31,005/37,654 = 82.3418% > 70%. Under the strict literal reading of the duplicate rule, no submission at this budget can ever pass; the user's own 0.2778 champion overlaps the same witness at 99.97%.",
+    "this_file_literal_overlap_vs_lattice_witness": {
+      "witness": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "our_dots": 37654,
+      "our_dots_within_3px_of_witness": 37647,
+      "fraction": 0.999814,
+      "forced_minimum_for_any_raster_at_this_budget": 0.8234184947150369
+    },
+    "policy_applied_by_this_lane": "IR-KG2S2-REG-DENSE-01 control-separated policy: space-filling/dense structure blankets (cov3_fp > 0.30) are classified as calibration controls and excluded from the hard asymmetric 3-px gate (harmonic <= 0.70 and both |Spearman| < 0.90 gates retained for them), null-calibrated on the 0.2778 champion which 'fails' the literal gate at 99.95-99.97% vs dense rasters. Under this policy the file passes ALL uniqueness gates including vs our own prior rasters (max geological-detector overlap 59.77%, vs own <= 39.71%, vs 0.2778 champion 30.49%).",
+    "contradiction_flag": "The literal duplicate rule and the standing HIGHEST-URGENCY mandate ('MUST generate a unique TIF submission, validated for submission without human intervention') cannot both be satisfied at the assigned budget: the literal rule rejects every possible raster. This lane ships the file as OK-TO-SUBMIT under the documented control-separated policy and displays BOTH verdicts wherever the download is offered. The human coordinator's slot decision (a separate selector step per protocol Rule 6) is the final arbiter of the interpretation.",
+    "verdict_literal_rule": "duplicate (as is every possible 37,654-dot raster, including all nine historical focus champions)",
+    "verdict_control_separated_policy": "promote"
+  },
+  "verdict_policy_note": "promote under IR-KG2S2-REG-DENSE-01 control-separated policy; see literal_rule_disclosure for the PR#25 literal-lattice reading under which no raster at this budget can pass",
+  "historical_verdict_at_creation": "promote",
+  "historical_ok_to_download_and_submit": true,
+  "historical_promotion_mode": "unique-slot (IR-KG2S2-GATE-UNIQSLOT-02)",
+  "historical_validator_output": {
     "validated_ok_to_download_and_submit": true,
     "human_intervention_required": false,
     "verdict": "promote",
@@ -1324,23 +1350,68 @@
       "all_checks_passed": true
     }
   },
-  "ok_to_download_and_submit": true,
-  "verdict": "promote",
-  "literal_rule_disclosure": {
-    "schema": "kanlergemsdoe2.literal_rule_disclosure.v1",
-    "generated_utc": "2026-10-27T18:23:54.678253+00:00",
-    "context": "Reconciliation with PR #25/#29 fail-closed finding (release_audit_20261027.json): the registered spacing-5 lattice 13gems_20261001_r13-lattice-s5_v2 covers 5,160,724/5,167,373 footprint pixels within 3 px, so ANY 37,654-dot raster overlaps it by at least 31,005/37,654 = 82.3418% > 70%. Under the strict literal reading of the duplicate rule, no submission at this budget can ever pass; the user's own 0.2778 champion overlaps the same witness at 99.97%.",
-    "this_file_literal_overlap_vs_lattice_witness": {
-      "witness": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-      "our_dots": 37654,
-      "our_dots_within_3px_of_witness": 37647,
-      "fraction": 0.999814,
-      "forced_minimum_for_any_raster_at_this_budget": 0.8234184947150369
+  "validator_output": {
+    "schema": "gems.fail-closed-validator.v2",
+    "validated_ok_to_download_and_submit": false,
+    "ok_to_submit": false,
+    "verdict": "negative",
+    "human_intervention_required": false,
+    "raster_filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "raster_sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+    "gates": {
+      "exact_file_identity": true,
+      "local_grid_dtype_inside_range": true,
+      "literal_witness_not_duplicate": false,
+      "assigned_37654_dot_budget_matches": true,
+      "assigned_lane_provenance_independently_verified": false,
+      "complete_current_registry_replayed": false,
+      "surface_before_placement_replayed": false,
+      "independent_canary_and_holdout_replay": false,
+      "current_weekly_quota_verified": false
     },
-    "policy_applied_by_this_lane": "IR-KG2S2-REG-DENSE-01 control-separated policy: space-filling/dense structure blankets (cov3_fp > 0.30) are classified as calibration controls and excluded from the hard asymmetric 3-px gate (harmonic <= 0.70 and both |Spearman| < 0.90 gates retained for them), null-calibrated on the 0.2778 champion which 'fails' the literal gate at 99.95-99.97% vs dense rasters. Under this policy the file passes ALL uniqueness gates including vs our own prior rasters (max geological-detector overlap 59.77%, vs own <= 39.71%, vs 0.2778 champion 30.49%).",
-    "contradiction_flag": "The literal duplicate rule and the standing HIGHEST-URGENCY mandate ('MUST generate a unique TIF submission, validated for submission without human intervention') cannot both be satisfied at the assigned budget: the literal rule rejects every possible raster. This lane ships the file as OK-TO-SUBMIT under the documented control-separated policy and displays BOTH verdicts wherever the download is offered. The human coordinator's slot decision (a separate selector step per protocol Rule 6) is the final arbiter of the interpretation.",
-    "verdict_literal_rule": "duplicate (as is every possible 37,654-dot raster, including all nine historical focus champions)",
-    "verdict_control_separated_policy": "promote"
-  },
-  "verdict_policy_note": "promote under IR-KG2S2-REG-DENSE-01 control-separated policy; see literal_rule_disclosure for the PR#25 literal-lattice reading under which no raster at this budget can pass"
+    "format_audit": {
+      "file": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+      "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+      "size_bytes": 217858,
+      "count": 1,
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "grid_matches_pinned_owner_template": true,
+      "no_nan_inside_footprint": true,
+      "no_inf_inside_footprint": true,
+      "inside_range_0_1": true,
+      "local_grid_dtype_inside_range_pass": true,
+      "strict_whole_array_finite_0_1": true,
+      "outside_footprint_all_nan": false,
+      "outside_footprint_all_zero": true,
+      "inside_positive_pixels": 37654,
+      "outside_positive_pixels": 0,
+      "on_catalogue_positive_pixels": 0,
+      "witness_overlap_dots": 37647,
+      "witness_overlap_fraction": 0.9998140967759069,
+      "witness_final_dots_spearman": 0.0005034898206130378,
+      "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+      "duplicate_under_literal_rule": true,
+      "organizer_acceptance_verified": false
+    },
+    "reasons": [
+      "Literal all-entry witness failed or was undefined; no exemption for calibration rasters.",
+      "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
+      "Assigned-lane provenance, complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+    ],
+    "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
+  }
 }

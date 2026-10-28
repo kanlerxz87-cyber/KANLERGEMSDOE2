@@ -2,6 +2,8 @@
 
 Date: 2026-10-27 · Receipt: [`evidence/session3_independent_recheck_20261027.json`](../evidence/session3_independent_recheck_20261027.json) · Script: [`scripts/session3_recheck.py`](../scripts/session3_recheck.py)
 
+> **Current decision: research only; do not submit any of the files described below.** This is a historical geometric review, not an authenticated score receipt, protocol change, holdout replay or portal acceptance. The literal all-registry rule has no lattice exception. The current card is [`evidence/current_run_card.json`](../evidence/current_run_card.json).
+
 Labels: **VERIFIED** = recomputed from pinned bytes in this session. **OFFICIAL** = stated by the organizer or the official rules (linked). **USER-REPORTED** = a score supplied by the owner with no submission-page receipt. **INFERENCE** = a reading that the evidence supports but does not prove.
 
 ## 1. Official facts the analysis depends on
@@ -31,7 +33,7 @@ Dots are in-footprint pixels with value > 0. "Off-fault" excludes pixels on the 
 | GEMSDOE33 | 41,865 | 1,377 | 3,894 | 6,024 | 0.2632 |
 | GEMSDOE36 | 38,854 | 0 | 0 | 2,281 | 0.2750 |
 
-All nine focus files are binary inside the footprint (values exactly 0 and 1; VERIFIED). Their outside-footprint encoding varies: GEMSDOE24, 25, 27, 28 and 31 use NaN outside, while GEMSDOE30, 32, 33 and 36 use zeros outside. Both encodings carry reported scores (USER-REPORTED), so both appear to be accepted by the portal. The official wording is "null or nan" outside bounds, so zeros are not what the rules describe. Each has a directional 3-px overlap of at least 0.975 with another focus file (VERIFIED; the lowest is GEMSDOE36 vs GEMSDOE27 at 0.9758; see the receipt). The nine files are therefore not unique relative to each other.
+All nine focus files are binary inside the footprint (values exactly 0 and 1; VERIFIED). Their outside-footprint encoding varies: GEMSDOE24, 25, 27, 28 and 31 use NaN outside, while GEMSDOE30, 32, 33 and 36 use zeros outside. Reported scores are not file-linked organizer receipts, so neither exterior encoding is proven accepted by the portal. The official wording is "null or nan" outside bounds; whether it applies to this irregular exterior is not established here. Each has a directional 3-px overlap of at least 0.975 with another focus file (VERIFIED; the lowest is GEMSDOE36 vs GEMSDOE27 at 0.9758; see the receipt). The nine files are therefore not unique relative to each other.
 
 ## 3. The 0.2778 lineage (VERIFIED)
 
@@ -58,7 +60,7 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 - Lattice `13gems_20261001_r13-lattice-s5_v2_nan-outside.tif` (sha256 `b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2`, 206,895 positive dots) covers **5,160,724 of 5,167,373** footprint pixels within 3 px. **6,649** pixels remain uncovered.
 - For N distinct in-footprint dots, overlap is at least N − 6,649. At N = 37,654 this is 31,005 dots, or **82.34%**, which exceeds 70% for any placement.
 - The bound drops below 70% only for N ≤ 22,163, and then only if at least 30% of dots fall in the 6,649 gap pixels. That is placement gaming and is not recommended.
-- Session-2 candidate `c71122d5`: witness overlap **99.98%** (VERIFIED), Spearman vs witness **0.0005** (VERIFIED, below the 0.90 threshold). Only the overlap rule fails.
+- Session-2 candidate `c71122d5`: witness overlap **99.98%** (VERIFIED), Spearman vs witness **0.0005** (VERIFIED, below the 0.90 threshold). This witness fails the overlap rule; the full registry, pre-placement surface, independent holdout and account quota also remain unverified.
 
 ## 7. Irregularities found this session (flagged for review)
 
@@ -77,11 +79,11 @@ The owner's earlier upload was rejected with "Predicted values must be in range 
 
 ## 9. Decision for the owner (no manual inspection is involved)
 
-- **A. Keep the literal rule.** No file from the current line of work is cleared. Work continues on research and on the registry-replay gap.
-- **B. Adopt a written, pre-registered control-separated rule** that exempts space-filling calibration rasters from the 70% test. Then the Session-2 file is eligible on that test, pending the still-unimplemented full-registry replay.
-- **C. Reduce the budget below 22,164.** Not recommended, because it passes only through placement gaming.
+- **Apply the literal rule.** No file from the current line of work is cleared. Work can continue on data provenance and registry-replay gaps without fitting or placing a new model.
+- A future change to the literal rule or budget requires an explicit new user authorization and preregistration; neither the current selector nor this document may supply an exemption.
+- Reducing the frozen budget to seek lattice gaps is placement gaming, not a geological validation.
 
-Until the owner chooses, the site reports NOT OK TO DOWNLOAD AND SUBMIT for every file.
+The site reports NOT OK TO SUBMIT for every file.
 
 ## 10. PR #36 override (merged to main during this session)
 
@@ -89,4 +91,4 @@ Until the owner chooses, the site reports NOT OK TO DOWNLOAD AND SUBMIT for ever
 - Independent recheck (`scripts/off36_recheck.py` → `evidence/off36_independent_check_20261027.json`): lattice 3-px overlap 66.00%, with 5,100 of 15,000 dots (34%) in lattice-gap pixels; 107 on-catalogue dots (card: 0); max non-lattice overlap vs the 12 restored registry rasters 28.59% (card: 22.37%, not reproduced); holdout DTI not measured.
 - Decision: promote **not adopted**. Reasons: no holdout result (the brief requires one before spending a slot); placement chosen to pass the lattice gate (AGENTS.md prohibits); budget reduced to 15,000 from 37,654.
 - Authoritative card stays `negative` / `ok_to_submit: false`. Archived promote card: `evidence/superseded/current_run_card_pr36_promote_20261027.json`. `scripts/generate_unique_submission.py` is forced to negative and writes to `evidence/research/`.
-- Owner options: (a) spatially blocked holdout replay of this file (needs organizer-authenticated training data); (b) a written owner ruling on the lattice control. Until then it is research only.
+- Current decision: the literal rule and frozen budget stand. Keep this artifact for forensic research only; a selector cannot waive either requirement. Organizer-authenticated data and a genuinely fold-safe future evaluation remain unresolved.

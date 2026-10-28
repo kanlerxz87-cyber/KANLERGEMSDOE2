@@ -1076,9 +1076,13 @@ def verify_recorded() -> dict[str, Any]:
             raise SystemExit(f"Missing recorded KG2 artifact: {p}")
     c1 = json.loads(RUN_CARD_JSON.read_text())
     c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
-    c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+    current = json.loads(DOCS_RUN_CARD_JSON.read_text())
+    if c1 != c2:
+        raise SystemExit("Archived KG2 run card copies in root and evidence/ disagree")
+    if current != json.loads((ROOT / "evidence/current_run_card.json").read_text()):
+        raise SystemExit("Published current run card disagrees with the current evidence")
+    if current.get("verdict") != "negative" or current.get("ok_to_submit") is not False:
+        raise SystemExit("Published current run card is not fail-closed")
 
     tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
     zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]
@@ -1097,8 +1101,14 @@ def verify_recorded() -> dict[str, Any]:
         "verified": True,
         "submission_filename": c1["submission_filename"],
         "raster_sha256": c1["raster_sha256"],
-        "holdout_dti": c1["holdout_dti"]["dti"],
-        "ci95": c1["holdout_dti"]["ci95"],
+        "historical_holdout": {
+            "label": c1["holdout_dti"]["label"],
+            "evaluator_version": c1["holdout_dti"]["evaluator_version"],
+            "withheld_positive_pixels": c1["holdout_dti"]["withheld_positive_pixels"],
+            "dti": c1["holdout_dti"]["dti"],
+            "ci95": c1["holdout_dti"]["ci95"],
+            "replayed": False,
+        },
         "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][
             "post_placement_competing_max_3px_overlap"
         ],

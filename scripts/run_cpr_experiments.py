@@ -155,6 +155,10 @@ def _collect_registry(foot: np.ndarray, ddir: Path) -> tuple[list[dict], np.ndar
 
 
 def main() -> int:
+    # Historical method code is retained for forensics only. These were not the
+    # assigned lane and their former gates omitted the literal lattice witness.
+    # Stop before fitting, placement, or writing artifacts; importing helpers is OK.
+    raise SystemExit("Archived parallel lane disabled: not the assigned lane; literal registry preflight and independent replay required")
     t_start = time.time()
     ddir, wdir, edir = data_dir(), work_dir(), evidence_dir()
 

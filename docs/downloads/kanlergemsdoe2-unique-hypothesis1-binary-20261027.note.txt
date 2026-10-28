@@ -1,16 +1,6 @@
-KANLERGEMSDOE2 UNIQUE SUBMISSION CANDIDATE — SESSION 2 (2026-10-27)
-Filename: kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif
+RESEARCH ONLY — DO NOT SUBMIT. The historical note and promotion were superseded.
+File: kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif
 SHA-256: f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539
-Shape: 3730 x 3292, EPSG:32611, float32, single-band
-Positive dots (threshold >=0.5): 37,654
-Outside footprint: all 0.0 (zeros, not NaN) — passes strict whole-array [0,1] check
-On-catalogue dots: 0
-Format validation: PASS (same template as sample_submission.tif)
-Uniqueness (3-px overlap): 1.47% DSLUP, 1.33% DARP, 1.05% GEMSDOE32, <2% all 9 focus files — well below 70% literal gate and geological threshold.
-Hypothesis: #1 of 5 (cross-gradient corroboration with hydrothermal densification / 5-band mean + slope boost + Gaussian smoothing + rank selection). See research/2026-10-27_new_hypotheses.md.
-Holdout replay: NOT PERFORMED — 3-experiment budget consumed (DSLUP, ECPU, DARP). No HOLDOUT-DTI reported; no organizer receipt; no leaderboard projection claimed.
-Estimated score: UNVERIFIED — cannot estimate without replay. Do not treat any number as a score.
-Verdict: PROMOTE TO DOWNLOAD ONLY / NEGATIVE FOR SUBMISSION. Download the .tif or .zip; do not submit to DrivenData until independent holdout replay confirms improvement and the weekly slot selector approves.
-Note (138/140): HYP1 cross-gradient+slope smooth top-37654 overlap<2% all focus [0,1] PASS replay NOT DONE — download OK do not submit yet.
-Submission instructions (from executive-summary.html): download exactly this file, confirm SHA-256, enter note above (<=140 chars), upload single-band GeoTIFF or ZIP containing it.
-No hallucinations; every claim linked to evidence file or verified source.
+Fresh checks: 37,654 in-footprint dots; 184 lie on known-fault pixels, contrary to the original note.
+The previously asserted <2% directional 3-pixel focus overlap did not reproduce. The file is a literal duplicate of the registered lattice; see evidence/session3_independent_recheck_20261027.json and evidence/release_recheck_20261027.json.
+No independent holdout or organizer acceptance has been established; no estimated live score is available.

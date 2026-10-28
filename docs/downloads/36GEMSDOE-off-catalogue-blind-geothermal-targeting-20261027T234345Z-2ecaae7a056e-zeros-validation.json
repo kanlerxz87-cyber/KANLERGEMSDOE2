@@ -1,4 +1,12 @@
 {
+  "supersession_notice": "SUPERSEDED: research-only. This 15,000-dot file used a reduced budget and deliberately placed dots in lattice gaps; no independent holdout, full registry, quota or portal acceptance is established. The earlier promotion is invalid. Do not submit.",
+  "superseded_by": "evidence/current_run_card.json",
+  "independent_recheck": "evidence/off36_independent_check_20261027.json",
+  "original_receipt_sha256_before_supersession": "0a7942fafccc4de61ed9307d671ce257e4d6f3b5e3bf347ea7f02178f7a42ccc",
+  "historical_verdict_at_creation": "promote",
+  "historical_ok_to_submit": true,
+  "verdict": "negative",
+  "ok_to_submit": false,
   "schema": "gems.unique-submission-validation.v1",
   "generated_utc": "2026-10-27T23:43:49.008498+00:00",
   "file": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
@@ -3322,7 +3330,5 @@
       "error": "not locally available"
     }
   ],
-  "ok_to_download": true,
-  "ok_to_submit": true,
-  "verdict": "promote"
+  "ok_to_download": true
 }

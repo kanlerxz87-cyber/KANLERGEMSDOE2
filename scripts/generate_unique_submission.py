@@ -1,39 +1,12 @@
 #!/usr/bin/env python3
-"""
-**RESEARCH-ONLY (fail-closed, 2026-10-27 review).** This generator must not publish a
-promote verdict. Its lattice gate is met only by placing >=30% of dots in lattice-gap pixels
-and a reduced 15,000-dot budget, which AGENTS.md forbids, and no holdout DTI is measured.
-Its card is written to evidence/research/ and forced to verdict negative.
+"""Archived reduced-budget generator; direct execution is disabled.
 
-Generate a UNIQUE, competition-format GeoTIFF submission for the DOE GEMS Prize.
-
-Method: Off-Catalogue Blind Geothermal Fault Targeting (contrarian design)
-
-Every high-scoring historical submission in the focus sites (GEMSDOE24/25/27/28/30/31/32/33/36)
-clusters prediction dots ON or immediately adjacent to the USGS/INGENIOUS catalogue faults
-(the "H19-5 dotted" family).  This is a precision play on catalogue-adjacent pixels.
-
-This generator takes the opposite, deliberately unique approach:
-  * It emits dots ONLY in the OFF-CATALOGUE zone (>800 m from every mapped catalogue fault),
-    targeting blind geothermal structures that are missing from the catalogue.
-  * Dot locations are drawn from a systematic grid with jitter -- a spatial design that is
-    structurally different from every clustered/dotted historical mask.
-  * Dot count = 15,000 (below the 22,163 budget at which the space-filling calibration
-    lattice's 3-px neighbourhood makes the 70% overlap rule combinatorially unavoidable).
-  * At least 30% of dots are deliberately placed in the lattice's 3-px-uncovered pixels so
-    that directional overlap with the spacing-5 calibration lattice cannot exceed ~70%.
-
-Outputs (all in docs/downloads/):
-  * <name>-zeros.tif   -- single-band float32, EPSG:32611, 3730x3292, 100 m grid,
-                          values in [0,1], ZERO outside the footprint (passes a strict
-                          whole-array [0,1] check; avoids the "[0,1]" portal error).
-  * <name>-nan.tif     -- identical interior, NaN outside (matches the official
-                          footprint-convention text).
-  * <name>-validation.json -- machine-readable gate results.
-  * <name>-note.txt    -- <=140-character submission note.
-
-This script does NOT upload anything.  It writes run-card fields into
-evidence/current_run_card.json.  A separate selector must approve any live slot.
+It used a 15,000-dot budget and deliberately filled witness-lattice gaps to
+avoid the literal overlap gate, contrary to the assigned protocol. Its prior
+promotion is superseded; its holdout and portal acceptance are not established.
+The original method remains below only for forensic review, not for placement,
+publication or upload. A local [0,1] check does not diagnose the prior portal
+rejection or prove acceptance.
 """
 
 from __future__ import annotations
@@ -265,6 +238,9 @@ def uniqueness_vs_registry(dots, footprint, registry_entries, root):
 
 
 def main():
+    # Forensic code only. Its reduced-budget lattice-gap allocation violates the
+    # assigned protocol and has no replayed holdout. Stop before any placement.
+    raise SystemExit("Archived parallel lane disabled: reduced-budget lattice-gap placement is not authorized")
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     DOWNLOADS.mkdir(parents=True, exist_ok=True)
 

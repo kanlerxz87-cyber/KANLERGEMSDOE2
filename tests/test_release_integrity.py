@@ -165,10 +165,11 @@ def test_current_evidence_new_unique_submission():
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     assert card["verdict"] == "negative" and card["ok_to_submit"] is False
-    assert card["holdout_dti"] is None and card["experiments_run"] == 0
+    assert card["raster_sha256"] is None and card["holdout_dti"] is None and card["experiments_run"] == 0
     assert len(card["note"]) <= 140
     superseded = json.loads((ROOT / "evidence/superseded/current_run_card_pr36_promote_20261027.json").read_text())
-    assert superseded["verdict"] == "promote" and superseded["holdout_dti"] is None
+    assert superseded["verdict"] == "negative" and superseded["ok_to_submit"] is False
+    assert superseded["historical_verdict_at_creation"] == "promote" and superseded["holdout_dti"] is None
     assert superseded["raster_sha256"] == "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4"
     tif = ROOT / "docs" / "downloads" / superseded["submission_name"]
     assert tif.is_file() and sha256_file(tif) == superseded["raster_sha256"]
@@ -217,15 +218,18 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
     builder = importlib.import_module('build_site')
     evidence = tmp_path / 'evidence'
     evidence.mkdir()
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
+    (evidence / 'release_recheck_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'promote', 'ok_to_submit': True}))
+    (evidence / 'dslup_literal_revalidation_20261027.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
     monkeypatch.setattr(builder, 'DOCS', tmp_path / 'docs')
     with pytest.raises(SystemExit, match='refusing stale or positive card'):
         builder.main()
-    real = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps(real))
-    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
+    real = json.loads((ROOT / 'evidence/release_recheck_20261027.json').read_text())
+    (evidence / 'release_recheck_20261027.json').write_text(json.dumps(real))
+    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False, 'generated_utc': real['generated_utc']}))
+    (evidence / 'dslup_literal_revalidation_20261027.json').write_text((ROOT / 'evidence/dslup_literal_revalidation_20261027.json').read_text())
+    (evidence / 'off36_literal_revalidation_20261027.json').write_text((ROOT / 'evidence/off36_literal_revalidation_20261027.json').read_text())
     with pytest.raises(SystemExit, match='artifact missing or differs'):
         builder.main()
 
