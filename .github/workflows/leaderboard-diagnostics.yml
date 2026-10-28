@@ -19,10 +19,10 @@ jobs:
           import re, sys
           from urllib.request import Request, urlopen
           sys.path.insert(0, 'scripts')
-          from refresh_public_feed import Tables, URL
+          from refresh_public_feed import Tables, PARTIAL_URL as URL
           request = Request(URL, headers={'User-Agent': 'GEMS-evidence-feed/1.0'})
           with urlopen(request, timeout=25) as response:
-              if response.geturl().split('?')[0].rstrip('/') != URL.rstrip('/'):
+              if response.geturl() != URL:
                   raise RuntimeError('Unexpected redirect')
               text = response.read(5_000_001).decode('utf-8')
           if len(text) > 5_000_000:
@@ -53,10 +53,12 @@ jobs:
           PY
       - name: Verify the fixed public partial and parser
         run: |
-          python scripts/refresh_public_feed.py --out "$RUNNER_TEMP/leaderboard-diagnostic.json" --strict
+          python scripts/refresh_public_feed.py --out "$RUNNER_TEMP/leaderboard-diagnostic.json" || true
           python - <<'PY'
-          import json, os
+          import json, os, sys
           from pathlib import Path
           data = json.loads((Path(os.environ['RUNNER_TEMP']) / 'leaderboard-diagnostic.json').read_text())
-          print(f"::notice file=scripts/refresh_public_feed.py,title=Public feed parser result::status={data['status']}; observed={data['observed_utc']}; rank1={data['top_public_dti']}; rank5={data['fifth_public_dti']}")
+          print(f"::notice file=scripts/refresh_public_feed.py,title=Public feed parser result::status={data['status']}; observed={data.get('observed_utc', data.get('attempted_utc'))}; rank1={data['top_public_dti']}; rank5={data['fifth_public_dti']}; error={data.get('error')}")
+          if data['status'] != 'success':
+              sys.exit(1)
           PY
