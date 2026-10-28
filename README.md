@@ -1,5 +1,7 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
+> **Separate concurrent artifact — NOT APPROVED.** PR #53 added a 20,000-dot blind-interior TIFF, but its generator changes the frozen 37,654-dot budget to bypass the literal lattice lower-bound stop. It has no holdout replay, and its local 29-raster check is not full-registry clearance. Its own format receipt says `submission_authorized: false`. This focus-nine review did not create or test that artifact; do not treat it as a candidate. See [the audit note](evidence/pr53_artifact_review_20261028.md) and [its run card](evidence/run_card_unique_7da04408edc9.json).
+
 > **DO NOT SUBMIT.** No file is cleared. The research HPTR TIFF is not unique under the literal rule, and no new file or reliable leaderboard estimate was produced this session. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop. Historical proxy comparisons do not establish a leaderboard win. [Executive summary](EXECUTIVE_SUMMARY.md) · [GitHub Pages dashboard](docs/index.html)
 
 ## Start here
@@ -11,8 +13,7 @@
 - [Previous negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261028.json)
 - [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
 - [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)
-- [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [source catalog](registry/source_catalog_20261027.json)
-- [Four focus-nine research hypotheses](research/2026-10-28_focus-nine-hypotheses.md) · [focus-nine evidence supplement](evidence/review_20261028_focus_nine.md)
+- [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [four focus-nine hypotheses](research/2026-10-28_focus-nine-hypotheses.md) · [focus-nine evidence supplement](evidence/review_20261028_focus_nine.md) · [source catalog](registry/source_catalog_20261027.json)
 
 ## Why the release stopped
 
