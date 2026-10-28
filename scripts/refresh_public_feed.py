@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 from datetime import datetime, timezone
@@ -20,6 +21,7 @@ URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderbo
 # The public page loads its first table asynchronously via this same-origin
 # HTMX partial. Fetching the shell alone yields no <table> in ordinary HTTP.
 PARTIAL_URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard_partial/?page=1"
+LIVE_SNAPSHOT_URL = "https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/docs/data/public_leaderboard.json"
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -122,10 +124,47 @@ def fetch_public_partial() -> str:
         return body.decode("utf-8")
 
 
+def verified_snapshot(data: object, now: datetime) -> tuple[datetime, dict] | None:
+    """Validate a prior public observation before showing it as stale fallback."""
+    if not isinstance(data, dict):
+        return None
+    if data.get("status") == "unavailable":
+        data = data.get("last_verified_snapshot")
+    if not isinstance(data, dict) or data.get("status") not in ("success", "verified_snapshot"):
+        return None
+    if data.get("source_url") != URL:
+        return None
+    first, fifth = data.get("top_public_dti"), data.get("fifth_public_dti")
+    if (type(first) not in (int, float) or type(fifth) not in (int, float)
+            or not math.isfinite(first) or not math.isfinite(fifth)
+            or not 0 <= fifth <= first <= 1):
+        return None
+    try:
+        observed = datetime.fromisoformat(data["observed_utc"].replace("Z", "+00:00"))
+        if observed.tzinfo is None or observed > now:
+            return None
+    except (AttributeError, KeyError, TypeError, ValueError, OverflowError):
+        return None
+    return observed, data
+
+
+def fetch_live_previous() -> object:
+    """Best-effort read of our deployed prior snapshot, never an organizer login."""
+    request = Request(LIVE_SNAPSHOT_URL, headers={"User-Agent": "GEMS-evidence-feed/1.1"})
+    with urlopen(request, timeout=10) as response:
+        if response.geturl() != LIVE_SNAPSHOT_URL:
+            raise ValueError("Unexpected prior-snapshot redirect")
+        body = response.read(100_001)
+        if len(body) > 100_000:
+            raise ValueError("Unexpectedly large prior snapshot")
+    return json.loads(body.decode("utf-8"))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, default=ROOT / "docs/data/public_leaderboard.json")
     ap.add_argument("--input-html", type=Path, help="Offline fixture for testing; never used by scheduled refresh")
+    ap.add_argument("--fetch-live-previous", action="store_true", help="On failure, also consider the prior deployed public snapshot")
     ap.add_argument("--strict", action="store_true", help="Return nonzero on refresh failure")
     args = ap.parse_args(argv)
     previous = {}
@@ -153,7 +192,16 @@ def main(argv=None) -> int:
         }
         failed = False
     except Exception as exc:
-        snapshot = previous if previous.get("status") in ("success", "verified_snapshot") else previous.get("last_verified_snapshot")
+        now = datetime.now(timezone.utc)
+        candidates = [verified_snapshot(previous, now)]
+        if args.fetch_live_previous and not args.input_html:
+            try:
+                candidates.append(verified_snapshot(fetch_live_previous(), now))
+            except Exception:
+                # A broken old deployment must never hide the original failure.
+                pass
+        valid = [item for item in candidates if item is not None]
+        snapshot = max(valid, key=lambda item: item[0])[1] if valid else None
         data = {
             "status": "unavailable",
             "source_url": URL,

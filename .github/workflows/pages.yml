@@ -33,7 +33,7 @@ jobs:
           cp -R registry/. _site/registry/
           cp -R research/. _site/research/
       - name: Refresh dated public leaderboard snapshot (fail closed if unavailable)
-        run: python scripts/refresh_public_feed.py --out _site/docs/data/public_leaderboard.json
+        run: python scripts/refresh_public_feed.py --out _site/docs/data/public_leaderboard.json --fetch-live-previous
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
