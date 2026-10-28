@@ -1,5 +1,10 @@
 # KANLERGEMSDOE2 — geothermal fault discovery
 
+> ### ⭐⭐ SESSION 3 (2026-10-27, KG2-S3): BEST FILE UNCHANGED — DSLUP-UNIQ, RE-VERIFIED THIS SESSION
+> - **Download & submit:** `docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif` SHA-256 `8f66f32c…76fbe3` — PROJECTION 0.436 [0.390,0.473] (labelled, not a score) from HOLDOUT-DTI SGMC-CAL 0.098140 replayed exactly today. Unique vs geological rasters (max 59.77%); literal-lattice conflict disclosed in EXECUTIVE_SUMMARY.md.
+> - **New KG2-S3 CVC-300 lane: NEGATIVE** — vote-consensus fails blind SGMC (0.0590 < 0.0641) and uniqueness (97.7%); its TIF is research-only, DO NOT SUBMIT. See `evidence/cvc300_run_card.json`.
+
+
 > ### ⭐ SESSION 2 (2026-10-27, KG2-S2 DSLUP-3D lane): NEW UNIQUE CANDIDATE — TWO VERDICTS, FULLY DISCLOSED
 >
 > - **File**: [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · [ZIP](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3`

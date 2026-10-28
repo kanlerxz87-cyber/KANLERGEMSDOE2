@@ -1,0 +1,23 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "site": "KANLERGEMSDOE2",
+  "lane_id": "KG2-S3-CVC300",
+  "hypothesis": "Cross-site vote-consensus (9 focus rasters) + DSLUP/DARP bonus, 300m disk-greedy emission, catches corridors single-site pruning dropped",
+  "mechanism": "vote_focus/9 (+0.15 DSLUP/DARP in EXP2) -> greedy_disk_allocate 3px, 37654 budget, catalogue excluded; EXP1 vote-only, EXP2 vote+bonus with DSLUP halo cap, EXP3 vote>=3 only",
+  "named_non_fault_mimic": "Shared catalogue-hugging bias of all voters; Lahontan shoreline dots common to voters",
+  "leakage_canary": {"passed": true, "max_single_feature_auc": 0.5082, "features_tested": 4, "note": "neg_dist_catalogue pooled AUC 0.996 vs full labels = leakage by construction; not used. Binary dot features have near-0.5 pixel AUC because DTI credit is 3px, not pixel-exact."},
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0 static-mask, N=22232, 95% CI) and (GEMSDOE32-SGMC-CAL-v3.0, N=62703)",
+    "EXP1": {"static_hide_recover": 0.087264, "ci95": [0.075631, 0.098513], "sgmc_cal": 0.059033, "sgmc_ci95": [0.052674, 0.065478], "delta_sgmc_vs_champion32": -0.005088},
+    "EXP2": {"static_hide_recover": 0.062535, "sgmc_cal": 0.058392, "delta_sgmc_vs_champion32": -0.005729},
+    "EXP3": {"static_hide_recover": 0.077251, "sgmc_cal": 0.056846},
+    "champion32_static_ref": {"static_hide_recover": 0.004515, "sgmc_cal": 0.064121},
+    "dslup_uniq_static_ref_replayed_this_session": {"sgmc_cal": 0.09814, "note": "exactly reproduces recorded DSLUP SGMC-CAL 0.098140; static hide-recover 0.019666 is NOT comparable to DSLUP per-cell hide-recover 0.125925"}
+  },
+  "correlation_overlap_vs_registry": {"scope": "13 local geological rasters in docs/downloads (9 focus + DSLUP/DARP/HTCADS/ECPU); not the full 1201-raster registry", "EXP1_max_3px_overlap": 0.9774, "EXP1_closest": "GEMSDOE27", "verdict_gate": "FAIL >0.70"},
+  "raster_sha256": "e2aa242ca155e8aa01b5ca829d16d17b7720166bbe4ce2db8dc245edf610d51d",
+  "validator_output": "float32 EPSG:32611 3730x3292 transform 243350/4508550 100m, 0 NaN, min 0.0 max 1.0, 37518 dots, 0 on-catalogue; all-finite so the reported 'Predicted values must be in range [0,1]' condition cannot recur from NaN/out-of-range values in this file",
+  "submission_name": "kanlergems2-cvc300-exp1-37518dots-20261027T235900Z-e2aa242c-zeros.tif",
+  "note": "KG2-S3 CVC300 EXP1 research NEGATIVE: SGMC 0.0590 < champ 0.0641, overlap 97.7% duplicate; DO NOT SUBMIT",
+  "verdict": "negative"
+}

@@ -1,3 +1,34 @@
+# Executive summary — Session 3 update (2026-10-27, KG2-S3 CVC-300)
+
+## ✅ THE ONE FILE TO DOWNLOAD AND SUBMIT
+
+| File to download | Estimated score (labelled) | Unique vs the 9 focus sites + our priors? | OK to submit? |
+|---|---|---|---|
+| [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) (ZIP: same name `.zip`) SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3` | **PROJECTION 0.436 [0.390, 0.473]** — OLS `live ≈ 4.715×SGMC-CAL − 0.0271` (recorded R²=0.956 on 9 USER-REPORTED anchors) applied to HOLDOUT-DTI SGMC-CAL **0.098140 [0.0884, 0.1061]** (GEMSDOE32-SGMC-CAL-v3.0, N=62,703), **replayed exactly this session**; per-cell HOLDOUT-DTI Hide-Recover **0.125925 [0.1129, 0.1382]** (N=22,232). A projection is **never** a score; no organizer receipt exists. | **Yes vs geological rasters**: max 3-px overlap **59.77% ≤70%** vs 1,201 checked (recorded Session-2), vs GEMSDOE32 champion **30.49%**, vs our own priors ≤39.71%. **No under literal lattice reading** (99.98% vs spacing-5 calibration lattice; forced ≥82.34% for *any* 37,654-dot raster) — both verdicts disclosed, slot decision is the coordinator's selector step. | **PROMOTE under control-separated policy — OK TO SUBMIT** (validator re-checked this session: float32, EPSG:32611, 3730×3292, 0 NaN, all values in [0,1], 37,654 dots, 0 on-catalogue; NaN-exterior files are the ones that can trigger `Predicted values must be in range [0, 1]` — this file is all-finite zeros-outside). Note (114/140): `KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)` |
+
+**Why GEMSDOE32 scored 0.2778 (USER-REPORTED, no receipt):** forensic equality in this repo — GEMSDOE32's mask = GEMSDOE25's mask minus 6,436 dots ≤2 px from the known-fault catalogue. Pruning catalogue-hugging dots raises precision under α=0.2 without losing 300 m-kernel recall (β=0.8). That mechanism, not a new detector, explains the 0.2600→0.2778 step; it does not prove hidden-truth causality. Beating it required a *different surface* (DSLUP listric updip gravity), not more pruning — Session-3 vote-consensus (below) proved consensus re-imports the shared catalogue-hugging bias and fails blind SGMC.
+
+## Session-3 new lane KG2-S3 CVC-300: NEGATIVE (do not submit)
+
+3 preregistered experiments (`registry/preregistration_cvc300_20261027.json`, `evidence/cvc300_experiments.json`, `evidence/cvc300_run_card.json`): EXP1 vote-only SGMC-CAL **0.059033 [0.0527, 0.0655]** (paired Δ vs champion **−0.005088**, CI strictly negative), EXP2 **0.058392**, EXP3 **0.056846** — all below champion 0.064121 and duplicate (EXP1 max 3-px overlap **97.74%** vs GEMSDOE27). Canary max AUC 0.5082 (pass; full-label distance AUC 0.996 = leakage, not used). Research file `kanlergems2-cvc300-exp1-37518dots-20261027T235900Z-e2aa242c-zeros.tif` SHA `e2aa242c…51d` is **DO NOT SUBMIT**. Hypotheses ranked in `research/2026-10-27_cvc300_hypotheses.md` (ASTER/InSAR deferred: NASA LP/ASF DAAC outside sandbox egress allowlist).
+
+## Per-site best (all USER/OWNER-REPORTED, no organizer receipts; all duplicate vs another focus site → do not resubmit)
+
+| Site | Best file (in docs/downloads) | Reported | Unique? |
+|---|---|---:|---|
+| GEMSDOE32 | gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif | 0.2778 | No — 100% contained in GEMSDOE36 |
+| GEMSDOE36 | gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif | 0.2750 | No — 97.58% vs GEMSDOE27 |
+| GEMSDOE28 | gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif (NaN exterior — [0,1] portal risk) | 0.2710 | No — 100% vs GEMSDOE25 |
+| GEMSDOE31 | gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif | 0.2708 | No — 100% vs GEMSDOE25 |
+| GEMSDOE33 | GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif | 0.2632 | No — 99.71% vs GEMSDOE27 |
+| GEMSDOE25 | gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif | 0.2600 | No — identical mask to GEMSDOE30 |
+| GEMSDOE30 | gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif | 0.2600 | No — identical mask to GEMSDOE25 |
+| GEMSDOE24 | gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif | 0.2477 | No — 100% vs GEMSDOE25 |
+| GEMSDOE27 | gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif | 0.2449 | No — 98.02% vs GEMSDOE24 |
+
+**How to submit (no human inspection needed):** DrivenData competition 306 → Submit → Make new submission → upload the DSLUP `.tif` (or its one-TIFF `.zip`) → paste the note above → record the submission-page receipt. Verify the downloaded SHA-256 matches before uploading.
+
+---
 # Executive summary — 27 October 2026
 
 ## Session 2 (KG2-S2 DSLUP-3D): new unique candidate — two verdicts, fully disclosed
