@@ -17,6 +17,9 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+# The public page loads its first table asynchronously via this same-origin
+# HTMX partial. Fetching the shell alone yields no <table> in ordinary HTTP.
+PARTIAL_URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard_partial/?page=1"
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -82,6 +85,19 @@ def parse_leaderboard(text: str) -> dict[int, float]:
     raise ValueError("Public leaderboard table/ranks not recognized; refusing to invent a score")
 
 
+def fetch_public_partial() -> str:
+    """Read the first-page public table referenced by the leaderboard shell."""
+    request = Request(PARTIAL_URL, headers={"User-Agent": "GEMS-evidence-feed/1.1 (+public leaderboard read only)"})
+    with urlopen(request, timeout=25) as response:
+        # A login/challenge redirect must fail, not become a leaderboard snapshot.
+        if response.geturl() != PARTIAL_URL:
+            raise ValueError("Unexpected redirect, likely authentication or site change")
+        body = response.read(5_000_001)
+        if len(body) > 5_000_000:
+            raise ValueError("Unexpectedly large response")
+        return body.decode("utf-8")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, default=ROOT / "docs/data/public_leaderboard.json")
@@ -99,17 +115,12 @@ def main(argv=None) -> int:
         if args.input_html:
             text = args.input_html.read_text(encoding="utf-8")
         else:
-            request = Request(URL, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
-            with urlopen(request, timeout=25) as response:
-                if response.geturl().split("?")[0].rstrip("/") != URL.rstrip("/"):
-                    raise ValueError("Unexpected redirect, likely authentication or site change")
-                text = response.read(5_000_001).decode("utf-8")
-                if len(text) > 5_000_000:
-                    raise ValueError("Unexpectedly large response")
+            text = fetch_public_partial()
         values = parse_leaderboard(text)
         data = {
             "status": "fixture_only" if args.input_html else "success",
             "source_url": URL,
+            "retrieved_url": None if args.input_html else PARTIAL_URL,
             "observed_utc": observed,
             "top_public_dti": values[1],
             "fifth_public_dti": values[5],
