@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Comprehensive 2026-10-27 multi-site audit covering:
+"""ARCHIVED: CLI disabled; historical claims below are not current evidence.
+
+Comprehensive 2026-10-27 multi-site audit covering:
   - New KANLERGEMSDOE2 candidate (`kanlergems2-darp-exp-1-37654dots-...-4ad35e71-zeros.tif`) + DARP-EXP-2/3
   - Historical KANLERGEMSDOE2 candidates (`11a2f251`, `f5a469e94b14`, `cab53e1b`)
   - All 9 Focus Sites (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`)
@@ -43,6 +45,14 @@ def _ov3_asym(m_a: np.ndarray, d3_b: np.ndarray) -> float:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived audit writer disabled: it can overwrite current evidence with "
+        "self-attested scores or legacy promotion claims. Use audit_release.py."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained only as historical code; not a current evidence generator."""
     ddir, edir, dldir = data_dir(), evidence_dir(), downloads_dir()
     extra = ddir / "scored_extra"
     scored = ddir / "scored"

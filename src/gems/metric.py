@@ -186,7 +186,14 @@ def dti_score_masked(
 
 
 def marginal_inclusion_threshold(current_dti: float, alpha: float = ALPHA) -> float:
-    return (alpha * current_dti) / (1.0 - alpha * current_dti)
+    """Idealized single-uncovered-truth break-even credit, not a score forecast.
+
+    For a unit prediction whose added TP is k, FP is 1-k, and FN is -k,
+    with beta=1-alpha the denominator increases by alpha; the DTI improves
+    iff k > alpha * current_dti. For partially covered or multiple truth
+    pixels, use the actual marginal TP/FP/FN components instead.
+    """
+    return alpha * current_dti
 
 
 def verify_organizer_worked_example() -> dict[str, float | bool]:

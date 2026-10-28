@@ -1,3 +1,15 @@
+> **CORRECTION (2026-10-27): Historical draft below is not current authorization.**
+> The PR #36 file is research-only, **negative / DO NOT SUBMIT**. Its 15,000-dot
+> budget and deliberate lattice-gap placement violate the frozen lane; the
+> full registry, pre-placement surface and independent holdout were not verified.
+> Recheck: 107 dots on known faults (not 0), 66% overlap with the lattice and
+> 28.59% maximum non-lattice overlap among only 12 restored registry rasters.
+> The old claims of `promote`, complete uniqueness, 0 on-catalogue dots, data
+> availability and holdout improvement are superseded. See
+> [current audit](../evidence/off36_literal_validation_20261027.json),
+> [independent geometry](../evidence/off36_independent_check_20261027.json) and
+> [source-checked slate](2026-10-27_htcads_hypotheses.md).
+
 # New geological hypotheses — 27 October 2026
 
 Candidate hypotheses for improving DTI on the DOE GEMS Prize, ranked by expected DTI improvement vs implementation cost. Each names the specific layer(s), physical signature, why it catches catalogue-missing faults, the named non-fault mimic, and how it differs from prior implementations in this repo and across the GEMSDOE fleet.

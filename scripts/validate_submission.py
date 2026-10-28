@@ -49,7 +49,7 @@ def validate_all_gates(tif_path: Path, run_card_path: Path, ddir: Path | None = 
         fmt = assess_file(Path(tif_path), ref)
         result["format_audit"] = fmt
         result["raster_sha256"] = fmt["sha256"]
-        expected_name = card.get("submission_filename") or card.get("raster_filename")
+        expected_name = card.get("submission_filename") or card.get("raster_filename") or card.get("submission_name")
         gates["exact_file_identity"] = bool(
             fmt["sha256"] == card.get("raster_sha256")
             and expected_name == Path(tif_path).name

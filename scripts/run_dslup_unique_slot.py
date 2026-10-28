@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""KG2-S2 final UNIQUE-SLOT emission (EXP-A**): constrained re-emission of the DSLUP EXP-A surface.
+"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+
+KG2-S2 final UNIQUE-SLOT emission (EXP-A**): constrained re-emission of the DSLUP EXP-A surface.
 
 Context (all logged, zero hidden state):
   - The 3 preregistered DSLUP experiments (evidence/dslup_experiments.json) all beat the 0.2778
@@ -57,6 +59,17 @@ CHAMPION_TAG = dmod.CHAMPION_TAG
 
 
 def main() -> int:
+    # Historical implementation is not an authorized execution path. It used
+    # a partial/control-exempt registry and could place dots before novelty
+    # screening. The currently assigned fixed-budget lane is blocked.
+    raise SystemExit(
+        "Archived runner disabled: not the assigned lane and no literal all-registry "
+        "pre-placement/holdout replay. No training, emission, or submission performed."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained for historical review; not a safe or authorized entry point."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

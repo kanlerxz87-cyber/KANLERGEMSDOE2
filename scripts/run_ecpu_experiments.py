@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""KG2-ECPU-20261027 lane: effort-corrected PU propensity reweighting (preregistered).
+"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+
+KG2-ECPU-20261027 lane: effort-corrected PU propensity reweighting (preregistered).
 
 Frozen design: registry/preregistration_ecpu_20261027.json (read it first).
 Reuses shared template code only (Protocol Rule 2): gems32.htcads cached stack +
@@ -103,6 +105,17 @@ def _emit_stratified(pi2d, elig2d, e2d, ridge2d=None):
 
 
 def main() -> int:
+    # Historical implementation is not an authorized execution path. It used
+    # a partial/control-exempt registry and could place dots before novelty
+    # screening. The currently assigned fixed-budget lane is blocked.
+    raise SystemExit(
+        "Archived runner disabled: not the assigned lane and no literal all-registry "
+        "pre-placement/holdout replay. No training, emission, or submission performed."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained for historical review; not a safe or authorized entry point."""
     t_start = time.time()
     ddir, wdir, edir = data_dir(), work_dir(), evidence_dir()
     canary = json.loads((edir / "ecpu_leakage_canary_20261027.json").read_text())

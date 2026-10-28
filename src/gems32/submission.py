@@ -151,17 +151,41 @@ def write_submission_bundle(
     candidate_meta: dict,
     prefix: str = "kanlergems2",
 ) -> dict:
-    """Write and audit DrivenData-compliant `-zeros.tif` + single-GeoTIFF `.zip` + receipt."""
-    out_dir.mkdir(parents=True, exist_ok=True)
-    raw = np.asarray(mask_or_probs, dtype=np.float32)
-    clean_vals = np.where(foot & ~labels & np.isfinite(raw), np.clip(raw, 0.0, 1.0), 0.0).astype(np.float32)
-    digest8 = hashlib.sha256(clean_vals.tobytes()).hexdigest()[:8]
+    """Write and locally audit a zero-exterior TIFF/ZIP; organizer acceptance is unverified."""
+    raw = np.asarray(mask_or_probs)
+    foot = np.asarray(foot)
+    labels = np.asarray(labels)
+    with rasterio.open(template_tif) as tpl:
+        if tpl.count != 1:
+            raise ValueError("Template must have a single band")
+        template_foot = np.isfinite(tpl.read(1))
+        profile_zeros = tpl.profile.copy()
+    if (raw.shape != template_foot.shape or foot.shape != template_foot.shape
+            or labels.shape != template_foot.shape):
+        raise ValueError("Prediction, footprint, labels and template must have identical grids")
+    if not np.isin(foot, [0, 1]).all() or not np.isin(labels, [0, 1]).all():
+        raise ValueError("Footprint and catalogue masks must be finite and binary")
+    foot, labels = foot.astype(bool), labels.astype(bool)
+    if not foot.any() or not np.array_equal(foot, template_foot):
+        raise ValueError("Footprint must exactly match the template's finite footprint")
+    vals = raw[foot]
+    try:
+        good = np.isfinite(vals).all() and np.all((vals >= 0) & (vals <= 1))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Predictions must be numeric probabilities") from exc
+    if not good:
+        raise ValueError("Predictions inside the footprint must be finite and in [0,1]")
+    note = str(candidate_meta.get("submission_note", "")).strip()
+    if len(note) > 140:
+        raise ValueError(f"Submission note exceeds 140 characters ({len(note)} chars)")
 
+    # Known catalogue pixels are intentionally masked, but invalid values are
+    # rejected above rather than hidden by clipping or implicit NaN-to-zero.
+    clean_vals = np.where(foot & ~labels, raw, 0.0).astype(np.float32)
+    digest8 = hashlib.sha256(clean_vals.tobytes()).hexdigest()[:8]
+    out_dir.mkdir(parents=True, exist_ok=True)
     zeros_name = f"{prefix}-{slug}-{timestamp_tag}-{digest8}-zeros.tif"
     zeros_path = out_dir / zeros_name
-
-    with rasterio.open(template_tif) as tpl:
-        profile_zeros = tpl.profile.copy()
 
     profile_zeros.update(
         driver="GTiff",
@@ -183,10 +207,6 @@ def write_submission_bundle(
     zip_path = zeros_path.with_suffix(".zip")
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
         zf.write(zeros_path, arcname=zeros_path.name)
-
-    note = str(candidate_meta.get("submission_note", "")).strip()
-    if len(note) > 140:
-        raise ValueError(f"Submission note exceeds 140 characters ({len(note)} chars)")
 
     bundle = {
         "candidate_id": candidate_meta.get("candidate_id", slug),

@@ -50,6 +50,9 @@ def _prepare(pred, truth, valid, known):
     truth = np.asarray(truth)
     if pred.ndim != 2 or pred.shape != truth.shape:
         raise ValueError("prediction and truth must be equal-shaped 2-D grids")
+    for mask in (valid, known):
+        if mask is not None and not np.isin(np.asarray(mask), [0, 1]).all():
+            raise ValueError("evaluation and known masks must be finite binary grids")
     valid = np.ones(pred.shape, bool) if valid is None else np.asarray(valid, bool)
     known = np.zeros(pred.shape, bool) if known is None else np.asarray(known, bool)
     if valid.shape != pred.shape or known.shape != pred.shape:
@@ -86,13 +89,10 @@ def dti_exact(pred, truth, valid=None, known=None, alpha: float = ALPHA, beta: f
 
 def dti_binary(pred_bool, truth, valid=None, known=None, alpha: float = ALPHA, beta: float = BETA) -> dict:
     """Fast exact DTI when predictions are binary {0, 1} via Euclidean distance transforms."""
-    pred_bool = np.asarray(pred_bool, bool)
-    truth = np.asarray(truth, bool)
-    valid_ = np.ones(pred_bool.shape, bool) if valid is None else np.asarray(valid, bool)
-    known_ = np.zeros(pred_bool.shape, bool) if known is None else np.asarray(known, bool)
-    active = valid_ & ~known_
-    p = pred_bool & active
-    g = truth & active
+    pred, g, active = _prepare(pred_bool, truth, valid, known)
+    if np.any((pred[active] != 0) & (pred[active] != 1)):
+        raise ValueError("binary DTI requires predictions in {0, 1}; use dti_exact for soft probabilities")
+    p = pred > 0
     n = int(g.sum())
     if n == 0:
         return dict(tp=0.0, fp=float(p.sum()), fn=0.0, n_truth=0, dti=0.0, coverage=0.0)

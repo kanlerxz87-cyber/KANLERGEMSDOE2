@@ -54,9 +54,9 @@ def test_status_feed_never_marks_a_candidate_ok() -> None:
     feed = json.loads(FEED.read_text(encoding="utf-8"))
     assert feed["ok_to_submit"] is False
     assert feed["validated_ok_to_download_and_submit"] is False
-    s2 = feed["session2_candidate"]
-    assert s2["ok_to_download_and_submit"] is False
-    assert s2["verdict_control_separated_policy"].startswith("would_promote")
+    assert feed["dslup"]["ok_to_submit"] is False
+    assert feed["dslup"]["witness_overlap"] > 0.70
+    assert feed["parallel_off36"]["ok_to_submit"] is False
 
 
 def test_pr34_candidate_irregularities_are_recorded() -> None:

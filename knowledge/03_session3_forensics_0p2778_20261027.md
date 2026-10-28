@@ -31,7 +31,7 @@ Dots are in-footprint pixels with value > 0. "Off-fault" excludes pixels on the 
 | GEMSDOE33 | 41,865 | 1,377 | 3,894 | 6,024 | 0.2632 |
 | GEMSDOE36 | 38,854 | 0 | 0 | 2,281 | 0.2750 |
 
-All nine focus files are binary inside the footprint (values exactly 0 and 1; VERIFIED). Their outside-footprint encoding varies: GEMSDOE24, 25, 27, 28 and 31 use NaN outside, while GEMSDOE30, 32, 33 and 36 use zeros outside. Both encodings carry reported scores (USER-REPORTED), so both appear to be accepted by the portal. The official wording is "null or nan" outside bounds, so zeros are not what the rules describe. Each has a directional 3-px overlap of at least 0.975 with another focus file (VERIFIED; the lowest is GEMSDOE36 vs GEMSDOE27 at 0.9758; see the receipt). The nine files are therefore not unique relative to each other.
+All nine focus files are binary inside the footprint (values exactly 0 and 1; VERIFIED). Their outside-footprint encoding varies: GEMSDOE24, 25, 27, 28 and 31 use NaN outside, while GEMSDOE30, 32, 33 and 36 use zeros outside. Reported scores do not identify accepted bytes via organizer receipts, so portal acceptance of either exterior encoding is unverified. The official wording is "null or nan" outside bounds, so zeros are not what the rules describe. Each has a directional 3-px overlap of at least 0.975 with another focus file (VERIFIED; the lowest is GEMSDOE36 vs GEMSDOE27 at 0.9758; see the receipt). The nine files are therefore not unique relative to each other.
 
 ## 3. The 0.2778 lineage (VERIFIED)
 
@@ -51,7 +51,7 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 1. **Pruning cannot produce a unique file.** Any subset of GEMSDOE32 has 100% overlap with it, which the literal rule classes as a duplicate. Further pruning therefore adds no novelty.
 2. **Uniqueness needs new dots in new places.** The Session-2 DSLUP file is such a placement. Its literal-rule overlap with the lattice is 99.98%, so the literal rule currently rejects it (see §6).
 3. **The local evaluator is not calibrated.** It gives the 0.2778 champion a proxy of 0.0992 (HOLDOUT-DTI, historical evaluator, not replayed here), while the owner reports 0.2778 on the organizer metric. Holdout ranks cannot be read as leaderboard estimates.
-4. **Only an organizer receipt calibrates the score.** The rules allow three submissions per week. Spending one needs an explicit owner decision, because the literal rule currently forbids any candidate from this line of work.
+4. **Only an organizer receipt calibrates the score.** A staff clarification says the actual submission-page cap prevails over the rules’ three/week parenthetical; this account’s quota was not checked. Spending one needs an explicit owner decision, because the literal rule currently forbids any candidate from this line of work.
 
 ## 6. The literal-rule conflict, quantified (VERIFIED)
 
@@ -68,7 +68,7 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 4. **Score provenance.** The 0.2778 and eight sibling figures are USER/OWNER-REPORTED. No submission-page receipt is stored.
 5. **Brief numbers differ from the official page.** The brief quotes 0.4413 (top) and 0.3195; the official page observed on 2026-10-27 shows 0.4544 and 0.3566.
 6. **Open PR #33** (`arena/89a5e815-kanlergemsdoe2`) proposes another promotion. It was not reviewed in this session.
-8. **PR #34 candidate (`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`, sha256 `f0cb1914…b539`, merged from main during this session).** Format passes. Verified: 99.99% of its dots lie within 3 px of the registered lattice (literal duplicate). It has **184** dots on known-fault pixels, not the "0" its note states. Its "<2% overlap vs focus files" does not reproduce: in this repository's directional 3-px metric the largest focus overlap is 21.7%, and the DSLUP overlap is 36.8%. The organizer masks known-fault pixels, so the 184 dots are score-neutral, but the stated claim is false. Its note's "download OK" wording is also superseded by the fail-closed status: the file is a research download only.
+8. **PR #34 candidate (`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`, sha256 `f0cb1914…b539`, merged from main during this session).** Format passes. Verified: 99.99% of its dots lie within 3 px of the registered lattice (literal duplicate). It has **184** dots on known-fault pixels, not the "0" its note states. Its "<2% overlap vs focus files" does not reproduce: in this repository's directional 3-px metric the largest focus overlap is 26.16% against GEMSDOE36 (21.67% against GEMSDOE32), and the DSLUP overlap is 36.76%. The organizer masks known-fault pixels, so the 184 dots are score-neutral, but the stated claim is false. Its note's "download OK" wording is also superseded by the fail-closed status: the file is a research download only.
 9. **The pinned lattice file is a registered competitor raster, not a neutral control.** The brief lists it under 13GEMSDOE with a USER-REPORTED 0.0904. Calling it a "calibration control" is a policy argument, and the owner should decide it explicitly.
 
 ## 8. Upload-error note (open)
