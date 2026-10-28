@@ -1,5 +1,8 @@
 # PhD-Level Forensic, Mathematical & Structural-Geological Synthesis: Why `GEMSDOE32` Reached `0.2778`, Across-Fleet Audit (9 Focus + 22 Sister Sites), and How to Exceed `0.2778`
 
+> **2026-10-28 integrity correction:** **DO NOT SUBMIT** any existing file. The independently replayed literal witness and nine-site geometry are in [the current preflight record](../evidence/preflight_replay_20261028.json). The narratives below are historical and may contain superseded promotion, causality, or improperly labeled SGMC-calibrated figures. SGMC prevalence calibration is an unverified projection, not a HOLDOUT-DTI; no proxy demonstrates a higher organizer score. A unique hash does not establish protocol uniqueness. The [current review](../REVIEW_2026-10-28.md) supersedes conflicting statements below.
+
+
 **Repository:** `kanlerxz87-cyber/KANLERGEMSDOE2` (`arena/f6c5d188-kanlergemsdoe2`)  
 **Date:** `2026-10-27` (UTC)  
 **Core Values:** **Maximize P(Win)** · **Own the Outcome**  

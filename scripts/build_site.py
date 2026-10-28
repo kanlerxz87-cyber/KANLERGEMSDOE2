@@ -316,9 +316,10 @@ def hptr_sections() -> tuple[str, str, str, str, dict | None]:
         "ok_to_submit": False,
         "validated_ok_to_download_and_submit": False,
         "ok_to_download_for_research": True,
-        "beats_02778_across_all_three_blind_holdouts": True,
+        "beats_02778_leaderboard_score": None,
+        "comparison_warning": "Historical proxy results were not replayed; SGMC-CAL uses an unverified inferred count and is not a holdout DTI.",
         "hide_recover_v3_dti": hr["pooled_dti"],
-        "sgmc_cal_v3_dti": sg["sgmc_prevalence_calibrated_dti"],
+        "sgmc_cal_v3_projection_not_holdout": sg["sgmc_prevalence_calibrated_dti"],
         "c_pied_v1_dti": cp["pooled_dti"],
         "binary_r_ge_05_max_detector_3px_overlap": reg["final_dots_max_detector_3px_overlap"],
         "max_overlap_vs_kanlergemsdoe2_rasters": rc["max_overlap_vs_all_kanlergemsdoe2_rasters"],
@@ -471,6 +472,24 @@ def main() -> None:
     hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
+    # Historical lane narratives contain unsupported causal claims, improperly
+    # labeled SGMC projections, and comparisons between public scores and
+    # holdouts. Keep the underlying evidence, but do not publish those narratives
+    # as current findings. A fail-closed summary is shared by every page.
+    historical_notice = (
+        '<section class="section"><div class="callout red-callout">'
+        '<strong>Historical KG2-S3-HPTR, TRBVC and LOPE: DO NOT SUBMIT.</strong>'
+        '<p>Prior cards and holdouts have not been independently replayed. '
+        'The SGMC prevalence-calibrated figures use an unverified inferred hidden-truth count; '
+        'they are not HOLDOUT-DTI or leaderboard estimates. A holdout comparison cannot '
+        'establish that a candidate beats an organizer leaderboard score. '
+        '<a href="../evidence/preflight_replay_20261028.json">Independent witness and focus-nine replay</a> · '
+        '<a href="../evidence/session3_hptr_run_card_20261027.json">Historical HPTR card</a> '
+        '(research only).</p></div></section>'
+    )
+    hptr_home = hptr_summary = hptr_research = hptr_irregular = historical_notice
+    lope_home = lope_summary = lope_irregular = ''
+    trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ''
     percent = 100 * prior["witness_overlap_fraction"]
     bound = 100 * pre["minimum_directional_overlap"]
     s2 = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
@@ -618,11 +637,22 @@ def main() -> None:
         "reason": f"Literal lattice overlap {100*s2_audit['witness_overlap_fraction']:.3f}%; budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
+    # The old lane cards contain abbreviated and sometimes improperly labeled
+    # proxy figures. Preserve identity/verdict only in the current feed; detailed
+    # historical values remain in the linked evidence and are not promoted.
+    feed["latest_preflight_review"] = "../../evidence/preflight_replay_20261028.json"
+    feed["latest_run_card"] = "../../evidence/run_card_20261028_preflight.json"
     if hptr_feed is not None:
+        for key in ("hide_recover_v3_dti", "sgmc_cal_v3_projection_not_holdout", "c_pied_v1_dti"):
+            hptr_feed.pop(key, None)
         feed["kg2s3_hptr_lane"] = hptr_feed
     if lope_feed is not None:
+        for key in ("lli_projection_lope", "lli_projection_dslup", "lli_projection_champion"):
+            lope_feed.pop(key, None)
         feed["kg2s3_lope_lane"] = lope_feed
     if trbvc_feed is not None:
+        for key in ("hide_recover_v3_dti", "sgmc_cal_v3_dti", "c_pied_v1_dti", "segment_v1_dti"):
+            trbvc_feed.pop(key, None)
         feed["kg2s3_trbvc_lane"] = trbvc_feed
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
