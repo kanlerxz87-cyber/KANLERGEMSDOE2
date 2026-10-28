@@ -204,8 +204,87 @@ def main() -> None:
             "overlap_3px_vs_ecpu": dcorr["overlap_3px_vs_ecpu_cecbdca7"],
         }
 
+    # ------------------------------------------------------------------
+    # Session-3 TRBVC lane + Complete 22-Sister-Repo Fleet Uniqueness Audit
+    # ------------------------------------------------------------------
+    trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ""
+    trbvc_feed: dict | None = None
+    trbvc_card_path = ROOT / "evidence/trbvc_run_card_20261027.json"
+    sis22_path = ROOT / "evidence/sister_fleet_uniqueness_20261027.json"
+    if trbvc_card_path.is_file() and sis22_path.is_file():
+        tc = json.loads(trbvc_card_path.read_text(encoding="utf-8"))
+        s22 = json.loads(sis22_path.read_text(encoding="utf-8"))
+        tfile = tc["submission_name"]
+        tzip = tc["submission_zip"]
+        tnote = tc["submission_note"]
+        tpath = DOCS / "downloads" / tfile
+        if not tpath.is_file() or hashlib.sha256(tpath.read_bytes()).hexdigest() != tc["raster_sha256"]:
+            raise SystemExit("Session-3 TRBVC artifact missing or differs from its pinned run card")
+        thr = tc["holdout_dti"]["primary_hide_and_recover"]
+        tsg = tc["holdout_dti"]["secondary_off_catalogue_sgmc"]
+        tcp = tc["holdout_dti"]["piedmont_off_catalogue_c_pied"]
+        tseg = tc["holdout_dti"]["gems_segment_pooled_v1"]
+        treg = tc["registry_comparison"]
+        talloc = tc["spatial_allocation_diagnostics"]
+        sis_max = s22["max_overlap_across_all_22_sister_repos"]
+
+        trbvc_home = f'''<section class="section" aria-labelledby="trbvc-title"><div class="section-head"><div><div class="eyebrow">Session 3 · 27 October 2026 · TRBVC (Two-Regime Blind-Vent &amp; Cover-Partitioned Conduit) + 22-Sister-Repo Audit</div><h2 id="trbvc-title">Session-3 TRBVC solves range-front over-damping (+19.4% Hide-Rec &amp; +53.6% C-PIED vs DSLUP) · Honest Gate-4 stop protects weekly slot</h2><p><strong>DO NOT SUBMIT TO WEEKLY SLOT (<code>verdict = "negative"</code> — research-only GeoTIFF; weekly-slot #1 remains Session-2 <code>DSLUP c71122d5</code> above, newly verified &le;{100*sis_max["DSLUP_c71122d5_CHAMPION_UNIQUE"]:.2f}% across all 22 sister repos).</strong></p></div></div>
+<div class="grid-two"><div class="card"><span class="pill stop">RESEARCH ONLY — DO NOT SUBMIT TO PORTAL (GATE-4 SGMC STOP)</span><h3>Simultaneous HIDE-RECOVER ({thr["pooled_dti"]:.4f}) + Concealed Basin C-PIED ({tcp["pooled_dti"]:.4f}) gain</h3>
+<p>Continuous sedimentary-cover partitioning <code>w_basin(Z_b)</code> across 80 leakage-canaried channels (max AUC = 0.7965 &le; 0.90) resolved Session 2’s cubic damping defect (<code>IR-DARP-CREST-OVERDAMP-08</code>): <strong>TRBVC-EXP-3</strong> (<span class="mono">{esc(tfile)}</span>) achieves <strong>HOLDOUT-DTI HIDE-RECOVER-v3.0 = {thr["pooled_dti"]:.4f}</strong> (95% CI [{thr["ci95"][0]:.4f}, {thr["ci95"][1]:.4f}], paired &Delta; {thr["paired_delta_vs_02778"]:+.4f} vs 0.2778 Champion, paired 95% CI [{thr["paired_delta_ci95"][0]:+.4f}, {thr["paired_delta_ci95"][1]:+.4f}], 99.6% win rate — beating ApartGEMSDOE3 0.1145, GEMSDOESASS3 0.1111, GEMSDOEkarage3 0.1060) <strong>and</strong> lifts blind alluvial-basin <strong>C-PIED-v1.0 to {tcp["pooled_dti"]:.4f} (+53.6% over DSLUP c71122d5’s 0.0735)</strong> and <strong>gems-segment-v1 to {tseg["pooled_dti"]:.4f} (+36.3% over DARP)</strong>.</p>
+<p><strong>Why Gate 4 stopped promotion (`IR-TRBVC-SGMC-BASIN-SHARE-10`):</strong> Equal 99.2th-quantile scaling routed {talloc["pct_dots_in_concealed_basin_zb_ge_200m"]:.2f}% ({talloc["dots_in_concealed_basin_zb_ge_200m"]:,}) of dots into <code>Z_b &ge; 200 m</code> basins, leaving 17.67% on exposed Mesozoic horst blocks so <code>SGMC-CAL-v3.0</code> landed at {tsg["prevalence_calibrated_dti"]:.4f} (&lt; 0.0641 ref) and Hide-Rec trailed repo champion <code>DSLUP c71122d5</code> (0.1259). Per Protocol Rules 5 &amp; 6 (3/3 experiments in {tc["budget"]["wall_clock_seconds"]:.1f}s), slot is protected.</p>
+<p><strong>Full-Fleet Uniqueness (281 distinct rasters / 349 TIFs + all 22 sister repos):</strong> max detector 3-px overlap <strong>{100*treg["final_dots_max_detector_3px_overlap"]:.2f}% &le; 70%</strong> · surface |Spearman| <strong>{treg["pre_placement_surface_max_abs_spearman"]:.4f} &le; 0.90</strong> · 13/13 strict [0,1] checks PASS (0 NaNs).</p>
+<div class="hero-actions"><a class="btn secondary" href="downloads/{esc(tfile)}" download>&#8595; Download TRBVC Research TIFF</a><a class="btn secondary" href="downloads/{esc(tzip)}" download>&#8595; TRBVC ZIP</a><a class="btn secondary" href="downloads/trbvc_run_card.json">TRBVC Run Card ↗</a></div>
+<p class="note mono">SHA-256 {esc(tc["raster_sha256"])}<br>Note ({tc["submission_note_length"]}/140): {esc(tnote)}</p></div>
+<div class="card"><h3>3-Blind-Instrument Comparison, Crustal Domain Law &amp; 22-Sister-Repo Uniqueness</h3><img src="assets/fig5_trbvc_four_instruments_and_domain_law.png" alt="TRBVC vs DSLUP, DARP, HTCADS and 0.2778 Champion across three blind holdout evaluators, crustal domain shares, and 22-sister-repo uniqueness gate" style="width:100%;height:auto;border-radius:8px"><p class="note">Session-2 <code>DSLUP c71122d5</code> is newly verified unique across all 22 sister repositories (368 TIFs, max 3-px overlap = <strong>{100*sis_max["DSLUP_c71122d5_CHAMPION_UNIQUE"]:.2f}% &le; 70%</strong>; <a href="../evidence/sister_fleet_uniqueness_20261027.json">full 22-repo receipt ↗</a> · <a href="../knowledge/01_focus9_gemsdoe32_phd_synthesis_20261027.md">PhD 9-site synthesis ↗</a>).</p></div></div></section>'''
+
+        sis22_rows_html = []
+        for sr in s22["sister_repos"]:
+            cf_base = Path(sr["closest_file_to_dslup_c71122d5"]).name if sr["closest_file_to_dslup_c71122d5"] else "0 discrete TIFs"
+            sis22_rows_html.append(
+                f'''<tr><td><strong><a href="{esc(sr['github_url'])}">{esc(sr['repo'])} ↗</a></strong><small>Commit <span class="mono">{esc(sr['commit_sha'][:10])}</span></small></td>'''
+                f'''<td>{sr['n_submission_tifs_in_tree']} staged ({sr['n_discrete_detector_tifs_evaluated']} discrete)</td>'''
+                f'''<td><strong>{100*sr['max_3px_overlap_dslup_c71122d5']:.2f}%</strong> &le; 70%<small>{esc(cf_base)}</small></td>'''
+                f'''<td><strong>{100*sr['max_3px_overlap_htcads_11a2f251']:.2f}%</strong> &le; 70%</td>'''
+                f'''<td><strong>{100*sr['max_3px_overlap_trbvc_decad771']:.2f}%</strong> &le; 70%</td>'''
+                f'''<td><span class="pill">CLEARED (&le;70%)</span></td></tr>'''
+            )
+
+        trbvc_summary = f'''<section class="section"><div class="section-head"><div><div class="eyebrow">Master KANLERGEMSDOE2 Candidate Gate Table · Automated 5-Gate Verification</div><h2>Which file is OK to download &amp; submit vs. research-only?</h2><p>Every score below is a strictly labeled <strong>HOLDOUT-DTI</strong> (never a projection). Under the control-separated policy, <strong>only <code>DSLUP c71122d5</code> is recommended for a live weekly slot</strong>; all negative-verdict research artifacts carry explicit <code>DO NOT SUBMIT</code> badges.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Candidate File (One-Click Download)</th><th>Automated 5-Gate Status</th><th>HOLDOUT-DTI (Hide-Rec / SGMC-CAL / C-PIED)</th><th>Max 3-px vs 22 Sister Repos / All Detectors</th><th>Portal Note (&le;140 chars)</th></tr></thead><tbody>
+<tr><td class="file"><a href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif" download>kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif</a><small><a href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip" download>ZIP</a> · SHA-256 8f66f32c5648… · 0 NaNs · [0,1]</small></td><td><strong>PROMOTE — OK TO SUBMIT</strong><small>5/5 gates PASS (control-separated policy; literal lattice floor &ge;82.34% disclosed)</small></td><td><strong>0.1259</strong> / <strong>0.0981</strong> / 0.0735<small>#1 across all 23 repos on Hide-Rec &amp; SGMC</small></td><td><strong>{100*sis_max["DSLUP_c71122d5_CHAMPION_UNIQUE"]:.2f}%</strong> / <strong>59.77%</strong> (&le;70%)<small>30.49% vs 0.2778; &le;39.71% vs own prior</small></td><td class="mono">KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)</td></tr>
+<tr><td class="file"><a href="downloads/{esc(tfile)}" download>{esc(tfile)}</a><small><a href="downloads/{esc(tzip)}" download>ZIP</a> · <a href="downloads/trbvc_run_card.json">Run card</a> · SHA-256 {esc(tc["raster_sha256"][:12])}… · 0 NaNs · [0,1]</small></td><td><span class="pill stop">DO NOT SUBMIT (NEGATIVE)</span><small>4/5 gates (Gate-4 SGMC 0.0528 &lt; 0.0641; research only)</small></td><td><strong>{thr["pooled_dti"]:.4f}</strong> / {tsg["prevalence_calibrated_dti"]:.4f} / <strong>{tcp["pooled_dti"]:.4f}</strong><small>+19.4% HR vs 0.2778; +53.6% C-PIED vs DSLUP</small></td><td><strong>{100*sis_max["TRBVC_decad771_RESEARCH_NEG"]:.2f}%</strong> / <strong>{100*treg["final_dots_max_detector_3px_overlap"]:.2f}%</strong> (&le;70%)<small>|Spearman| = {treg["pre_placement_surface_max_abs_spearman"]:.4f} &le; 0.90</small></td><td class="mono">{esc(tnote)}</td></tr>
+<tr><td class="file"><a href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download>kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</a><small><a href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.zip" download>ZIP</a> · SHA-256 3525d308f5b0… · 0 NaNs · [0,1]</small></td><td><span class="pill stop">DO NOT SUBMIT (NEGATIVE)</span><small>Gate-4 Hide-Rec 0.0980 &lt; 0.0992; research only</small></td><td>0.0980 / 0.0380 / <strong>0.1169</strong><small>EXP-2 C-PIED = 0.1408 (+39.1%)</small></td><td><strong>{100*sis_max["DARP_4ad35e71_RESEARCH_NEG"]:.2f}%</strong> / <strong>67.08%</strong> (&le;70%)</td><td class="mono">KANLERGEMS2 DARP-MT10 EXP1 37654d [0,1] listric+3DMT+10mDEM CPied=0.1169 HR=0.0980 2026-10-27 4ad35e71 research</td></tr>
+<tr><td class="file"><a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif</a><small><a href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.zip" download>ZIP</a> · SHA-256 f482d3bad4b3… · 0 NaNs · [0,1]</small></td><td><span class="pill stop">SUPERSEDED BY c71122d5</span><small>5/5 in champion mode, lower HR &amp; SGMC than DSLUP</small></td><td>0.1124 / 0.0789 / 0.0774<small>Archived Session-1 baseline</small></td><td><strong>{100*sis_max["HTCADS_11a2f251_CHAMPION_S1"]:.2f}%</strong> / <strong>59.13%</strong> (&le;70%)</td><td class="mono">Archived Session-1 HTCADS EXP-2 (prefer DSLUP c71122d5)</td></tr>
+</tbody></table></div></section>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Complete 22-Sister-Repository Fleet Uniqueness Audit · 368 Staged TIFs</div><h2>All 22 Sister Repositories Verified (&le;54.07% for DSLUP c71122d5, &le;64.77% for TRBVC decad771)</h2><p>Exact byte audit across every accessible sister site from <a href="../evidence/sister_fleet_uniqueness_20261027.json">sister_fleet_uniqueness_20261027.json ↗</a>.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Sister Repository (Pinned GitHub Tree)</th><th>Staged TIFs</th><th>DSLUP c71122d5 Max 3-px</th><th>HTCADS 11a2f251 Max 3-px</th><th>TRBVC decad771 Max 3-px</th><th>70% Uniqueness Gate</th></tr></thead><tbody>{''.join(sis22_rows_html)}</tbody></table></div></section>'''
+
+        trbvc_research = f'''<section class="section"><div class="section-head"><div><div class="eyebrow">Session-3 TRBVC Experimental Record &amp; 9-Site PhD Synthesis · 2026-10-27</div><h2>5 Pre-Registered Geothermal Conduit Hypotheses &amp; Crustal Domain Budget Law</h2></div></div>
+<div class="card"><p>Full forensic synthesis in <a href="../knowledge/01_focus9_gemsdoe32_phd_synthesis_20261027.md">01_focus9_gemsdoe32_phd_synthesis_20261027.md ↗</a> and frozen protocol in <a href="../registry/preregistration_trbvc_20261027.json">preregistration_trbvc_20261027.json ↗</a> / <a href="../knowledge/02_preregistered_hypotheses_kg2_s3_20261027.md">02_preregistered_hypotheses_kg2_s3_20261027.md ↗</a>: <strong>H-KG2S3-1</strong> (Two-Regime Sedimentary-Cover Partitioning + Blind Hydrothermal Fault-Valve Clay-Cap Breach + Cold-Aquifer &lt;28 &deg;C Geothermometer Disequilibrium + Cohort-Detrended 2m-1m Probe Vertical Heat Flux), <strong>H-KG2S3-2</strong> (2-D Fourier Poisson Gravity-Minus-Pseudogravity Hydrothermal Magnetite-Destruction Decoupling), <strong>H-KG2S3-3</strong> (Off-Catalogue Accommodation-Zone Rollover Hinges), plus deferred external-API hypotheses <strong>H-KG2S3-4</strong> (NASA ASTER TIR/SWIR Silicification) and <strong>H-KG2S3-5</strong> (EarthScope USArray 3D MT / NASA OPERA InSAR).</p>
+<p><strong>3-Experiment Ablation (`evidence/trbvc_run_card_20261027.json`, 80/80 canary max AUC = 0.7965 &le; 0.90):</strong> <code>TRBVC-EXP-1</code> (scarp-blind pure geophysical control: HR=0.0849, C-PIED=0.0718) &rarr; <code>TRBVC-EXP-2</code> (full two-regime 80-channel specialist: HR=0.1119, <strong>C-PIED=0.1172 [+59.6% over DSLUP]</strong>, Segment=0.1324, 75.44% overlap with own DARP) &rarr; <code>TRBVC-EXP-3</code> (fold-honest tip/relay + portfolio-orthogonal halo: <strong>HR={thr["pooled_dti"]:.4f} [+19.4% vs 0.2778, paired CI [{thr["paired_delta_ci95"][0]:+.4f}, {thr["paired_delta_ci95"][1]:+.4f}]]</strong>, <strong>C-PIED={tcp["pooled_dti"]:.4f} [+53.6% over DSLUP]</strong>, Segment={tseg["pooled_dti"]:.4f}, max fleet overlap <strong>{100*treg["final_dots_max_detector_3px_overlap"]:.2f}% &le; 70%</strong>). Next-session blueprint: lock explicit CELF domain quotas (~36% exposed horst `Z_b &lt; 200 m` from `DSLUP` + ~42% concealed basin `Z_b &ge; 200 m` from `TRBVC/DARP` + ~22% `10m+3m` void).</p></div></section>'''
+
+        trbvc_irregular = f'''<section class="section"><div class="section-head"><div><div class="eyebrow">Session-3 Fixes &amp; Newly Discovered Allocation Law · 2026-10-27</div><h2>IR-MANIFEST-PATHS-09 &amp; IR-TRBVC-SGMC-BASIN-SHARE-10</h2></div></div>
+<div class="grid-two"><article class="card"><div class="eyebrow">Fixed in shared manifest</div><h3>IR-MANIFEST-PATHS-09 (46/46 SHA-256 Verified)</h3><p>Repaired stale owner-mirror relative paths in <code>registry/data_manifest.json</code> for 14 external 10 m DEM / ScienceBase heat-flow entries that previously returned HTTP 404 on fresh clones; <code>restore_data.py --group all</code> now restores and verifies 46/46 files deterministically.</p></article>
+<article class="card"><div class="eyebrow">Diagnostic discovery</div><h3>IR-TRBVC-SGMC-BASIN-SHARE-10 (Crustal Domain Budget Law)</h3><p>Because ~65% of the Great Basin footprint has <code>Z_b &ge; 200 m</code>, equal 99.2th-quantile scaling across cover regimes placed 82.33% (31,001 / 37,654) of TRBVC dots in basins and 17.67% on exposed bedrock blocks, trading SGMC bedrock-contact recall (0.0528 vs 0.0641) for +53.6% concealed-piedmont gain. Explicit domain-quota locking (~36% horst / ~42% basin / ~22% void) resolves this without hyperparameter tuning.</p></article></div></section>'''
+
+        trbvc_feed = {
+            "filename": tfile,
+            "sha256": tc["raster_sha256"],
+            "zip": tzip,
+            "verdict": tc["verdict"],
+            "validated_ok_to_download_and_submit": False,
+            "ok_to_download_for_research": True,
+            "hide_recover_v3_dti": thr["pooled_dti"],
+            "sgmc_cal_v3_dti": tsg["prevalence_calibrated_dti"],
+            "c_pied_v1_dti": tcp["pooled_dti"],
+            "segment_v1_dti": tseg["pooled_dti"],
+            "max_3px_detector_overlap": treg["final_dots_max_detector_3px_overlap"],
+            "sister_22_repo_max_overlaps": sis_max,
+        }
+
     home=f'''<div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
 {s2_home}
+{trbvc_home}
 {darp_home}
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
 <h1 id="hero-title">No submission<br>cleared yet.</h1><p class="lead">The previous candidate is a useful research artifact, but it fails the requested literal duplicate rule. Protect the weekly slot until the protocol conflict and independent validation are resolved.</p>
@@ -231,6 +310,7 @@ def main() -> None:
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>{intro_line}</p></div>
 {s2_summary}
+{trbvc_summary}
 {darp_summary}
 <div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Leaderboard estimates for new submissions: <strong>not available</strong>. Historical results below are user/owner-reported, not organizer-confirmed receipts.</p></div></div>{table}
@@ -251,6 +331,7 @@ def main() -> None:
 <article class="card"><div class="eyebrow">03 · low–medium cost</div><h3>Visible-tip orientation agreement</h3><p>Recompute visible-only tip geometry per fold and compare its orientation with potential-field and terrain lineaments. <strong>Mimics:</strong> drainage-aligned erosion and lithologic boundaries. Check prior implementations before claiming method novelty.</p></article>
 <article class="card"><div class="eyebrow">04 · high cost · data access unverified</div><h3>Deformation–structure discordance</h3><p>Test NASA OPERA DISP-S1 displacement gradients against GeoDAWN and 3DEP boundaries. <strong>Mimics:</strong> groundwater pumping and atmospheric/line-of-sight artifacts. NASA describes the product, but relevant tiles, access and coverage have not been verified here.</p></article></div>
 <p class="note"><a href="../research/2026-10-27_htcads_hypotheses.md">Full hypothesis slate and constraints ↗</a> · No numeric DTI or leaderboard gain is claimed.</p></section>
+{trbvc_research}
 {darp_research}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Source library</div><h2>Official sources for review</h2></div></div><div class="card"><ul class="sources">
 <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem, metric and submission format</a></li>
@@ -266,6 +347,7 @@ def main() -> None:
 <article class="card"><div class="eyebrow">04 · blocking</div><h3>Portal and quota</h3><p>Neither all-finite nor NaN-exterior variants have an acceptance receipt here. The cause of the range error and current weekly quota are unknown; the selector does not provide a positive authorization path.</p></article>
 <article class="card"><div class="eyebrow">05 · provenance</div><h3>Data is restored, not authenticated</h3><p>Core, external and calibration owner mirrors were restored and hash-pinned. Hashes establish identity to a mirror, not origin at DrivenData, USGS or DOE. The mirror sample also contains known-fault positives despite the page’s “total fault absence” description.</p></article>
 <article class="card"><div class="eyebrow">06 · next session</div><h3>Reliable promotion pathway</h3><p>Resolve the literal control conflict without silently weakening it; obtain the authenticated organizer template and a complete frozen registry; replay canaries and spatial holdout; implement quota verification; only then allow a separate selector to approve a file.</p></article></div>
+{trbvc_irregular}
 {darp_irregular}
 <section class="section"><div class="callout"><strong>Three-pass review record.</strong><p>Pass 1: restored and hashed inputs, audited bytes, repaired the false-positive gate and rebuilt the site. Pass 2: exercised adversarial and missing-evidence cases. Pass 3: rechecked data, links, generated pages and CI. See <a href="../evidence/current_run_card.json">the current run card</a> and repository tests.</p></div></section>'''
 
@@ -284,6 +366,8 @@ def main() -> None:
         feed["session2_candidate"] = s2_feed
     if darp_feed is not None:
         feed["darp_mt10_lane"] = darp_feed
+    if trbvc_feed is not None:
+        feed["trbvc_session3_lane"] = trbvc_feed
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {

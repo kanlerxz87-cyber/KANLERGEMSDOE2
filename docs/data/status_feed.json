@@ -76,5 +76,24 @@
     "max_3px_non_blanket_detectors": 0.670792,
     "overlap_3px_vs_dslup": 0.549503,
     "overlap_3px_vs_ecpu": 0.542625
+  },
+  "trbvc_session3_lane": {
+    "filename": "kanlergems2-trbvc-exp-3-37654dots-20261028T004644Z-decad771-zeros.tif",
+    "sha256": "3ad6a187e8330757470df8f2d318a8caaf965490ec1868aa527e606a61ab5d3b",
+    "zip": "kanlergems2-trbvc-exp-3-37654dots-20261028T004644Z-decad771-zeros.zip",
+    "verdict": "negative",
+    "validated_ok_to_download_and_submit": false,
+    "ok_to_download_for_research": true,
+    "hide_recover_v3_dti": 0.118472,
+    "sgmc_cal_v3_dti": 0.052775,
+    "c_pied_v1_dti": 0.11284,
+    "segment_v1_dti": 0.13522,
+    "max_3px_detector_overlap": 0.647713,
+    "sister_22_repo_max_overlaps": {
+      "DSLUP_c71122d5_CHAMPION_UNIQUE": 0.540739,
+      "HTCADS_11a2f251_CHAMPION_S1": 0.591278,
+      "DARP_4ad35e71_RESEARCH_NEG": 0.64535,
+      "TRBVC_decad771_RESEARCH_NEG": 0.647713
+    }
   }
 }
