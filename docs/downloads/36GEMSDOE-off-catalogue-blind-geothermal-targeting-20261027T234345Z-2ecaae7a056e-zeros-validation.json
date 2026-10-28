@@ -3330,5 +3330,6 @@
       "error": "not locally available"
     }
   ],
-  "ok_to_download": true
+  "ok_to_download": true,
+  "historical_receipt_sha256": "0a7942fafccc4de61ed9307d671ce257e4d6f3b5e3bf347ea7f02178f7a42ccc"
 }

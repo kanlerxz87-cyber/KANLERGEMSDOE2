@@ -113,7 +113,7 @@ def test_legacy_validator_modes_cannot_authorize_self_asserted_card(tmp_path):
                                     "run_cpr_experiments.py", "generate_unique_submission.py"])
 def test_archived_parallel_lane_entry_points_stop_before_fitting(script):
     module = importlib.import_module(script[:-3])
-    with pytest.raises(SystemExit, match="Archived parallel lane disabled"):
+    with pytest.raises(SystemExit, match="Archived (runner|off36 generator) disabled"):
         module.main()
 
 
@@ -137,7 +137,8 @@ def test_rendered_pages_and_feeds_are_fail_closed_and_local_links_resolve(tmp_pa
     for filename in ("release_recheck_20261027.json", "current_run_card.json",
                      "dslup_literal_revalidation_20261027.json", "dslup_unique_slot_run_card.json",
                      "data_restore_recheck_20261027.json", "independent_witness_20261027.json",
-                     "off36_literal_revalidation_20261027.json", "verification_passes_20261027.json"):
+                     "off36_literal_revalidation_20261027.json", "verification_passes_20261027.json",
+                     "pages_deployment_20261027.json"):
         shutil.copy2(ROOT / "evidence" / filename, evidence / filename)
     shutil.copy2(ROOT / "docs/style.css", docs / "style.css")
     (tmp_path / "research").mkdir()

@@ -238,9 +238,14 @@ def uniqueness_vs_registry(dots, footprint, registry_entries, root):
 
 
 def main():
-    # Forensic code only. Its reduced-budget lattice-gap allocation violates the
-    # assigned protocol and has no replayed holdout. Stop before any placement.
-    raise SystemExit("Archived parallel lane disabled: reduced-budget lattice-gap placement is not authorized")
+    raise SystemExit(
+        "Archived off36 generator disabled: its reduced budget and deliberate lattice-gap "
+        "placement bypass the frozen lane. No new TIFF may be generated."
+    )
+
+
+def _legacy_main_archived():
+    """Historical generator only; not an authorized experiment."""
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     DOWNLOADS.mkdir(parents=True, exist_ok=True)
 

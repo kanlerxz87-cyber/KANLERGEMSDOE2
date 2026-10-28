@@ -42,9 +42,16 @@ The official public leaderboard observed on **2026-10-27** showed #1 **0.4544** 
 - The registered lattice covers 5,160,724 of 5,167,373 footprint pixels within 3 px; only 6,649 are uncovered. At the frozen 37,654 distinct-dot budget, at least 31,005 must overlap (**82.3418%**), exceeding 70%. This is one decisive witness, not a full-registry replay; it does not prove every smaller raster fails. No exception or budget reduction is authorized.
 - Owner-mirror checks verified core, scored and nine focus-site files. The all-group [restore receipt](evidence/data_restore_recheck_20261027.json) recorded **31/46 manifest files verified**, including **15/30 external**, and **15 failures**: 14 missing files from a deleted DEM10 ref and one missing heat-flow CSV. Hashes verify mirror identity, not organizer provenance. `.cache/gems_data` and its prepared feature matrix are not persisted in workspace snapshots.
 - No independent holdout, all-feature canary, full current-registry surface audit or current account quota was established. Six declared benchmark run cards and three historical verifier modules are absent, so the current-best same-evaluator inventory remains incomplete and the selector fails closed. No weekly slot was spent in this review. Do not infer available quota or past portal status.
+- GitHub Pages currently has both legacy main-root and Actions deploys. A source change to Actions was denied with HTTP 403, so automated leaderboard refresh may not be the version served; treat the feed as dated. See the [deployment audit](evidence/pages_deployment_20261027.json).
 - A separate [distance-transform review](evidence/independent_witness_20261027.json) reproduced the exact lattice counts using an algorithm distinct from the original binary-dilation audit; it did not replay the full registry or a holdout.
 - Local TIFF checks found single-band float32, EPSG:32611, 3,730 × 3,292, 100 m grid and whole-array finite values in [0,1]. The mirror sample uses NaN outside its irregular footprint; the prior files use zeros. The old range rejection's bytes and diagnosis are missing. Neither a local pass nor an encoding guess proves organizer acceptance.
 - Four ranked, unfitted physical hypotheses with source availability, transforms, named mimics and qualitative benefit/cost appear in the [research slate](research/2026-10-27_htcads_hypotheses.md). They do not override the assigned lane or justify a new experiment before the stop is resolved.
+
+## Three verification passes
+
+1. **Implementation:** the combined suite passed 96 tests with restored mirrors, with one rasterio warning; shared writers, restoration, validators and archived runners fail closed on invalid inputs.
+2. **Independent review:** an alternative distance-transform calculation reproduced the lattice bound and six candidate overlaps; archived holdouts and the full registry were not replayed.
+3. **Clean-cache and site checks:** 96 tests passed with an empty data directory; two site builds were byte-identical, and compile, local-link and whitespace checks passed. Details and earlier pre-integration counts are in the [verification record](evidence/verification_passes_20261027.json).
 
 ## Future submission guide — not authorization
 

@@ -641,6 +641,26 @@ def _is_binary_field(arr: np.ndarray) -> bool:
     return bool(np.all((fin == 0.0) | (fin == 1.0)))
 
 
+def _validate_footprint_probabilities(arr: np.ndarray, footprint: np.ndarray, name: str) -> np.ndarray:
+    """Reject invalid predictions rather than silently clipping or masking them.
+
+    NaN outside the supplied footprint is permitted. A caller evaluating a
+    cropped cell supplies its matching cropped footprint. This is a format
+    check only; it does not verify how features/models were trained.
+    """
+    a = np.asarray(arr)
+    if a.shape != footprint.shape or a.ndim != 2:
+        raise ValueError(f"{name}: prediction grid does not match footprint")
+    values = a[footprint]
+    try:
+        good = np.isfinite(values).all() and np.all((values >= 0) & (values <= 1))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name}: predictions must be numeric probabilities") from exc
+    if not good:
+        raise ValueError(f"{name}: footprint predictions must be finite and in [0, 1]")
+    return a
+
+
 def _exact_soft_truth_credit(p: np.ndarray, ty: np.ndarray, tx: np.ndarray) -> np.ndarray:
     """Exact 25-offset Euclidean 300 m kernel credit max_{d<=3} p(x)*k(d) for soft p in [0, 1]."""
     H, W = p.shape
@@ -669,6 +689,8 @@ def evaluate_hide_and_recover(
     and computes exact pooled DTI (alpha=0.2, beta=0.8, 300 m triangular kernel) for BOTH binary {0, 1}
     and soft/continuous [0, 1] predictions, with a spatial ``grid_n x grid_n`` block cluster-bootstrap 95% CI.
     """
+    if grid_n <= 0 or n_boot <= 0:
+        raise ValueError("grid_n and n_boot must be positive")
     h, w = ctx.foot.shape
     n_blocks = grid_n * grid_n
     tp_blk = np.zeros(n_blocks, dtype=np.float64)
@@ -682,23 +704,24 @@ def evaluate_hide_and_recover(
     base_arr = None
     base_is_bin = True
     if not is_cell_dict:
-        raw_arr = np.asarray(pred_or_cells)
-        base_is_bin = _is_binary_field(raw_arr)
+        raw_arr = _validate_footprint_probabilities(pred_or_cells, ctx.foot, name)
+        base_is_bin = _is_binary_field(raw_arr[ctx.foot])
         if base_is_bin:
             base_arr = (np.isfinite(raw_arr) & (raw_arr > 0)) & ctx.foot
         else:
-            if np.any(np.isfinite(raw_arr[ctx.foot]) & ((raw_arr[ctx.foot] < 0.0) | (raw_arr[ctx.foot] > 1.0))):
-                raise ValueError("Soft predictions inside footprint must lie in [0, 1]")
-            base_arr = np.where(ctx.foot & np.isfinite(raw_arr), raw_arr, 0.0).astype(np.float64)
+            base_arr = np.where(ctx.foot, raw_arr, 0.0).astype(np.float64)
 
     folds: dict[str, dict] = {}
     for cell in ctx.cells:
         sl = cell.bbox
         r0, c0 = int(sl[0].start), int(sl[1].start)
         if is_cell_dict:
+            if cell.key not in pred_or_cells:
+                raise ValueError(f"Missing prediction for holdout cell {cell.key}")
             raw_cell = np.asarray(pred_or_cells[cell.key])
-            cell_bin = _is_binary_field(raw_cell)
             sub_raw = raw_cell[sl] if raw_cell.shape == (h, w) else raw_cell
+            sub_raw = _validate_footprint_probabilities(sub_raw, ctx.foot[sl], cell.key)
+            cell_bin = _is_binary_field(sub_raw[ctx.foot[sl]])
         else:
             cell_bin = base_is_bin
             sub_raw = base_arr[sl]
@@ -731,7 +754,7 @@ def evaluate_hide_and_recover(
             py_sub, px_sub = np.nonzero(p_sub)
             fp_weights = (1.0 - cell.k_dg_sub[p_sub]).astype(np.float64)
         else:
-            p_sub_f = np.where(allow & np.isfinite(sub_raw), np.clip(sub_raw, 0.0, 1.0), 0.0).astype(np.float64)
+            p_sub_f = np.where(allow, sub_raw, 0.0).astype(np.float64)
             pos_sub = p_sub_f > 0.0
             n_emit = int(pos_sub.sum())
             mass_emit = float(p_sub_f.sum())
@@ -805,8 +828,10 @@ def evaluate_sgmc_with_ci(
 ) -> dict:
     """Off-catalogue SGMC DTI (raw & prevalence-calibrated) with 256-block spatial cluster-bootstrap 95% CI."""
     h, w = ctx.foot.shape
-    raw_arr = np.asarray(mask)
-    is_bin = _is_binary_field(raw_arr)
+    if grid_n <= 0 or n_boot <= 0:
+        raise ValueError("grid_n and n_boot must be positive")
+    raw_arr = _validate_footprint_probabilities(mask, ctx.foot, name)
+    is_bin = _is_binary_field(raw_arr[ctx.foot])
     allow = ctx.foot & ~ctx.labels
     n_blocks = grid_n * grid_n
     tp_blk = np.zeros(n_blocks, dtype=np.float64)
@@ -833,8 +858,13 @@ def evaluate_sgmc_with_ci(
             np.add.at(emit_blk, p_blk, 1.0)
         else:
             np.add.at(fn_blk, t_blk, 1.0)
+            if m_bool.any() and ctx.sgmc_n_truth == 0:
+                py, px = np.nonzero(m_bool)
+                p_blk = _spatial_block_index(py, px, (h, w), grid_n)
+                np.add.at(fp_blk, p_blk, 1.0)
+                np.add.at(emit_blk, p_blk, 1.0)
     else:
-        p_f = np.where(allow & np.isfinite(raw_arr), np.clip(raw_arr, 0.0, 1.0), 0.0).astype(np.float64)
+        p_f = np.where(allow, raw_arr, 0.0).astype(np.float64)
         pos = p_f > 0.0
         if pos.any() and ctx.sgmc_n_truth > 0:
             t_cred = _exact_soft_truth_credit(p_f, ty, tx)
@@ -847,6 +877,11 @@ def evaluate_sgmc_with_ci(
             np.add.at(emit_blk, p_blk, p_f[pos])
         else:
             np.add.at(fn_blk, t_blk, 1.0)
+            if pos.any() and ctx.sgmc_n_truth == 0:
+                py, px = np.nonzero(pos)
+                p_blk = _spatial_block_index(py, px, (h, w), grid_n)
+                np.add.at(fp_blk, p_blk, p_f[pos])
+                np.add.at(emit_blk, p_blk, p_f[pos])
 
     raw_pooled, raw_ci95, _ = _cluster_bootstrap_pooled_dti(tp_blk, fp_blk, fn_blk, active_blocks, n_boot=n_boot, seed=seed)
 
@@ -882,6 +917,7 @@ def evaluate_sgmc_with_ci(
         "sgmc_prevalence_calibrated_dti": cal_pooled,
         "sgmc_calibrated_ci95": cal_ci95,
         "_cal_boots": cal_boots,
+        "_block_totals": (tp_blk, fp_blk, fn_blk, active_blocks),
     }
 
 

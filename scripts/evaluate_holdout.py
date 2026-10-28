@@ -118,7 +118,7 @@ def main():
         raise SystemExit("Archived KG2 lane disabled: not this session's assigned HTCADS method and not literal-registry safe")
     if args.verify_tnr1:
         if not (ROOT / "scripts/run_tnr1_lane.py").is_file():
-            raise SystemExit("Archived TNR1 verifier is missing; no verification or replay was performed")
+            raise SystemExit("Archived TNR1 verifier is missing (not present in this checkout); no verification or replay was performed")
         from run_tnr1_lane import verify_recorded
 
         print(
@@ -131,14 +131,14 @@ def main():
         return
     if args.verify_recorded:
         if not (ROOT / "scripts/verify_mtr_receipt.py").is_file():
-            raise SystemExit("Archived MTR1 verifier is missing; no verification or replay was performed")
+            raise SystemExit("Archived MTR1 verifier is missing (not present in this checkout); no verification or replay was performed")
         from verify_mtr_receipt import verify
 
         print(json.dumps(verify(), indent=2, allow_nan=False))
         return
     if args.verify_gvc1:
         if not (ROOT / "scripts/run_gvc1_pipeline.py").is_file():
-            raise SystemExit("Archived GVC1 verifier is missing; no verification or replay was performed")
+            raise SystemExit("Archived GVC1 verifier is missing (not present in this checkout); no verification or replay was performed")
         from run_gvc1_pipeline import verify_gvc1
 
         print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))

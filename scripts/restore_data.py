@@ -144,6 +144,7 @@ def main(argv=None) -> int:
         "schema_version": 2,
         "requested_group": args.group,
         "status": "failed" if not results else "partial" if failed else "complete",
+        "complete": bool(results) and failed == 0,
         "verified_files_count": len(results) - failed,
         "failed_files_count": failed,
         "storage_root": storage_root,

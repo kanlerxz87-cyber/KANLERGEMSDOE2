@@ -1413,5 +1413,8 @@
       "Assigned-lane provenance, complete current registry, pre-placement surface, independent replay and account quota have not been verified."
     ],
     "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
-  }
+  },
+  "historical_record": "../../evidence/superseded/dslup_original_run_card_20261027.json",
+  "historical_record_sha256": "886e2492978be2ea63426bd7a5befa1312f9569c368931ff1b1d00a451844e07",
+  "historical_record_warning": "The historical control-exempt promotion is retracted and is not authorization."
 }

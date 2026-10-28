@@ -2,6 +2,9 @@
   "generated_utc": "2026-10-27T23:55:42.261888+00:00",
   "source_audit": "evidence/release_recheck_20261027.json",
   "source_run_card": "evidence/current_run_card.json",
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "validated_ok_to_download_and_submit": false,
   "research_artifact_sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
   "submission": {
     "verdict": "negative",

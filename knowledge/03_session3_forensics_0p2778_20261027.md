@@ -12,7 +12,7 @@ Labels: **VERIFIED** = recomputed from pinned bytes in this session. **OFFICIAL*
 |---|---|---|
 | Metric is a distance-weighted Tversky index with α=0.2 (FP) and β=0.8 (FN); triangular kernel, range 300 m (3 px at 100 m). | OFFICIAL | [DrivenData problem page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) |
 | Submission is a single-band `float32` GeoTIFF, EPSG:32611, 100 m, same bounds, values between 0 and 1; data outside the bounds is null or NaN. | OFFICIAL | [DrivenData problem page](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#submission-format) · [official rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) |
-| Three submissions per week. | OFFICIAL | [official rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) §3.2 |
+| Rules mention three submissions per week; staff say the submission-page limit takes precedence. Current account quota was not checked. | OFFICIAL / account unknown | [rules PDF](https://docs.nlr.gov/docs/fy26osti/96647.pdf) §3.2 · [staff clarification](https://community.drivendata.org/t/submission-amount-question/11553) |
 | Pixels on known USGS/INGENIOUS faults are masked, pixel-exactly (identical to the training fault labels). Predictions near a known fault but far from a new-fault ground-truth pixel are fully penalized; the buffer does not apply to known faults. | OFFICIAL (DrivenData staff, 16 and 21 Sep 2026) | [community thread](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4) |
 | New-fault ground-truth pixels can lie within 300 m of a known trace. | OFFICIAL (same thread) | same |
 | Public leaderboard observed 2026-10-27: #1 0.4544, #5 0.3566. | OFFICIAL (page observation; not a receipt for any team) | [leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) |
@@ -51,9 +51,9 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 ## 5. What this implies for a score above 0.2778
 
 1. **Pruning cannot produce a unique file.** Any subset of GEMSDOE32 has 100% overlap with it, which the literal rule classes as a duplicate. Further pruning therefore adds no novelty.
-2. **Uniqueness needs new dots in new places.** The Session-2 DSLUP file is such a placement. Its literal-rule overlap with the lattice is 99.98%, so the literal rule currently rejects it (see §6).
-3. **The local evaluator is not calibrated.** It gives the 0.2778 champion a proxy of 0.0992 (HOLDOUT-DTI, historical evaluator, not replayed here), while the owner reports 0.2778 on the organizer metric. Holdout ranks cannot be read as leaderboard estimates.
-4. **Only an organizer receipt calibrates the score.** The rules allow three submissions per week. Spending one needs an explicit owner decision, because the literal rule currently forbids any candidate from this line of work.
+2. **Different placement is not enough.** Session-2 DSLUP has a different hash and placement, but its literal-rule overlap with the lattice is 99.98%, so the rule rejects it (see §6).
+3. **The local evaluator is not calibrated.** Historical proxy evaluations were not replayed here; holdout ranks cannot be read as leaderboard estimates.
+4. **Only a file-linked organizer receipt establishes a submitted score.** The rules mention three submissions per week, but the account's current quota is unverified and the literal rule forbids any candidate from this line of work.
 
 ## 6. The literal-rule conflict, quantified (VERIFIED)
 
@@ -71,7 +71,7 @@ The reported sequence 0.2600 → 0.2778 matches removing the 6,436 near-trace do
 5. **Brief numbers differ from the official page.** The brief quotes 0.4413 (top) and 0.3195; the official page observed on 2026-10-27 shows 0.4544 and 0.3566.
 6. **Open PR #33** (`arena/89a5e815-kanlergemsdoe2`) proposes another promotion. It was not reviewed in this session.
 8. **PR #34 candidate (`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`, sha256 `f0cb1914…b539`, merged from main during this session).** Format passes. Verified: 99.99% of its dots lie within 3 px of the registered lattice (literal duplicate). It has **184** dots on known-fault pixels, not the "0" its note states. Its "<2% overlap vs focus files" does not reproduce: in this repository's directional 3-px metric the largest focus overlap is 21.7%, and the DSLUP overlap is 36.8%. The organizer masks known-fault pixels, so the 184 dots are score-neutral, but the stated claim is false. Its note's "download OK" wording is also superseded by the fail-closed status: the file is a research download only.
-9. **The pinned lattice file is a registered competitor raster, not a neutral control.** The brief lists it under 13GEMSDOE with a USER-REPORTED 0.0904. Calling it a "calibration control" is a policy argument, and the owner should decide it explicitly.
+9. **The pinned lattice file is registered.** The brief lists it under 13GEMSDOE with a USER-REPORTED 0.0904. Whatever its historical label, the literal protocol exempts no calibration raster; a selector cannot waive the stop.
 
 ## 8. Upload-error note (open)
 

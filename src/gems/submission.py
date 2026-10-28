@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import tempfile
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -45,13 +47,21 @@ def write_submission(
     """
     if outside not in ("nan", "zero"):
         raise ValueError("outside must be 'nan' or 'zero'")
-    out_path = Path(out_path)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path, template_path = Path(out_path), Path(template_path)
+    if out_path.resolve() == template_path.resolve():
+        raise ValueError("Output cannot overwrite the reference template")
     with rasterio.open(template_path) as t:
         profile = t.profile.copy()
         footprint = np.isfinite(t.read(1))
-    if not footprint.any():
-        raise ValueError("template contains no finite prediction footprint")
+        template_matches = (
+            t.count == 1 and t.dtypes == (EXPECTED["dtype"],)
+            and t.crs is not None and t.crs.to_epsg() == 32611
+            and t.shape == EXPECTED["shape"]
+            and tuple(t.transform)[:6] == EXPECTED["transform"]
+            and int(footprint.sum()) == EXPECTED["footprint_pixels"]
+        )
+    if not template_matches:
+        raise ValueError("Reference template does not match the documented grid and pinned footprint")
     pred_2d = np.asarray(pred_2d)
     if pred_2d.shape != footprint.shape:
         raise ValueError(f"prediction shape {pred_2d.shape} != template {footprint.shape}")
@@ -67,9 +77,22 @@ def write_submission(
     profile.update(
         driver="GTiff", dtype="float32", count=1, nodata=(np.nan if outside == "nan" else None)
     )
-    with rasterio.open(out_path, "w", **profile) as dst:
-        dst.write(arr, 1)
-        dst.update_tags(AREA_OR_POINT="Area")
+    # Never leave a partial or locally invalid TIFF at the requested path.
+    # The local audit is not organizer acceptance or slot authorization.
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(prefix=f".{out_path.stem}.", suffix=".tif", dir=out_path.parent)
+    os.close(fd)
+    staged = Path(name)
+    try:
+        with rasterio.open(staged, "w", **profile) as dst:
+            dst.write(arr, 1)
+            dst.update_tags(AREA_OR_POINT="Area")
+        checks = check_variants(staged, template_path)
+        if not checks["format_valid"]:
+            raise ValueError(f"Staged TIFF failed local format checks: {checks['hard_failures']}")
+        staged.replace(out_path)
+    finally:
+        staged.unlink(missing_ok=True)
     return out_path
 
 
@@ -145,7 +168,7 @@ def check_variants(path: Path | str, template_path: Path | str) -> dict[str, Any
     add(
         "official_template_grid_and_footprint",
         expected_template,
-        "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "Reference must match documented geometry and the pinned mirror footprint, not just an arbitrary raster; organizer origin is unverified",
     )
     add("single_band", count == 1, f"count={count}")
     add("dtype_float32", dtypes == ("float32",), f"dtypes={dtypes}")
