@@ -1,5 +1,13 @@
 # Executive summary — 27 October 2026
 
+## Session 3 (KG2-S3 GMV lane): honest negative — the Session-2 file remains the best submission
+
+> **Bottom line: Session 3 produced NO new submission file.** Three preregistered GMV experiments (geomorphology + fossil-vent corridors) all beat the 0.2778-proxy on Hide-Recover (Δ up to +0.0184, strictly positive paired 95% CIs) but **failed the SGMC blind metric** (all paired CIs cross zero) **and the uniqueness gate** (75–87% of dots within 3 px of our own retracted Session-1 file). Verdict **NEGATIVE**; no GMV file exists to download. Receipts: [run card](evidence/gmv_run_card_20261027.json) · [3 experiments](evidence/gmv_experiments_20261027.json) · [9 new lane tests](tests/test_gmv_lane.py) · [frozen prereg](registry/preregistration_gmv.json) · [5 ranked hypotheses](knowledge/03_preregistered_hypotheses_gmv_20261027.md).
+>
+> **BEST SUBMISSION — still the Session-2 file:** [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) (SHA-256 `8f66f32c5648…76fbe3`). HOLDOUT-DTI 0.125925 [0.1129, 0.1382] / SGMC-CAL 0.098140 [0.0884, 0.1061]; max 59.77% vs geological registry; **PROMOTE under the documented control-separated policy** (Session-2 section below; slot decision stays the coordinator's separate selector step).
+>
+> **New Session-3 evidence:** (1) [forensic analysis of 0.2778](research/2026-10-27_gmv_forensic_02778.md) — precision surgery on the shared scarp manifold, mainly deleting 6,436 near-catalogue dots; hidden-truth causality unproven without receipts. (2) REF diagnostic: the static 37,654-dot champion mask scores Hide-Recover ≈ 0.0045 — the 0.0992 REF is a property of the unpruned-parent + visible-only-collar procedure, not of the champion's dots. (3) Fresh public leaderboard snapshot (observed 2026-10-28T00:05Z): #1 0.4544, #5 0.3566, #25 0.3195 — the old brief targets (0.3195 as #5, 0.4413 as #1) were stale. (4) Template fixes: data-manifest heat-flow path, HTCADS registry collector coverage, NaN-masked filtering guard (IR-KG2S3-NAN-01).
+
 ## Session 2 (KG2-S2 DSLUP-3D): new unique candidate — two verdicts, fully disclosed
 
 > **File to download:** [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) (SHA-256 `8f66f32c5648…76fbe3`, 37,654 dots, all-finite `[0,1]`, EPSG:32611, 3730×3292, 0 catalogue pixels).

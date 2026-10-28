@@ -49,3 +49,7 @@ Focus on the highest-scoring submissions from the following 9 focus sites:
 - Preserve this prompt and Arena Core Values in `README.md` as the starting point for future sessions.
 - Verify every claim, file hash, calculation, and official URL line by line with zero hallucinations; flag any irregularities.
 - Execute **3 verification passes** (Pass 1: complete implementation & verification; Pass 2: review & fix bugs, missing requirements, and edge cases; Pass 3: final accuracy, completeness, and quality check), then open and merge a Pull Request onto `main`.
+
+### Session Addenda (fulfilment record — newest first)
+
+- **Session 3 (2026-10-27, KG2-S3 GMV):** Forensic mandate fulfilled in `research/2026-10-27_gmv_forensic_02778.md` (0.2778 = precision surgery on the shared H19-5 manifold; path past it = off-manifold discovery, not more pruning); hypotheses mandate fulfilled in `knowledge/03_preregistered_hypotheses_gmv_20261027.md` (5 ranked, top-2 implemented and validated: H1 geomorph HOLDOUT-DTI HR Δ+0.0184 CI+, H2 vent corridors no incremental value). Three GMV experiments ran in 716 s (budget: 3 exp / 2 h); verdict **negative** on SGMC significance + uniqueness vs own retracted file ([run card](evidence/gmv_run_card_20261027.json)). No new file; best submission remains the Session-2 DSLUP unique-slot TIF. Leaderboard targets in the original mandate are stale: observed 2026-10-28T00:05Z, public #1 = 0.4544, #5 = 0.3566, #25 = 0.3195 (`docs/data/public_leaderboard.json`).

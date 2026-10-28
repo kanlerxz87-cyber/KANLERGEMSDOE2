@@ -76,5 +76,19 @@
     "max_3px_non_blanket_detectors": 0.670792,
     "overlap_3px_vs_dslup": 0.549503,
     "overlap_3px_vs_ecpu": 0.542625
+  },
+  "session3_gmv": {
+    "lane": "KG2-S3-GMV",
+    "verdict": "negative",
+    "ok_to_download_and_submit": false,
+    "new_raster": null,
+    "reason": "EXP-A/B/C beat 0.2778-proxy on Hide-Recover (best 0.1176, paired CI strictly positive) but failed SGMC significance (all CIs cross zero) and uniqueness (75-87% within 3px of own retracted HTCADS file).",
+    "best_submission_unchanged": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "run_card": "../../evidence/gmv_run_card_20261027.json",
+    "experiments": "../../evidence/gmv_experiments_20261027.json",
+    "forensic": "../../research/2026-10-27_gmv_forensic_02778.md",
+    "hypotheses": "../../knowledge/03_preregistered_hypotheses_gmv_20261027.md",
+    "wall_seconds": 716.4,
+    "experiments_run": 3
   }
 }

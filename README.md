@@ -1,5 +1,10 @@
 # KANLERGEMSDOE2 — geothermal fault discovery
 
+> ### SESSION 3 (2026-10-27, KG2-S3 GMV lane): HONEST NEGATIVE — NO NEW FILE
+>
+> - Three preregistered experiments (range-front Smf/Vf/tilt/TPI-discordance + RANSAC fossil-vent corridors) all beat the 0.2778-proxy on Hide-Recover (pooled HOLDOUT-DTI up to 0.1176, Δ +0.0184, paired 95% CI strictly positive) but failed SGMC significance (CIs cross zero) and uniqueness (75–87% within 3 px of our own retracted HTCADS file). **Verdict: negative. Nothing to download from Session 3.**
+> - **The best submission remains the Session-2 DSLUP unique-slot file** (below). Session 3 adds: [0.2778 forensic](research/2026-10-27_gmv_forensic_02778.md) · [5 ranked hypotheses, top-2 validated](knowledge/03_preregistered_hypotheses_gmv_20261027.md) · [fresh leaderboard snapshot](docs/data/public_leaderboard.json) · [receipts](evidence/gmv_run_card_20261027.json)
+>
 > ### ⭐ SESSION 2 (2026-10-27, KG2-S2 DSLUP-3D lane): NEW UNIQUE CANDIDATE — TWO VERDICTS, FULLY DISCLOSED
 >
 > - **File**: [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · [ZIP](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3`
