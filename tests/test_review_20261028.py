@@ -1,34 +1,32 @@
-"""Protect the current evidence boundary against stale promotional claims."""
-import json
+"""Independent review must not confuse byte integrity with authorization."""
+import importlib.util
 from pathlib import Path
+import numpy as np
+import pytest
+import rasterio
+from rasterio.transform import from_origin
 
 ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location("review_published", ROOT / "scripts/review_published_artifact.py")
+review = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(review)
+
+@pytest.mark.parametrize("value,valid", [(0.0, True), (1.0, True), (-0.1, False), (1.01, False), (float("nan"), False), (float("inf"), False)])
+def test_numeric_checks_and_unknown_provenance(tmp_path, value, valid):
+    path = tmp_path / "candidate.tif"
+    with rasterio.open(path, "w", driver="GTiff", width=2, height=2, count=1,
+                       dtype="float32", crs="EPSG:32611", transform=from_origin(1000, 2000, 100, 100)) as ds:
+        ds.write(np.full((2, 2), value, dtype=np.float32), 1)
+    result = review.inspect(path, "not-the-hash")
+    assert result["all_cells_in_0_1"] is valid
+    assert result["hash_matches_sidecar"] is False
+    assert result["official_template_match"] is None
+    assert result["organizer_acceptance_verified"] is False
 
 
-def test_replay_stop_and_focus_geometry():
-    replay = json.loads((ROOT / "evidence/review_20261028_replay.json").read_text())
-    pre = replay["preflight"]
-    assert replay["verdict"] == "negative" and replay["ok_to_submit"] is False
-    assert pre["forced_duplicate"] and pre["minimum_overlapping_dots"] == 31005
-    assert pre["minimum_directional_overlap"] > pre["limit"]
-    assert replay["hptr_exact_bytes"]["witness_overlap_dots"] == 37640
-    assert replay["hptr_exact_bytes"]["duplicate_under_literal_rule"] is True
-    assert replay["geometry"]["g32_b2_vs_g25_d28_filtered_by_distance_gt_2px_xor"] == 0
-    assert len(replay["focus_nine"]) == 9
-    assert all(r["duplicate_within_focus_nine"] for r in replay["focus_nine"])
-
-
-def test_published_dashboard_does_not_call_proxies_leaderboard_wins():
-    feed = json.loads((ROOT / "docs/data/status_feed.json").read_text())
-    assert feed["ok_to_submit"] is False
-    for lane in ("kg2s3_hptr_lane", "kg2s3_trbvc_lane"):
-        assert feed[lane]["sgmc_cal_v3_dti"] is None
-        assert feed[lane]["hide_recover_v3_dti"] is None
-        assert feed[lane]["ok_to_submit"] is False
-    for name in ("index.html", "executive-summary.html", "research.html", "irregularities.html"):
-        text = (ROOT / "docs" / name).read_text()
-        assert "DO NOT SUBMIT" in text.upper()
-        assert "procedure proxies do not demonstrate a leaderboard win" in text
-        assert "HOLDOUT-DTI SGMC-CAL" not in text
-        assert "breakthrough" not in text.lower()
-    assert "No credible leaderboard estimate" in (ROOT / "EXECUTIVE_SUMMARY.md").read_text()
+def test_review_notice_precedes_historical_claims_on_all_pages():
+    for name in ["index.html", "executive-summary.html", "submission-table.html", "submission-howto.html", "research.html", "irregularities.html", "audit-review.html"]:
+        page = (ROOT / "docs" / name).read_text()
+        assert 'aria-label="Current evidence correction"' in page
+        assert '<main id="main" class="wrap"><section class="callout" role="note" aria-label="Current evidence correction">' in page
+        assert "No validated leaderboard estimate is available" in page

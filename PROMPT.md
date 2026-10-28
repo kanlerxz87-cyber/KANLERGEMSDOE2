@@ -1,5 +1,8 @@
 # Standing Project Brief & Parallel-Run Protocol (`KANLERGEMSDOE2`)
 
+> **2026-10-28 integrity correction:** **DO NOT SUBMIT** any existing file. The independently replayed literal witness and nine-site geometry are in [the current preflight record](evidence/preflight_replay_20261028.json). The narratives below are historical and may contain superseded promotion, causality, or improperly labeled SGMC-calibrated figures. SGMC prevalence calibration is an unverified projection, not a HOLDOUT-DTI; no proxy demonstrates a higher organizer score. A unique hash does not establish protocol uniqueness. The [current review](REVIEW_2026-10-28.md) supersedes conflicting statements below.
+
+
 > **Epistemic integrity:** This is the prior-session condensed standing brief, not a verbatim transcript. Read it with `README.md`, including its preserved request, at the start of every session. **Current decision: do not submit.** Historical user/owner reports are not organizer receipts; old target scores are historical snapshots.
 
 ---
@@ -53,3 +56,8 @@ Focus on the highest-scoring submissions from the following 9 focus sites:
 ### Session Addenda (fulfilment record — newest first)
 
 - **Session 3 (2026-10-27, KG2-S3 GMV):** Forensic mandate fulfilled in `research/2026-10-27_gmv_forensic_02778.md` (0.2778 = precision surgery on the shared H19-5 manifold; path past it = off-manifold discovery, not more pruning); hypotheses mandate fulfilled in `knowledge/03_preregistered_hypotheses_gmv_20261027.md` (5 ranked, top-2 implemented and validated: H1 geomorph HOLDOUT-DTI HR Δ+0.0184 CI+, H2 vent corridors no incremental value). Three GMV experiments ran in 716 s (budget: 3 exp / 2 h); verdict **negative** on SGMC significance + uniqueness vs own retracted file ([run card](evidence/gmv_run_card_20261027.json)). No GMV file emitted; this lane concurs with main's fail-closed DO-NOT-SUBMIT decision (Session-2 DSLUP promotion superseded by the literal rule). Leaderboard targets in the original mandate are stale: observed 2026-10-28T00:05Z, public #1 = 0.4544, #5 = 0.3566, #25 = 0.3195 (`docs/data/public_leaderboard.json`).
+
+
+## 2026-10-28 repeated-request review
+
+Read the superseding [review](evidence/review_20261028.md) before archived lane claims. The current request repeats the unique-TIFF requirement, nine-site executive comparison, autonomous scientific research, three review passes, and PR/merge request. It supplies no new single-method lane paragraph. It does not authorize relaxing the all-registry duplicate stop, spending a weekly slot, or claiming a projection as a score. The request's 0.3195 and 0.4413 leaderboard targets conflict with each other and are not current verified measurements. The review preserves these requirements as a condensed record, not a verbatim transcript. No new training run was authorized or performed.

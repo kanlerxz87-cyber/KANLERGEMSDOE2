@@ -6,7 +6,8 @@
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
 - [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md)
-- [This session’s negative run card](evidence/run_card_20261028_review.json) · [independent replay and three-pass review](evidence/review_20261028.md)
+- [Concurrent independent review](REVIEW_2026-10-28.md) · [artifact numeric inspection](evidence/review_run_card_20261028.json) · [parallel preflight replay](evidence/preflight_replay_20261028.json)
+- [This session’s negative run card](evidence/run_card_20261028_review.json) · [independent replay and three-pass review](evidence/review_20261028_lattice_and_site.md)
 - [Previous negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261027.json)
 - [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
 - [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)

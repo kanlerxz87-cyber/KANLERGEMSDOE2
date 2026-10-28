@@ -33,11 +33,14 @@ def header(active: str) -> str:
 <nav class="nav" aria-label="Main navigation">{links}<a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header>'''
 
 
+REVIEW_NOTICE = """<section class="callout" role="note" aria-label="Current evidence correction"><strong>2026-10-28 review: NOT OK TO SUBMIT.</strong><p>No new method lane was supplied; no new experiment or submission was run. Historical leaderboard values are user-reported. Holdout comparisons do not establish a leaderboard score. Hidden-label counts and pure-false-positive claims inferred from rounded scores are unverified. No validated leaderboard estimate is available. <a href="../evidence/review_20261028.md">Read the independent review and next steps ↗</a>.</p></section>"""
+
+
 def page(title: str, active: str, content: str, script: str = "") -> str:
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} | GEMS Fieldnotes</title><meta name="description" content="Evidence-led geological fault discovery for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"></head>
-<body>{header(active)}<main id="main" class="wrap">{content}</main>
+<body>{header(active)}<main id="main" class="wrap">{REVIEW_NOTICE}{content}</main>
 <footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Auditable evidence. No upload is automated.</div></div></footer>{script}</body></html>'''
 
 
@@ -493,7 +496,7 @@ def main() -> None:
     <strong>Archived KG2-S3-HPTR, LOPE and TRBVC: DO NOT SUBMIT.</strong>
     <p>Historical runs and figures have not been independently replayed. Their
     procedure proxies do not demonstrate a leaderboard win; SGMC-CAL is an
-    unvalidated transformation, not a measured holdout or a promotion gate.
+    unvalidated transformation; its values are not HOLDOUT-DTI or leaderboard estimates.
     Detector-only overlaps omit registered controls and do not establish uniqueness.
     <a href="../evidence/review_20261028_replay.json">Independent lattice and focus-site replay ↗</a> ·
     <a href="../evidence/session3_hptr_run_card_20261027.json">Archived HPTR card ↗</a> ·
@@ -505,14 +508,15 @@ def main() -> None:
         # The old boolean equated three proxy comparisons with beating 0.2778.
         # Leave unknown, not false: the actual organizer outcome is unobserved.
         hptr_feed["beats_02778_across_all_three_blind_holdouts"] = None
-        hptr_feed["sgmc_cal_v3_dti"] = None
-        hptr_feed["hide_recover_v3_dti"] = None
-        hptr_feed["c_pied_v1_dti"] = None
+        hptr_feed["beats_02778_leaderboard_score"] = None
+        hptr_feed["comparison_warning"] = "Historical proxies not replayed; SGMC-CAL uses an unverified inferred count and is not a holdout DTI."
+        for key in ("sgmc_cal_v3_dti", "hide_recover_v3_dti", "c_pied_v1_dti"):
+            hptr_feed.pop(key, None)
+        hptr_feed["warning"] = "Unreplayed historical proxies; SGMC-CAL is not measured holdout DTI. No leaderboard win or novelty established."
     if trbvc_feed is not None:
         for key in ("hide_recover_v3_dti", "sgmc_cal_v3_dti", "c_pied_v1_dti", "segment_v1_dti"):
-            trbvc_feed[key] = None
+            trbvc_feed.pop(key, None)
         trbvc_feed["warning"] = "Unreplayed historical proxies, not leaderboard scores; detector-only overlaps exclude controls."
-        hptr_feed["warning"] = "Unreplayed historical proxies; SGMC-CAL is not measured holdout DTI. No leaderboard win or novelty established."
     percent = 100 * prior["witness_overlap_fraction"]
     bound = 100 * pre["minimum_directional_overlap"]
     s2 = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
@@ -667,6 +671,8 @@ def main() -> None:
     if trbvc_feed is not None:
         feed["kg2s3_trbvc_lane"] = trbvc_feed
     (DOCS / "data").mkdir(exist_ok=True)
+    feed["latest_preflight_review"] = "../../evidence/preflight_replay_20261028.json"
+    feed["latest_run_card"] = "../../evidence/run_card_20261028_preflight.json"
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     (DOCS / "data/current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {

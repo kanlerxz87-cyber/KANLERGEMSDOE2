@@ -47,12 +47,11 @@
     "validated_ok_to_download_and_submit": false,
     "ok_to_download_for_research": true,
     "beats_02778_across_all_three_blind_holdouts": null,
-    "hide_recover_v3_dti": null,
-    "sgmc_cal_v3_dti": null,
-    "c_pied_v1_dti": null,
     "binary_r_ge_05_max_detector_3px_overlap": 0.659797,
     "max_overlap_vs_kanlergemsdoe2_rasters": 0.464625,
     "literal_spacing5_lattice_overlap": 0.9996281935518139,
+    "beats_02778_leaderboard_score": null,
+    "comparison_warning": "Historical proxies not replayed; SGMC-CAL uses an unverified inferred count and is not a holdout DTI.",
     "warning": "Unreplayed historical proxies; SGMC-CAL is not measured holdout DTI. No leaderboard win or novelty established."
   },
   "kg2s3_lope_lane": {
@@ -81,10 +80,6 @@
     "ok_to_submit": false,
     "validated_ok_to_download_and_submit": false,
     "ok_to_download_for_research": true,
-    "hide_recover_v3_dti": null,
-    "sgmc_cal_v3_dti": null,
-    "c_pied_v1_dti": null,
-    "segment_v1_dti": null,
     "max_3px_non_lattice_detector_overlap": 0.647713,
     "sister_22_repo_max_overlaps": {
       "DSLUP_c71122d5_CHAMPION_UNIQUE": 0.540739,
@@ -93,5 +88,7 @@
       "TRBVC_decad771_RESEARCH_NEG": 0.647713
     },
     "warning": "Unreplayed historical proxies, not leaderboard scores; detector-only overlaps exclude controls."
-  }
+  },
+  "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
+  "latest_run_card": "../../evidence/run_card_20261028_preflight.json"
 }
