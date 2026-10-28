@@ -1,0 +1,38 @@
+{
+  "schema": "gems.off36-independent-check.v1",
+  "file": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+  "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+  "dots": 15000,
+  "values_unique": [
+    0.0,
+    1.0
+  ],
+  "nan_count": 0,
+  "outside_footprint_positive": 0,
+  "on_catalogue_positive_pixels": 107,
+  "lattice_overlap_3px": 0.66,
+  "dots_in_lattice_gap_pixels": 5100,
+  "dots_in_lattice_gap_fraction": 0.34,
+  "restored_registry_rasters_checked": 12,
+  "max_overlap_3px_restored_registry": {
+    "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "fraction": 0.66
+  },
+  "per_raster_overlap_3px": {
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": 0.66,
+    "8GEMSDOE_Hedge-v2_submission.tif": 0.210333,
+    "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif": 0.267267,
+    "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif": 0.285933,
+    "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif": 0.193067,
+    "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif": 0.189,
+    "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif": 0.1854,
+    "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif": 0.167667,
+    "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif": 0.1586,
+    "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif": 0.168733,
+    "gemsdoe-ens12-adopted-7f00890a.tif": 0.185667,
+    "gemsdoe9-PLACEHOLDER-2314b599.tif": 0.0656
+  },
+  "holdout_dti": null,
+  "limit": 0.7,
+  "literal_rule_duplicate": false
+}

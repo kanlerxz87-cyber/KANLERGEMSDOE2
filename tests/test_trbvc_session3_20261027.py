@@ -122,8 +122,26 @@ def test_trbvc_run_card_geotiff_and_automated_5_gate_validator() -> None:
     assert float(arr.min()) >= 0.0 and float(arr.max()) <= 1.0
     assert int((arr >= 0.5).sum()) == 37654
 
-    # Automated 5-gate validator fails closed on Gate 4 for TRBVC and passes 5/5 for DSLUP c71122d5
-    proc_neg = subprocess.run(
+    # Automated literal fail-closed validator & retired wrapper both keep TRBVC negative (DO NOT SUBMIT)
+    proc_lit = subprocess.run(
+        [
+            sys.executable, str(ROOT / "scripts/validate_submission.py"),
+            "--tif", str(tif_path),
+            "--run-card", str(ROOT / "evidence/trbvc_run_card_20261027.json"),
+        ],
+        capture_output=True, text=True, check=False,
+    )
+    assert proc_lit.returncode == 1
+    v_lit = json.loads(proc_lit.stdout)
+    assert v_lit["ok_to_submit"] is False and v_lit["verdict"] == "negative"
+    assert v_lit["gates"]["exact_file_identity"] is True
+    assert v_lit["gates"]["local_grid_dtype_inside_range"] is True
+    assert v_lit["gates"]["literal_witness_not_duplicate"] is False
+    assert v_lit["format_audit"]["strict_whole_array_finite_0_1"] is True
+    assert v_lit["format_audit"]["inside_positive_pixels"] == 37654
+    assert v_lit["format_audit"]["on_catalogue_positive_pixels"] == 0
+
+    proc_s2 = subprocess.run(
         [
             sys.executable, str(ROOT / "scripts/validate_submission_kg2s2.py"),
             "--tif", str(tif_path), "--mode", "unique-slot",
@@ -131,14 +149,10 @@ def test_trbvc_run_card_geotiff_and_automated_5_gate_validator() -> None:
         ],
         capture_output=True, text=True, check=False,
     )
-    assert proc_neg.returncode == 1
-    v_neg = json.loads(proc_neg.stdout)
-    assert v_neg["validated_ok_to_download_and_submit"] is False
-    assert v_neg["gates"]["gate_1_format_and_range_0_1"] is True
-    assert v_neg["gates"]["gate_2_leakage_canary_le_090"] is True
-    assert v_neg["gates"]["gate_3_registry_uniqueness"] is True
-    assert v_neg["gates"]["gate_4_holdout_beats_champion"] is False
-    assert v_neg["gates"]["gate_5_portal_metadata_le_140"] is True
+    assert proc_s2.returncode == 1
+    v_s2 = json.loads(proc_s2.stdout)
+    assert v_s2["validated_ok_to_download_and_submit"] is False
+    assert v_s2["verdict"] == "negative"
 
 
 def test_sister_fleet_22_repos_uniqueness_receipt_and_site_sync() -> None:
@@ -153,6 +167,7 @@ def test_sister_fleet_22_repos_uniqueness_receipt_and_site_sync() -> None:
     assert max_ov["TRBVC_decad771_RESEARCH_NEG"] <= 0.70
 
     feed = _load("docs/data/status_feed.json")
-    assert "trbvc_session3_lane" in feed
-    assert feed["trbvc_session3_lane"]["verdict"] == "negative"
-    assert feed["trbvc_session3_lane"]["validated_ok_to_download_and_submit"] is False
+    assert "kg2s3_trbvc_lane" in feed
+    assert feed["kg2s3_trbvc_lane"]["verdict"] == "negative"
+    assert feed["kg2s3_trbvc_lane"]["ok_to_submit"] is False
+    assert feed["kg2s3_trbvc_lane"]["validated_ok_to_download_and_submit"] is False

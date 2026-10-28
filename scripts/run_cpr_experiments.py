@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""KG2-CPR lane: Credit-Priced Regression — 3 pre-registered experiments (registry/preregistration_cpr.json).
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
+
+KG2-CPR lane: Credit-Priced Regression — 3 pre-registered experiments (registry/preregistration_cpr.json).
 
 CPR-1: soft DTI-credit regression target y=k(d) (official 300 m triangular kernel) +
        rank-product fusion (regressor x physical conduit x LiDAR specialist) +
@@ -155,6 +157,14 @@ def _collect_registry(foot: np.ndarray, ddir: Path) -> tuple[list[dict], np.ndar
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir, wdir, edir = data_dir(), work_dir(), evidence_dir()
 

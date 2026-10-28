@@ -1,4 +1,8 @@
 {
+  "notice": "HISTORICAL LOCAL FORMAT AUDIT ONLY; NOT PORTAL ACCEPTANCE OR SUBMISSION AUTHORIZATION. Literal uniqueness fails; DO NOT SUBMIT.",
+  "verdict": "negative",
+  "ok_to_submit": false,
+  "current_validator": "../../evidence/dslup_literal_revalidation_20261027.json",
   "candidate_id": "EXP-A-DSTAR",
   "slug": "dslup-uniq-q15k-37654dots",
   "content_digest8": "c71122d5",

@@ -100,8 +100,9 @@ def main():
                     "raster_sha256": tif_sha,
                     "zip_sha256": zip_sha,
                     "canary_max_auc": canary["max_single_feature_auc"],
+                    "scope": "Historical file hashes and recorded metadata only; canary and holdouts not independently replayed. No upload authorization.",
                     "holdout_dti_c_pied": rc["holdout_dti"]["piedmont_off_catalogue_c_pied"],
-                    "exp2_c_pied_dti": rc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"]["pooled_dti"],
+                    "exp2_c_pied_dti": rc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"],
                 },
                 indent=2,
                 allow_nan=False,
@@ -115,27 +116,11 @@ def main():
         return
     if args.run_kg2:
         raise SystemExit("Archived KG2 lane disabled: not this session's assigned HTCADS method and not literal-registry safe")
-    if args.verify_tnr1:
-        from run_tnr1_lane import verify_recorded
-
-        print(
-            json.dumps(
-                {"verified": True, "experiment_rerun": False, "run_card": verify_recorded()},
-                indent=2,
-                allow_nan=False,
-            )
+    if args.verify_tnr1 or args.verify_recorded or args.verify_gvc1:
+        raise SystemExit(
+            "The requested historical verifier is not present in this checkout; "
+            "no replay or verification was performed. Inspect the archived evidence instead."
         )
-        return
-    if args.verify_recorded:
-        from verify_mtr_receipt import verify
-
-        print(json.dumps(verify(), indent=2, allow_nan=False))
-        return
-    if args.verify_gvc1:
-        from run_gvc1_pipeline import verify_gvc1
-
-        print(json.dumps(verify_gvc1(), indent=2, allow_nan=False))
-        return
     if args.run_gvc1:
         raise SystemExit("Archived GVC1 lane disabled: not the assigned lane and no literal-registry clearance")
     raise SystemExit("Archived MTR1 experiment disabled: this session's assigned lane stops at the literal registry preflight")

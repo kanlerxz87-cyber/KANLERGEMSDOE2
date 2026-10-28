@@ -7,7 +7,11 @@ Evaluates a GeoTIFF, `.npy` mask/probability field, or `.npz` per-cell OOF fold 
      triangular kernel) and 256-block spatial cluster-bootstrap 95% CI.
   2. `HOLDOUT-DTI` (`GEMSDOE32-SGMC-CAL-v3.0`): off-catalogue USGS SGMC faults (>300 m from `labels.tif`)
      with 256-block spatial cluster-bootstrap 95% CI.
-Supports both binary `{0, 1}` and soft/continuous `[0, 1]` rasters (fixes `IR-SHARED-SOFT-01`).
+Supports both binary `{0, 1}` and soft/continuous `[0, 1]` rasters.
+The CLI cannot prove how a static or purported per-cell prediction was trained,
+or whether catalogue features used only visible faults. Its numeric output is
+descriptive and cannot by itself establish an independent holdout or approve a
+submission. GeoTIFF grids must match the owner-mirror sample exactly.
 """
 from __future__ import annotations
 
@@ -27,7 +31,16 @@ from gems32.paths import data_dir  # noqa: E402
 
 
 def _strip_internal(d: dict) -> dict:
-    return {k: v for k, v in d.items() if not k.startswith("_")}
+    result = {k: v for k, v in d.items() if not k.startswith("_")}
+    result["score_label"] = "DESCRIPTIVE-DTI (fold/model provenance not verified)"
+    return result
+
+
+_PROVENANCE_WARNING = (
+    "The scoring code does not verify model training, feature provenance, or visible-only "
+    "catalogue construction. A static or purported per-cell prediction is not an "
+    "independent holdout or release authorization without separate replay."
+)
 
 
 def evaluate_path(path: Path, b_visible_px: float = 0.0, ddir: Path | None = None, name: str | None = None) -> dict:
@@ -43,17 +56,27 @@ def evaluate_path(path: Path, b_visible_px: float = 0.0, ddir: Path | None = Non
         out = {
             "candidate_id": cand_name,
             "path": str(path),
-            "mode": "per_cell_oof_npz",
+            "mode": "per_cell_predictions_npz",
+            "grid_identity_verified": False,
+            "feature_and_training_provenance_verified": False,
+            "eligible_for_promotion": False,
+            "provenance_warning": _PROVENANCE_WARNING,
             "hide_and_recover": hr,
         }
         if full_arr is not None:
             out["sgmc_off_catalogue"] = _strip_internal(holdout.evaluate_sgmc_with_ci(full_arr, ctx, name=cand_name))
         return out
+    grid_verified = False
     if suf == ".npy":
-        arr = np.load(path)
+        arr = np.load(path, allow_pickle=False)
     else:
-        with rasterio.open(path) as ds:
+        with rasterio.open(path) as ds, rasterio.open(ddir / "sample_submission.tif") as template:
+            if (ds.count != 1 or template.count != 1 or
+                    (ds.shape, ds.crs, ds.transform) !=
+                    (template.shape, template.crs, template.transform)):
+                raise ValueError("GeoTIFF must be single-band and match the sample grid/CRS/transform")
             arr = ds.read(1)
+            grid_verified = True
     if arr.shape != ctx.foot.shape:
         raise ValueError(f"Expected grid shape {ctx.foot.shape}, got {arr.shape}")
     pos = np.isfinite(arr) & (arr > 0) & ctx.foot
@@ -62,6 +85,11 @@ def evaluate_path(path: Path, b_visible_px: float = 0.0, ddir: Path | None = Non
     return {
         "candidate_id": cand_name,
         "path": str(path),
+        "mode": "static_full_map",
+        "grid_identity_verified": grid_verified,
+        "feature_and_training_provenance_verified": False,
+        "eligible_for_promotion": False,
+        "provenance_warning": _PROVENANCE_WARNING,
         "emitted_pixels": int(pos.sum()),
         "emitted_mass": float(np.where(pos, arr, 0.0).sum()),
         "hide_and_recover": hr,

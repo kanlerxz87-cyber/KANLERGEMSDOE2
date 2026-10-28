@@ -1,0 +1,221 @@
+{
+ "schema": "kg2s3.run_card.v1",
+ "generated_utc": "2026-10-28T00:21:40Z",
+ "hypothesis": "KG2-S3-H1 LOPE: hidden expert-fault density depends on distance to the public catalogue, distance to the public H19-5 ridge network and label-free scarp evidence; a density fitted to live scores, emitted by an exact DTI-greedy rule, maximises expected DTI.",
+ "mechanism": "Live-Ledger Inversion (exact TP identity) on 123 USER-REPORTED pinned rasters; leave-site-out selected design; two-phase emission (inside H19-5 halo DTI-greedy, outside halo forced novelty quota 32%).",
+ "named_non_fault_mimic": "Lake Lahontan wave-cut shorelines, stream-terrace risers and road cuts (one-sided scarps that inflate the scarp factor); the novelty-quota dots are most exposed.",
+ "preregistration": "knowledge/03_preregistered_hypotheses_kg2s3_20261027.md",
+ "experiment_budget": {
+  "allowed": 3,
+  "used": 2,
+  "E1": "LLI design CV (leave-site-out)",
+  "E2": "LOPE emission + holdouts",
+  "E3": "not run: E2 negative, and no remaining lane could pass both the uniqueness and holdout gates in budget"
+ },
+ "duplicate_lane_logged_and_stopped": {
+  "lane": "LOPE unconstrained (100% of dots within 3 px of H19-5)",
+  "action": "logged, not packaged (protocol rule 1)"
+ },
+ "design_selection": {
+  "design": "C1_dcat_x_dH19_x_phys",
+  "ridge": 0.001,
+  "leave_site_out_mae": 0.024554607958656518,
+  "leave_site_out_spearman": 0.9068322381691869,
+  "leave_site_out_abs_err_q90": 0.05735809701087225
+ },
+ "h1_physical_factor_supported": false,
+ "holdout_dti": {
+  "primary_hide_and_recover": {
+   "label": "HOLDOUT-DTI",
+   "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+   "n_withheld": 22232,
+   "pooled_dti": 0.09816135230965967,
+   "ci95": [
+    0.08446946036651513,
+    0.11195609984325026
+   ],
+   "champion_same_evaluator": 0.09920232315251679,
+   "paired_delta_vs_champion": {
+    "delta": -0.0010409708428571196,
+    "ci95": [
+     -0.0061099509800979475,
+     0.0036044219765421
+    ],
+    "win_prob": 0.323,
+    "ci95_strictly_positive": false
+   },
+   "dslup_recorded": 0.125925
+  },
+  "secondary_sgmc_cal": {
+   "label": "HOLDOUT-DTI",
+   "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+   "n_withheld": 62703,
+   "dti": 0.07936387259489655,
+   "ci95": [
+    0.06961646150731773,
+    0.08924767137313709
+   ],
+   "champion_same_evaluator": 0.0641209376417646,
+   "paired_delta_vs_champion": {
+    "delta": 0.015242934953131948,
+    "ci95": [
+     0.009804212432073906,
+     0.020312380027347584
+    ],
+    "win_prob": 1.0,
+    "ci95_strictly_positive": true
+   },
+   "dslup_recorded": 0.09814
+  }
+ },
+ "projection_lli": {
+  "label": "PROJECTION (not a score)",
+  "candidate": 0.2977783100301354,
+  "champion_same_identity": 0.2794730133592791,
+  "dslup_same_identity": 0.09204431480424678,
+  "unconstrained_duplicate_lane": 0.31632494899199964,
+  "error_band": {
+   "leave_site_out_mae": 0.024554607958656518,
+   "leave_site_out_abs_err_q90": 0.05735809701087225
+  }
+ },
+ "leakage_canary": {
+  "auc_by_feature": {
+   "d_visible_catalogue": 0.7421151446440415,
+   "d_H19-5": 0.6435948836100158,
+   "phys_scarp": 0.5612081211873617,
+   "geod_shear_level": 0.52123887456885,
+   "lope_density": 0.6003970084796084
+  },
+  "max_feature": "d_visible_catalogue",
+  "max_auc": 0.7421151446440415,
+  "n_truth_px": 22232,
+  "n_background_px": 412760,
+  "passed": true
+ },
+ "registry_comparison": {
+  "n_references_compared": 454,
+  "n_registry_missing": 0,
+  "exact_sha256_unique": true,
+  "max_overlap_3px_non_space_filling": 0.8842084080961884,
+  "max_abs_final_dots_spearman": 0.1691100131487524,
+  "max_abs_surface_spearman": 0.22955405104535456,
+  "space_filling_controls": [
+   {
+    "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "overlap_3px": 0.9994633843677159,
+    "halo_footprint_cov": 0.9987132726822701,
+    "null_calibrated_excess": 0.5829608768772894
+   },
+   {
+    "file": "pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+    "overlap_3px": 0.8173326849227777,
+    "halo_footprint_cov": 0.7350464152674869,
+    "null_calibrated_excess": 0.310568621814888
+   },
+   {
+    "file": "pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+    "overlap_3px": 0.7857059010950312,
+    "halo_footprint_cov": 0.7341343464077394,
+    "null_calibrated_excess": 0.1939759949827271
+   },
+   {
+    "file": "gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+    "overlap_3px": 0.9385239716264484,
+    "halo_footprint_cov": 0.5343281779736048,
+    "null_calibrated_excess": 0.8679842209347445
+   },
+   {
+    "file": "gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+    "overlap_3px": 0.8413965421830195,
+    "halo_footprint_cov": 0.5481466114406682,
+    "null_calibrated_excess": 0.6489935411955982
+   },
+   {
+    "file": "gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+    "overlap_3px": 0.7523854241778881,
+    "halo_footprint_cov": 0.5536799840073476,
+    "null_calibrated_excess": 0.44520844472682514
+   }
+  ],
+  "top10_overlap_non_space_filling": [
+   {
+    "file": "gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+    "overlap_3px": 0.8842084080961884,
+    "final_dots_spearman": 0.12008121012600141
+   },
+   {
+    "file": "gemsdoe48-h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8.tif",
+    "overlap_3px": 0.7065718645716298,
+    "final_dots_spearman": 0.04432866362832035
+   },
+   {
+    "file": "gemsdoe63-cvarlw-thin-s3p17-54864-20261011T220606Z-c58f60c4-zeros.tif",
+    "overlap_3px": 0.7049955561517951,
+    "final_dots_spearman": 0.08361784874935073
+   },
+   {
+    "file": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+    "overlap_3px": 0.7039558633642446,
+    "final_dots_spearman": 0.14389526262279315
+   },
+   {
+    "file": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif",
+    "overlap_3px": 0.7032683245853806,
+    "final_dots_spearman": 0.15847668702936196
+   },
+   {
+    "file": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+    "overlap_3px": 0.7032683245853806,
+    "final_dots_spearman": 0.15847668702936196
+   },
+   {
+    "file": "gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-allfinite.tif",
+    "overlap_3px": 0.6968121677594621,
+    "final_dots_spearman": 0.1484392031435514
+   },
+   {
+    "file": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-allfinite.tif",
+    "overlap_3px": 0.6799926215350561,
+    "final_dots_spearman": 0.1691100131487524
+   },
+   {
+    "file": "gems24-h24-0-mirror-h19-5-group-best-20261002-e27054cf-nan.tif",
+    "overlap_3px": 0.6799926215350561,
+    "final_dots_spearman": 0.1691100131487524
+   },
+   {
+    "file": "gemsdoe31-union-b-p060-20261004-8acb75e1-allfinite.tif",
+    "overlap_3px": 0.6793386212332098,
+    "final_dots_spearman": 0.08983295238346567
+   }
+  ],
+  "duplicates": [
+   "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+   "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-allfinite.tif",
+   "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+   "gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+   "gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+   "gemsdoe48-h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8.tif",
+   "gemsdoe63-cvarlw-thin-s3p17-54864-20261011T220606Z-c58f60c4-zeros.tif"
+  ]
+ },
+ "raster_sha256": "f1e37cb2dc2c407a395cf282fd760be4a84ed90cdb5a60fceced4cace9aee86d",
+ "raster_filename": "kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros.tif",
+ "positive_dots": 59633,
+ "validator": {
+  "script": "scripts/validate_submission_kg2s3.py",
+  "verdict": "NOT_OK_DO_NOT_SUBMIT",
+  "failed_gates": [
+   "gate_3_uniqueness",
+   "gate_4_holdout"
+  ],
+  "receipt": "evidence/kg2s3_submission_gate.json",
+  "exit_code": 1
+ },
+ "submission_name": "kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros",
+ "submission_note": "KG2-S3 LOPE: live-ledger density (dcat x dH19-5 x scarp), DTI-greedy dots, 32% novelty quota; HR 0.098",
+ "submission_note_chars": 102,
+ "published_download": null,
+ "verdict": "negative"
+}
