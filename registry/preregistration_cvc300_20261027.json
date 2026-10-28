@@ -1,0 +1,29 @@
+{
+  "lane_id": "KG2-S3-CVC300",
+  "date": "2026-10-27",
+  "method_paragraph": "CVC-300: Cross-site Vote-Consensus surface from the 9 focus-site dotted rasters (GEMSDOE24/25/27/28/30/31/32/33/36, local hash-pinned copies in docs/downloads) weighted equally, plus DSLUP-uniq and DARP research rasters as independent-family bonuses, converted to a 300m triangular-kernel submodular CELF emission (alpha=0.2,beta=0.8) at 37654 dots, catalogue pixels excluded, distance-to-catalogue used only as a canary/feature not as hidden-truth leak. Mimic: shared catalogue-hugging bias of all voters (suppressed by excluding <=2px catalogue collar in holdout evaluator and reporting hug share).",
+  "budget_experiments": 3,
+  "experiments": [
+    {
+      "id": "EXP1",
+      "desc": "Vote-only CELF, pi=vote_focus/9, allowed foot & ~labels"
+    },
+    {
+      "id": "EXP2",
+      "desc": "Vote + 0.15*DSLUP + 0.15*DARP bonus CELF, hard cap <=15000 dots within 3px of DSLUP-uniq dots"
+    },
+    {
+      "id": "EXP3",
+      "desc": "Vote CELF restricted to sweet band 3-15px from catalogue labels"
+    }
+  ],
+  "gates": {
+    "canary_max_auc": 0.9,
+    "max_3px_overlap_vs_any_local_geological_raster": 0.7,
+    "max_abs_spearman_vs_any_local_raster": 0.9,
+    "validator": "all-finite float32 EPSG:32611 3730x3292 values in [0,1] everywhere, 0 on-catalogue, zeros outside footprint",
+    "holdout": "GEMSDOE32-HIDE-RECOVER-v3.0 N withheld reported, plus SGMC-CAL-v3.0; paired vs GEMSDOE32 champion and vs DSLUP-uniq"
+  },
+  "note_limit": 140,
+  "deviation": "Exact CELF allocation timed out after 1700s (no result recorded); switched to repo greedy_disk_allocate 3px disk emitter, same budget/allowed/score. Logged 2026-10-27 KG2-S3."
+}

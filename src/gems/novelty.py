@@ -53,9 +53,11 @@ def rank_correlation(ranks_a, b):
 
 def dot_overlap(candidate, reference, radius_px=3.0):
     """Directional inclusive-radius coverage, not a symmetric similarity score."""
-    c, r = np.asarray(candidate, bool), np.asarray(reference, bool)
-    if c.shape != r.shape or c.ndim != 2 or not np.isfinite(radius_px) or radius_px < 0:
-        raise ValueError("Aligned masks and nonnegative radius required")
+    c, r = np.asarray(candidate), np.asarray(reference)
+    if (c.shape != r.shape or c.ndim != 2 or not np.isin(c, [0, 1]).all()
+            or not np.isin(r, [0, 1]).all() or not np.isfinite(radius_px) or radius_px < 0):
+        raise ValueError("Aligned finite binary masks and nonnegative radius required")
+    c, r = c.astype(bool), r.astype(bool)
     cp, rp = np.argwhere(c), np.argwhere(r)
     forward = None if not len(cp) else 0.0
     reverse = None if not len(rp) else 0.0
@@ -190,14 +192,13 @@ def compare_registry(
     absolute rho. A strong negative raw rho or sampled kernel correlation is an
     additional conservative stop, not proof of a positive raw-rank duplicate.
     """
-    surface, footprint = np.asarray(surface), np.asarray(footprint, bool)
-    if (
-        surface.shape != footprint.shape
-        or footprint.ndim != 2
-        or not footprint.any()
-        or sample_size < 1
-        or not np.isfinite(surface[footprint]).all()
-    ):
+    surface, footprint = np.asarray(surface), np.asarray(footprint)
+    if (surface.shape != footprint.shape or footprint.ndim != 2
+            or not np.isin(footprint, [0, 1]).all() or not footprint.any()
+            or not isinstance(sample_size, int) or isinstance(sample_size, bool) or sample_size < 1):
+        raise ValueError("Finite binary footprint, aligned surface and positive integer sample required")
+    footprint = footprint.astype(bool)
+    if not np.isfinite(surface[footprint]).all():
         raise ValueError("Finite footprint-aligned candidate surface required")
     ids = np.flatnonzero(footprint)
     rng = np.random.default_rng(20261025)
@@ -207,9 +208,13 @@ def compare_registry(
     values = surface.ravel()[sample]
     full_ranks = rankdata(surface.ravel()[ids])
     if dots is not None:
-        dots = np.asarray(dots, bool)
-        if dots.shape != surface.shape or np.any(dots & ~footprint) or not dots.any():
-            raise ValueError("Nonempty candidate dots inside footprint required")
+        dots = np.asarray(dots)
+        if (dots.shape != surface.shape or not np.isin(dots, [0, 1]).all()
+                or not dots.any()):
+            raise ValueError("Nonempty finite binary candidate dots inside footprint required")
+        dots = dots.astype(bool)
+        if np.any(dots & ~footprint):
+            raise ValueError("Nonempty finite binary candidate dots inside footprint required")
         dot_yx = np.argwhere(dots)
         candidate_kernel = np.maximum(1 - cKDTree(dot_yx).query(sample_yx)[0] / 3, 0)
     else:

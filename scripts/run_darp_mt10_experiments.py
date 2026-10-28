@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Execute the 3 pre-registered H-N1 DARP-MT10 experiments (DARP-EXP-1..3), 4-instrument holdout
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
+
+Execute the 3 pre-registered H-N1 DARP-MT10 experiments (DARP-EXP-1..3), 4-instrument holdout
 evaluation, 410+-raster pre/post-placement uniqueness audit, and portal-safe GeoTIFF + ZIP emission.
 
 Strictly obeys Parallel-Run Protocol Rules 1-6:
@@ -471,6 +473,14 @@ def _audit_uniqueness(
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir, wdir, edir, dldir = data_dir(), work_dir(), evidence_dir(), downloads_dir()
 

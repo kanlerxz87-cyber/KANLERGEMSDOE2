@@ -6,8 +6,8 @@
 
 ## Core Values
 
-- **Maximize P(Win):** Optimize expected leaderboard and Phase 2 ($250k / $395k expert-reviewed evaluation) return per scarce submission slot. Never burn a weekly slot on cosmetic edits, duplicate `H19-5` clones, or candidates that fail to beat the spatially-blocked holdout benchmark.
-- **Own the Outcome:** Automated code gates — never manual human inspection — verify `[0, 1]` GeoTIFF range safety, zero NaNs, leakage canaries, registry uniqueness, and holdout statistical significance end-to-end. Fix shared template defects at the root and document every irregularity and negative result transparently.
+- **Maximize P(Win):** Optimize expected performance on both leaderboard and expert-reviewed evaluation per scarce submission slot. Never burn a weekly slot on cosmetic edits, duplicate `H19-5` clones, or candidates that fail to beat the spatially-blocked holdout benchmark.
+- **Own the Outcome:** Automated code gates — never manual human inspection — verify `[0, 1]` GeoTIFF range safety and zero NaNs **inside the footprint**, leakage canaries, registry uniqueness, and holdout statistical significance end-to-end. Fix shared template defects at the root and document every irregularity and negative result transparently; independently confirm the required exterior encoding.
 
 ---
 
@@ -27,7 +27,7 @@ Focus on the highest-scoring submissions from the following 9 focus sites:
 
 ### PhD-Level Forensic Analysis & Scientific Hypothesis Mandate
 
-1. **Study, analyze, and understand `0.2778`:** Explain why and how `GEMSDOE32` (`https://buffedlizard55-lab.github.io/GEMSDOE32/`, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`: `0.2778` USER/OWNER-REPORTED, unverified) achieved the highest score across the focus sites, and whether/how a new strategy can score higher (`> 0.2778`, targeting `#5 = 0.3195` and public `#1 = 0.4413`).
+1. **Study, analyze, and understand `0.2778`:** Investigate `GEMSDOE32` (`https://buffedlizard55-lab.github.io/GEMSDOE32/`, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`: `0.2778` USER/OWNER-REPORTED, unverified) and whether a new strategy can exceed it. The user's `0.3195` and `0.4413` targets are historical reported values, not verified current rankings; the 2026-10-27 public snapshot was #5 `0.3566` and #1 `0.4544`. Do not infer hidden-score causes or claim a new improvement without evidence.
 2. **Pre-Implementation Hypotheses (3–5 Untried Geological Hypotheses):** Emphasizing scientific discovery of geothermal vents and unmapped faults, propose 3–5 concrete hypotheses before writing model code, specifying for each:
    - Exact layer(s) involved
    - Physical fault signature or mathematical transform targeted (plus named non-fault mimic process)
@@ -52,4 +52,4 @@ Focus on the highest-scoring submissions from the following 9 focus sites:
 
 ### Session Addenda (fulfilment record — newest first)
 
-- **Session 3 (2026-10-27, KG2-S3 GMV):** Forensic mandate fulfilled in `research/2026-10-27_gmv_forensic_02778.md` (0.2778 = precision surgery on the shared H19-5 manifold; path past it = off-manifold discovery, not more pruning); hypotheses mandate fulfilled in `knowledge/03_preregistered_hypotheses_gmv_20261027.md` (5 ranked, top-2 implemented and validated: H1 geomorph HOLDOUT-DTI HR Δ+0.0184 CI+, H2 vent corridors no incremental value). Three GMV experiments ran in 716 s (budget: 3 exp / 2 h); verdict **negative** on SGMC significance + uniqueness vs own retracted file ([run card](evidence/gmv_run_card_20261027.json)). No new file; best submission remains the Session-2 DSLUP unique-slot TIF. Leaderboard targets in the original mandate are stale: observed 2026-10-28T00:05Z, public #1 = 0.4544, #5 = 0.3566, #25 = 0.3195 (`docs/data/public_leaderboard.json`).
+- **Session 3 (2026-10-27, KG2-S3 GMV):** Forensic mandate fulfilled in `research/2026-10-27_gmv_forensic_02778.md` (0.2778 = precision surgery on the shared H19-5 manifold; path past it = off-manifold discovery, not more pruning); hypotheses mandate fulfilled in `knowledge/03_preregistered_hypotheses_gmv_20261027.md` (5 ranked, top-2 implemented and validated: H1 geomorph HOLDOUT-DTI HR Δ+0.0184 CI+, H2 vent corridors no incremental value). Three GMV experiments ran in 716 s (budget: 3 exp / 2 h); verdict **negative** on SGMC significance + uniqueness vs own retracted file ([run card](evidence/gmv_run_card_20261027.json)). No GMV file emitted; this lane concurs with main's fail-closed DO-NOT-SUBMIT decision (Session-2 DSLUP promotion superseded by the literal rule). Leaderboard targets in the original mandate are stale: observed 2026-10-28T00:05Z, public #1 = 0.4544, #5 = 0.3566, #25 = 0.3195 (`docs/data/public_leaderboard.json`).
