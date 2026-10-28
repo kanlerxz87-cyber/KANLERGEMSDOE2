@@ -52,7 +52,7 @@ def test_hptr_module_synthetic_transforms_finite_and_fold_honest() -> None:
     assert not np.allclose(tip_a, tip_b)
 
 
-def test_hptr_preregistration_and_81_channel_canary() -> None:
+def test_hptr_preregistration_and_archived_canary_record() -> None:
     prereg = _load("registry/preregistration_hptr_20261027.json")
     assert prereg["lane_id"] == "KG2-S3-HPTR"
     assert len(prereg["hypotheses_ranked"]) == 4
@@ -62,6 +62,8 @@ def test_hptr_preregistration_and_81_channel_canary() -> None:
     for hid in ("H-S3-1", "H-S3-2", "H-S3-3", "H-S3-4"):
         assert hid in hyp_md
 
+    # These assertions check the archived JSON's internal shape only. They do
+    # not replay the feature canary or establish that its assumptions hold.
     canary = _load("evidence/hptr_leakage_canary_20261027.json")
     assert canary["total_features_tested"] == 81
     assert canary["passed"] is True
@@ -71,7 +73,7 @@ def test_hptr_preregistration_and_81_channel_canary() -> None:
     assert all(f["oriented_auc"] <= 0.90 for f in hptr_feats)
 
 
-def test_hptr_run_card_geotiff_and_three_suite_dominance() -> None:
+def test_hptr_archived_card_and_geotiff_remain_negative() -> None:
     rc_bytes = (ROOT / "evidence/session3_hptr_run_card_20261027.json").read_bytes()
     dl_bytes = (ROOT / "docs/downloads/hptr_run_card.json").read_bytes()
     assert rc_bytes == dl_bytes
@@ -91,22 +93,15 @@ def test_hptr_run_card_geotiff_and_three_suite_dominance() -> None:
     assert rc["budget"]["within_budget"] is True
     assert 0 < len(rc["submission_note"]) <= 140
 
-    # Beats 0.2778 GEMSDOE32 champion across ALL THREE blind holdout benchmarks simultaneously
+    # The archived JSON is not an independent holdout replay. Check only that
+    # the recorded fields are present and numerically bounded, not dominance.
     hr = rc["holdout_dti"]["primary_hide_and_recover"]
     sg = rc["holdout_dti"]["secondary_off_catalogue_sgmc"]
     cp = rc["holdout_dti"]["tertiary_concealed_piedmont_c_pied"]
-    assert hr["pooled_dti"] > hr["champion_02778_same_evaluator"]
-    assert hr["paired_delta_ci95"][0] > 0.0 and hr["ci95_strictly_positive"] is True
-    assert sg["sgmc_prevalence_calibrated_dti"] > sg["champion_02778_same_evaluator"]
-    assert sg["paired_delta_ci95"][0] > 0.0 and sg["ci95_strictly_positive"] is True
-    assert cp["pooled_dti"] > cp["champion_02778_same_evaluator"]
-
-    # Binary (r>=0.5) non-blanket detector uniqueness & Spearman checks
-    reg = rc["registry_comparison"]
-    assert reg["pre_placement_surface_max_abs_spearman"] < 0.90
-    assert reg["final_dots_max_abs_spearman"] < 0.90
-    assert reg["final_dots_max_detector_3px_overlap"] <= 0.70
-    assert rc["max_overlap_vs_all_kanlergemsdoe2_rasters"] <= 0.50
+    assert 0 <= hr["pooled_dti"] <= 1
+    assert 0 <= sg["sgmc_prevalence_calibrated_dti"] <= 1
+    assert 0 <= cp["pooled_dti"] <= 1
+    assert "registry_comparison" in rc  # its pre-placement claims are not replayed here
 
     # GeoTIFF, ZIP, sidecar & DO-NOT-SUBMIT guard verification
     tif_path = ROOT / "docs/downloads" / rc["raster_filename"]
@@ -158,15 +153,13 @@ def test_hptr_run_card_geotiff_and_three_suite_dominance() -> None:
     assert out["verdict"] == "negative" and out["ok_to_submit"] is False
 
 
-def test_hptr_123_repo_fleet_audit_and_site_sync() -> None:
+def test_hptr_historical_fleet_receipt_and_site_sync() -> None:
     fl = _load("evidence/hptr_full_fleet_audit_20261027.json")
     assert len(fl["focus_nine_audit"]) == 9
     assert len(fl["sister_24_audit"]) == 21
-    for r in fl["focus_nine_audit"]:
-        assert r["hptr_exp2_in_peer_3px_overlap"] <= 0.50
-    for sr in fl["sister_24_audit"]:
-        if sr["site"] != "KANLERGEMSDOE2" and sr["representative_raster"] is not None:
-            assert sr["representative_raster"]["hptr_exp2_in_peer_3px_overlap"] <= 0.50
+    # Receipt completeness is not an independent fleet comparison or clearance.
+    assert all("site" in row for row in fl["focus_nine_audit"])
+    assert all("site" in row for row in fl["sister_24_audit"])
 
     expected_sisters = {
         "KANLERGEMSDOE1", "KANLERGEMSDOE2", "KANLERGEMSDOE3",
@@ -183,7 +176,12 @@ def test_hptr_123_repo_fleet_audit_and_site_sync() -> None:
     assert "kg2s3_hptr_lane" in feed
     assert feed["kg2s3_hptr_lane"]["verdict"] == "negative"
     assert feed["kg2s3_hptr_lane"]["ok_to_submit"] is False
-    assert feed["kg2s3_hptr_lane"]["beats_02778_across_all_three_blind_holdouts"] is True
+    lane = feed["kg2s3_hptr_lane"]
+    assert lane["historical_holdouts_independently_replayed"] is False
+    assert lane["feature_canary_independently_replayed"] is False
+    assert lane["full_registry_independently_checked"] is False
+    assert lane["literal_witness_overlap"] > 0.70
+    assert "beats_02778_across_all_three_blind_holdouts" not in lane
 
     for page_name in ("index.html", "executive-summary.html", "submission-table.html", "research.html", "irregularities.html"):
         html_txt = (ROOT / "docs" / page_name).read_text(encoding="utf-8")

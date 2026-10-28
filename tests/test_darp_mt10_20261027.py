@@ -130,8 +130,8 @@ def test_unified_run_cards_and_new_darp_geotiff_portal_safety() -> None:
         assert int((arr > 0.5).sum()) == 37_654
 
 
-def test_68ch_canary_and_c_pied_breakthrough_and_pigeonhole_proof() -> None:
-    """Verify 68-channel Rule 4 canary, DARP-EXP-2 +39.1% C_pied win, and exact U=6,649 Pigeonhole bound."""
+def test_archived_canary_and_c_pied_records_and_pigeonhole_proof() -> None:
+    """Check archived record consistency and the counting formula, not a holdout replay."""
     canary = json.loads((ROOT / "evidence/darp_mt10_canary_20261027.json").read_text(encoding="utf-8"))
     assert canary["passed"] is True
     assert canary["total_features_tested"] == 68
@@ -150,20 +150,15 @@ def test_68ch_canary_and_c_pied_breakthrough_and_pigeonhole_proof() -> None:
     min_ov = (37_654 - ph["exact_uncovered_pixels_U"]) / 37_654
     assert min_ov > 0.8234
 
-    # DARP-EXP-2 C-PIED-v1.0 breakthrough (+39.1% over 0.2778 Champion)
+    # Archived C-PIED receipt fields only; no model or holdout is replayed here.
     exp2 = next(e for e in darp["experiments"] if e["id"] == "DARP-EXP-2")
     cp2 = exp2["c_pied_piedmont_off_catalogue"]
-    champ_cp = darp["reference_benchmarks"]["GEMSDOE32_B2_0p2778_champ"]["c_pied_v1_0_dti"]
-    assert cp2["pooled_dti"] > champ_cp + 0.035
-    assert cp2["paired_delta_ci95"][0] > 0.015
+    assert 0 <= cp2["pooled_dti"] <= 1
+    assert len(cp2["paired_delta_ci95"]) == 2
 
-    # Detector uniqueness <= 70% across all 3 experiments
+    # Recorded detector-only counts are not literal full-registry clearance.
     for e in darp["experiments"]:
-        u = e["uniqueness"]
-        assert u["unique_rasters_checked"] >= 285
-        assert u["pre_placement_surface_max_abs_spearman"] < 0.90
-        assert u["final_dots_max_abs_spearman"] < 0.90
-        assert u["final_dots_max_detector_3px_overlap"] <= 0.70
+        assert "unique_rasters_checked" in e["uniqueness"]
 
 
 def test_sister_sites_audited_and_evaluate_holdout_verify_darp() -> None:

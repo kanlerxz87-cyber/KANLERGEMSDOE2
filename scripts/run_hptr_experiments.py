@@ -310,6 +310,14 @@ def _overlap_3px_asym(dots_2d: np.ndarray, peer_2d: np.ndarray) -> float:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

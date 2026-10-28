@@ -80,8 +80,20 @@ def load_reference(root: Path, data: Path) -> dict:
 def forced_budget_result(ref: dict, dots: int) -> dict:
     if type(dots) is not int or not 1 <= dots <= int(ref["foot"].sum()):
         raise ValueError("Candidate budget must fit in the footprint")
-    u = ref["uncovered"]
+    u = int((ref["foot"] & ~ref["near"]).sum())
+    if u != ref["uncovered"]:
+        raise ValueError("Reference uncovered count does not match its masks")
     minimum_overlap = max(0, dots - u)
+    # A frozen method may also prohibit catalogue pixels. This stricter domain
+    # is reported separately: the unconditional bound above alone proves STOP.
+    eligible = ref["foot"] & ~ref["catalogue"]
+    eligible_count = int(eligible.sum())
+    off_catalogue_uncovered = int((eligible & ~ref["near"]).sum())
+    fits_off_catalogue = dots <= eligible_count
+    # At a strict >70% stop, 70% itself is allowed. Integer arithmetic avoids
+    # rounding a boundary case into the wrong decision: 3*K <= 10*U.
+    max_budget = min(int(ref["foot"].sum()), 10 * u // 3)
+    max_off_catalogue_budget = min(eligible_count, 10 * off_catalogue_uncovered // 3)
     return {
         "candidate_dot_budget": dots,
         "footprint_pixels": int(ref["foot"].sum()),
@@ -90,11 +102,19 @@ def forced_budget_result(ref: dict, dots: int) -> dict:
         "uncovered_pixels": u,
         "minimum_overlapping_dots": minimum_overlap,
         "minimum_directional_overlap": minimum_overlap / dots,
+        "maximum_budget_not_forced_by_witness": max_budget,
+        "off_catalogue_eligible_pixels": eligible_count,
+        "off_catalogue_uncovered_pixels": off_catalogue_uncovered,
+        "budget_fits_off_catalogue": fits_off_catalogue,
+        "minimum_overlap_off_catalogue": (
+            max(0, dots - off_catalogue_uncovered) / dots if fits_off_catalogue else None
+        ),
+        "maximum_off_catalogue_budget_not_forced_by_witness": max_off_catalogue_budget,
         "limit": 0.70,
         "forced_duplicate": novelty.budget_forced_duplicate(u, dots),
         "witness_filename": WITNESS_NAME,
         "witness_sha256": WITNESS_SHA,
-        "scope": "Exact counting lower bound for any set of distinct in-footprint dots; not a complete registry audit",
+        "scope": "Exact counting lower bound for any set of distinct in-footprint dots; not a complete registry audit. A smaller budget is not clearance or permission to change the frozen lane.",
     }
 
 

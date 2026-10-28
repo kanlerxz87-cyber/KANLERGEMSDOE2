@@ -23,6 +23,14 @@ FOCUS = {"GEMSDOE24": "h25-1-dotted-h19-5-d1-5", "GEMSDOE25": "dotted-h19-5-d2-8
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     sel = json.loads((ROOT / "evidence/kg2s3_lli_design_cv.json").read_text())["selected"]
     z, fm, meta, active = cv.load()
     full = lope.full_spec(fm, active)

@@ -1,1 +1,12 @@
-{"evidence_class": "ORGANIZER PUBLIC LEADERBOARD OBSERVATION; not a submission-page receipt", "fifth_public_dti": 0.3566, "observed_utc": "2026-10-28T00:05:00Z", "ranks": {"rank_1": 0.4544, "rank_10": 0.3379, "rank_2": 0.3916, "rank_20": 0.3273, "rank_25": 0.3195, "rank_3": 0.3911, "rank_30": 0.3113, "rank_4": 0.3724, "rank_48": 0.2874, "rank_49": 0.2858, "rank_5": 0.3566, "rank_50": 0.2857}, "source_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/", "status": "verified_snapshot", "time_precision": "minute; fetched via research page-fetch tool 2026-10-28T00:05Z", "top_public_dti": 0.4544, "warning": "Ranks move as teams submit (#49 sam35 submitted ~7h before this snapshot). Public scores may differ from final private scores."}
+{
+  "status": "verified_snapshot",
+  "source_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "retrieved_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard_partial/?page=1",
+  "observed_utc": "2026-10-28T16:37:28.368628+00:00",
+  "top_public_dti": 0.4544,
+  "fifth_public_dti": 0.357,
+  "evidence_class": "ORGANIZER PUBLIC LEADERBOARD OBSERVATION; not a submission-page receipt",
+  "verification": "GitHub Actions ran the public partial parser; values and timestamp were captured in a public check-run annotation.",
+  "verification_url": "https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2/actions/runs/40727757132",
+  "warning": "Dated public leaderboard snapshot only; scores and account quota can change. No file-specific result is established."
+}

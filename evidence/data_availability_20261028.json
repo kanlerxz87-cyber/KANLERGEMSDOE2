@@ -1,0 +1,484 @@
+{
+  "schema": "gems.local-mirror-input-audit.v1",
+  "checked_utc": "2026-10-28T16:21:12.602331+00:00",
+  "manifest_sha256": "8e82239c1569ddc1d6d0a6bc42d37802b909abec23337be402b27db0dc53f1e6",
+  "requested_group": "all",
+  "groups": {
+    "core": {
+      "verified": 4,
+      "total": 4
+    },
+    "external": {
+      "verified": 30,
+      "total": 30
+    },
+    "scored": {
+      "verified": 12,
+      "total": 12
+    }
+  },
+  "complete": true,
+  "provenance": "Owner-hosted mirrors only. SHA-256 matching does not authenticate organizer or official-source provenance.",
+  "files": [
+    {
+      "id": "training_features",
+      "group": "core",
+      "dest": "training_features.tif",
+      "expected_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "expected_bytes": 418912844,
+      "status": "verified",
+      "actual_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+      "bytes": 418912844
+    },
+    {
+      "id": "labels",
+      "group": "core",
+      "dest": "labels.tif",
+      "expected_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "expected_bytes": 425830,
+      "status": "verified",
+      "actual_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "bytes": 425830
+    },
+    {
+      "id": "existing_faults",
+      "group": "core",
+      "dest": "existing_faults.tif",
+      "expected_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "expected_bytes": 425830,
+      "status": "verified",
+      "actual_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+      "bytes": 425830
+    },
+    {
+      "id": "sample_submission",
+      "group": "core",
+      "dest": "sample_submission.tif",
+      "expected_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "expected_bytes": 1599597,
+      "status": "verified",
+      "actual_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "bytes": 1599597
+    },
+    {
+      "id": "ext_lidar_scarp_features_u8",
+      "group": "external",
+      "dest": "external/lidar_scarp_features_u8.tif",
+      "expected_sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+      "expected_bytes": 36943606,
+      "status": "verified",
+      "actual_sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+      "bytes": 36943606
+    },
+    {
+      "id": "ext_geodawn_rad_u8",
+      "group": "external",
+      "dest": "external/geodawn_rad_u8.tif",
+      "expected_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+      "expected_bytes": 26612970,
+      "status": "verified",
+      "actual_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+      "bytes": 26612970
+    },
+    {
+      "id": "ext_geodawn_extensions_u8",
+      "group": "external",
+      "dest": "external/geodawn_extensions_u8.tif",
+      "expected_sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+      "expected_bytes": 27132925,
+      "status": "verified",
+      "actual_sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+      "bytes": 27132925
+    },
+    {
+      "id": "ext_derived_sgmc_faults_100m_u8",
+      "group": "external",
+      "dest": "external/derived_sgmc_faults_100m_u8.tif",
+      "expected_sha256": "643cbe992ef4ba37588fb469163ed8291e3ceb23d6c1f78a3cfaa462430c2da0",
+      "expected_bytes": 198602,
+      "status": "verified",
+      "actual_sha256": "643cbe992ef4ba37588fb469163ed8291e3ceb23d6c1f78a3cfaa462430c2da0",
+      "bytes": 198602
+    },
+    {
+      "id": "ext_gdr_wellspring_in_footprint",
+      "group": "external",
+      "dest": "external/gdr_wellspring_in_footprint.csv",
+      "expected_sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea",
+      "expected_bytes": 2146771,
+      "status": "verified",
+      "actual_sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea",
+      "bytes": 2146771
+    },
+    {
+      "id": "ext_gdr_qfaults_traces",
+      "group": "external",
+      "dest": "external/gdr_qfaults_traces.csv",
+      "expected_sha256": "9702f2e5c382a4f472ae834d22b94990983b059677a37adfafd51c50f75e643c",
+      "expected_bytes": 126177,
+      "status": "verified",
+      "actual_sha256": "9702f2e5c382a4f472ae834d22b94990983b059677a37adfafd51c50f75e643c",
+      "bytes": 126177
+    },
+    {
+      "id": "ext_gdr_volcanic_vents_in_footprint",
+      "group": "external",
+      "dest": "external/gdr_volcanic_vents_in_footprint.csv",
+      "expected_sha256": "f91bafbaccaaf2754e71d60434fc0f9eb2c7b880c6e714883f4974542ff6a0bf",
+      "expected_bytes": 672,
+      "status": "verified",
+      "actual_sha256": "f91bafbaccaaf2754e71d60434fc0f9eb2c7b880c6e714883f4974542ff6a0bf",
+      "bytes": 672
+    },
+    {
+      "id": "scored_h19_5",
+      "group": "scored",
+      "dest": "scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "expected_sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
+      "expected_bytes": 1712322,
+      "status": "verified",
+      "actual_sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
+      "bytes": 1712322
+    },
+    {
+      "id": "scored_h19_4",
+      "group": "scored",
+      "dest": "scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+      "expected_sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+      "expected_bytes": 1716768,
+      "status": "verified",
+      "actual_sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+      "bytes": 1716768
+    },
+    {
+      "id": "scored_h16_1",
+      "group": "scored",
+      "dest": "scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+      "expected_sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea",
+      "expected_bytes": 1718028,
+      "status": "verified",
+      "actual_sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea",
+      "bytes": 1718028
+    },
+    {
+      "id": "scored_d15_scored",
+      "group": "scored",
+      "dest": "scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "expected_sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "expected_bytes": 1632732,
+      "status": "verified",
+      "actual_sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "bytes": 1632732
+    },
+    {
+      "id": "scored_d28_unscored",
+      "group": "scored",
+      "dest": "scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "expected_sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "expected_bytes": 1603424,
+      "status": "verified",
+      "actual_sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "bytes": 1603424
+    },
+    {
+      "id": "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou",
+      "group": "scored",
+      "dest": "scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "expected_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "expected_bytes": 1706456,
+      "status": "verified",
+      "actual_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "bytes": 1706456
+    },
+    {
+      "id": "calib_8GEMSDOE_Hedge-v2_submission",
+      "group": "scored",
+      "dest": "scored/8GEMSDOE_Hedge-v2_submission.tif",
+      "expected_sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792",
+      "expected_bytes": 736494,
+      "status": "verified",
+      "actual_sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792",
+      "bytes": 736494
+    },
+    {
+      "id": "calib_gems10-h25-ctx-ridge-20260927T2329477041",
+      "group": "scored",
+      "dest": "scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "expected_sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+      "expected_bytes": 1772935,
+      "status": "verified",
+      "actual_sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+      "bytes": 1772935
+    },
+    {
+      "id": "calib_gems10-h28-dotted-ridge-20260928T0202562",
+      "group": "scored",
+      "dest": "scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "expected_sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+      "expected_bytes": 1620739,
+      "status": "verified",
+      "actual_sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+      "bytes": 1620739
+    },
+    {
+      "id": "calib_gemsdoe-ens12-adopted-7f00890a",
+      "group": "scored",
+      "dest": "scored/gemsdoe-ens12-adopted-7f00890a.tif",
+      "expected_sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+      "expected_bytes": 570890,
+      "status": "verified",
+      "actual_sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+      "bytes": 570890
+    },
+    {
+      "id": "calib_gemsdoe9-PLACEHOLDER-2314b599",
+      "group": "scored",
+      "dest": "scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
+      "expected_sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+      "expected_bytes": 439456,
+      "status": "verified",
+      "actual_sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+      "bytes": 439456
+    },
+    {
+      "id": "scored_gems27_tgc_v2_d15",
+      "group": "scored",
+      "dest": "scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "expected_sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "expected_bytes": 1635084,
+      "status": "verified",
+      "actual_sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "bytes": 1635084
+    },
+    {
+      "id": "ext_gdr_2m_temp_probes_zip",
+      "group": "external",
+      "dest": "external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+      "expected_sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3",
+      "expected_bytes": 1080530,
+      "status": "verified",
+      "actual_sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3",
+      "bytes": 1080530
+    },
+    {
+      "id": "ext_gdr_paleo_geothermal_zip",
+      "group": "external",
+      "dest": "external/paleo_geothermal_regional.zip",
+      "expected_sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca",
+      "expected_bytes": 84008,
+      "status": "verified",
+      "actual_sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca",
+      "bytes": 84008
+    },
+    {
+      "id": "ext_tiger_road_distance_m",
+      "group": "external",
+      "dest": "external/tiger_road_distance_m.tif",
+      "expected_sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+      "expected_bytes": 10492276,
+      "status": "verified",
+      "actual_sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+      "bytes": 10492276
+    },
+    {
+      "id": "ext_dem10_curv_absmax_f32",
+      "group": "external",
+      "dest": "dem10/dem10_curv_absmax.f32.npy",
+      "expected_sha256": "58e82f1301032b46b10344b9299b83e6ce5bed1ca83e320f078fa57321bff632",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "58e82f1301032b46b10344b9299b83e6ce5bed1ca83e320f078fa57321bff632",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_hgm200_mean_f32",
+      "group": "external",
+      "dest": "dem10/dem10_hgm200_mean.f32.npy",
+      "expected_sha256": "9328f889f4d607f8530840da138741b7431da49d2432b0ab2da110a82984102b",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "9328f889f4d607f8530840da138741b7431da49d2432b0ab2da110a82984102b",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_hgm20_max_f32",
+      "group": "external",
+      "dest": "dem10/dem10_hgm20_max.f32.npy",
+      "expected_sha256": "f58df86b0be3b3dc54affc60dc7d77a95db3dafb9c1267eac4912c5d8e57526b",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "f58df86b0be3b3dc54affc60dc7d77a95db3dafb9c1267eac4912c5d8e57526b",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_hgm50_max_f32",
+      "group": "external",
+      "dest": "dem10/dem10_hgm50_max.f32.npy",
+      "expected_sha256": "1cca42538ec0c91951b578136893eb5d90cd1414c45257d2a72ebe80b29f0f40",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "1cca42538ec0c91951b578136893eb5d90cd1414c45257d2a72ebe80b29f0f40",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_onesided_f32",
+      "group": "external",
+      "dest": "dem10/dem10_onesided.f32.npy",
+      "expected_sha256": "02d1d241de9534d307f314d0b2f8a857ceb1ce0d099fd7dee8872a83bd0271f8",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "02d1d241de9534d307f314d0b2f8a857ceb1ce0d099fd7dee8872a83bd0271f8",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_onesided3_f32",
+      "group": "external",
+      "dest": "dem10/dem10_onesided3.f32.npy",
+      "expected_sha256": "bca9faf8e0c572ecb1e77b6c94b0cb96c41e824873cb7747e0ece28b531598d2",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "bca9faf8e0c572ecb1e77b6c94b0cb96c41e824873cb7747e0ece28b531598d2",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_resid_range_f32",
+      "group": "external",
+      "dest": "dem10/dem10_resid_range.f32.npy",
+      "expected_sha256": "bbcf8a462ace31a80964ba8a7ab76fcbcb347deb4f4d2919166b3eda5c721b0c",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "bbcf8a462ace31a80964ba8a7ab76fcbcb347deb4f4d2919166b3eda5c721b0c",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_resid_std_f32",
+      "group": "external",
+      "dest": "dem10/dem10_resid_std.f32.npy",
+      "expected_sha256": "50db8caa815cb09cc695ec230f15f41e8e04cd9bef5fc09b07b06aeadd44a86e",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "50db8caa815cb09cc695ec230f15f41e8e04cd9bef5fc09b07b06aeadd44a86e",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_slope_max_f32",
+      "group": "external",
+      "dest": "dem10/dem10_slope_max.f32.npy",
+      "expected_sha256": "fd46738e9a58a6f40c130c3c70f645525dbfc12d27b6ed149e596e6a379cbfaa",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "fd46738e9a58a6f40c130c3c70f645525dbfc12d27b6ed149e596e6a379cbfaa",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_slope_mean_f32",
+      "group": "external",
+      "dest": "dem10/dem10_slope_mean.f32.npy",
+      "expected_sha256": "338b443c441db61120faf36437ec61dfcccaa569c41aa3099ed3accef5a35f95",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "338b443c441db61120faf36437ec61dfcccaa569c41aa3099ed3accef5a35f95",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_slope_std_f32",
+      "group": "external",
+      "dest": "dem10/dem10_slope_std.f32.npy",
+      "expected_sha256": "9c15e0e760d8255eb0473821a07cc09e4fe4b40746e6e37278e691f615c0f642",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "9c15e0e760d8255eb0473821a07cc09e4fe4b40746e6e37278e691f615c0f642",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_steep_ratio_max_f32",
+      "group": "external",
+      "dest": "dem10/dem10_steep_ratio_max.f32.npy",
+      "expected_sha256": "eaf3d5e24c6769ffb98665e75c9665dbaa16bdb79708900217dca955031e6828",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "eaf3d5e24c6769ffb98665e75c9665dbaa16bdb79708900217dca955031e6828",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_dem10_valid_frac_f32",
+      "group": "external",
+      "dest": "dem10/dem10_valid_frac.f32.npy",
+      "expected_sha256": "35d7ef0719bfed93f9aed927afd8c51882283fc7316cab0f8c219c9302b92122",
+      "expected_bytes": 20669620,
+      "status": "verified",
+      "actual_sha256": "35d7ef0719bfed93f9aed927afd8c51882283fc7316cab0f8c219c9302b92122",
+      "bytes": 20669620
+    },
+    {
+      "id": "ext_manifest",
+      "group": "external",
+      "dest": "dem10/manifest.json",
+      "expected_sha256": "bfb79f39be0737b448b1a3bf5432db168a77d6786240eafdca352e7a87400f0d",
+      "expected_bytes": 13194,
+      "status": "verified",
+      "actual_sha256": "bfb79f39be0737b448b1a3bf5432db168a77d6786240eafdca352e7a87400f0d",
+      "bytes": 13194
+    },
+    {
+      "id": "ext_h52_scarp3m_100m_tif",
+      "group": "external",
+      "dest": "external/h52_scarp3m_100m.tif",
+      "expected_sha256": "b5e53d67c3a7d3d1ca44ae04ae1e84d8574857da3fcd5e34ba47276d6c04b923",
+      "expected_bytes": 43839078,
+      "status": "verified",
+      "actual_sha256": "b5e53d67c3a7d3d1ca44ae04ae1e84d8574857da3fcd5e34ba47276d6c04b923",
+      "bytes": 43839078
+    },
+    {
+      "id": "ext_h52_scarp3m_100m_json",
+      "group": "external",
+      "dest": "external/h52_scarp3m_100m.json",
+      "expected_sha256": "95d9e65347e097be55530af70d3e289676bc16bbd12f4caee99cd3ca4b55453e",
+      "expected_bytes": 53897,
+      "status": "verified",
+      "actual_sha256": "95d9e65347e097be55530af70d3e289676bc16bbd12f4caee99cd3ca4b55453e",
+      "bytes": 53897
+    },
+    {
+      "id": "ext_sb_heat_flow",
+      "group": "external",
+      "dest": "external/sb_heat_flow_in_footprint.csv",
+      "expected_sha256": "9845263e658aeb66a4aeca6e64d995e74f0eb14b89768219ea9d223006dc8baf",
+      "expected_bytes": 909294,
+      "status": "verified",
+      "actual_sha256": "9845263e658aeb66a4aeca6e64d995e74f0eb14b89768219ea9d223006dc8baf",
+      "bytes": 909294
+    },
+    {
+      "id": "ext_gb_regional_stress_grid_10km",
+      "group": "external",
+      "dest": "external/gb_regional_stress_grid_10km.csv",
+      "expected_sha256": "9e01d5de2b6070816513e163a8f34cf19559630d497ef8ddc60b4d18565140ef",
+      "expected_bytes": 47627,
+      "status": "verified",
+      "actual_sha256": "9e01d5de2b6070816513e163a8f34cf19559630d497ef8ddc60b4d18565140ef",
+      "bytes": 47627
+    },
+    {
+      "id": "ext_usgs_comcat_geodawn",
+      "group": "external",
+      "dest": "external/usgs_comcat_geodawn.csv",
+      "expected_sha256": "c580226b3b0516653873b87077edb8e164c3545e9bc1e7c764789c52bdd30624",
+      "expected_bytes": 600662,
+      "status": "verified",
+      "actual_sha256": "c580226b3b0516653873b87077edb8e164c3545e9bc1e7c764789c52bdd30624",
+      "bytes": 600662
+    },
+    {
+      "id": "ext_usgs_heat_flow_wells_epsg32611",
+      "group": "external",
+      "dest": "external/usgs_heat_flow_wells_epsg32611.csv",
+      "expected_sha256": "9773bf59340e06901b2855d30b1972dc91374a5d344a8324452f9bb69304e370",
+      "expected_bytes": 139607,
+      "status": "verified",
+      "actual_sha256": "9773bf59340e06901b2855d30b1972dc91374a5d344a8324452f9bb69304e370",
+      "bytes": 139607
+    }
+  ]
+}

@@ -15,6 +15,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     rc_path = ROOT / "evidence/session3_hptr_run_card_20261027.json"
     dl_rc_path = ROOT / "docs/downloads/hptr_run_card.json"
     rc = json.loads(rc_path.read_text(encoding="utf-8"))

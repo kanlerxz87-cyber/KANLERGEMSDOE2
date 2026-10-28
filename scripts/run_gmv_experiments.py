@@ -116,6 +116,14 @@ def _canary_new_channels(X_gmv: np.ndarray, ctx, foot: np.ndarray, fp_idx_2d: np
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

@@ -66,6 +66,10 @@ def test_both_legacy_validator_modes_fail_closed_on_unavailable_inputs(tmp_path)
 @pytest.mark.parametrize("runner", [
     "run_dslup_experiments.py", "run_dslup_unique_slot.py", "run_darp_mt10_experiments.py",
     "run_ecpu_experiments.py", "run_cpr_experiments.py",
+    "run_cvc300_experiments.py", "run_gmv_experiments.py", "run_hptr_experiments.py",
+    "run_trbvc_experiments.py", "run_kg2s3_lope.py", "run_kg2s3_evaluate.py",
+    "run_kg2s3_focus_lli.py", "run_kg2s3_ledger_design.py", "run_kg2s3_lli_cv.py",
+    "sync_hptr_receipts_20261027.py",
 ])
 def test_parallel_legacy_runners_stop_before_fit_or_write(tmp_path, runner):
     p = subprocess.run([sys.executable, str(ROOT / "scripts" / runner)],

@@ -42,6 +42,14 @@ def strip(d: dict) -> dict:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     t0 = time.time()
     ddir, wdir = data_dir(), work_dir() / "kg2s3"
     emis = json.loads((ROOT / "evidence/kg2s3_lope_emission.json").read_text())

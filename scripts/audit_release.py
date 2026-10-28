@@ -92,11 +92,28 @@ def audit_focus(ref: dict, data: Path) -> tuple[list[dict], dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", type=Path, default=ROOT / "evidence/release_audit_20261027.json")
-    ap.add_argument("--card-out", type=Path, default=ROOT / "evidence/current_run_card.json")
+    ap.add_argument("--out", type=Path, default=None, help="Audit receipt (default: data cache; use a new path to preserve old receipts)")
+    ap.add_argument("--card-out", type=Path, default=None, help="Run card (default: data cache)")
     ap.add_argument("--data-dir", type=Path, default=None)
     args = ap.parse_args()
     data = args.data_dir or data_dir()
+    args.out = args.out or data / "release_audit_current.json"
+    args.card_out = args.card_out or data / "current_run_card.json"
+    if args.out.resolve() == args.card_out.resolve():
+        raise ValueError("Audit and run card outputs must be different files")
+    manifest_path = ROOT / "registry/data_manifest.json"
+    focus_manifest_path = ROOT / "registry/focus_sites_20261027.json"
+    manifest = json.loads(manifest_path.read_text())
+    focus_manifest = json.loads(focus_manifest_path.read_text())
+    protected = {manifest_path.resolve(), focus_manifest_path.resolve(),
+                 (ROOT / "registry/comparison_registry.json").resolve(),
+                 (ROOT / "docs/data/footprint.bin").resolve()}
+    protected.update((data / row["dest"]).resolve() for row in manifest["files"])
+    protected.update((data / "focus_20261027" / (row["site"] + "__" + Path(row["path"]).name)).resolve()
+                     for row in focus_manifest["sites"])
+    protected.update(p.resolve() for p in (ROOT / "docs/downloads").glob("*.tif"))
+    if args.out.resolve() in protected or args.card_out.resolve() in protected:
+        raise ValueError("Audit output must not overwrite a reference or research TIFF")
     ref = load_reference(ROOT, data)
     budget = forced_budget_result(ref, 37654)
     old = json.loads((ROOT / "evidence/run_card.json").read_text())
@@ -145,7 +162,10 @@ def main() -> int:
         "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
         "holdout_dti": None,
         "holdout_ci95": None,
+        "holdout_evaluator_version": None,
+        "withheld_positive_count": None,
         "holdout_status": "Not measured in this session: stopped before fit. Prior results are historical, not replayed.",
+        "feature_canary_status": "Not run: the literal-registry feasibility gate stopped this lane before any new experiment.",
         "correlation_overlap_vs_registry": {
             "surface_pre_placement": None,
             "surface_status": "No new surface was built or compared",
@@ -155,6 +175,8 @@ def main() -> int:
             "prior_dslup_final_dots_overlap_vs_witness": dslup["witness_overlap_fraction"],
             "witness_sha256": WITNESS_SHA,
             "unavoidable_overlap_at_registered_budget": budget["minimum_directional_overlap"],
+            "unavoidable_overlap_off_catalogue": budget["minimum_overlap_off_catalogue"],
+            "maximum_off_catalogue_budget_not_forced_by_witness": budget["maximum_off_catalogue_budget_not_forced_by_witness"],
             "complete_registry_checked": False,
         },
         "raster_sha256": None,

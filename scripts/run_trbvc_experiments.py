@@ -522,6 +522,14 @@ def _extract_ci95(ci_obj) -> list[float]:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     t_start = time.time()
     ddir, wdir, edir, dldir = data_dir(), work_dir(), evidence_dir(), downloads_dir()
 

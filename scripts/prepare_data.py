@@ -49,6 +49,19 @@ BASE_BANDS = (
 LIDAR_BANDS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)  # strike converted to circular encoding below.
 
 
+def validate_band_order(descriptions, expected_names):
+    """Verify the mirror's named band order before assigning physical semantics.
+
+    This checks metadata consistency, not whether the owner-mirrored bytes are
+    authentic organizer data or whether their descriptions are scientifically true.
+    """
+    if len(descriptions) != len(expected_names) or any(not d for d in descriptions):
+        raise ValueError("Feature raster must have a nonempty description for every band")
+    observed = [d.split(" - ", 1)[0].strip() for d in descriptions]
+    if observed != list(expected_names):
+        raise ValueError("Feature raster band descriptions do not match the configured band order")
+
+
 def verify_cached_preparation(dest, meta_path, input_paths, expected_shape, expected_names):
     """Fail closed on stale bytes, inputs, or layout instead of trusting cache presence."""
     metadata = json.loads(Path(meta_path).read_text())
@@ -70,6 +83,10 @@ def verify_cached_preparation(dest, meta_path, input_paths, expected_shape, expe
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true")
+    ap.add_argument(
+        "--receipt", type=Path, default=paths.DATA_DIR / "preparation_receipt.json",
+        help="Output receipt (default: in the data cache); use a new path to preserve prior receipts",
+    )
     args = ap.parse_args()
     out = paths.DATA_DIR / "prepared"
     out.mkdir(parents=True, exist_ok=True)
@@ -84,12 +101,21 @@ def main() -> None:
         template = paths.DATA_DIR / "bridge/sample_submission.tif"  # legacy layout
     source = paths.DATA_DIR / "training_features.tif"
     lidar = paths.DATA_DIR / "external/lidar_scarp_features_u8.tif"
+    manifest = ROOT / "registry/data_manifest.json"
+    protected = [template, source, lidar, dest, meta_path,
+                 dest.with_name("features.partial.npy"), manifest,
+                 ROOT / "docs/data/footprint.bin"]
+    if manifest.is_file():
+        protected.extend(paths.DATA_DIR / e["dest"] for e in json.loads(manifest.read_text())["files"])
+    if args.receipt.resolve() in {p.resolve() for p in protected}:
+        raise SystemExit("Preparation receipt must not overwrite an input or feature cache")
     with rasterio.open(template) as t, rasterio.open(source) as s, rasterio.open(lidar) as lidar_ds:
         for d in (s, lidar_ds):
             if d.shape != t.shape or d.crs != t.crs or d.transform != t.transform:
                 raise SystemExit("Input grid mismatch; no silent reprojecting")
-        if s.count != 19:
-            raise SystemExit("Expected 19 competition bridge bands")
+        if s.count != len(geofeatures.BAND_ORDER):
+            raise SystemExit(f"Expected {len(geofeatures.BAND_ORDER)} competition bridge bands")
+        validate_band_order(s.descriptions, geofeatures.BAND_ORDER)
         if not np.array_equal(np.isfinite(t.read(1)), fp):
             raise SystemExit("Template and committed footprint disagree")
     names = (
@@ -109,6 +135,8 @@ def main() -> None:
         checked = verify_cached_preparation(
             dest, meta_path, (template, source, lidar), (len(idx), len(names)), names
         )
+        args.receipt.parent.mkdir(parents=True, exist_ok=True)
+        args.receipt.write_text(json.dumps(checked, indent=2) + "\n")
         print(json.dumps(checked, indent=2))
         return
     arr = np.lib.format.open_memmap(
@@ -176,7 +204,8 @@ def main() -> None:
         "note": "Band names follow owner bridge order. Ambiguous tc/earthquake description aliases are deliberately excluded. Features are not calibrated fault probabilities.",
     }
     meta_path.write_text(json.dumps(metadata, indent=2) + "\n")
-    (ROOT / "evidence/data_preparation.json").write_text(json.dumps(metadata, indent=2) + "\n")
+    args.receipt.parent.mkdir(parents=True, exist_ok=True)
+    args.receipt.write_text(json.dumps(metadata, indent=2) + "\n")
     print(json.dumps(metadata, indent=2))
 
 

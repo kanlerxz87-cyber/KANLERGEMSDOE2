@@ -86,6 +86,14 @@ def collapse(M, full: StrataSpec, factors):
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     t0 = time.time()
     z, fm, meta, active = load()
     A, B, N, S, sizes = z["A"], z["B"], z["N"], z["S"], z["sizes"]

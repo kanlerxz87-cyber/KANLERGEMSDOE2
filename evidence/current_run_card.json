@@ -1,12 +1,15 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
+  "generated_utc": "2026-10-28T16:23:57.165402+00:00",
   "hypothesis": "H-K1 HTCADS frozen lane; proposed height-persistent cross-gradient ablation is not yet registered or fitted",
   "mechanism": "Compare potential-field gradient orientation and displacement across continuation heights with separate hydrothermal evidence; proposed, not fitted.",
   "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
   "holdout_dti": null,
   "holdout_ci95": null,
+  "holdout_evaluator_version": null,
+  "withheld_positive_count": null,
   "holdout_status": "Not measured in this session: stopped before fit. Prior results are historical, not replayed.",
+  "feature_canary_status": "Not run: the literal-registry feasibility gate stopped this lane before any new experiment.",
   "correlation_overlap_vs_registry": {
     "surface_pre_placement": null,
     "surface_status": "No new surface was built or compared",
@@ -16,6 +19,8 @@
     "prior_dslup_final_dots_overlap_vs_witness": 0.9998140967759069,
     "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
     "unavoidable_overlap_at_registered_budget": 0.8234184947150369,
+    "unavoidable_overlap_off_catalogue": 0.8270037711796887,
+    "maximum_off_catalogue_budget_not_forced_by_witness": 21713,
     "complete_registry_checked": false
   },
   "raster_sha256": null,

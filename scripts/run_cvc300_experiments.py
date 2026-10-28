@@ -36,6 +36,14 @@ def spearman_bin(a,b):
     af=a.ravel().astype(np.float64); bf=b.ravel().astype(np.float64)
     return float(np.corrcoef(af,bf)[0,1])
 def main():
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived():
+    """Historical implementation retained for audit; do not use as an active runner."""
     t0=time.time()
     ctx=holdout.load_holdout_context(DD)
     foot, labels = ctx.foot, ctx.labels

@@ -206,7 +206,9 @@ def test_public_feed_parses_only_ranked_public_score_table(tmp_path):
     failed = json.loads(out.read_text())
     assert failed['status'] == 'unavailable' and failed['top_public_dti'] is None
     assert failed['last_verified_snapshot'] is None
-    out.write_text(json.dumps({'status': 'verified_snapshot', 'top_public_dti': .4544, 'observed_utc': '2026-10-27'}))
+    out.write_text(json.dumps({'status': 'verified_snapshot', 'source_url': refresh_public_feed.URL,
+                               'top_public_dti': .4544, 'fifth_public_dti': .3566,
+                               'observed_utc': '2026-10-27T00:00:00Z'}))
     assert refresh_public_feed.main(['--input-html', str(fixture), '--out', str(out), '--strict']) == 1
     stale = json.loads(out.read_text())
     assert stale['status'] == 'unavailable' and stale['top_public_dti'] is None
@@ -217,15 +219,18 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
     builder = importlib.import_module('build_site')
     evidence = tmp_path / 'evidence'
     evidence.mkdir()
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
+    (evidence / 'release_audit_20261028_independent.json').write_text(json.dumps({'verdict': 'negative'}))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'promote', 'ok_to_submit': True}))
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
     monkeypatch.setattr(builder, 'DOCS', tmp_path / 'docs')
     with pytest.raises(SystemExit, match='refusing stale or positive card'):
         builder.main()
-    real = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps(real))
-    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
+    real = json.loads((ROOT / 'evidence/release_audit_20261028_independent.json').read_text())
+    (evidence / 'release_audit_20261028_independent.json').write_text(json.dumps(real))
+    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False, 'generated_utc': 'stale'}))
+    with pytest.raises(SystemExit, match='refusing stale card'):
+        builder.main()
+    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False, 'generated_utc': real['generated_utc']}))
     with pytest.raises(SystemExit, match='artifact missing or differs'):
         builder.main()
 

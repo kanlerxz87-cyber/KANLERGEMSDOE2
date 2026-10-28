@@ -55,6 +55,14 @@ def project_mask(mask: np.ndarray, sp, lam: np.ndarray) -> dict:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived runner disabled: not the assigned HTCADS lane; the literal registry stop "
+        "and preserved historical receipts prohibit this execution path."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; do not use as an active runner."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-bisect", type=int, default=5)
     args = ap.parse_args()
