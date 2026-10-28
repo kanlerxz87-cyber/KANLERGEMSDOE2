@@ -1,6 +1,6 @@
 {
   "schema": "gems.current-status.v3",
-  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
+  "generated_utc": "2026-10-28T16:14:02.877404+00:00",
   "verdict": "negative",
   "validated_ok_to_download_and_submit": false,
   "ok_to_submit": false,
@@ -38,57 +38,23 @@
   "reason": "Literal lattice overlap 99.981%; budget lower bound 82.34% > 70%.",
   "run_card": "../../evidence/current_run_card.json",
   "public_leaderboard": "public_leaderboard.json",
+  "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
+  "latest_run_card": "../../evidence/run_card_20261028_preflight.json",
   "kg2s3_hptr_lane": {
     "filename": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
     "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
-    "zip": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.zip",
     "verdict": "negative",
     "ok_to_submit": false,
-    "validated_ok_to_download_and_submit": false,
-    "ok_to_download_for_research": true,
-    "beats_02778_across_all_three_blind_holdouts": null,
-    "binary_r_ge_05_max_detector_3px_overlap": 0.659797,
-    "max_overlap_vs_kanlergemsdoe2_rasters": 0.464625,
-    "literal_spacing5_lattice_overlap": 0.9996281935518139,
+    "warning": "Historical holdouts not replayed; SGMC calibration is a projection, not measured DTI.",
     "beats_02778_leaderboard_score": null,
-    "comparison_warning": "Historical proxies not replayed; SGMC-CAL uses an unverified inferred count and is not a holdout DTI.",
-    "warning": "Unreplayed historical proxies; SGMC-CAL is not measured holdout DTI. No leaderboard win or novelty established."
-  },
-  "kg2s3_lope_lane": {
-    "lope_file": "kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros.tif",
-    "lope_sha256": "f1e37cb2dc2c407a395cf282fd760be4a84ed90cdb5a60fceced4cace9aee86d",
-    "lope_verdict": "NOT_OK_DO_NOT_SUBMIT",
-    "lope_failed_gates": [
-      "gate_3_uniqueness",
-      "gate_4_holdout"
-    ],
-    "ok_to_submit": false,
-    "dslup_byte_revalidation_verdict": "NOT_OK_DO_NOT_SUBMIT",
-    "dslup_failed_gates": [
-      "gate_3_uniqueness"
-    ],
-    "lli_projection_lope": 0.2977783100301354,
-    "lli_projection_dslup": 0.09204431480424678,
-    "lli_projection_champion": 0.2794730133592791,
-    "label": "PROJECTIONS are not scores"
+    "comparison_warning": "SGMC calibration uses an unverified count and is not a holdout DTI."
   },
   "kg2s3_trbvc_lane": {
     "filename": "kanlergems2-trbvc-exp-3-37654dots-20261028T004644Z-decad771-zeros.tif",
     "sha256": "3ad6a187e8330757470df8f2d318a8caaf965490ec1868aa527e606a61ab5d3b",
-    "zip": "kanlergems2-trbvc-exp-3-37654dots-20261028T004644Z-decad771-zeros.zip",
     "verdict": "negative",
     "ok_to_submit": false,
     "validated_ok_to_download_and_submit": false,
-    "ok_to_download_for_research": true,
-    "max_3px_non_lattice_detector_overlap": 0.647713,
-    "sister_22_repo_max_overlaps": {
-      "DSLUP_c71122d5_CHAMPION_UNIQUE": 0.540739,
-      "HTCADS_11a2f251_CHAMPION_S1": 0.591278,
-      "DARP_4ad35e71_RESEARCH_NEG": 0.64535,
-      "TRBVC_decad771_RESEARCH_NEG": 0.647713
-    },
-    "warning": "Unreplayed historical proxies, not leaderboard scores; detector-only overlaps exclude controls."
-  },
-  "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
-  "latest_run_card": "../../evidence/run_card_20261028_preflight.json"
+    "warning": "Historical results not independently replayed."
+  }
 }

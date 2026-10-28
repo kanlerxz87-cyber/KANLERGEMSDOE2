@@ -15,7 +15,8 @@
 - Live-ledger (LLI) numbers are PROJECTIONS (leave-site-out MAE about 0.025) and can never promote. Scores in the ledger are USER-REPORTED.
 - Irregularities, next steps and limitations: `evidence/kg2s3_irregularities.json`.
 
-## KG2-S3 HPTR lane (historical)
+## KG2-S3 HPTR lane (2026-10-27) historical state — superseded by 2026-10-28 review
 
-- Its TIFF is **DO NOT SUBMIT**: the 2026-10-28 independent replay found 37,640 / 37,654 dots within three pixels of the registered lattice. See `evidence/review_20261028_replay.json`.
-- Historical proxy and detector-only comparisons do not establish a leaderboard win or full-registry novelty. SGMC-CAL is an unvalidated inferred-count transformation, not measured holdout DTI. The original folds and pre-placement surface were not replayed.
+Historical holdouts below were not independently replayed; SGMC prevalence-calibrated figures are projections, not measured HOLDOUT-DTI. A different hash is not literal all-registry novelty. See `evidence/review_20261028.md`.
+
+- The historical HPTR TIFF is a research artifact only: the fresh byte-level [audit](evidence/hptr_revalidation_20261028.json) finds literal witness overlap above 70%. Historical canary and holdout records were not replayed this session. See `evidence/review_20261028.md`; no current file is OK to submit.

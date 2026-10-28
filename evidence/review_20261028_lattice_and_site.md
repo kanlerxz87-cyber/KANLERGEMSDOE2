@@ -19,3 +19,5 @@ Next: resolve the rule and lane; restore and authenticate official data/template
 ### Concurrent-main integration
 
 A second session independently published a separate preflight and numeric-inspection review while this branch was open. Both reviews are retained; their results agree on the lattice stop. The generated site preserves the other session's top-of-page correction and omits unreplayed proxy metrics from the status feed. After resolving conflicts, the combined suite passed **122 tests**, with 14 Rasterio pending-deprecation warnings.
+
+A further concurrent main update supplied a refreshed audit, validator receipt and stale-feed handling. These were retained and the combined test suite passed **124 tests** (14 Rasterio pending-deprecation warnings).
