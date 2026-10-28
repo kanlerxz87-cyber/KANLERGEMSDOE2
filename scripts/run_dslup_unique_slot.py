@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
 
 KG2-S2 final UNIQUE-SLOT emission (EXP-A**): constrained re-emission of the DSLUP EXP-A surface.
 
@@ -59,17 +59,14 @@ CHAMPION_TAG = dmod.CHAMPION_TAG
 
 
 def main() -> int:
-    # Historical implementation is not an authorized execution path. It used
-    # a partial/control-exempt registry and could place dots before novelty
-    # screening. The currently assigned fixed-budget lane is blocked.
     raise SystemExit(
-        "Archived runner disabled: not the assigned lane and no literal all-registry "
-        "pre-placement/holdout replay. No training, emission, or submission performed."
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 
 
 def _legacy_main_archived() -> int:
-    """Retained for historical review; not a safe or authorized entry point."""
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

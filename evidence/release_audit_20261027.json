@@ -1,6 +1,6 @@
 {
   "schema": "gems.release-integrity-audit.v1",
-  "generated_utc": "2026-10-27T23:55:53.306969+00:00",
+  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
   "scope": "Fresh exact-byte and focus-nine comparison. The complete live registry and prior surface were not replayed.",
   "source_authentication": "Pinned owner mirrors; hashes prove byte identity, not organizer origin.",
   "preflight": {

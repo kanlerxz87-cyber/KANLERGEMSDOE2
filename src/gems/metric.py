@@ -47,14 +47,16 @@ def _evaluation_arrays(pred, truth, valid_mask, catalogue_mask, *, binary=False)
         raise ValueError("Evaluation/catalogue mask grid mismatch")
     active = valid & ~known
     values = pred[active]
-    # Official outside-footprint NaNs are neutral, but infinities or invalid
-    # values inside the evaluation domain must not turn into giant TP credit.
+    # Missing values outside the domain are neutral; inside it neither invalid
+    # predictions nor missing/non-binary ground truth may be silently scored.
     if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
         raise ValueError("Evaluated predictions must be probabilities in [0,1]")
-    if binary and np.any(np.isfinite(values) & (values != 0) & (values != 1)):
+    if binary and np.any((values != 0) & (values != 1)):
         raise ValueError("Fast DTI is binary-only; use dti_components_exact for soft scores")
+    if not np.isin(truth[active], [0, 1]).all():
+        raise ValueError("Ground truth inside the scored domain must be finite and binary")
     p = np.where(active & np.isfinite(pred), pred, 0).astype(bool if binary else np.float64)
-    g = active & np.isfinite(truth) & (truth > 0)
+    g = active & (truth == 1)
     return p, g, valid, known
 
 
@@ -72,8 +74,8 @@ def dti_components_exact(
         pred, truth, valid_mask, catalogue_mask
     )
     H, W = p.shape
-    if alpha < 0 or beta < 0:
-        raise ValueError("Tversky penalties must be nonnegative")
+    if not np.isfinite([alpha, beta]).all() or alpha < 0 or beta < 0:
+        raise ValueError("Tversky penalties must be finite and nonnegative")
     yy, xx = np.nonzero(g_mask)
     n_truth = int(len(yy))
     if n_truth == 0:
@@ -186,13 +188,17 @@ def dti_score_masked(
 
 
 def marginal_inclusion_threshold(current_dti: float, alpha: float = ALPHA) -> float:
-    """Idealized single-uncovered-truth break-even credit, not a score forecast.
+    """Idealized break-even credit for one uncovered truth pixel, not a general gate.
 
-    For a unit prediction whose added TP is k, FP is 1-k, and FN is -k,
-    with beta=1-alpha the denominator increases by alpha; the DTI improves
-    iff k > alpha * current_dti. For partially covered or multiple truth
-    pixels, use the actual marginal TP/FP/FN components instead.
+    With beta=1-alpha, adding a unit prediction that supplies ``k`` credit to
+    a previously uncovered truth pixel and has false-positive weight ``1-k``
+    changes the denominator by alpha. Thus it improves DTI iff k > alpha*DTI.
+    See the shared ``gems32.metric`` implementation for the derivation and scope.
     """
+    if not np.isfinite(current_dti) or not 0 <= current_dti <= 1:
+        raise ValueError("current_dti must be finite and in [0,1]")
+    if not np.isfinite(alpha) or not 0 <= alpha <= 1:
+        raise ValueError("alpha must be finite and in [0,1]")
     return alpha * current_dti
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ARCHIVED: CLI execution is disabled; historical claims below are not current verdicts.
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
 
 Execute the 3 pre-registered H-N1 DARP-MT10 experiments (DARP-EXP-1..3), 4-instrument holdout
 evaluation, 410+-raster pre/post-placement uniqueness audit, and portal-safe GeoTIFF + ZIP emission.
@@ -473,17 +473,14 @@ def _audit_uniqueness(
 
 
 def main() -> int:
-    # Historical implementation is not an authorized execution path. It used
-    # a partial/control-exempt registry and could place dots before novelty
-    # screening. The currently assigned fixed-budget lane is blocked.
     raise SystemExit(
-        "Archived runner disabled: not the assigned lane and no literal all-registry "
-        "pre-placement/holdout replay. No training, emission, or submission performed."
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 
 
 def _legacy_main_archived() -> int:
-    """Retained for historical review; not a safe or authorized entry point."""
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir, wdir, edir, dldir = data_dir(), work_dir(), evidence_dir(), downloads_dir()
 

@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -39,11 +41,25 @@ def main():
             if (s.shape, s.crs, s.transform, s.count) != (t.shape, t.crs, t.transform, 1):
                 raise SystemExit("Prediction must match the template grid and be single-band")
             a = s.read(1)
-    p = write_submission(a, args.template, args.output, outside=args.outside)
-    checks = check_variants(p, args.template)
-    print(json.dumps(checks, indent=2))
-    if not checks["format_valid"]:
-        raise SystemExit("Written file failed pinned-grid format validation")
+    if args.output.suffix.lower() != ".tif":
+        raise SystemExit("Output must have a .tif extension")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    # Never leave a newly generated invalid file, and never destroy an existing
+    # output on failure. Validate the exact saved bytes before atomic replacement.
+    fd, tmp_name = tempfile.mkstemp(prefix=".gems-writer-", suffix=".tif", dir=args.output.parent)
+    os.close(fd)
+    tmp = Path(tmp_name)
+    try:
+        write_submission(a, args.template, tmp, outside=args.outside)
+        checks = check_variants(tmp, args.template)
+        if not checks["format_valid"]:
+            print(json.dumps(checks, indent=2))
+            raise SystemExit("Written file failed pinned-mirror grid/format validation")
+        tmp.replace(args.output)
+        checks["file"] = args.output.name
+        print(json.dumps(checks, indent=2))
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 if __name__ == "__main__":

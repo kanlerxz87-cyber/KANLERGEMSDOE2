@@ -94,15 +94,15 @@ def main():
             json.dumps(
                 {
                     "verified": True,
-                    "scope": "Historical byte/metadata and recorded canary check only; no holdout or model replay and no upload authorization.",
                     "lane": "DARP-MT10-20261027",
                     "verdict": rc["verdict"],
                     "ok_to_download_and_submit": rc["ok_to_download_and_submit"],
                     "raster_sha256": tif_sha,
                     "zip_sha256": zip_sha,
                     "canary_max_auc": canary["max_single_feature_auc"],
+                    "scope": "Historical file hashes and recorded metadata only; canary and holdouts not independently replayed. No upload authorization.",
                     "holdout_dti_c_pied": rc["holdout_dti"]["piedmont_off_catalogue_c_pied"],
-                    "exp2_c_pied_recorded": rc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"],
+                    "exp2_c_pied_dti": rc["holdout_dti"]["ablation_darp_exp2_piedmont_breakthrough"]["piedmont_off_catalogue_c_pied"],
                 },
                 indent=2,
                 allow_nan=False,

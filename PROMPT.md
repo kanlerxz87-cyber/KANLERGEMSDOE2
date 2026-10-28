@@ -6,8 +6,8 @@
 
 ## Core Values
 
-- **Maximize P(Win):** Optimize expected leaderboard and Phase 2 ($250k / $395k expert-reviewed evaluation) return per scarce submission slot. Never burn a weekly slot on cosmetic edits, duplicate `H19-5` clones, or candidates that fail to beat the spatially-blocked holdout benchmark.
-- **Own the Outcome:** Automated code gates — never manual human inspection — verify `[0, 1]` GeoTIFF range safety, zero NaNs, leakage canaries, registry uniqueness, and holdout statistical significance end-to-end. Fix shared template defects at the root and document every irregularity and negative result transparently.
+- **Maximize P(Win):** Optimize expected performance on both leaderboard and expert-reviewed evaluation per scarce submission slot. Never burn a weekly slot on cosmetic edits, duplicate `H19-5` clones, or candidates that fail to beat the spatially-blocked holdout benchmark.
+- **Own the Outcome:** Automated code gates — never manual human inspection — verify `[0, 1]` GeoTIFF range safety and zero NaNs **inside the footprint**, leakage canaries, registry uniqueness, and holdout statistical significance end-to-end. Fix shared template defects at the root and document every irregularity and negative result transparently; independently confirm the required exterior encoding.
 
 ---
 
@@ -27,7 +27,7 @@ Focus on the highest-scoring submissions from the following 9 focus sites:
 
 ### PhD-Level Forensic Analysis & Scientific Hypothesis Mandate
 
-1. **Study, analyze, and understand `0.2778`:** Explain why and how `GEMSDOE32` (`https://buffedlizard55-lab.github.io/GEMSDOE32/`, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`: `0.2778` USER/OWNER-REPORTED, unverified) achieved the highest score across the focus sites, and whether/how a new strategy can score higher (`> 0.2778`, targeting `#5 = 0.3195` and public `#1 = 0.4413`).
+1. **Study, analyze, and understand `0.2778`:** Investigate `GEMSDOE32` (`https://buffedlizard55-lab.github.io/GEMSDOE32/`, `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros`: `0.2778` USER/OWNER-REPORTED, unverified) and whether a new strategy can exceed it. The user's `0.3195` and `0.4413` targets are historical reported values, not verified current rankings; the 2026-10-27 public snapshot was #5 `0.3566` and #1 `0.4544`. Do not infer hidden-score causes or claim a new improvement without evidence.
 2. **Pre-Implementation Hypotheses (3–5 Untried Geological Hypotheses):** Emphasizing scientific discovery of geothermal vents and unmapped faults, propose 3–5 concrete hypotheses before writing model code, specifying for each:
    - Exact layer(s) involved
    - Physical fault signature or mathematical transform targeted (plus named non-fault mimic process)

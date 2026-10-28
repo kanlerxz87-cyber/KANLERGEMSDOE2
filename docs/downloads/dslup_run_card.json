@@ -1,16 +1,98 @@
 {
-  "schema": "gems.research-artifact-status.v1",
-  "status": "HISTORICAL_RESEARCH_ONLY",
+  "schema": "gems.research-only-supersession.v1",
+  "notice": "DO NOT SUBMIT. The archived detector-only promotion exempted a registered lattice; it is superseded by the literal all-registry witness.",
+  "verdict": "negative",
+  "ok_to_download_and_submit": false,
   "submission_filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
   "raster_sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
-  "ok_to_download_for_research": true,
-  "ok_to_download_and_submit": false,
+  "historical_holdout_dti": {
+    "pooled_dti": 0.125925,
+    "ci95": [
+      0.11288,
+      0.138176
+    ],
+    "champion_02778_same_evaluator": 0.099202,
+    "per_quadrant_dti": {
+      "NW": 0.143788,
+      "NE": 0.102215,
+      "SW": 0.114146,
+      "SE": 0.146328
+    },
+    "paired_delta_vs_0p2778_ref": 0.026723,
+    "paired_delta_ci95": [
+      0.016895,
+      0.03692
+    ],
+    "win_prob_vs_ref": 1.0,
+    "ci95_strictly_positive": true,
+    "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232 withheld positives, 95% CI [0.1129, 0.1382])"
+  },
+  "historical_holdout_status": "Prior procedure result; not independently replayed and not a leaderboard estimate.",
+  "current_validator_output": {
+    "schema": "gems.fail-closed-validator.v2",
+    "validated_ok_to_download_and_submit": false,
+    "ok_to_submit": false,
+    "verdict": "negative",
+    "human_intervention_required": false,
+    "raster_filename": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+    "raster_sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+    "gates": {
+      "exact_file_identity": true,
+      "local_grid_dtype_inside_range": true,
+      "literal_witness_not_duplicate": false,
+      "complete_current_registry_replayed": false,
+      "surface_before_placement_replayed": false,
+      "independent_canary_and_holdout_replay": false,
+      "current_weekly_quota_verified": false
+    },
+    "format_audit": {
+      "file": "kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif",
+      "sha256": "8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3",
+      "size_bytes": 217858,
+      "count": 1,
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "grid_matches_pinned_owner_template": true,
+      "no_nan_inside_footprint": true,
+      "no_inf_inside_footprint": true,
+      "inside_range_0_1": true,
+      "local_grid_dtype_inside_range_pass": true,
+      "strict_whole_array_finite_0_1": true,
+      "outside_footprint_all_nan": false,
+      "outside_footprint_all_zero": true,
+      "inside_positive_pixels": 37654,
+      "outside_positive_pixels": 0,
+      "on_catalogue_positive_pixels": 0,
+      "witness_overlap_dots": 37647,
+      "witness_overlap_fraction": 0.9998140967759069,
+      "witness_final_dots_spearman": 0.0005034898206130378,
+      "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+      "duplicate_under_literal_rule": true,
+      "organizer_acceptance_verified": false
+    },
+    "reasons": [
+      "Literal all-entry witness failed or was undefined; no exemption for calibration rasters.",
+      "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
+      "Complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+    ],
+    "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
+  },
+  "historical_run_card": "../../evidence/dslup_unique_slot_run_card.json",
+  "historical_note": "Archive is preserved for audit; its promotion and detector-only gate are superseded.",
   "ok_to_submit": false,
-  "verdict": "negative",
-  "reason": "Literal registered-lattice overlap exceeds 70%; no exemption, independent replay, or quota verification. Do not submit.",
-  "witness_overlap_fraction": 0.9998140967759069,
-  "current_validation": "../../evidence/dslup_literal_validation_20261027.json",
-  "historical_record": "../../evidence/dslup_unique_slot_run_card.json",
   "historical_record_sha256": "886e2492978be2ea63426bd7a5befa1312f9569c368931ff1b1d00a451844e07",
-  "historical_record_warning": "The immutable historical record contains retracted control-exempt promotion claims and is not authorization."
+  "historical_record_warning": "Historical detector-only promotion is retracted and not submission authorization."
 }

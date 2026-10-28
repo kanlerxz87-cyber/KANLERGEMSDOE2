@@ -1,62 +1,73 @@
-# KANLERGEMSDOE2 — geothermal fault discovery
+# KANLERGEMSDOE2 — DOE GEMS fault discovery
 
-> ## CURRENT DECISION: NEGATIVE / DO NOT SUBMIT
->
-> No TIFF is approved for a live slot. This review created **no** new raster, holdout result, score estimate, or submission. The archived HTCADS, DSLUP, and both later parallel TIFFs may be downloaded **for research only**. Earlier control-exempt promotion claims are superseded; no such exemption was authorized.
->
-> **[Decision dashboard](docs/index.html)** · **[Executive comparison](docs/executive-summary.html)** · **[JSON run card](evidence/current_run_card.json)** · **[Exact-byte audit](evidence/release_audit_20261027.json)**
+> **CURRENT DECISION: DO NOT SUBMIT.** This review generated no new GeoTIFF, and no file is cleared. Other concurrent sessions generated research TIFFs, but they are not approved uploads. The previous DSLUP “promotion” is superseded by the user's literal all-registry rule. No weekly slot was used in this review.
 
-## Why the lane stopped
+## Start here
 
-The fixed lane requires **37,654 distinct dots**, but a registered spacing-5 lattice has only **6,649** footprint pixels farther than 3 px from it. At least `37,654 - 6,649 = 31,005` dots must therefore overlap the lattice: **82.3418%**, above the literal **>70%** stop. The registered witness is not exempt. The bound is specific to this budget and does not prove every smaller raster fails; quietly changing the budget to evade the gate is not permitted.
+- [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
+- [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md)
+- [Current negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261027.json)
+- [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
+- [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)
+- [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [source catalog](registry/source_catalog_20261027.json)
 
-The archived [HTCADS TIFF](docs/downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif) (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`) overlaps that witness **37,642/37,654 = 99.9681%**. The [DSLUP research TIFF](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) overlaps **37,647/37,654 = 99.9814%**; its former validator falsely returned a promotion after excluding controls. [Corrected receipt](evidence/dslup_literal_validation_20261027.json).
+## Why the release stopped
 
-A TIFF added by a concurrently merged PR was also independently reopened: [`kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif`](docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif), SHA-256 `f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539`, overlaps **37,652/37,654 = 99.9947%** and has **184 positive pixels on the restored known-fault catalogue**, contrary to its earlier note. It is **not unique under the literal rule; do not submit**. See its [corrected audit](evidence/parallel_hypothesis1_literal_audit_20261027.json).
+At the frozen budget of **37,654** positive pixels, a SHA-pinned owner-mirror registry lattice covers 5,160,724 of 5,167,373 footprint pixels within three pixels. Only 6,649 pixels remain uncovered. Therefore **at least 31,005 / 37,654 = 82.341849%** of *any* placement necessarily overlaps that single registry raster, above the user's 70% stop. The literal rule does not exempt calibration controls. The preflight stopped **before fitting or placing dots**. Altering the frozen budget or declaring an exception to evade this gate would violate the standing protocol.
 
-A second parallel PR added a [15,000-dot research file](docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif), with 66% lattice overlap, but 34% of dots were deliberately placed in lattice gaps, contrary to the fixed-budget lane. It has 107 on-catalogue dots, no independent holdout and no full-registry check. Its promotion is retracted: **do not submit**. [Geometry recheck](evidence/off36_independent_check_20261027.json) · [negative validator](evidence/off36_literal_validation_20261027.json).
+The earlier DSLUP research TIFF is byte-verified (SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3`): **37,647 / 37,654 = 99.9814%** of its dots overlap the same lattice. Its local shape, CRS, transform and in-footprint range pass, but uniqueness fails. [Download its current negative validator result](evidence/dslup_literal_revalidation_20261027.json), not an authorization. The older HTCADS TIFF (SHA-256 `f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb`) likewise fails and is research only. Historical evidence files are preserved for audit and may contain superseded detector-only claims.
 
-## What the historical scores show
+Two concurrent PRs added research TIFFs while this review was underway. **Neither is approved:** PR #34's 37,654-dot file has 37,652/37,654 (99.9947%) witness overlap and 184 known-fault dots. PR #36's 15,000-dot file has 66.0% witness overlap, but deliberately places 5,100 dots in lattice gaps and lowers the frozen budget to evade the gate; 107 dots are on catalogue, with no measured holdout or full-registry clearance. Its prior promotion is superseded. See the [executive table](EXECUTIVE_SUMMARY.md) and [independent review](evidence/off36_independent_check_20261027.json).
 
-The highest of the nine supplied numbers is GEMSDOE32 **0.2778, USER/OWNER-REPORTED**, with no submission-page receipt. Its positive mask equals GEMSDOE25's after removing 6,436 dots within 2 px of the restored catalogue; GEMSDOE25 and 30 have identical positive masks, and GEMSDOE36 contains all GEMSDOE32 dots plus 1,200. Pruning may improve precision, but hidden-label attribution and a causal explanation are unproven. A higher result is possible in principle, but no new candidate has demonstrated one. All nine exceed 70% directional overlap with another of the nine; see the [per-site table](docs/executive-summary.html).
+## What the scores do and do not establish
 
-The previous HTCADS receipt records **HOLDOUT-DTI 0.112353**, evaluator `GEMSDOE32-HIDE-RECOVER-v3.0`, **22,232 withheld-positive occurrences**, 95% CI **[0.098995, 0.125743]**. This historical result was not independently replayed and is not an organizer score or leaderboard forecast. The public leaderboard snapshot observed on 2026-10-27 had #1 **0.4544**, #5 **0.3566**; neither number scores this candidate. The six-hour Actions feed attempts refresh and labels failures/stale snapshots, but legacy Pages publishing can compete with Actions; an integration permission prevented switching the source, so live delivery is not guaranteed. [Deployment audit](evidence/pages_deployment_20261027.json).
+The **0.2778** attributed to GEMSDOE32 is USER/OWNER-REPORTED; no organizer receipt ties it to a file hash. Exact mask analysis shows GEMSDOE32 is GEMSDOE25 with 6,436 dots near the mirrored known-fault mask removed, but cannot reveal the hidden-label cause of the reported score. GEMSDOE25 and 30 have identical positive masks; GEMSDOE36 contains the GEMSDOE32 mask plus 1,200 dots.
 
-Four qualitative [research hypotheses](research/2026-10-27_htcads_hypotheses.md) describe layers, physical mechanisms, named non-fault mimics, prior-work differences, costs and official data sources. None was fitted here; the top direction is multi-height magnetic/gravity cross-gradient stability plus independent hydrothermal corroboration.
+The archived DSLUP procedure reports **HOLDOUT-DTI 0.125925**, `GEMSDOE32-HIDE-RECOVER-v3.0`, 22,232 withheld-positive occurrences, 95% CI [0.112880, 0.138176]. Another historical KG2 benchmark reports **HOLDOUT-DTI 0.177056**, `gems-segment-pooled-v1`, 60,988 withheld-positive pixels, 95% CI [0.163673, 0.190831]. The two evaluators and populations differ, so these values are not directly comparable. Neither original OOF prediction set has been independently replayed here. Neither is a leaderboard score or a validated estimate for any new submission. SGMC prevalence-calibrated numbers rely on an **unverified inferred hidden-truth count** and are research transformations, not measured holdout DTI, organizer scores, or valid promotion gates.
 
-## Range error and data limits
+The public leaderboard observed on 2026-10-27 had #1 **0.4544** and #5 **0.3566**; those public observations do not confirm any of this repository's file scores. The scheduled [feed](docs/data/public_leaderboard.json) preserves the last observed timestamp and marks refresh failures; always consult the [official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 
-The exact rejected bytes and portal diagnostic were not supplied, so the cause of `"Predicted values must be in range [0, 1]"` is **unknown**. The audited research TIFFs are locally single-band float32 on the pinned owner-mirror EPSG:32611, 100 m, 3,730×3,292 grid, finite and in [0,1]; that is **not** an organizer acceptance receipt. They use zeros outside the footprint while the mirrored sample and official text use NaN/null; neither encoding is proven accepted. Check the actual file, footprint, grid, nodata tag, NaNs/infinities and range before any future submission.
+## Safe workflow and current limitations
 
-Core **4/4**, scored **12/12**, and the **9/9** focus TIFFs were restored from hash-pinned owner mirrors. Of 30 external entries, **15 verified; 15 unavailable (404)**: 13 derived 10 m DEM channels, their manifest, and one heat-flow CSV. Later available entries were still checked; the [availability receipt](evidence/data_availability_20261027.json) lists each. The 30-column shared base feature cache was prepared. Hashes establish identity to owner mirrors, not independently authenticated organizer or official-source origin; exact external files and replay caches remain incomplete.
+1. Read [`AGENTS.md`](AGENTS.md), this README, the preserved standing brief in [`PROMPT.md`](PROMPT.md), and the frozen lane before doing work. Values: **Maximize P(Win)** and **Own the Outcome**.
+2. No fresh lane, no budget change, no exemptions and no automated upload are authorized by this result. Resolve the literal conflict explicitly and specify a new method/lane before a new run. Stay within the user's ≤3 experiments or 2 hours.
+3. Reconstruct catalogue features from visible faults separately for each spatial fold, hide whole connected segments with a buffer, mask known-fault pixels exactly, run a separate leakage canary on **every** feature, and compare pooled DTI and paired spatial CI to a comparable baseline. AUC >0.90 is leakage until disproven.
+4. Verify the full current registry for **both** surface rank correlation and final-dot overlap; verify organizer-authenticated template/labels; replay any historical baseline, verify the portal exterior behavior and current account quota; run an independent selector. Shared validators currently intentionally have **no positive authorization path**.
+5. Only after an approved selector produces an exact SHA, the user may upload that TIFF/one-file ZIP to DrivenData → Submit → Make new submission, use the approved unique name and ≤140-character note, retain the receipt, and make the competition's single final selection. **This is future guidance, not approval to submit an existing file.**
 
-## Reproduce locally (no upload)
+Competition data used here are SHA-verified **owner-hosted mirrors**, not authenticated organizer downloads; the official data page required login. A concurrent [availability audit](evidence/data_availability_20261027.json) reported 15 of 30 external mirror files unavailable. The earlier portal rejection bytes and receipt were not retained, so its precise cause is unknown. A finite all-zero exterior passed the local numeric checks; the official page says null/NaN outside bounds. Portal acceptance of either encoding for the irregular mirrored footprint remains unverified.
 
-Python 3.11, a GDAL-compatible rasterio wheel, GitHub access and several GB of disk/RAM are needed. Bulk inputs and `.venv` are ignored and must be restored in a fresh workspace. Expected failures are reported, never converted to success:
+GitHub Pages currently has both legacy main-branch publishing and an Actions deploy configured. A parallel [Pages audit](evidence/pages_deployment_20261027.json) reports a 403 when switching to an Actions-only source; a repository administrator must resolve that setting and verify the deployed feed. Until then, treat the leaderboard as a dated snapshot, not guaranteed live.
+
+## Reproduce the non-submission audit
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/python scripts/restore_data.py --group core
-.venv/bin/python scripts/restore_data.py --group scored
-.venv/bin/python scripts/restore_data.py --group external  # exits 1 while 15 pinned entries are unavailable
-.venv/bin/python scripts/restore_focus_sites.py
-.venv/bin/python scripts/prepare_data.py                  # optional 30-column cache
-.venv/bin/python scripts/audit_release.py                 # exact-byte witness and negative card
-.venv/bin/python scripts/build_site.py
-.venv/bin/python -m pytest -q
+python -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+python scripts/restore_data.py --group core --target-dir data/review_20261027
+python scripts/restore_data.py --group scored --target-dir data/review_20261027
+GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/restore_focus_sites.py
+GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/audit_release.py \
+  --out evidence/release_audit_20261027.json --card-out evidence/current_run_card.json
+GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/validate_submission.py \
+  --tif docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif \
+  --run-card evidence/dslup_unique_slot_run_card.json \
+  --out evidence/dslup_literal_revalidation_20261027.json  # exits 1: expected negative
+python scripts/build_site.py
+python -m compileall -q src scripts tests
+python -m pytest -q
 ```
 
-`GEMS_DATA_DIR` overrides `.cache/gems_data`. Restore receipts are per group in ignored `data/`. The current shared validator and its legacy compatibility entry point refuse upload when references, full novelty, independent replay or quota are missing. Legacy experiment CLIs are disabled; they used partial/exempt registries and cannot safely run in this lane. Fixes also reject invalid evaluator/writer inputs instead of silently clipping them, and align the idealized marginal threshold to `alpha × DTI`.
+See the [review record](evidence/review_20261027_session3.md) for exact restored artifacts, checks and limitations. An archived runner is not a submission workflow. Public pages are generated and published by [the Pages workflow](.github/workflows/pages.yml); a public feed never conveys account quota or a file-specific score.
 
-Only after the protocol conflict is explicitly resolved, a new properly assigned lane passes complete surface/final registry checks, every feature canary, buffered visible-only holdout with confidence intervals, and the current account quota is verified may a separate selector approve an exact file. Then follow the [official submission page](https://www.drivendata.org/competitions/306/competition-doe-gems/) and save its receipt. No weekly slot was selected or spent in this review.
+## Official source starting points
 
-## Values and starting brief
+[Competition objective, DTI and file format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [official rules](https://docs.nlr.gov/docs/fy26osti/96647.pdf) · [known-fault masking clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516) · [official reference solution](https://github.com/drivendataorg/gems-prize-reference-solution) · [USGS GeoDAWN](https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and) · [DOE INGENIOUS](https://gdr.openei.org/submissions/1391) · [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) · [NASA OPERA](https://www.earthdata.nasa.gov/data/projects/opera).
 
-**Maximize P(Win):** Protect scarce live slots; prefer a valid negative result to an unverified projected gain.
-**Own the Outcome:** Restore/check bytes, verify sources, fix shared tools, use automatic fail-closed checks, document uncertainty, and do not rely on a manual geological inspector.
+## Preserved standing project brief
 
-Read this README, the condensed brief below, and [`PROMPT.md`](PROMPT.md) at the start of every session. The preserved request is a structured summary, not a verbatim transcript; it records earlier score targets as historical; it does not override the current stop or confer score authenticity. See [`AGENTS.md`](AGENTS.md) for the operative safety contract and [`docs/irregularities.html`](docs/irregularities.html) for unresolved blockers.
+The following prior-session prompt record is retained as it appeared before this audit. The transcript is not available verbatim in this session; the quoted earlier `0 NaNs` shorthand must be read with the clarified current exterior caveat above.
 
 <details>
 <summary><strong>📋 Preserved Standing Project Prompt &amp; PARALLEL-RUN PROTOCOL (Read at the Start of Every Session)</strong></summary>

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-**RESEARCH-ONLY (fail-closed, 2026-10-27 review).** This generator must not publish a
-promote verdict. Its lattice gate is met only by placing >=30% of dots in lattice-gap pixels
-and a reduced 15,000-dot budget, which AGENTS.md forbids, and no holdout DTI is measured.
-Its card is written to evidence/research/ and forced to verdict negative.
+**ARCHIVED / DISABLED (2026-10-27 review).** Its lattice gate was met only by placing
+>=30% of dots in lattice-gap pixels and reducing the frozen 37,654-dot budget to 15,000,
+which AGENTS.md forbids; no holdout DTI was measured. The historical implementation and
+its claims below are retained for forensic review only. The CLI now stops before execution.
 
-Generate a UNIQUE, competition-format GeoTIFF submission for the DOE GEMS Prize.
+Historical generator for a research-only GeoTIFF; not a submission authorization.
 
 Method: Off-Catalogue Blind Geothermal Fault Targeting (contrarian design)
 
@@ -25,15 +25,15 @@ This generator takes the opposite, deliberately unique approach:
 
 Outputs (all in docs/downloads/):
   * <name>-zeros.tif   -- single-band float32, EPSG:32611, 3730x3292, 100 m grid,
-                          values in [0,1], ZERO outside the footprint (passes a strict
-                          whole-array [0,1] check; avoids the "[0,1]" portal error).
-  * <name>-nan.tif     -- identical interior, NaN outside (matches the official
-                          footprint-convention text).
+                          values in [0,1], ZERO outside the footprint (passes a local strict
+                          whole-array [0,1] check; portal acceptance not established).
+  * <name>-nan.tif     -- identical interior, NaN outside (matches the owner mirror's
+                          exterior; portal acceptance not established).
   * <name>-validation.json -- machine-readable gate results.
   * <name>-note.txt    -- <=140-character submission note.
 
-This script does NOT upload anything.  It writes run-card fields into
-evidence/current_run_card.json.  A separate selector must approve any live slot.
+The archived CLI now stops; it does NOT generate, upload or approve anything.
+A future independent selector would have to verify all requirements.
 """
 
 from __future__ import annotations
@@ -266,13 +266,13 @@ def uniqueness_vs_registry(dots, footprint, registry_entries, root):
 
 def main():
     raise SystemExit(
-        "Archived off36 generator disabled: its reduced budget and deliberate lattice-gap "
-        "placement bypass the frozen lane. No new TIFF may be generated."
+        "Archived generator disabled: its reduced budget and intentional lattice-gap "
+        "placement violate the frozen lane; no model or TIFF will be produced."
     )
 
 
 def _legacy_main_archived():
-    """Historical generator only; not an authorized experiment."""
+    """Historical implementation retained for audit; not a safe execution path."""
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     DOWNLOADS.mkdir(parents=True, exist_ok=True)
 

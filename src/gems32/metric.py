@@ -52,7 +52,7 @@ def _prepare(pred, truth, valid, known):
         raise ValueError("prediction and truth must be equal-shaped 2-D grids")
     for mask in (valid, known):
         if mask is not None and not np.isin(np.asarray(mask), [0, 1]).all():
-            raise ValueError("evaluation and known masks must be finite binary grids")
+            raise ValueError("evaluation and known-fault masks must be finite binary grids")
     valid = np.ones(pred.shape, bool) if valid is None else np.asarray(valid, bool)
     known = np.zeros(pred.shape, bool) if known is None else np.asarray(known, bool)
     if valid.shape != pred.shape or known.shape != pred.shape:
@@ -61,13 +61,17 @@ def _prepare(pred, truth, valid, known):
     vals = pred[active]
     if not np.isfinite(vals).all() or (vals < 0).any() or (vals > 1).any():
         raise ValueError("predictions inside the scored domain must be finite and in [0, 1]")
+    if not np.isin(truth[active], [0, 1]).all():
+        raise ValueError("ground truth inside the scored domain must be finite and binary")
     p = np.where(active & np.isfinite(pred), pred, 0.0).astype(np.float64)
-    g = active & (np.asarray(truth) > 0)
+    g = active & (truth == 1)
     return p, g, active
 
 
 def dti_exact(pred, truth, valid=None, known=None, alpha: float = ALPHA, beta: float = BETA) -> dict:
     """Exact DTI for arbitrary soft or binary predictions in [0, 1]."""
+    if not np.isfinite([alpha, beta]).all() or alpha < 0 or beta < 0:
+        raise ValueError("Tversky penalties must be finite and nonnegative")
     p, g, _ = _prepare(pred, truth, valid, known)
     H, W = p.shape
     yy, xx = np.nonzero(g)
@@ -89,10 +93,13 @@ def dti_exact(pred, truth, valid=None, known=None, alpha: float = ALPHA, beta: f
 
 def dti_binary(pred_bool, truth, valid=None, known=None, alpha: float = ALPHA, beta: float = BETA) -> dict:
     """Fast exact DTI when predictions are binary {0, 1} via Euclidean distance transforms."""
-    pred, g, active = _prepare(pred_bool, truth, valid, known)
-    if np.any((pred[active] != 0) & (pred[active] != 1)):
-        raise ValueError("binary DTI requires predictions in {0, 1}; use dti_exact for soft probabilities")
-    p = pred > 0
+    if not np.isfinite([alpha, beta]).all() or alpha < 0 or beta < 0:
+        raise ValueError("Tversky penalties must be finite and nonnegative")
+    raw = np.asarray(pred_bool)
+    p_values, g, active = _prepare(raw, truth, valid, known)
+    if not np.isin(raw[active], [0, 1]).all():
+        raise ValueError("dti_binary requires binary predictions, not soft probabilities")
+    p = p_values.astype(bool)
     n = int(g.sum())
     if n == 0:
         return dict(tp=0.0, fp=float(p.sum()), fn=0.0, n_truth=0, dti=0.0, coverage=0.0)
@@ -151,7 +158,10 @@ def marginal_inclusion_threshold(current_dti: float, alpha: float = ALPHA) -> fl
     threshold. The exact metric implementation is in :func:`dti_exact` and tested against the
     literal equations in ``tests/test_metric.py``.
     """
-    return alpha * current_dti
+    # Share one implementation with the other public metric API.
+    from gems.metric import marginal_inclusion_threshold as shared_threshold
+
+    return shared_threshold(current_dti, alpha)
 
 
 # ---------------------------------------------------------------------------------------------
