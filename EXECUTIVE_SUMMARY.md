@@ -1,5 +1,8 @@
 # Executive summary — submission decision
 
+> **2026-10-28 superseding review — NOT OK TO SUBMIT.** No new single-method lane was supplied; no experiments or new TIFF were generated. [Current review](evidence/review_20261028.md) · [independent published-file inspection and run card](evidence/review_run_card_20261028.json). **No validated leaderboard estimate is available.** Archived claims below about hidden-label counts, pure false positives, or beating the reported 0.2778 on holdout are not established facts. Scores are USER-REPORTED unless backed by an organizer receipt. The literal all-registry stop remains; detector-only uniqueness is not clearance. Read this correction before any historical lane report.
+
+
 > **DO NOT SUBMIT. This review generated no candidate; no file is approved.** A registered lattice makes the frozen 37,654-dot budget mathematically incompatible with the user's literal any-registry overlap limit. Concurrently generated research TIFFs and the previously promoted DSLUP TIFF are not approved. No competition slot was used in this review.
 
 ## Latest Session-3 KG2-S3-HPTR lane + 123-Repository Fleet Audit (`kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`): NEGATIVE — DO NOT SUBMIT (Research Download Only)
