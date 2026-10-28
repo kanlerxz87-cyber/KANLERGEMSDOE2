@@ -30,12 +30,23 @@ class Tables(HTMLParser):
         self.table = None
         self.row = None
         self.cell = None
+        self.in_head = False
+        self.implicit_head_row = False
 
     def handle_starttag(self, tag, attrs):
         if tag == "table" and self.table is None:
             self.table = []
+        elif self.table is not None and tag == "thead":
+            self.in_head = True
         elif self.table is not None and tag == "tr":
             self.row = []
+            self.implicit_head_row = False
+        elif self.table is not None and tag == "th" and self.in_head and self.row is None:
+            # DrivenData's partial currently places <th> directly in <thead>
+            # without an enclosing <tr>. Preserve it as one implicit header row.
+            self.row = []
+            self.implicit_head_row = True
+            self.cell = []
         elif self.row is not None and tag in ("td", "th"):
             self.cell = []
         elif self.cell is not None and tag in ("br", "p", "div"):
@@ -52,34 +63,47 @@ class Tables(HTMLParser):
         elif tag == "tr" and self.row is not None and self.table is not None:
             self.table.append(self.row)
             self.row = None
+        elif tag == "thead" and self.table is not None:
+            if self.implicit_head_row and self.row is not None:
+                self.table.append(self.row)
+                self.row = None
+            self.in_head = self.implicit_head_row = False
         elif tag == "table" and self.table is not None:
             self.tables.append(self.table)
             self.table = self.row = self.cell = None
+            self.in_head = self.implicit_head_row = False
 
 
 def parse_leaderboard(text: str) -> dict[int, float]:
     parser = Tables()
     parser.feed(text)
     for table in parser.tables:
-        headers = " ".join(table[0]).lower() if table else ""
-        if "rank" not in headers or "tversky" not in headers or "public" not in headers:
+        if not table:
             continue
+        headers = [h.lower() for h in table[0]]
+        score_columns = [i for i, h in enumerate(headers) if "tversky" in h and "public" in h]
+        if not headers or "rank" not in headers[0] or len(score_columns) != 1:
+            continue
+        score_column = score_columns[0]
         found = {}
         for row in table[1:]:
-            if not row:
+            if len(row) != len(headers):
                 continue
             rank_match = re.fullmatch(r"#\s*(\d+)", row[0].strip())
             if not rank_match:
                 continue
-            # Values live in their own score cell. Do not parse a date, name,
-            # avatar URL or submission-count field as a leaderboard score.
-            scores = [float(c) for c in row[1:] if re.fullmatch(r"(?:0|1)\.\d{4,}", c)]
-            if len(scores) != 1 or not 0 <= scores[0] <= 1:
+            # Only the uniquely identified public-score column is trusted; a
+            # name, count, timestamp, or other numeric column is never a score.
+            score_cell = row[score_column]
+            if not re.fullmatch(r"(?:0|1)\.\d{4,}", score_cell):
+                continue
+            score = float(score_cell)
+            if not 0 <= score <= 1:
                 continue
             rank = int(rank_match.group(1))
             if rank in found:
                 raise ValueError("Duplicate leaderboard rank")
-            found[rank] = scores[0]
+            found[rank] = score
         if all(i in found for i in range(1, 6)) and all(found[i] >= found[i + 1] for i in range(1, 5)):
             return found
     raise ValueError("Public leaderboard table/ranks not recognized; refusing to invent a score")
