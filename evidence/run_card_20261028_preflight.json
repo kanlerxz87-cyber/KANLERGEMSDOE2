@@ -1,0 +1,32 @@
+{
+  "schema": "gems.parallel-run-card.v2",
+  "generated_utc": "2026-10-28T16:15:44.424688+00:00",
+  "hypothesis": "HTCADS height-persistent gravity\u2013magnetic cross-gradient corroborated by hydrothermal evidence; proposed ablation, not fitted.",
+  "mechanism": "Buried structural boundaries may produce coherent potential-field gradients at multiple continuation heights and nearby independent hydrothermal signals.",
+  "named_non_fault_mimic": "Unfaulted lithologic contacts and airborne survey leveling seams",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "Not measured; stopped at budget preflight before features, canaries, fitting, or dot placement.",
+  "correlation_overlap_vs_registry": {
+    "surface_pre_placement": null,
+    "surface_status": "Not built or compared",
+    "final_dots_new": null,
+    "full_registry_checked": false,
+    "historical_hptr_witness_overlap": 0.9996281935518139,
+    "historical_hptr_witness_spearman": 0.00016691726447952516,
+    "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "registered_budget_forced_minimum_overlap": 0.8234184947150369
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "Not created; CRS, shape, transform, NaN and range checks not applicable.",
+    "historical_hptr": "See preflight_replay_20261028.json for exact-byte audit; literal duplicate, not submit-ready.",
+    "official_template_provenance": "owner mirror only; organizer provenance and portal acceptance not verified."
+  },
+  "submission_name": null,
+  "note": "No submission: frozen lane fails the literal registry preflight.",
+  "experiments_run": 0,
+  "weekly_slots_spent": 0,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}

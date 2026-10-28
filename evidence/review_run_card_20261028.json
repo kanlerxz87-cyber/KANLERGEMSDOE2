@@ -1,0 +1,53 @@
+{
+  "schema": "gems.review-card.v1",
+  "generated_utc": "2026-10-28T16:13:36.650332+00:00",
+  "hypothesis": "No new lane supplied; review existing artifact only",
+  "mechanism": "Independent byte hash and full-array numeric inspection; no model fit or emission",
+  "named_non_fault_mimic": "Lithologic contacts and survey leveling seams (historical lane confounders)",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "Not replayed; archived results are not current measurements or leaderboard estimates",
+  "correlation_overlap_vs_registry": {
+    "surface": null,
+    "final_dots": null,
+    "status": "Not replayed; archived sidecar records a literal registry failure, not clearance",
+    "archived_literal_witness_overlap": 0.9996281935518139
+  },
+  "raster_sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
+  "validator_output": {
+    "file": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
+    "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
+    "hash_matches_sidecar": true,
+    "bands": 1,
+    "shape": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "all_cells_finite": true,
+    "nonfinite_cells": 0,
+    "all_cells_in_0_1": true,
+    "minimum": 0.0,
+    "maximum": 1.0,
+    "positive_cells": 37654,
+    "official_template_match": null,
+    "footprint_available": false,
+    "organizer_acceptance_verified": false
+  },
+  "submission_name": null,
+  "note": "Review only. No assigned new method lane; historical literal duplicate stop remains. Do not submit.",
+  "experiments_run": 0,
+  "weekly_slots_spent": 0,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}
