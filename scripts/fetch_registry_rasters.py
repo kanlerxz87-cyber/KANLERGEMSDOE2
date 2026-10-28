@@ -34,7 +34,7 @@ def sha256_file(p: Path) -> str:
 
 def local_index(root: Path) -> dict[str, Path]:
     idx = {}
-    for sub in ("ledger", "ledger_add", "scored", "focus_20261027"):
+    for sub in ("ledger", "ledger_add", "scored", "scored_extra", "focus_sites", "focus_20261027"):
         d = root / sub
         if d.exists():
             for p in d.rglob("*.tif"):

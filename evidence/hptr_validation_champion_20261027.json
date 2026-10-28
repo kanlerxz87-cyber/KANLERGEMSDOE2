@@ -1,0 +1,65 @@
+{
+  "schema": "gems.fail-closed-validator.v2",
+  "validated_ok_to_download_and_submit": false,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "human_intervention_required": false,
+  "raster_filename": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
+  "raster_sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
+  "gates": {
+    "exact_file_identity": true,
+    "local_grid_dtype_inside_range": true,
+    "literal_witness_not_duplicate": false,
+    "complete_current_registry_replayed": false,
+    "surface_before_placement_replayed": false,
+    "independent_canary_and_holdout_replay": false,
+    "current_weekly_quota_verified": false
+  },
+  "format_audit": {
+    "file": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
+    "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
+    "size_bytes": 218677,
+    "count": 1,
+    "shape": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "grid_matches_pinned_owner_template": true,
+    "no_nan_inside_footprint": true,
+    "no_inf_inside_footprint": true,
+    "inside_range_0_1": true,
+    "local_grid_dtype_inside_range_pass": true,
+    "strict_whole_array_finite_0_1": true,
+    "outside_footprint_all_nan": false,
+    "outside_footprint_all_zero": true,
+    "inside_positive_pixels": 37654,
+    "outside_positive_pixels": 0,
+    "on_catalogue_positive_pixels": 0,
+    "witness_overlap_dots": 37640,
+    "witness_overlap_fraction": 0.9996281935518139,
+    "witness_final_dots_spearman": 0.00016691726447952516,
+    "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+    "duplicate_under_literal_rule": true,
+    "organizer_acceptance_verified": false
+  },
+  "reasons": [
+    "Literal all-entry witness failed or was undefined; no exemption for calibration rasters.",
+    "Zeros outside the mirror footprint differ from its NaN convention; portal acceptance is unverified.",
+    "Complete current registry, pre-placement surface, independent replay and account quota have not been verified."
+  ],
+  "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization.",
+  "requested_legacy_mode": "champion",
+  "legacy_mode_ignored": "champion",
+  "legacy_mode_status": "Retired: no calibration-raster exemption or self-attested promotion; all modes use scripts/validate_submission.py."
+}

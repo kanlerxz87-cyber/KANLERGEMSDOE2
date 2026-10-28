@@ -1,0 +1,58 @@
+{
+  "schema": "gems.preregistration.v3",
+  "preregistered_utc": "2026-10-27T23:48:00Z",
+  "repository": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "branch": "arena/119fbef3-kanlergemsdoe2",
+  "lane_id": "KG2-S3-HPTR",
+  "lane_title": "Multi-Height Joint Gravity-Magnetic Cross-Gradient Persistence, Dispersed Geothermal Plume Intersection & Un-Damped Seamless LiDAR-Void Synthesis",
+  "single_method_paragraph": "Construct 12 label-free HPTR physical channels combining (1) listric depth-scaled (150/400/800 m) joint gravity-RTP upward-continuation ridge persistence and cross-field strike co-alignment, (2) anisotropic +-45 deg upslope/updip advective-dispersive geothermal plume intersection across GDR 1391 2m temperature probes, paleo-geothermal sinter/travertine vents, geothermometers, and USGS heat-flow wells coupled with shallow RTP magnetite destruction, spectral magnetization decay, bilateral K/eTh alteration shoulders, and 2.5 km high-pass asymmetric MT clay-cap baffles, and (3) road- and shoreline-deconfounded seamless 10 m + 3 m USGS 3DEP scarp features variance-matched to the 1 m contour-orthogonal LiDAR specialist to bridge the 24.63% 1 m LiDAR void without damping range-front or bedrock faults; fuse out-of-quadrant LightGBM specialists with the un-damped Two-Regime Multi-Physics Conduit prior and fold-visible-only fault-tip/relay strike-tensor concordance via Noisy-OR, and emit 37,654 binary float32 [0,1] dots using 300 m submodular CELF with a multi-peer portfolio uniqueness cap (<=14,500 dots inside the 3-px halo of any prior KANLERGEMSDOE2 submission).",
+  "hypotheses_ranked": [
+    {
+      "rank": 1,
+      "id": "H-S3-1",
+      "name": "HPTR-3D Multi-Height Cross-Gradient Persistence + Plume-Dispersed Vent Upflow + Un-Damped Seamless LiDAR-Void Bridge",
+      "status": "selected_primary",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 2,
+      "id": "H-S3-2",
+      "name": "Fold-Visible Fault-Tip & Relay-Ramp Strike-Tensor Concordance",
+      "status": "selected_ablation_exp2_exp3",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 3,
+      "id": "H-S3-3",
+      "name": "Spectral Magnetization Decay Ratio & Bilateral K/eTh Alteration Flanking",
+      "status": "included_in_feature_stack",
+      "external_data_obtainable_in_sandbox": true
+    },
+    {
+      "rank": 4,
+      "id": "H-S3-4",
+      "name": "NASA OPERA Sentinel-1 DISP-S1 Velocity-Gradient Hydraulic Barrier Discontinuity",
+      "status": "deferred_sandbox_host_blocked",
+      "official_source": "https://www.earthdata.nasa.gov/data/projects/opera",
+      "external_data_obtainable_in_sandbox": false
+    }
+  ],
+  "mandatory_gates": {
+    "gate_1_format_and_range_0_1": "Single-band float32 EPSG:32611 3730x3292 100m grid, nodata=None, 0 NaNs across 12,279,160 cells, values in [0,1], 0 positive pixels on existing_faults.tif.",
+    "gate_2_leakage_canary": "Every single feature tested alone on spatially-blocked holdout must satisfy AUC <= 0.90 before fitting any model.",
+    "gate_3_uniqueness_detector_policy": "Pre-placement surface |Spearman| < 0.90 and post-placement dots |Spearman| < 0.90 across ALL registry rasters (incl. controls), <= 0.70 directional 3-px dot overlap against EVERY competing geological detector across all focus, archive, and sister sites, AND <= 0.45 directional 3-px overlap against EVERY prior KANLERGEMSDOE2 GeoTIFF.",
+    "gate_3_literal_lattice_disclosure": "Transparently log exact directional overlap against 13gems spacing-5 calibration lattice (U=6,649 uncovered px; unavoidable >=82.3418% lower bound at 37,654 dots) alongside control-separated verdict.",
+    "gate_4_holdout_superiority": "Beat the 0.2778 Champion benchmark on ALL THREE holdout evaluators simultaneously (GEMSDOE32-HIDE-RECOVER-v3.0.1, GEMSDOE32-SGMC-CAL-v3.0, and GEMSDOE70-C-PIED-v1.0) with strictly positive paired 95% bootstrap CIs on Hide-Recover AND SGMC-CAL AND C-PIED.",
+    "gate_5_metadata": "Unique submission filename + portal note <= 140 characters."
+  },
+  "budget": {
+    "max_experiments": 3,
+    "experiments": [
+      "HPTR-EXP-1: HPTR Core (H-S3-1 + H-S3-3) + Seamless Void Bridge, isotropic B=2.0 collar, unconstrained 37,654 CELF",
+      "HPTR-EXP-2: HPTR + Fold-Visible Tip/Relay Strike-Tensor Concordance (H-S3-2) + Multi-Peer Portfolio Uniqueness Cap (q_own<=14500) + Two-Regime Piedmont/Void Tranche (5200+32454=37654)",
+      "HPTR-EXP-3: HPTR-EXP-2 + Along-Strike Axial Continuity Smoothing (sigma=0.55) + Marginal DTI Floor (0.0016)"
+    ],
+    "max_wall_hours": 2.0,
+    "live_drivendata_slots_to_spend": 0
+  }
+}
