@@ -254,7 +254,7 @@ def test_retired_validator_and_parallel_entrypoints_never_authorize(tmp_path):
 def test_parallel_research_promotion_is_superseded_and_receipts_preserved():
     sidecar = json.loads((ROOT / 'docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros-validation.json').read_text())
     assert sidecar['verdict'] == 'negative' and sidecar['ok_to_submit'] is False
-    original = json.loads((ROOT / 'evidence/superseded/off36_original_generator_validation_20261027.json').read_text())
+    original = json.loads((ROOT / 'evidence/superseded/off36_validation_pr36_promote_20261027.json').read_text())
     assert original['verdict'] == 'promote'  # preserved, never authorization
     note = (ROOT / 'docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.note.txt').read_text()
     assert 'DO NOT SUBMIT' in note and '184' in note and '37,652/37,654' in note
