@@ -32,6 +32,7 @@ class Structure(HTMLParser):
         class_id = " ".join(attrs.get(k, "") for k in ("id", "class", "role"))[:120]
         # Classes/IDs are structure, but filter out unexpected characters.
         class_id = re.sub(r"[^A-Za-z0-9_:. -]", "", class_id)
+        class_id = re.sub(r"leaderRow_\d+", "leaderRow", class_id)
         self.stack.append((tag, class_id.strip()))
         for key in ("href", "src", "hx-get", "hx-post", "data-url"):
             value = attrs.get(key, "")
@@ -77,12 +78,15 @@ def main() -> None:
         parser = Tables()
         parser.feed(html)
         report.update(title=structure.title, table_count=len(parser.tables),
-                      table_headers=[table[0] for table in parser.tables[:2] if table],
+                      table_classes=[sorted(classes) for classes in parser.table_classes[:2]],
                       numeric_score_samples=structure.scores,
                       query_free_endpoint_paths=sorted(structure.paths)[:20],
                       visible_signin_message=structure.visible_signin)
         try:
-            report["parser_recognized_ranks"] = len(parse_leaderboard(html))
+            values = parse_leaderboard(html, allow_official_headerless_fragment=True)
+            report["parser_recognized_ranks"] = len(values)
+            report["top_public_dti"] = values[1]
+            report["fifth_public_dti"] = values[5]
         except ValueError as exc:
             report["parser_error"] = str(exc)
     except Exception as exc:

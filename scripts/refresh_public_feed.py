@@ -17,6 +17,8 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 URL = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+# The public page loads this server-rendered table asynchronously (HTMX).
+PARTIAL_URL = URL.replace("/leaderboard/", "/leaderboard_partial/")
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -24,13 +26,16 @@ class Tables(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.tables: list[list[list[str]]] = []
+        self.table_classes: list[set[str]] = []
         self.table = None
+        self.classes: set[str] = set()
         self.row = None
         self.cell = None
 
     def handle_starttag(self, tag, attrs):
         if tag == "table" and self.table is None:
             self.table = []
+            self.classes = set(dict(attrs).get("class", "").split())
         elif self.table is not None and tag == "tr":
             self.row = []
         elif self.row is not None and tag in ("td", "th"):
@@ -51,26 +56,36 @@ class Tables(HTMLParser):
             self.row = None
         elif tag == "table" and self.table is not None:
             self.tables.append(self.table)
+            self.table_classes.append(self.classes)
             self.table = self.row = self.cell = None
+            self.classes = set()
 
 
-def parse_leaderboard(text: str) -> dict[int, float]:
+def parse_leaderboard(text: str, *, allow_official_headerless_fragment: bool = False) -> dict[int, float]:
     parser = Tables()
     parser.feed(text)
-    for table in parser.tables:
+    for table, classes in zip(parser.tables, parser.table_classes):
         headers = " ".join(table[0]).lower() if table else ""
-        if "rank" not in headers or "tversky" not in headers or "public" not in headers:
+        headered = all(term in headers for term in ("rank", "tversky", "public"))
+        # The public HTMX fragment observed 2026-10-28 contains a headerless
+        # <table class="leaderTable ... scores-table"> with exactly five cells:
+        # rank, avatars, participant, score, shared work. Only the fixed official
+        # fragment URL can enable this fallback; never treat an arbitrary page as it.
+        fragment = (allow_official_headerless_fragment and not headered
+                    and {"leaderTable", "scores-table"}.issubset(classes))
+        if not (headered or fragment):
             continue
         found = {}
-        for row in table[1:]:
+        for row in (table[1:] if headered else table):
             if not row:
                 continue
             rank_match = re.fullmatch(r"#\s*(\d+)", row[0].strip())
             if not rank_match:
                 continue
-            # Values live in their own score cell. Do not parse a date, name,
-            # avatar URL or submission-count field as a leaderboard score.
-            scores = [float(c) for c in row[1:] if re.fullmatch(r"(?:0|1)\.\d{4,}", c)]
+            # For the headerless fragment, only column 4 is a score. Never
+            # mistake a participant name, date or submission count for one.
+            candidates = [row[3]] if fragment and len(row) == 5 else (row[1:] if headered else [])
+            scores = [float(c) for c in candidates if re.fullmatch(r"(?:0|1)\.\d{4,}", c)]
             if len(scores) != 1 or not 0 <= scores[0] <= 1:
                 continue
             rank = int(rank_match.group(1))
@@ -80,6 +95,20 @@ def parse_leaderboard(text: str) -> dict[int, float]:
         if all(i in found for i in range(1, 6)) and all(found[i] >= found[i + 1] for i in range(1, 5)):
             return found
     raise ValueError("Public leaderboard table/ranks not recognized; refusing to invent a score")
+
+
+def fetch_public_html(url: str) -> str:
+    """Fetch only the exact public page or its official table fragment."""
+    if url not in (URL, PARTIAL_URL):
+        raise ValueError("Unexpected public leaderboard endpoint")
+    request = Request(url, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
+    with urlopen(request, timeout=25) as response:
+        if response.geturl().split("?")[0].rstrip("/") != url.rstrip("/"):
+            raise ValueError("Unexpected redirect, likely authentication or site change")
+        text = response.read(5_000_001).decode("utf-8")
+        if len(text) > 5_000_000:
+            raise ValueError("Unexpectedly large response")
+    return text
 
 
 def main(argv=None) -> int:
@@ -96,20 +125,24 @@ def main(argv=None) -> int:
             pass
     observed = datetime.now(timezone.utc).isoformat()
     try:
+        fetch_url = None
         if args.input_html:
-            text = args.input_html.read_text(encoding="utf-8")
+            values = parse_leaderboard(args.input_html.read_text(encoding="utf-8"))
         else:
-            request = Request(URL, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
-            with urlopen(request, timeout=25) as response:
-                if response.geturl().split("?")[0].rstrip("/") != URL.rstrip("/"):
-                    raise ValueError("Unexpected redirect, likely authentication or site change")
-                text = response.read(5_000_001).decode("utf-8")
-                if len(text) > 5_000_000:
-                    raise ValueError("Unexpectedly large response")
-        values = parse_leaderboard(text)
+            fetch_url = URL
+            text = fetch_public_html(URL)
+            try:
+                values = parse_leaderboard(text)
+            except ValueError:
+                # The page shell currently loads its table asynchronously.
+                # A fragment is accepted only if the exact URL is returned and
+                # the same strict rank/header/score checks pass.
+                fetch_url = PARTIAL_URL
+                values = parse_leaderboard(fetch_public_html(PARTIAL_URL), allow_official_headerless_fragment=True)
         data = {
             "status": "fixture_only" if args.input_html else "success",
             "source_url": URL,
+            "fetch_url": fetch_url,
             "observed_utc": observed,
             "top_public_dti": values[1],
             "fifth_public_dti": values[5],
