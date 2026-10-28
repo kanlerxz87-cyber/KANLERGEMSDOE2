@@ -1,6 +1,6 @@
 {
   "schema": "gems.current-status.v3",
-  "generated_utc": "2026-10-27T23:54:42.303223+00:00",
+  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
   "verdict": "negative",
   "validated_ok_to_download_and_submit": false,
   "ok_to_submit": false,
@@ -13,8 +13,27 @@
     "verdict": "negative",
     "ok_to_download_for_research": true,
     "ok_to_submit": false,
+    "ok_to_download_and_submit": false,
     "literal_witness_overlap": 0.9998140967759069,
     "warning": "Archived detector-only promotion is superseded; the literal rule fails."
+  },
+  "parallel_research_files": {
+    "pr34": {
+      "filename": "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif",
+      "sha256": "f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539",
+      "verdict": "negative",
+      "ok_to_submit": false,
+      "literal_witness_overlap": 0.9999468847931162,
+      "warning": "Research only; no holdout replay or full-registry authorization."
+    },
+    "pr36": {
+      "filename": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+      "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+      "verdict": "negative",
+      "ok_to_submit": false,
+      "literal_witness_overlap": 0.66,
+      "warning": "Research only; no holdout replay or full-registry authorization."
+    }
   },
   "reason": "Literal lattice overlap 99.981%; budget lower bound 82.34% > 70%.",
   "run_card": "../../evidence/current_run_card.json",

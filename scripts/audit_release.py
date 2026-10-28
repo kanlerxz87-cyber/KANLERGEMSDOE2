@@ -135,6 +135,8 @@ def main() -> int:
     dslup_archive = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
     dslup = next(r for r in candidates if r["sha256"] == dslup_archive["raster_sha256"]
                  and r["file"] == dslup_archive["submission_filename"])
+    pr34 = next(r for r in candidates if r["file"] == "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif")
+    pr36 = next(r for r in candidates if r["file"] == "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif")
     card = {
         "schema": "gems.parallel-run-card.v2",
         "generated_utc": record["generated_utc"],
@@ -160,7 +162,10 @@ def main() -> int:
             "new_raster": "not produced",
             "prior_raster_exact_byte_audit": prior,
             "prior_dslup_exact_byte_audit": dslup,
-            "note": "Both prior rasters are research artifacts only; range/grid checks are not portal acceptance.",
+            "parallel_pr34_exact_byte_audit": pr34,
+            "parallel_pr36_exact_byte_audit": pr36,
+            "parallel_pr36_policy_stop": "15,000-dot budget and intentional lattice-gap placement violate the frozen lane; no holdout or full-registry clearance.",
+            "note": "All prior and parallel rasters are research artifacts only; range/grid checks are not portal acceptance.",
         },
         "submission_name": None,
         "note": "No new candidate; literal registry duplicate stop. Research only; do not submit.",

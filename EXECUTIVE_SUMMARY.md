@@ -1,12 +1,17 @@
 # Executive summary — submission decision
 
-> **DO NOT SUBMIT. No new candidate has been generated or approved.** A registered lattice makes the frozen 37,654-dot budget mathematically incompatible with the user's literal any-registry overlap limit. The previously promoted DSLUP TIFF is research only. No competition slot was used.
+> **DO NOT SUBMIT. This review generated no candidate; no file is approved.** A registered lattice makes the frozen 37,654-dot budget mathematically incompatible with the user's literal any-registry overlap limit. Concurrently generated research TIFFs and the previously promoted DSLUP TIFF are not approved. No competition slot was used in this review.
 
 ## Current research file and decision
 
 | Filename / SHA-256 | Research holdout (not a leaderboard estimate) | Literal uniqueness | Decision |
 |---|---|---|---|
 | [DSLUP TIFF](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3` | **HOLDOUT-DTI 0.125925**, `GEMSDOE32-HIDE-RECOVER-v3.0`, 22,232 withheld-positive occurrences, 95% CI [0.112880, 0.138176]. Archived procedure result, not independently replayed. | **FAIL:** 37,647/37,654 dots = **99.9814%** within 3 pixels of one registry lattice. Pre-placement surface not replayed. | **DO NOT SUBMIT** |
+| [KG2 historical benchmark](docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif) · `cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e` | **HOLDOUT-DTI 0.177056**, `gems-segment-pooled-v1`, 60,988 withheld-positive pixels, 95% CI [0.163673, 0.190831]. Historical receipt, not independently replayed. | **FAIL:** 37,494/37,654 = **99.5751%** within 3 pixels of the lattice. | **DO NOT SUBMIT** |
+| [Parallel PR #34 research TIFF](docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif) · `f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539` | Not measured or replayed. | **FAIL:** 37,652/37,654 = **99.9947%** vs lattice; 184 on-catalogue dots. | **DO NOT SUBMIT** |
+| [Parallel PR #36 research TIFF](docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif) · `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4` | Not measured or replayed. | **NOT CLEARED:** 15,000 dots, 66.0% witness overlap, but 5,100 dots placed in lattice gaps to evade the gate, violating the frozen lane; 107 on-catalogue dots. Full registry not verified. | **DO NOT SUBMIT** |
+
+The two historical HOLDOUT-DTI values use different evaluators and populations and cannot be directly ranked. No new holdout has been generated for a paired comparison. PR #36's previously positive card and sidecar are superseded and preserved under `evidence/superseded/`.
 
 [Exact-byte negative validator receipt](evidence/dslup_literal_revalidation_20261027.json) · [current JSON run card](evidence/current_run_card.json) · [full local release audit](evidence/release_audit_20261027.json). Local finite [0,1], shape, CRS and transform checks do not demonstrate portal acceptance or satisfy novelty. Current submission name and note are **not applicable** because no file is approved.
 

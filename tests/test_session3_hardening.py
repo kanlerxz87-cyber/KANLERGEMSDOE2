@@ -247,6 +247,22 @@ def test_retired_validator_and_parallel_entrypoints_never_authorize(tmp_path):
     for module in modules:
         with pytest.raises(SystemExit, match='Archived lane disabled'):
             importlib.import_module(module).main()
+    with pytest.raises(SystemExit, match='Archived generator disabled'):
+        importlib.import_module('generate_unique_submission').main()
+
+
+def test_parallel_research_promotion_is_superseded_and_receipts_preserved():
+    sidecar = json.loads((ROOT / 'docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros-validation.json').read_text())
+    assert sidecar['verdict'] == 'negative' and sidecar['ok_to_submit'] is False
+    original = json.loads((ROOT / 'evidence/superseded/off36_original_generator_validation_20261027.json').read_text())
+    assert original['verdict'] == 'promote'  # preserved, never authorization
+    note = (ROOT / 'docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.note.txt').read_text()
+    assert 'DO NOT SUBMIT' in note and '184' in note and '37,652/37,654' in note
+    audit = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
+    relevant = {r['file']: r for r in audit['all_local_candidate_artifacts']}
+    off = relevant['36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif']
+    assert off['inside_positive_pixels'] == 15000 and off['witness_overlap_fraction'] == .66
+    assert off['on_catalogue_positive_pixels'] == 107
 
 
 def test_published_decision_cannot_contradict_literal_revalidation():

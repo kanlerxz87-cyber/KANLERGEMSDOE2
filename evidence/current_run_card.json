@@ -1,6 +1,6 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-27T23:54:42.303223+00:00",
+  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
   "hypothesis": "H-K1 HTCADS frozen lane; proposed height-persistent cross-gradient ablation is not yet registered or fitted",
   "mechanism": "Compare potential-field gradient orientation and displacement across continuation heights with separate hydrothermal evidence; proposed, not fitted.",
   "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
@@ -97,7 +97,84 @@
       "duplicate_under_literal_rule": true,
       "organizer_acceptance_verified": false
     },
-    "note": "Both prior rasters are research artifacts only; range/grid checks are not portal acceptance."
+    "parallel_pr34_exact_byte_audit": {
+      "file": "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif",
+      "sha256": "f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539",
+      "size_bytes": 758631,
+      "count": 1,
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "grid_matches_pinned_owner_template": true,
+      "no_nan_inside_footprint": true,
+      "no_inf_inside_footprint": true,
+      "inside_range_0_1": true,
+      "local_grid_dtype_inside_range_pass": true,
+      "strict_whole_array_finite_0_1": true,
+      "outside_footprint_all_nan": false,
+      "outside_footprint_all_zero": true,
+      "inside_positive_pixels": 37654,
+      "outside_positive_pixels": 0,
+      "on_catalogue_positive_pixels": 184,
+      "witness_overlap_dots": 37652,
+      "witness_overlap_fraction": 0.9999468847931162,
+      "witness_final_dots_spearman": 9.728156321052254e-05,
+      "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+      "duplicate_under_literal_rule": true,
+      "organizer_acceptance_verified": false
+    },
+    "parallel_pr36_exact_byte_audit": {
+      "file": "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif",
+      "sha256": "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4",
+      "size_bytes": 781400,
+      "count": 1,
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ],
+      "dtype": "float32",
+      "nodata": null,
+      "grid_matches_pinned_owner_template": true,
+      "no_nan_inside_footprint": true,
+      "no_inf_inside_footprint": true,
+      "inside_range_0_1": true,
+      "local_grid_dtype_inside_range_pass": true,
+      "strict_whole_array_finite_0_1": true,
+      "outside_footprint_all_nan": false,
+      "outside_footprint_all_zero": true,
+      "inside_positive_pixels": 15000,
+      "outside_positive_pixels": 0,
+      "on_catalogue_positive_pixels": 107,
+      "witness_overlap_dots": 9900,
+      "witness_overlap_fraction": 0.66,
+      "witness_final_dots_spearman": -0.003973779109310169,
+      "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+      "duplicate_under_literal_rule": false,
+      "organizer_acceptance_verified": false
+    },
+    "parallel_pr36_policy_stop": "15,000-dot budget and intentional lattice-gap placement violate the frozen lane; no holdout or full-registry clearance.",
+    "note": "All prior and parallel rasters are research artifacts only; range/grid checks are not portal acceptance."
   },
   "submission_name": null,
   "note": "No new candidate; literal registry duplicate stop. Research only; do not submit.",

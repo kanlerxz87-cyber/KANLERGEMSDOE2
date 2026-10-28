@@ -108,6 +108,32 @@ def main() -> None:
             or revalidation.get("format_audit", {}).get("witness_overlap_dots") != s2_audit["witness_overlap_dots"]):
         raise SystemExit("Current Session-2 revalidation is absent or inconsistent with the exact-byte audit")
     hr = s2["holdout_dti"]["primary_hide_and_recover"]
+    kg = json.loads((ROOT / "run_card.json").read_text())
+    kg_rows = [r for r in audit["all_local_candidate_artifacts"] if r["sha256"] == kg["raster_sha256"]
+               and r["file"] == kg["submission_filename"]]
+    if len(kg_rows) != 1 or not kg_rows[0]["duplicate_under_literal_rule"]:
+        raise SystemExit("Historical KG2 benchmark witness audit missing or changed")
+    kg_audit, kg_hr = kg_rows[0], kg["holdout_dti"]
+    # Integrate concurrent main-branch research artifacts without adopting their
+    # self-attested promotion. Their differing budgets have different conclusions.
+    extras = {}
+    for key, filename in (
+        ("pr34", "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif"),
+        ("pr36", "36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif"),
+    ):
+        matches = [r for r in audit["all_local_candidate_artifacts"] if r["file"] == filename]
+        candidate_path = DOCS / "downloads" / filename
+        if len(matches) != 1 or not candidate_path.is_file() or hashlib.sha256(candidate_path.read_bytes()).hexdigest() != matches[0]["sha256"]:
+            raise SystemExit(f"Parallel research artifact {key} differs from the audited bytes")
+        extras[key] = matches[0]
+    off36 = json.loads((ROOT / "evidence/off36_independent_check_20261027.json").read_text())
+    if (extras["pr34"]["witness_overlap_dots"] != 37652 or extras["pr34"]["on_catalogue_positive_pixels"] != 184
+            or extras["pr36"]["witness_overlap_dots"] != 9900 or extras["pr36"]["inside_positive_pixels"] != 15000
+            or extras["pr36"]["on_catalogue_positive_pixels"] != 107 or off36["sha256"] != extras["pr36"]["sha256"]):
+        raise SystemExit("Parallel research recheck disagrees; rerun the release audit")
+    parallel_notice = f'''<div class="callout red-callout"><strong>Parallel-session artifacts — DO NOT SUBMIT.</strong>
+<p><a href="downloads/{esc(extras['pr34']['file'])}" download>PR #34 research TIFF</a> · SHA-256 <span class="mono">{esc(extras['pr34']['sha256'])}</span>. Exact-byte audit: {extras['pr34']['witness_overlap_dots']:,}/{extras['pr34']['inside_positive_pixels']:,} dots ({100*extras['pr34']['witness_overlap_fraction']:.3f}%) overlap the lattice and {extras['pr34']['on_catalogue_positive_pixels']} are on the mirrored catalogue. No holdout was replayed.</p>
+<p><a href="downloads/{esc(extras['pr36']['file'])}" download>PR #36 research TIFF</a> · SHA-256 <span class="mono">{esc(extras['pr36']['sha256'])}</span>. Its {extras['pr36']['inside_positive_pixels']:,}-dot budget deviates from the frozen lane and 5,100 dots were deliberately placed in lattice gaps; its 66.0% witness overlap does not establish protocol compliance or full-registry novelty. It has {extras['pr36']['on_catalogue_positive_pixels']} on-catalogue dots and no measured holdout. Its historical promotion is superseded. <a href="../evidence/off36_independent_check_20261027.json">Independent recheck ↗</a></p></div>'''
     archive_notice = f'''<div class="callout red-callout"><strong>DO NOT SUBMIT — all prior files are research only.</strong>
 <p>The prior DSLUP TIFF can be <a href="downloads/{esc(s2_name)}" download>downloaded for research</a> · <a href="../evidence/dslup_literal_revalidation_20261027.json">current validator result</a> · SHA-256 <span class="mono">{esc(s2_sha)}</span>.</p>
 <p>Its local grid and inside-footprint values pass, but {s2_audit['witness_overlap_dots']:,} of {s2_audit['inside_positive_pixels']:,} dots ({100*s2_audit['witness_overlap_fraction']:.3f}%) are within 3 pixels of a registered raster. The former detector-only promotion is superseded: the protocol contains no exemption. Neither format validity nor a unique file hash is approval to submit.</p></div>'''
@@ -120,7 +146,7 @@ def main() -> None:
 <div class="metric"><div class="label">New leaderboard estimate</div><div class="value">—</div><div class="hint">Unavailable; no hidden truth or receipt</div></div>
 <div class="metric"><div class="label">Weekly slots used here</div><div class="value">0</div><div class="hint">A selector is a separate step</div></div>
 <div class="metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public #1 DW-Tversky ↗</a></div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated public snapshot…</div><noscript><span class="note">View the linked official leaderboard.</span></noscript></div></div>
-<section class="section"><div class="section-head"><div><div class="eyebrow">Prior candidate</div><h2>Download for research, not for a slot.</h2></div></div>{archive_notice}</section>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Prior candidates</div><h2>Download for research, not for a slot.</h2></div></div>{archive_notice}{parallel_notice}</section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">The distinctions that matter</div><h2>A valid-looking TIFF is not a validated submission.</h2></div></div><div class="grid-three">
 <article class="card"><div class="card-icon">01</div><h3>Format</h3><p>Independent local checks found the previous file finite in [0,1] on the mirror grid. The cause of the reported portal range error and portal acceptance are unknown.</p></article>
 <article class="card"><div class="card-icon">02</div><h3>Uniqueness</h3><p>A different SHA-256 is not enough. The requested literal 3-pixel rule fails against a registered lattice, before considering the rest of the registry.</p></article>
@@ -129,12 +155,16 @@ def main() -> None:
     summary = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p><strong>No new file has passed all gates. Do not submit any current download.</strong> The tables distinguish research artifacts, reported scores, and measured overlap.</p></div>
 {archive_notice}
-<section class="section"><div class="section-head"><div><div class="eyebrow">Candidate comparison</div><h2>Current best evidence is not a submission recommendation.</h2></div></div>
+{parallel_notice}
+<section class="section"><div class="section-head"><div><div class="eyebrow">Historical benchmark comparison</div><h2>Holdout evidence is not a submission recommendation.</h2></div></div>
 <div class="table-wrap"><table><thead><tr><th>Research file</th><th>Historical holdout / leaderboard estimate</th><th>Literal uniqueness</th><th>Decision</th></tr></thead><tbody><tr>
 <td class="file"><a href="downloads/{esc(s2_name)}" download>{esc(s2_name)}</a><small>SHA-256 {esc(s2_sha)}</small></td>
 <td><strong>{hr['pooled_dti']:.6f}</strong><small>HOLDOUT-DTI · GEMSDOE32-HIDE-RECOVER-v3.0 · N=22,232 withheld-positive occurrences · 95% CI [{hr['ci95'][0]:.6f}, {hr['ci95'][1]:.6f}]. Historical procedure result; not independently replayed. Leaderboard estimate: unavailable.</small></td>
-<td><strong>No</strong><small>{100*s2_audit['witness_overlap_fraction']:.3f}% vs registered lattice; pre-placement surface not replayed.</small></td><td><span class="pill stop">Do not submit</span></td></tr></tbody></table></div>
-<p class="note">The historical SGMC-CAL values depend on an unverified inferred hidden-truth count; they are research transforms, not measured leaderboard scores or a valid promotion gate.</p></section>
+<td><strong>No</strong><small>{100*s2_audit['witness_overlap_fraction']:.3f}% vs registered lattice; pre-placement surface not replayed.</small></td><td><span class="pill stop">Do not submit</span></td></tr>
+<tr><td class="file"><a href="downloads/{esc(kg['submission_filename'])}" download>{esc(kg['submission_filename'])}</a><small>SHA-256 {esc(kg['raster_sha256'])}</small></td>
+<td><strong>{kg_hr['dti']:.6f}</strong><small>HOLDOUT-DTI · {esc(kg_hr['evaluator_version'])} · N={kg_hr['withheld_positive_pixels']:,} · 95% CI [{kg_hr['ci95'][0]:.6f}, {kg_hr['ci95'][1]:.6f}]. Historical receipt only; OOF not replayed.</small></td>
+<td><strong>No</strong><small>{100*kg_audit['witness_overlap_fraction']:.3f}% vs lattice.</small></td><td><span class="pill stop">Do not submit</span></td></tr></tbody></table></div>
+<p class="note">These are different evaluator protocols and populations, so the numbers cannot establish which procedure is better. This review has no new holdout to compare with either. Historical SGMC-CAL values rely on an unverified inferred hidden-truth count and are not measured leaderboard scores or a valid promotion gate.</p></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Evidence table</div><h2>Nine historical site leaders</h2><p>Scores are USER/OWNER-REPORTED, not organizer-confirmed; no receipts tie them to exact bytes. The largest reported value is 0.2778 for GEMSDOE32.</p></div></div>{table}
 <p class="note">Overlap is directional: the fraction of a row’s positive pixels within 3 pixels of its closest other focus-site raster. The nine-site comparison is not full-registry clearance. All downloads are historical research only.</p></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Future instructions · not authorization</div><h2>How to make a submission, once cleared.</h2></div></div>
@@ -142,7 +172,7 @@ def main() -> None:
 <div class="card"><h3>Format versus acceptance</h3><p>The <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#submission-format">official format</a> specifies a single float32 layer in [0,1], EPSG:32611, matching bounds and 100 m grid, with null/NaN outside bounds. The owner-mirrored template has an irregular NaN exterior; this candidate uses zeros there.</p><p>The rejected file bytes and organizer diagnosis for <code>Predicted values must be in range [0, 1]</code> were not retained. A local whole-array check does not establish portal acceptance of either exterior convention.</p><p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">Official competition instructions ↗</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">Official rules ↗</a></p></div></div></section>'''
 
     research = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Research</span></div>
-<div class="page-intro"><div class="eyebrow">Scientific review</div><h1>Better evidence, not a louder score.</h1><p>The competition predicts unmapped faults that may indicate geothermal resources. A heat anomaly or vent is not itself a confirmed fault.</p></div>
+<div class="page-intro"><div class="eyebrow">Scientific review</div><h1>Better evidence, not a louder score.</h1><p><strong>DO NOT SUBMIT</strong> any current file. The competition predicts unmapped faults that may indicate geothermal resources. A heat anomaly or vent is not itself a confirmed fault.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Forensic analysis</div><h2>What could explain the reported 0.2778?</h2></div></div><div class="grid-two"><div class="card"><h3>What the raster bytes show</h3><p>GEMSDOE32's mask equals GEMSDOE25's after removing {audit['focus_lineage_geometry']['g25_to_g32_removed_pixels']:,} pixels at distance ≤2 px from the mirrored known-fault mask (XOR {audit['focus_lineage_geometry']['g32_b2_vs_g25_d28_filtered_by_distance_gt_2px_xor']:,}). GEMSDOE36 contains those dots plus {audit['focus_lineage_geometry']['g36_extra_pixels_over_g32']:,}. GEMSDOE25 and GEMSDOE30 have identical positive masks.</p></div>
 <div class="card"><h3>What remains unknown</h3><p>Thinning can reduce false-positive mass while retaining credit, but whether it caused the reported ordering is unknown. The hidden labels, an organizer receipt tying score to bytes, and the original replay are unavailable. We cannot establish that a new file will exceed 0.2778.</p></div></div></section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Ranked before modeling</div><h2>Four hypotheses to investigate</h2><p>Qualitative ranking only; not fitted here. Novelty across the entire fleet is unproven.</p></div></div><div class="grid-two">
@@ -156,7 +186,7 @@ def main() -> None:
 <li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">National Laboratory of the Rockies official rules</a> · <a href="https://github.com/drivendataorg/gems-prize-reference-solution">DrivenData reference solution</a></li>
 <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a> · <a href="https://gdr.openei.org/submissions/1391">DOE GDR INGENIOUS</a> · <a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a> · <a href="https://www.earthdata.nasa.gov/data/projects/opera">NASA OPERA</a></li></ul><p class="note"><a href="../registry/source_catalog_20261027.json">Source catalog and provenance notes ↗</a></p></div></section>'''
 
-    irregular = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p>Automated checks fail closed; no human geological inspector is substituted for validation.</p></div>
+    irregular = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p><strong>DO NOT SUBMIT</strong> any current file. Automated checks fail closed; no human geological inspector is substituted for validation.</p></div>
 <div class="grid-two"><article class="card"><div class="eyebrow">01 · blocking</div><h3>Literal novelty contradiction</h3><p>A registered calibration lattice forces ≥{bound:.2f}% overlap at the frozen budget. The prompt says <em>any</em> registry raster; no control exemption has been authorized.</p></article>
 <article class="card"><div class="eyebrow">02 · blocking</div><h3>Replay and registry completeness</h3><p>The prior surface and out-of-fold caches have not been independently replayed. A single witness proves failure but cannot establish full-registry clearance. The separate method paragraph referred to in the prompt was not supplied.</p></article>
 <article class="card"><div class="eyebrow">03 · blocking</div><h3>Score provenance</h3><p>The focus scores are user/owner reports without submission-page receipts. The historical SGMC prevalence calibration uses an inferred hidden-label count, not observed organizer truth. Neither is a leaderboard estimate.</p></article>
@@ -171,6 +201,7 @@ def main() -> None:
             ("research.html", "Research", research, ""),
             ("irregularities.html", "Open issues", irregular, ""),
             ("submission-table.html", "Historical submission comparison", summary, ""),
+            ("submission-howto.html", "Conditional submission instructions", summary, ""),
             ("audit-review.html", "Open issues", irregular, "")):
         (DOCS / name).write_text(page(title, name, content, js), encoding="utf-8")
     feed = {
@@ -181,14 +212,22 @@ def main() -> None:
         "session2_candidate": {
             "filename": s2_name, "sha256": s2_sha, "verdict": "negative",
             "ok_to_download_for_research": True, "ok_to_submit": False,
+            "ok_to_download_and_submit": False,
             "literal_witness_overlap": s2_audit["witness_overlap_fraction"],
             "warning": "Archived detector-only promotion is superseded; the literal rule fails.",
+        },
+        "parallel_research_files": {
+            key: {"filename": row["file"], "sha256": row["sha256"], "verdict": "negative",
+                  "ok_to_submit": False, "literal_witness_overlap": row["witness_overlap_fraction"],
+                  "warning": "Research only; no holdout replay or full-registry authorization."}
+            for key, row in extras.items()
         },
         "reason": f"Literal lattice overlap {100*s2_audit['witness_overlap_fraction']:.3f}%; budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    (DOCS / "data/current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     table_data = {
         "schema": "gems.submission-comparison.v2", "generated_utc": card["generated_utc"],
         "verdict": "negative", "ok_to_submit": False, "new_raster": None,
@@ -197,7 +236,7 @@ def main() -> None:
         "previous_artifact": prior, "focus_nine": audit["focus_nine"],
     }
     (ROOT / "evidence/submission_table_20261027.json").write_text(json.dumps(table_data, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print("Built six fail-closed pages from exact-byte audit", audit["generated_utc"])
+    print("Built seven fail-closed pages from exact-byte audit", audit["generated_utc"])
 
 
 if __name__ == "__main__":
