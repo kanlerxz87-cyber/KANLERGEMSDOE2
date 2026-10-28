@@ -33,11 +33,14 @@ def header(active: str) -> str:
 <nav class="nav" aria-label="Main navigation">{links}<a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header>'''
 
 
+REVIEW_NOTICE = """<section class="callout" role="note" aria-label="Current evidence correction"><strong>2026-10-28 review: NOT OK TO SUBMIT.</strong><p>No new method lane was supplied; no new experiment or submission was run. Historical leaderboard values are user-reported. Holdout comparisons do not establish a leaderboard score. Hidden-label counts and pure-false-positive claims inferred from rounded scores are unverified. No validated leaderboard estimate is available. <a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2/blob/main/evidence/review_20261028.md">Read the superseding review and next steps ↗</a>.</p></section>"""
+
+
 def page(title: str, active: str, content: str, script: str = "") -> str:
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} | GEMS Fieldnotes</title><meta name="description" content="Evidence-led geological fault discovery for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"></head>
-<body>{header(active)}<main id="main" class="wrap">{content}</main>
+<body>{header(active)}<main id="main" class="wrap">{REVIEW_NOTICE}{content}</main>
 <footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Auditable evidence. No upload is automated.</div></div></footer>{script}</body></html>'''
 
 

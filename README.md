@@ -1,5 +1,8 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
+> **2026-10-28 superseding review — NOT OK TO SUBMIT.** No new single-method lane was supplied; no experiments or new TIFF were generated. [Current review](evidence/review_20261028.md) · [independent published-file inspection and run card](evidence/review_run_card_20261028.json). **No validated leaderboard estimate is available.** Archived claims below about hidden-label counts, pure false positives, or beating the reported 0.2778 on holdout are not established facts. Scores are USER-REPORTED unless backed by an organizer receipt. The literal all-registry stop remains; detector-only uniqueness is not clearance. Read this correction before any historical lane report.
+
+
 > **CURRENT DECISION: DO NOT SUBMIT.** This review generated no approved live-slot upload: all shared automated gates fail closed (`verdict = "negative"`) to protect weekly DrivenData slots under the literal all-registry spacing-5 lattice rule. Our latest Session-3 lane (**`KG2-S3-HPTR`**) generated the genuinely unique `[0, 1]` GeoTIFF [`docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif) — the **first candidate in `KANLERGEMSDOE2` history to beat the `0.2778` (`GEMSDOE32`) champion simultaneously across all three blind holdout benchmarks (`Hide-Recover = 0.113133`, `SGMC-CAL = 0.077148`, `C-PIED = 0.104289`)** — published strictly as a **research artifact (`DO NOT SUBMIT`)** until the literal calibration-lattice rule and live selector are resolved.
 
 ## Latest Session-3 KG2-S3-HPTR lane + 123-Repo Fleet Audit (`675d0ff8`, negative — DO NOT SUBMIT)
