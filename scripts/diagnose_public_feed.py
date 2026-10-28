@@ -7,13 +7,17 @@ HTML, cookies, tokens, or full URLs with query strings.
 """
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import re
 from html.parser import HTMLParser
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
-from refresh_public_feed import URL, Tables, parse_leaderboard
+from refresh_public_feed import URL, Tables, main as refresh_main, parse_leaderboard
 
 PARTIAL_URL = URL.replace("/leaderboard/", "/leaderboard_partial/")
 
@@ -90,6 +94,17 @@ def main() -> None:
             report["fifth_public_dti"] = values[5]
         except ValueError as exc:
             report["parser_error"] = str(exc)
+        # Exercise the real shell → fragment → strict-parse → JSON path too;
+        # only aggregate public scores and status are copied to the annotation.
+        with TemporaryDirectory() as temp:
+            output = Path(temp) / "public.json"
+            with contextlib.redirect_stdout(io.StringIO()):
+                rc = refresh_main(["--out", str(output), "--strict"])
+            refreshed = json.loads(output.read_text(encoding="utf-8"))
+            report["full_refresh"] = {"exit": rc, "status": refreshed.get("status"),
+                                      "fetch_url": refreshed.get("fetch_url"),
+                                      "top_public_dti": refreshed.get("top_public_dti"),
+                                      "fifth_public_dti": refreshed.get("fifth_public_dti")}
     except Exception as exc:
         report["unavailable"] = type(exc).__name__
     text = json.dumps(report, ensure_ascii=True, separators=(",", ":"))[:6000]
