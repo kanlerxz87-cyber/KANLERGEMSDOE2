@@ -79,6 +79,7 @@ def main() -> None:
         parser.feed(html)
         report.update(title=structure.title, table_count=len(parser.tables),
                       table_classes=[sorted(classes) for classes in parser.table_classes[:2]],
+                      table_ids=parser.table_ids[:2],
                       numeric_score_samples=structure.scores,
                       query_free_endpoint_paths=sorted(structure.paths)[:20],
                       visible_signin_message=structure.visible_signin)

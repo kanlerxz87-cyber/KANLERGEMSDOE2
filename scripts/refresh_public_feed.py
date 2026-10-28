@@ -27,15 +27,19 @@ class Tables(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.tables: list[list[list[str]]] = []
         self.table_classes: list[set[str]] = []
+        self.table_ids: list[str] = []
         self.table = None
         self.classes: set[str] = set()
+        self.table_id = ""
         self.row = None
         self.cell = None
 
     def handle_starttag(self, tag, attrs):
         if tag == "table" and self.table is None:
             self.table = []
-            self.classes = set(dict(attrs).get("class", "").split())
+            attributes = dict(attrs)
+            self.classes = set(attributes.get("class", "").split())
+            self.table_id = attributes.get("id", "")
         elif self.table is not None and tag == "tr":
             self.row = []
         elif self.row is not None and tag in ("td", "th"):
@@ -57,22 +61,24 @@ class Tables(HTMLParser):
         elif tag == "table" and self.table is not None:
             self.tables.append(self.table)
             self.table_classes.append(self.classes)
+            self.table_ids.append(self.table_id)
             self.table = self.row = self.cell = None
             self.classes = set()
+            self.table_id = ""
 
 
 def parse_leaderboard(text: str, *, allow_official_headerless_fragment: bool = False) -> dict[int, float]:
     parser = Tables()
     parser.feed(text)
-    for table, classes in zip(parser.tables, parser.table_classes):
+    for table, classes, table_id in zip(parser.tables, parser.table_classes, parser.table_ids):
         headers = " ".join(table[0]).lower() if table else ""
         headered = all(term in headers for term in ("rank", "tversky", "public"))
         # The public HTMX fragment observed 2026-10-28 contains a headerless
-        # <table class="leaderTable ... scores-table"> with exactly five cells:
+        # <table id="leaderTable" class="... scores-table"> with exactly five cells:
         # rank, avatars, participant, score, shared work. Only the fixed official
         # fragment URL can enable this fallback; never treat an arbitrary page as it.
         fragment = (allow_official_headerless_fragment and not headered
-                    and {"leaderTable", "scores-table"}.issubset(classes))
+                    and table_id == "leaderTable" and "scores-table" in classes)
         if not (headered or fragment):
             continue
         found = {}
