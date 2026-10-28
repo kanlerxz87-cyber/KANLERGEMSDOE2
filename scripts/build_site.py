@@ -53,7 +53,9 @@ FEED_SCRIPT = '''<script>
     if(!s||typeof s.top_public_dti!=='number'||s.top_public_dti<0||s.top_public_dti>1){value.textContent='Unavailable';label.textContent='No verified snapshot';return;}
     value.textContent=s.top_public_dti.toFixed(4);
     const fifth=(typeof s.fifth_public_dti==='number'&&s.fifth_public_dti>=0&&s.fifth_public_dti<=1)?' · #5 '+s.fifth_public_dti.toFixed(4):'';
-    label.textContent=(d.status==='unavailable'?'Refresh failed · last snapshot ':'Public snapshot · ')+(s.observed_utc||'unknown date')+fifth;
+    const when=Date.parse(s.observed_utc||''), age=Date.now()-when;
+    const stale=!Number.isFinite(when)||age<0||age>24*60*60*1000;
+    label.textContent=(d.status==='unavailable'?'Refresh failed · last snapshot ':stale?'Stale public snapshot · ':'Public snapshot · ')+(s.observed_utc||'unknown date')+fifth;
   }).catch(()=>{value.textContent='Unavailable';label.textContent='Feed could not be loaded'});
 })();</script>'''
 
@@ -455,7 +457,7 @@ def trbvc_sections() -> tuple[str, str, str, str, dict | None]:
 
 
 def main() -> None:
-    audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
+    audit = json.loads((ROOT / "evidence/release_audit_20261028.json").read_text())
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     if card.get("verdict") != "negative" or card.get("ok_to_submit") is not False or audit.get("verdict") != "negative":
         raise SystemExit("This portal builder only publishes the current negative decision; refusing stale or positive card")
@@ -472,24 +474,31 @@ def main() -> None:
     hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
-    # Historical lane narratives contain unsupported causal claims, improperly
-    # labeled SGMC projections, and comparisons between public scores and
-    # holdouts. Keep the underlying evidence, but do not publish those narratives
-    # as current findings. A fail-closed summary is shared by every page.
-    historical_notice = (
-        '<section class="section"><div class="callout red-callout">'
-        '<strong>Historical KG2-S3-HPTR, TRBVC and LOPE: DO NOT SUBMIT.</strong>'
-        '<p>Prior cards and holdouts have not been independently replayed. '
-        'The SGMC prevalence-calibrated figures use an unverified inferred hidden-truth count; '
-        'they are not HOLDOUT-DTI or leaderboard estimates. A holdout comparison cannot '
-        'establish that a candidate beats an organizer leaderboard score. '
-        '<a href="../evidence/preflight_replay_20261028.json">Independent witness and focus-nine replay</a> · '
-        '<a href="../evidence/session3_hptr_run_card_20261027.json">Historical HPTR card</a> '
-        '(research only).</p></div></section>'
-    )
-    hptr_home = hptr_summary = hptr_research = hptr_irregular = historical_notice
-    lope_home = lope_summary = lope_irregular = ''
-    trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ''
+    # Archive legacy lane narratives: they contain claims of proven causality,
+    # nonliteral uniqueness and calibrated SGMC projections mislabeled as DTI.
+    # The underlying receipts remain linked, but are not independently replayed.
+    archive = ("<section class=\"section\"><div class=\"callout red-callout\">"
+               "<strong>KG2-S3-HPTR and other previous lanes: DO NOT SUBMIT.</strong> "
+               "Historical results are not independently replayed. SGMC prevalence-calibrated "
+               "figures are projections, not measured HOLDOUT-DTI or leaderboard scores; "
+               "they are not HOLDOUT-DTI or leaderboard estimates. "
+               "<a href=\"downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif\" download>HPTR research TIFF only</a> · "
+               "<a href=\"../evidence/hptr_revalidation_20261028.json\">Fresh validator output</a> · "
+               "<a href=\"../evidence/session3_hptr_run_card_20261027.json\">Archived HPTR card</a> · "
+               "<a href=\"../evidence/release_audit_20261028.json\">Fresh byte audit</a></div></section>")
+    hptr_home = hptr_summary = hptr_research = hptr_irregular = archive
+    lope_home = lope_summary = lope_irregular = ""
+    trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ""
+    hptr_feed = {"filename": hptr_feed["filename"], "sha256": hptr_feed["sha256"],
+                 "verdict": "negative", "ok_to_submit": False,
+                 "warning": "Historical holdouts not replayed; SGMC calibration is a projection, not measured DTI.",
+                 "beats_02778_leaderboard_score": None,
+                 "comparison_warning": "SGMC calibration uses an unverified count and is not a holdout DTI."}
+    lope_feed = None
+    trbvc_feed = {"filename": trbvc_feed["filename"], "sha256": trbvc_feed["sha256"],
+                  "verdict": "negative", "ok_to_submit": False,
+                  "validated_ok_to_download_and_submit": False,
+                  "warning": "Historical results not independently replayed."}
     percent = 100 * prior["witness_overlap_fraction"]
     bound = 100 * pre["minimum_directional_overlap"]
     s2 = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())

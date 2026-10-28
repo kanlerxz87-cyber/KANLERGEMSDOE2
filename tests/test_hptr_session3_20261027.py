@@ -183,6 +183,7 @@ def test_hptr_123_repo_fleet_audit_and_site_sync() -> None:
     assert "kg2s3_hptr_lane" in feed
     assert feed["kg2s3_hptr_lane"]["verdict"] == "negative"
     assert feed["kg2s3_hptr_lane"]["ok_to_submit"] is False
+    assert "projection, not measured DTI" in feed["kg2s3_hptr_lane"]["warning"]
     assert feed["kg2s3_hptr_lane"]["beats_02778_leaderboard_score"] is None
     assert "not a holdout DTI" in feed["kg2s3_hptr_lane"]["comparison_warning"]
 

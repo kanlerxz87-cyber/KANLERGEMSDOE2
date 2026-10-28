@@ -26,12 +26,13 @@ jobs:
         run: python scripts/build_site.py
       - name: Stage research downloads and evidence
         run: |
-          mkdir -p _site/docs _site/evidence _site/registry _site/research
+          mkdir -p _site/docs _site/evidence _site/registry _site/research _site/knowledge
           cp index.html .nojekyll _site/
           cp -R docs/. _site/docs/
           cp -R evidence/. _site/evidence/
           cp -R registry/. _site/registry/
           cp -R research/. _site/research/
+          cp -R knowledge/. _site/knowledge/
       - name: Refresh dated public leaderboard snapshot (fail closed if unavailable)
         run: python scripts/refresh_public_feed.py --out _site/docs/data/public_leaderboard.json
       - uses: actions/upload-pages-artifact@v3

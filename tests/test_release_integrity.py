@@ -217,14 +217,14 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
     builder = importlib.import_module('build_site')
     evidence = tmp_path / 'evidence'
     evidence.mkdir()
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
+    (evidence / 'release_audit_20261028.json').write_text(json.dumps({'verdict': 'negative'}))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'promote', 'ok_to_submit': True}))
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
     monkeypatch.setattr(builder, 'DOCS', tmp_path / 'docs')
     with pytest.raises(SystemExit, match='refusing stale or positive card'):
         builder.main()
-    real = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
-    (evidence / 'release_audit_20261027.json').write_text(json.dumps(real))
+    real = json.loads((ROOT / 'evidence/release_audit_20261028.json').read_text())
+    (evidence / 'release_audit_20261028.json').write_text(json.dumps(real))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
     with pytest.raises(SystemExit, match='artifact missing or differs'):
         builder.main()
@@ -251,3 +251,24 @@ def test_legacy_runner_stops_when_reference_is_absent(tmp_path):
     other = subprocess.run([sys.executable, str(ROOT / 'scripts/evaluate_holdout.py'), '--run-kg2'],
                            cwd=ROOT, env=env, capture_output=True, text=True)
     assert other.returncode != 0 and 'disabled' in other.stderr
+
+
+def test_public_feed_uses_public_score_column_not_decoy():
+    rows = ''.join(f'<tr><td>#{i}</td><td>{s:.4f}</td><td>0.9999</td></tr>'
+                   for i, s in enumerate([.5, .4, .3, .2, .1], 1))
+    html = '<table><tr><th>Rank</th><th>Public Tversky</th><th>Other</th></tr>' + rows + '</table>'
+    assert refresh_public_feed.parse_leaderboard(html)[1] == .5
+    # An invalid score column cannot be silently replaced with a different numeric column.
+    with pytest.raises(ValueError):
+        refresh_public_feed.parse_leaderboard(html.replace('<td>0.5000</td>', '<td>n/a</td>'))
+    with pytest.raises(ValueError):
+        refresh_public_feed.parse_leaderboard(html.replace('<th>Other</th>', '<th>Public Tversky</th>'))
+
+
+def test_generated_pages_do_not_promote_archived_projection():
+    for page in ('index.html', 'executive-summary.html', 'research.html'):
+        text = (ROOT / 'docs' / page).read_text()
+        assert 'DO NOT SUBMIT' in text
+        assert 'SGMC prevalence-calibrated' in text
+        assert 'removing pure-false-positive dots' not in text
+        assert '3-Suite HOLDOUT-DTI breakthrough' not in text
