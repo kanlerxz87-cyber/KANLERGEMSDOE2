@@ -1,0 +1,333 @@
+{
+  "schema": "gems.data-availability.v1",
+  "checked_utc": "2026-10-27T23:46:03.586903+00:00",
+  "core": {
+    "verified": 4,
+    "total": 4
+  },
+  "scored": {
+    "verified": 12,
+    "total": 12
+  },
+  "focus_sites": {
+    "verified": 9,
+    "total": 9
+  },
+  "external": {
+    "verified": 15,
+    "unavailable": 15,
+    "total": 30,
+    "entries": [
+      {
+        "id": "ext_lidar_scarp_features_u8",
+        "dest": "external/lidar_scarp_features_u8.tif",
+        "status": "present",
+        "expected_sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/lidar_scarp_features_u8.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_geodawn_rad_u8",
+        "dest": "external/geodawn_rad_u8.tif",
+        "status": "present",
+        "expected_sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/geodawn_rad_u8.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_geodawn_extensions_u8",
+        "dest": "external/geodawn_extensions_u8.tif",
+        "status": "present",
+        "expected_sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/geodawn_extensions_u8.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_derived_sgmc_faults_100m_u8",
+        "dest": "external/derived_sgmc_faults_100m_u8.tif",
+        "status": "present",
+        "expected_sha256": "643cbe992ef4ba37588fb469163ed8291e3ceb23d6c1f78a3cfaa462430c2da0",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/derived_sgmc_faults_100m_u8.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_gdr_wellspring_in_footprint",
+        "dest": "external/gdr_wellspring_in_footprint.csv",
+        "status": "present",
+        "expected_sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/gdr_wellspring_in_footprint.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_gdr_qfaults_traces",
+        "dest": "external/gdr_qfaults_traces.csv",
+        "status": "present",
+        "expected_sha256": "9702f2e5c382a4f472ae834d22b94990983b059677a37adfafd51c50f75e643c",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/gdr_qfaults_traces.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_gdr_volcanic_vents_in_footprint",
+        "dest": "external/gdr_volcanic_vents_in_footprint.csv",
+        "status": "present",
+        "expected_sha256": "f91bafbaccaaf2754e71d60434fc0f9eb2c7b880c6e714883f4974542ff6a0bf",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+        "source_path": "data/external/gdr_volcanic_vents_in_footprint.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_gdr_2m_temp_probes_zip",
+        "dest": "external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+        "status": "present",
+        "expected_sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "9da8a18381e179530c3b878d073314feaa26a20c",
+        "source_path": "data/external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_gdr_paleo_geothermal_zip",
+        "dest": "external/paleo_geothermal_regional.zip",
+        "status": "present",
+        "expected_sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "9da8a18381e179530c3b878d073314feaa26a20c",
+        "source_path": "data/external/paleo_geothermal_regional.zip",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_tiger_road_distance_m",
+        "dest": "external/tiger_road_distance_m.tif",
+        "status": "present",
+        "expected_sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+        "source_repo": "buffedlizard55-lab/GEMSDOE24",
+        "source_ref": "9da8a18381e179530c3b878d073314feaa26a20c",
+        "source_path": "data/external/audit_sources/tiger_road_distance_m.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_dem10_curv_absmax_f32",
+        "dest": "dem10/dem10_curv_absmax.f32.npy",
+        "status": "failed",
+        "expected_sha256": "58e82f1301032b46b10344b9299b83e6ce5bed1ca83e320f078fa57321bff632",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_curv_absmax.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_hgm200_mean_f32",
+        "dest": "dem10/dem10_hgm200_mean.f32.npy",
+        "status": "failed",
+        "expected_sha256": "9328f889f4d607f8530840da138741b7431da49d2432b0ab2da110a82984102b",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_hgm200_mean.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_hgm20_max_f32",
+        "dest": "dem10/dem10_hgm20_max.f32.npy",
+        "status": "failed",
+        "expected_sha256": "f58df86b0be3b3dc54affc60dc7d77a95db3dafb9c1267eac4912c5d8e57526b",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_hgm20_max.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_hgm50_max_f32",
+        "dest": "dem10/dem10_hgm50_max.f32.npy",
+        "status": "failed",
+        "expected_sha256": "1cca42538ec0c91951b578136893eb5d90cd1414c45257d2a72ebe80b29f0f40",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_hgm50_max.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_onesided_f32",
+        "dest": "dem10/dem10_onesided.f32.npy",
+        "status": "failed",
+        "expected_sha256": "02d1d241de9534d307f314d0b2f8a857ceb1ce0d099fd7dee8872a83bd0271f8",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_onesided.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_onesided3_f32",
+        "dest": "dem10/dem10_onesided3.f32.npy",
+        "status": "failed",
+        "expected_sha256": "bca9faf8e0c572ecb1e77b6c94b0cb96c41e824873cb7747e0ece28b531598d2",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_onesided3.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_resid_range_f32",
+        "dest": "dem10/dem10_resid_range.f32.npy",
+        "status": "failed",
+        "expected_sha256": "bbcf8a462ace31a80964ba8a7ab76fcbcb347deb4f4d2919166b3eda5c721b0c",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_resid_range.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_resid_std_f32",
+        "dest": "dem10/dem10_resid_std.f32.npy",
+        "status": "failed",
+        "expected_sha256": "50db8caa815cb09cc695ec230f15f41e8e04cd9bef5fc09b07b06aeadd44a86e",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_resid_std.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_slope_max_f32",
+        "dest": "dem10/dem10_slope_max.f32.npy",
+        "status": "failed",
+        "expected_sha256": "fd46738e9a58a6f40c130c3c70f645525dbfc12d27b6ed149e596e6a379cbfaa",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_slope_max.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_slope_mean_f32",
+        "dest": "dem10/dem10_slope_mean.f32.npy",
+        "status": "failed",
+        "expected_sha256": "338b443c441db61120faf36437ec61dfcccaa569c41aa3099ed3accef5a35f95",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_slope_mean.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_slope_std_f32",
+        "dest": "dem10/dem10_slope_std.f32.npy",
+        "status": "failed",
+        "expected_sha256": "9c15e0e760d8255eb0473821a07cc09e4fe4b40746e6e37278e691f615c0f642",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_slope_std.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_steep_ratio_max_f32",
+        "dest": "dem10/dem10_steep_ratio_max.f32.npy",
+        "status": "failed",
+        "expected_sha256": "eaf3d5e24c6769ffb98665e75c9665dbaa16bdb79708900217dca955031e6828",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_steep_ratio_max.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_dem10_valid_frac_f32",
+        "dest": "dem10/dem10_valid_frac.f32.npy",
+        "status": "failed",
+        "expected_sha256": "35d7ef0719bfed93f9aed927afd8c51882283fc7316cab0f8c219c9302b92122",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/dem10_valid_frac.f32.npy",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_manifest",
+        "dest": "dem10/manifest.json",
+        "status": "failed",
+        "expected_sha256": "bfb79f39be0737b448b1a3bf5432db168a77d6786240eafdca352e7a87400f0d",
+        "source_repo": "buffedlizard55-lab/GEMSDOE10",
+        "source_ref": "ext/dem10-36343078537",
+        "source_path": "data/external/dem10/manifest.json",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_h52_scarp3m_100m_tif",
+        "dest": "external/h52_scarp3m_100m.tif",
+        "status": "restored",
+        "expected_sha256": "b5e53d67c3a7d3d1ca44ae04ae1e84d8574857da3fcd5e34ba47276d6c04b923",
+        "source_repo": "buffedlizard55-lab/GEMSDOE48",
+        "source_ref": "main",
+        "source_path": "data/external/h52_scarp3m_100m.tif",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_h52_scarp3m_100m_json",
+        "dest": "external/h52_scarp3m_100m.json",
+        "status": "restored",
+        "expected_sha256": "95d9e65347e097be55530af70d3e289676bc16bbd12f4caee99cd3ca4b55453e",
+        "source_repo": "buffedlizard55-lab/GEMSDOE48",
+        "source_ref": "main",
+        "source_path": "data/external/h52_scarp3m_100m.json",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_sb_heat_flow",
+        "dest": "external/sb_heat_flow_in_footprint.csv",
+        "status": "failed",
+        "expected_sha256": "9845263e658aeb66a4aeca6e64d995e74f0eb14b89768219ea9d223006dc8baf",
+        "source_repo": "buffedlizard55-lab/GEMSDOE28",
+        "source_ref": "main",
+        "source_path": "data/external/sb_heat_flow_in_footprint.csv",
+        "note": "GitHub API returned 404 for the pinned ref/path; bytes unavailable in this audit."
+      },
+      {
+        "id": "ext_gb_regional_stress_grid_10km",
+        "dest": "external/gb_regional_stress_grid_10km.csv",
+        "status": "restored",
+        "expected_sha256": "9e01d5de2b6070816513e163a8f34cf19559630d497ef8ddc60b4d18565140ef",
+        "source_repo": "buffedlizard55-lab/GEMSDOE85",
+        "source_ref": "main",
+        "source_path": "data/external/gb_regional_stress_grid_10km.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_usgs_comcat_geodawn",
+        "dest": "external/usgs_comcat_geodawn.csv",
+        "status": "restored",
+        "expected_sha256": "c580226b3b0516653873b87077edb8e164c3545e9bc1e7c764789c52bdd30624",
+        "source_repo": "buffedlizard55-lab/GEMSDOE85",
+        "source_ref": "main",
+        "source_path": "data/external/usgs_comcat_geodawn.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      },
+      {
+        "id": "ext_usgs_heat_flow_wells_epsg32611",
+        "dest": "external/usgs_heat_flow_wells_epsg32611.csv",
+        "status": "restored",
+        "expected_sha256": "9773bf59340e06901b2855d30b1972dc91374a5d344a8324452f9bb69304e370",
+        "source_repo": "buffedlizard55-lab/GEMSDOE85",
+        "source_ref": "main",
+        "source_path": "data/external/usgs_heat_flow_wells_epsg32611.csv",
+        "note": "Owner mirror fetched and SHA verified; official origin not independently authenticated."
+      }
+    ]
+  },
+  "derived_features": {
+    "columns": 30,
+    "shape": [
+      5167373,
+      30
+    ],
+    "sha256": "a4ca25b2a18f6f6637f0247367cc6235a1366eb8475f77b18cd0285e62232dc8",
+    "built_in_ignored_cache": true
+  },
+  "scope": "Pinned hashes establish identity to owner-hosted mirrors only, not organizer or official-origin provenance. No unverified data is used to claim a score."
+}

@@ -1,0 +1,49 @@
+{
+  "protocol_rule": "Rule 4 Leakage Canary (single-feature holdout AUC <= 0.90)",
+  "evaluator": "GEMSDOE32-HIDE-RECOVER-v3.0 (draw20 spatially-blocked withheld segments)",
+  "threshold": 0.9,
+  "total_features_tested": 6,
+  "n_withheld_positive_pixels_tested": 11172,
+  "n_negative_pixels_tested": 240000,
+  "max_single_feature_auc": 0.553925,
+  "max_feature_name": "gmv_tilt_coherence",
+  "passed": true,
+  "features": [
+    {
+      "feature": "gmv_tilt_coherence",
+      "group": "gmv_new",
+      "raw_auc": 0.553925,
+      "oriented_auc": 0.553925
+    },
+    {
+      "feature": "gmv_tpi_discord",
+      "group": "gmv_new",
+      "raw_auc": 0.523659,
+      "oriented_auc": 0.523659
+    },
+    {
+      "feature": "gmv_front_sinuosity",
+      "group": "gmv_new",
+      "raw_auc": 0.514608,
+      "oriented_auc": 0.514608
+    },
+    {
+      "feature": "gmv_valley_vf",
+      "group": "gmv_new",
+      "raw_auc": 0.48787,
+      "oriented_auc": 0.51213
+    },
+    {
+      "feature": "gmv_vent_density",
+      "group": "gmv_new",
+      "raw_auc": 0.511574,
+      "oriented_auc": 0.511574
+    },
+    {
+      "feature": "gmv_vent_corridor",
+      "group": "gmv_new",
+      "raw_auc": 0.49617,
+      "oriented_auc": 0.50383
+    }
+  ]
+}

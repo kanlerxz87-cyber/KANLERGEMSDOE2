@@ -1,0 +1,57 @@
+{
+  "schema": "gems.parallel-file-audit.v1",
+  "source_main_commit": "0e125d30cbfcd2462e53259dd12c6c5b7032aced",
+  "audit": {
+    "file": "kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif",
+    "sha256": "f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539",
+    "size_bytes": 758631,
+    "count": 1,
+    "shape": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "grid_matches_pinned_owner_template": true,
+    "no_nan_inside_footprint": true,
+    "no_inf_inside_footprint": true,
+    "inside_range_0_1": true,
+    "local_grid_dtype_inside_range_pass": true,
+    "strict_whole_array_finite_0_1": true,
+    "outside_footprint_all_nan": false,
+    "outside_footprint_all_zero": true,
+    "inside_positive_pixels": 37654,
+    "outside_positive_pixels": 0,
+    "on_catalogue_positive_pixels": 184,
+    "witness_overlap_dots": 37652,
+    "witness_overlap_fraction": 0.9999468847931162,
+    "witness_final_dots_spearman": 9.728156321052254e-05,
+    "rank_scope": "Exact raw in-footprint ranks against binary witness; soft candidates are not binarized",
+    "duplicate_under_literal_rule": true,
+    "organizer_acceptance_verified": false
+  },
+  "current_verdict": "negative",
+  "ok_to_submit": false,
+  "scope": "Fetched exact blob from parallel PR #34; a pinned literal-registry witness is sufficient to prove duplicate. No pre-placement surface, canary, holdout or full registry replay. Focus comparisons use candidate-to-reference direction within 3 px.",
+  "directional_candidate_overlap_vs_focus_and_dslup": {
+    "GEMSDOE32": 0.21671004408562172,
+    "GEMSDOE36": 0.261645509109258,
+    "GEMSDOE28": 0.21843628830934297,
+    "GEMSDOE31": 0.22279173527380888,
+    "GEMSDOE33": 0.22964359696181016,
+    "GEMSDOE25": 0.23028097944441495,
+    "GEMSDOE30": 0.23028097944441495,
+    "GEMSDOE24": 0.244675200509906,
+    "GEMSDOE27": 0.25309396080097735,
+    "DSLUP": 0.3675837892388591
+  }
+}

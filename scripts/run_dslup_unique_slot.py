@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""KG2-S2 final UNIQUE-SLOT emission (EXP-A**): constrained re-emission of the DSLUP EXP-A surface.
+"""ARCHIVED / DISABLED: historical claims and gates are not current authorization.
+
+KG2-S2 final UNIQUE-SLOT emission (EXP-A**): constrained re-emission of the DSLUP EXP-A surface.
 
 Context (all logged, zero hidden state):
   - The 3 preregistered DSLUP experiments (evidence/dslup_experiments.json) all beat the 0.2778
@@ -57,6 +59,14 @@ CHAMPION_TAG = dmod.CHAMPION_TAG
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
+        "at the frozen budget; fresh authorization and a safe replay path are required."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Historical implementation retained for audit; not a safe execution path."""
     t_start = time.time()
     ddir = data_dir()
     wdir = work_dir()

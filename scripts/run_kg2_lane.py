@@ -1097,6 +1097,9 @@ def verify_recorded() -> dict[str, Any]:
         "verified": True,
         "submission_filename": c1["submission_filename"],
         "raster_sha256": c1["raster_sha256"],
+        "holdout_score_label": "HOLDOUT-DTI (historical procedure, not independently replayed)",
+        "holdout_evaluator_version": c1["holdout_dti"]["evaluator_version"],
+        "withheld_positive_pixels": c1["holdout_dti"]["withheld_positive_pixels"],
         "holdout_dti": c1["holdout_dti"]["dti"],
         "ci95": c1["holdout_dti"]["ci95"],
         "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][

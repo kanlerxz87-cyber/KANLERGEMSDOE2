@@ -54,9 +54,9 @@
     {
       "id": "opera",
       "title": "NASA OPERA project and surface-displacement products",
-      "url": "https://www.earthdata.nasa.gov/data/projects/opera",
-      "evidence": "NASA lists DISP-S1 and U.S. spatial extent; line-of-sight deformation is not itself proof of faulting.",
-      "access": "Metadata page fetched, but product tiles, specific coverage, licensing and authenticated access not verified; host blocked for sandbox downloads. Not used in this run."
+      "url": "https://www.earthdata.nasa.gov/data/catalog/asf-opera-l3-disp-s1-v1-1",
+      "evidence": "NASA describes OPERA DISP-S1, 30 m line-of-sight displacement across North America from 2016 onward, openly shared; displacement is not proof of faulting.",
+      "access": "Product metadata and open-sharing statement fetched; relevant tiles, dates, acquisition and usable coverage have not been verified. Not used in this run."
     },
     {
       "id": "reference-solution",
@@ -64,6 +64,27 @@
       "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
       "evidence": "Organizer reference notebook supports CPU and GPU environments; data must be obtained separately.",
       "access": "Public repository reviewed; no GPU used in this audit."
+    },
+    {
+      "id": "submission-limit",
+      "title": "DrivenData staff submission-limit clarification",
+      "url": "https://community.drivendata.org/t/submission-amount-question/11553",
+      "evidence": "Staff say the limit displayed on the submission page takes precedence over the weekly number in the official rules.",
+      "access": "Public forum fetched; this account's actual quota and reset time were not checked."
+    },
+    {
+      "id": "structural-discontinuities",
+      "title": "USGS structural discontinuities and hydrothermal systems",
+      "url": "https://www.usgs.gov/publications/structural-discontinuities-and-their-control-hydrothermal-systems-great-basin-usa",
+      "evidence": "Published modeling connects strain/stress concentration to bends, steps and fault terminations; it does not validate any raster in this repository.",
+      "access": "Official public abstract reviewed."
+    },
+    {
+      "id": "dike-mimic",
+      "title": "USGS Surprise Valley potential-field mapping",
+      "url": "https://www.usgs.gov/publications/influence-pre-existing-structures-geothermal-springs-inferences-potential-field",
+      "evidence": "A major linear magnetic high is interpreted and supported as a buried dike swarm, illustrating an important non-fault mimic.",
+      "access": "Official public abstract reviewed; no data file downloaded."
     }
   ]
 }

@@ -489,11 +489,12 @@
       "group": "external",
       "repo": "buffedlizard55-lab/GEMSDOE28",
       "ref": "main",
-      "path": "data/external/sb_heat_flow_in_footprint.csv",
+      "path": "docs/data/sb_heat_flow_in_footprint.csv",
       "dest": "external/sb_heat_flow_in_footprint.csv",
       "bytes": 909294,
       "sha256": "9845263e658aeb66a4aeca6e64d995e74f0eb14b89768219ea9d223006dc8baf",
-      "description": "USGS ScienceBase Great Basin conductive heat-flow points in footprint (fixes IR-HTCADS-HFZERO-06)"
+      "description": "USGS ScienceBase Great Basin conductive heat-flow points in footprint (fixes IR-HTCADS-HFZERO-06)",
+      "provenance": " [IR-KG2S3-MANIFEST-01 2026-10-27: relocated from data/external/; identical SHA-256 bytes verified this session]"
     },
     {
       "id": "ext_gb_regional_stress_grid_10km",

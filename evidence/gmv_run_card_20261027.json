@@ -1,0 +1,37 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "site": "KANLERGEMSDOE2",
+  "repo": "kanlerxz87-cyber/KANLERGEMSDOE2",
+  "branch": "arena/e896cd9a-kanlergemsdoe2",
+  "lane_id": "KG2-S3-GMV",
+  "generated_utc": "2026-10-28T00:21:35.157427+00:00",
+  "hypothesis": "KG2-S3 GMV: range-front Smf/Vf/tilt/TPI-discordance + RANSAC fossil-vent alignment corridors",
+  "mechanism": "H1 4-ch geomorph suite + H2 2-ch vent corridors appended to sharp-column OOF LightGBM; template physics pillar + GMV scaled addition (0.62/0.38); tip/relay Noisy-OR; exact 300m CELF; single emission",
+  "named_non_fault_mimic": "Lithologic fronts/faceted spurs (HG-step gate), Lahontan shorelines (contour-discordance), road-following springs (TIGER clearance), mine blasts (depth<=12km + HG coincidence).",
+  "leakage_canary": {
+    "passed": true,
+    "max_single_feature_auc": 0.553925,
+    "max_feature_name": "gmv_tilt_coherence",
+    "total_features_tested": 6,
+    "base_template_canary": {
+      "passed": true,
+      "max_single_feature_auc": 0.795377
+    }
+  },
+  "wall_seconds": 716.4,
+  "experiments_run": 3,
+  "winning_experiment": null,
+  "verdict": "negative",
+  "ok_to_download_and_submit": false,
+  "holdout_dti": {
+    "note": "No experiment passed the preregistered promotion bar; per-experiment numbers in evidence/gmv_experiments_20261027.json."
+  },
+  "registry_comparison": {
+    "note": "Per-experiment uniqueness in experiments receipt."
+  },
+  "raster_sha256": null,
+  "submission_filename": null,
+  "submission_name": null,
+  "submission_note": null,
+  "validator_output": null
+}

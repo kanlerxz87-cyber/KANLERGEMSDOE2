@@ -1,0 +1,267 @@
+{
+  "lane": "KG2-S3-CVC300",
+  "wall_s": 58.28897714614868,
+  "canary": {
+    "features": {
+      "vote_focus": {
+        "auc_raw": 0.49179791666666667,
+        "auc_oriented": 0.5082020833333334
+      },
+      "dslup_ind": {
+        "auc_raw": 0.49617916666666667,
+        "auc_oriented": 0.5038208333333334
+      },
+      "darp_ind": {
+        "auc_raw": 0.49646875,
+        "auc_oriented": 0.50353125
+      },
+      "champion32_ind": {
+        "auc_raw": 0.49640625,
+        "auc_oriented": 0.5035937500000001
+      }
+    },
+    "max_auc": 0.5082020833333334,
+    "passed": true
+  },
+  "ref_champion": {
+    "hr": 0.00451537871535044,
+    "hr_ci": [
+      0.0038164175817344387,
+      0.005261598301920283
+    ],
+    "sgmc": 0.0641209376417646,
+    "N_hr": 22232,
+    "N_sgmc": 62703
+  },
+  "ref_dslup": {
+    "hr": 0.019666205865363898,
+    "sgmc": 0.09814014577230036
+  },
+  "experiments": {
+    "EXP1": {
+      "dots": 37518,
+      "hr": 0.08726390450317116,
+      "hr_ci": [
+        0.07563124186859227,
+        0.0985125678938071
+      ],
+      "hr_N": 22232,
+      "sgmc": 0.05903256057455955,
+      "sgmc_ci": [
+        0.05267429591122558,
+        0.06547753205513122
+      ],
+      "sgmc_N": 62703,
+      "delta_hr_vs_champ": {
+        "delta": 0.08274852578782071,
+        "ci95": [
+          0.07159580128990184,
+          0.09352047685360702
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "delta_sg_vs_champ": {
+        "delta": -0.005088377067205052,
+        "ci95": [
+          -0.006853871884846838,
+          -0.0033446968842339797
+        ],
+        "win_prob": 0.0,
+        "ci95_strictly_positive": false
+      },
+      "delta_hr_vs_dslup": {
+        "delta": 0.06759769863780726,
+        "ci95": [
+          0.05701434384253792,
+          0.07763187225894883
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "max_overlap3": 0.9774,
+      "overlaps": {
+        "GEMSDOE24": 0.9515,
+        "GEMSDOE25": 0.9506,
+        "GEMSDOE27": 0.9774,
+        "GEMSDOE28": 0.8805,
+        "GEMSDOE30": 0.9506,
+        "GEMSDOE31": 0.8821,
+        "GEMSDOE32": 0.8303,
+        "GEMSDOE33": 0.9117,
+        "GEMSDOE36": 0.8514,
+        "DSLUP": 0.3902,
+        "DARP": 0.283,
+        "HTCADS": 0.3359,
+        "ECPU": 0.3378
+      },
+      "max_abs_corr": 0.8058,
+      "corrs": {
+        "GEMSDOE24": 0.5996,
+        "GEMSDOE25": 0.8058,
+        "GEMSDOE27": 0.6141,
+        "GEMSDOE28": 0.6698,
+        "GEMSDOE30": 0.8058,
+        "GEMSDOE31": 0.78,
+        "GEMSDOE32": 0.7578,
+        "GEMSDOE33": 0.7081,
+        "GEMSDOE36": 0.7666,
+        "DSLUP": 0.0134,
+        "DARP": 0.0205,
+        "HTCADS": 0.0189,
+        "ECPU": 0.0232
+      },
+      "on_catalogue": 0
+    },
+    "EXP2": {
+      "dots": 37654,
+      "hr": 0.06253487701609743,
+      "hr_ci": [
+        0.05316852276603787,
+        0.07187365311070555
+      ],
+      "hr_N": 22232,
+      "sgmc": 0.05839220568314493,
+      "sgmc_ci": [
+        0.051810049632687115,
+        0.06520515872685065
+      ],
+      "sgmc_N": 62703,
+      "delta_hr_vs_champ": {
+        "delta": 0.05801949830074699,
+        "ci95": [
+          0.048901432256211734,
+          0.06659570962488835
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "delta_sg_vs_champ": {
+        "delta": -0.0057287319586196706,
+        "ci95": [
+          -0.006951237491737342,
+          -0.0045854170815839744
+        ],
+        "win_prob": 0.0,
+        "ci95_strictly_positive": false
+      },
+      "delta_hr_vs_dslup": {
+        "delta": 0.042868671150733534,
+        "ci95": [
+          0.03367368618854171,
+          0.051949163251958835
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "max_overlap3": 0.9997,
+      "overlaps": {
+        "GEMSDOE24": 0.9994,
+        "GEMSDOE25": 0.9994,
+        "GEMSDOE27": 0.9997,
+        "GEMSDOE28": 0.9559,
+        "GEMSDOE30": 0.9994,
+        "GEMSDOE31": 0.9589,
+        "GEMSDOE32": 0.918,
+        "GEMSDOE33": 0.9713,
+        "GEMSDOE36": 0.9188,
+        "DSLUP": 0.3068,
+        "DARP": 0.2474,
+        "HTCADS": 0.2912,
+        "ECPU": 0.3144
+      },
+      "max_abs_corr": 0.8832,
+      "corrs": {
+        "GEMSDOE24": 0.6092,
+        "GEMSDOE25": 0.8822,
+        "GEMSDOE27": 0.6032,
+        "GEMSDOE28": 0.7083,
+        "GEMSDOE30": 0.8822,
+        "GEMSDOE31": 0.8832,
+        "GEMSDOE32": 0.8711,
+        "GEMSDOE33": 0.7853,
+        "GEMSDOE36": 0.8577,
+        "DSLUP": 0.0124,
+        "DARP": 0.0236,
+        "HTCADS": 0.0202,
+        "ECPU": 0.0232
+      },
+      "on_catalogue": 0
+    },
+    "EXP3": {
+      "dots": 33461,
+      "hr": 0.07725087682263475,
+      "hr_ci": [
+        0.06740715905772333,
+        0.08673738315040966
+      ],
+      "hr_N": 22232,
+      "sgmc": 0.05684628163408636,
+      "sgmc_ci": [
+        0.0505217414937788,
+        0.06301058036058152
+      ],
+      "sgmc_N": 62703,
+      "delta_hr_vs_champ": {
+        "delta": 0.0727354981072843,
+        "ci95": [
+          0.06310257877986827,
+          0.08160389742149106
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "delta_sg_vs_champ": {
+        "delta": -0.007274656007678244,
+        "ci95": [
+          -0.009004984186679915,
+          -0.0058169022806494565
+        ],
+        "win_prob": 0.0,
+        "ci95_strictly_positive": false
+      },
+      "delta_hr_vs_dslup": {
+        "delta": 0.05758467095727085,
+        "ci95": [
+          0.04861380626423906,
+          0.06615821992579886
+        ],
+        "win_prob": 1.0,
+        "ci95_strictly_positive": true
+      },
+      "max_overlap3": 1.0,
+      "overlaps": {
+        "GEMSDOE24": 1.0,
+        "GEMSDOE25": 1.0,
+        "GEMSDOE27": 1.0,
+        "GEMSDOE28": 0.9348,
+        "GEMSDOE30": 1.0,
+        "GEMSDOE31": 0.9375,
+        "GEMSDOE32": 0.8836,
+        "GEMSDOE33": 0.9632,
+        "GEMSDOE36": 0.8845,
+        "DSLUP": 0.3904,
+        "DARP": 0.2775,
+        "HTCADS": 0.3347,
+        "ECPU": 0.3419
+      },
+      "max_abs_corr": 0.847,
+      "corrs": {
+        "GEMSDOE24": 0.6052,
+        "GEMSDOE25": 0.847,
+        "GEMSDOE27": 0.5989,
+        "GEMSDOE28": 0.6946,
+        "GEMSDOE30": 0.847,
+        "GEMSDOE31": 0.8258,
+        "GEMSDOE32": 0.8025,
+        "GEMSDOE33": 0.7408,
+        "GEMSDOE36": 0.7899,
+        "DSLUP": 0.0123,
+        "DARP": 0.0195,
+        "HTCADS": 0.0184,
+        "ECPU": 0.023
+      },
+      "on_catalogue": 0
+    }
+  }
+}
