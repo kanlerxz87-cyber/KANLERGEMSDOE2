@@ -161,8 +161,22 @@ def test_current_evidence_has_no_new_raster_or_score():
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     assert card["verdict"] == "negative" and card["ok_to_submit"] is False
-    assert card["raster_sha256"] is None and card["holdout_dti"] is None
-    assert card["experiments_run"] == 0 and len(card["note"]) <= 140
+    assert card["new_raster_created"] is False and card["raster_sha256"] is None
+    assert card["current_holdout"]["label"] == "HOLDOUT-DTI"
+    assert card["current_holdout"]["pooled_dti"] is None
+    assert card["current_holdout"]["ci95"] is None
+    assert card["experiments_run_in_this_review"] == 0
+    assert card["additional_experiments_authorized"] == 0
+    feature_review = card["code_review_corrections"][0]
+    assert feature_review["corrected_shared_feature_label"] == "strike_alignment_fixed_62deg"
+    assert feature_review["feature_values_changed"] is False
+    assert card["code_review_corrections"][1]["measured_groundwater_hydraulic_head_used"] is False
+    assert len(card["note"]) <= 140
+    assert card["note"] == card["submission_note"]
+    assert card["note_characters"] == len(card["note"])
+    assert card["submission_note_characters"] == len(card["submission_note"])
+    assert card["prior_holdout_not_replayed"]["label"] == "HOLDOUT-DTI"
+    assert card["prior_holdout_not_replayed"]["evidence_class"].startswith("HISTORICAL")
     assert audit["preflight"]["uncovered_pixels"] == 6649
     assert audit["preflight"]["minimum_overlapping_dots"] == 31005
     assert audit["prior_candidate"]["witness_overlap_dots"] == 37642
@@ -202,6 +216,9 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
     builder = importlib.import_module('build_site')
     evidence = tmp_path / 'evidence'
     evidence.mkdir()
+    docs_data = tmp_path / 'docs' / 'data'
+    docs_data.mkdir(parents=True)
+    (docs_data / 'public_leaderboard.json').write_text(json.dumps({'status': 'verified_snapshot'}))
     (evidence / 'release_audit_20261027.json').write_text(json.dumps({'verdict': 'negative'}))
     (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'promote', 'ok_to_submit': True}))
     monkeypatch.setattr(builder, 'ROOT', tmp_path)
@@ -210,8 +227,24 @@ def test_site_builder_rejects_positive_card_or_missing_artifact(tmp_path, monkey
         builder.main()
     real = json.loads((ROOT / 'evidence/release_audit_20261027.json').read_text())
     (evidence / 'release_audit_20261027.json').write_text(json.dumps(real))
-    (evidence / 'current_run_card.json').write_text(json.dumps({'verdict': 'negative', 'ok_to_submit': False}))
-    with pytest.raises(SystemExit, match='artifact missing or differs'):
+    (evidence / 'focus_site_audit_20261027.json').write_text(
+        (ROOT / 'evidence/focus_site_audit_20261027.json').read_text()
+    )
+    pre = real['preflight']
+    test_card = {
+        'schema': 'gems.parallel-run-card.v3', 'verdict': 'negative', 'ok_to_submit': False,
+        'new_raster_created': False, 'raster_sha256': None, 'submission_name': None,
+        'current_holdout': {'evaluator': None, 'withheld_positive_n': None, 'pooled_dti': None, 'ci95': None},
+        'hard_stop': {
+            'candidate_dot_budget': pre['candidate_dot_budget'],
+            'minimum_overlapping_dots': pre['minimum_overlapping_dots'],
+            'minimum_directional_overlap': pre['minimum_directional_overlap'],
+            'witness_sha256': pre['witness_sha256'],
+        },
+        'submission_note': 'Do not submit.', 'submission_note_characters': len('Do not submit.'),
+    }
+    (evidence / 'current_run_card.json').write_text(json.dumps(test_card))
+    with pytest.raises(SystemExit, match='Research artifact missing or differs'):
         builder.main()
 
 

@@ -1,0 +1,56 @@
+{
+  "schema": "gems.evidence-supersession.v1",
+  "effective_date_utc": "2026-10-27",
+  "current_decision": {
+    "source": "evidence/current_run_card.json",
+    "verdict": "negative",
+    "ok_to_submit": false,
+    "rule": "Literal any-registry-raster correlation/overlap gate; no calibration-control exemption.",
+    "current_candidate": null,
+    "current_score": null
+  },
+  "notice": "The evidence directory deliberately retains historical run cards and validator receipts. A historical promote or control-separated verdict describes its original policy context only; it is not current download or submission authorization. The current negative run card and release audit supersede prior candidate-selection claims under the standing literal rule.",
+  "superseded_records": [
+    {
+      "path": "evidence/dslup_unique_slot_run_card.json",
+      "historical_claim": "verdict=promote under the control-separated policy; literal-rule disclosure also records duplicate.",
+      "current_interpretation": "Historical policy-specific result. The control exemption is not authorized; do not submit the associated TIFF."
+    },
+    {
+      "path": "docs/downloads/dslup_run_card.json",
+      "historical_claim": "Public copy of the historical DSLUP card with the same dual verdict.",
+      "current_interpretation": "Retained for forensic comparison only; it is not an active candidate or approval."
+    },
+    {
+      "path": "evidence/dslup_unique_slot_validator_receipt.json",
+      "historical_claim": "Validator receipt recorded a positive policy-specific verdict.",
+      "current_interpretation": "Superseded by the current literal any-registry stop; local or policy-specific validation does not override it."
+    },
+    {
+      "path": "evidence/dslup_literal_rule_disclosure.json",
+      "historical_claim": "Discloses the earlier control-separated interpretation and the literal duplicate conflict.",
+      "current_interpretation": "The literal reading is controlling for current work; no control exemption is applied."
+    },
+    {
+      "path": "evidence/htcads_run_card_20261026.json",
+      "historical_claim": "Historical detector-only promotion under an earlier gate interpretation.",
+      "current_interpretation": "Withdrawn; the current literal witness lower bound blocks the frozen-budget lane."
+    },
+    {
+      "path": "evidence/kg2_run_card_20261026.json",
+      "historical_claim": "Historical KG2 result records a prior promotion state.",
+      "current_interpretation": "Archived experiment result only; not the assigned current HTCADS lane and not current authorization."
+    },
+    {
+      "path": "evidence/validator_reverification_20261027.json",
+      "historical_claim": "Historical validator re-verification under an earlier gate interpretation.",
+      "current_interpretation": "Does not replace the complete current-registry gate or current negative card."
+    },
+    {
+      "path": "evidence/lattice_null_calibration_20261027.json",
+      "historical_claim": "Historical argument for null-calibrating or excluding the dense lattice control.",
+      "current_interpretation": "The standing literal protocol explicitly allows no such exemption; the argument is retained for provenance, not applied."
+    }
+  ],
+  "audit_scope": "This manifest identifies prominent historical promotion records found during the 2026-10-27 release review; it is not a hash inventory of every historical experiment or every external repository."
+}

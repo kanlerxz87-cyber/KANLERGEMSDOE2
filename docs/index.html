@@ -1,53 +1,62 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Decision dashboard | GEMS Fieldnotes</title><meta name="description" content="Evidence-led geological fault discovery for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"></head>
-<body><a class="skip" href="#main">Skip to content</a>
-<header class="topbar"><div class="wrap topbar-inner"><a href="index.html" class="brand"><span class="brand-mark">G</span><span class="brand-name">GEMS / FIELDNOTES<small>KANLERGEMSDOE2</small></span></a>
-<nav class="nav" aria-label="Main navigation"><a href="index.html" class="active" aria-current="page">Overview</a><a href="executive-summary.html">Executive summary</a><a href="research.html">Research</a><a href="irregularities.html">Open issues</a><a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header><main id="main" class="wrap"><div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
-<section class="hero" aria-labelledby="s2-title" style="margin-bottom:1.2rem"><div><div class="eyebrow">Session 2 · 27 October 2026 · KG2-S2 DSLUP-3D lane</div><span class="status">New candidate — policy decision disclosed</span>
-<h1 id="s2-title">A new, maximally<br>decorrelated candidate.</h1>
-<p class="lead"><strong>kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif</strong> — depth-scaled listric updip-gravity surface, re-emitted under a hard own-halo cap (&le;15,000 of 37,654 dots near our prior rasters). It beats every raster this repository has evaluated on <strong>both</strong> blind holdouts with strictly positive paired 95% CIs, and is the least-duplicated candidate this fleet audit has seen: max 3-px overlap vs every <em>geological</em> detector 59.77%, vs the 0.2778 champion 30.49%, vs our own prior files &le;39.71%.</p>
-<div class="hero-actions"><a class="btn" href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif" download>&#8595; Download Session-2 GeoTIFF</a><a class="btn secondary" href="downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip" download>&#8595; Portal ZIP</a><a class="btn secondary" href="downloads/dslup_run_card.json">Run card ↗</a></div>
-<p class="note"><strong>TWO VERDICTS, YOUR CALL (slot decisions are the coordinator's selector step):</strong> under the documented control-separated policy (space-filling calibration lattices excluded from the hard gate, null-calibrated on the 0.2778 champion) this file is <strong>PROMOTE — OK TO SUBMIT</strong>; under PR&nbsp;#25's literal all-registry reading it is a duplicate vs the registered lattice (99.98%) — but so is <em>every possible</em> 37,654-dot raster (forced minimum 82.34%), including all nine historical champions. The literal rule and the standing unique-TIF mandate cannot both be satisfied at this budget.</p></div>
-<div class="hero-aside"><div class="eyebrow">Blind holdout (HOLDOUT-DTI, not a live score)</div><h3>Beats the 0.2778 proxy on both metrics</h3>
-<p>Hide-and-Recover <strong>0.1259</strong> vs 0.0992 (paired Δ +0.0267, 95% CI [+0.0169, +0.0369])</p>
-<p>Blind SGMC-CAL <strong>0.0981</strong> vs 0.0641 (paired Δ +0.0340, 95% CI [+0.0236, +0.0432])</p>
-<p class="note">Historical-evaluator numbers (GEMSDOE32-HIDE-RECOVER/SGMC-CAL v3.0, N=22,232 / 62,703, n_boot=1000). No organizer receipt exists for any score here.</p>
-<div class="hash mono">kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif<br>SHA-256 8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3<br>Note (114/140): KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)</div></div></section>
-<section class="section" aria-labelledby="darp-title"><div class="section-head"><div><div class="eyebrow">Parallel Lane · 27 October 2026 · DARP-MT10 (Dip-Adaptive MT + 10 m DEM)</div><h2 id="darp-title">DARP-MT10 negative result &amp; +39.1% piedmont blind-basin breakthrough</h2><p><strong>DO NOT SUBMIT TO DRIVENDATA (`verdict = "negative"` — research artifact only).</strong> Unique 2026-10-27 GeoTIFF (<span class="mono">kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif</span>, 13/13 strict [0,1] checks PASS, 0 NaNs, 0 on-catalogue dots, 22.20% LiDAR-void coverage vs 0.65% for 0.2778 Champion).</p></div></div>
-<div class="grid-two"><div class="card"><span class="pill stop">NEGATIVE — DO NOT SUBMIT TO PORTAL</span><h3>Piedmont blind-basin gain (+39.1%), range-front trade-off (-0.0012)</h3>
-<p>On alluvial-covered piedmont faults (<code>GEMSDOE70-C-PIED-v1.0</code>, <code>Z_b &gt;= 150 m</code>, N=9,847), <strong>DARP-EXP-1</strong> reaches <strong>0.1169</strong> (+0.0157 over 0.2778 Champion 0.1012) and <strong>DARP-EXP-2</strong> reaches <strong>0.1407</strong> (<strong>+39.1%</strong>, paired 95% CI [+0.0179, +0.0571], #1 across all focus &amp; sister sites). On full-catalogue <code>HIDE-RECOVER-v3.0.1</code>, range-front damping lowers DTI by -0.0012 (0.0980 vs 0.0992), so automatic gates keep <code>verdict = "negative"</code> under the 3-experiment cap.</p>
-<p><strong>Uniqueness (290 unique rasters + Session-2 peers):</strong> max 3-px overlap vs non-blanket detectors <strong>67.08% &le; 70%</strong> · vs DSLUP (c71122d5) <strong>54.95%</strong> · vs ECPU (cecbdca7) <strong>54.26%</strong> · vs archived HTCADS (11a2f251) <strong>58.83%</strong> · vs 0.2778 Champion <strong>36.75%</strong>.</p>
-<div class="hero-actions"><a class="btn secondary" href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif" download>&#8595; Download DARP Research TIFF</a><a class="btn secondary" href="downloads/kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.zip" download>&#8595; DARP ZIP</a><a class="btn secondary" href="downloads/darp_mt10_run_card.json">DARP Run Card ↗</a></div>
-<p class="note mono">SHA-256 3525d308f5b06d5cc04859ad115c35f3676b974c2faf850b9829585dbe934fe6<br>Note (127/140): KG2 DARP-MT10 (DARP-EXP-1, 37654d): updip grav/RTP+asymMT+ComCat; HideRec=0.0980, CPied=0.1169 (EXP2=0.1408); research negative</p></div>
-<div class="card"><h3>4-Instrument Diagnostic &amp; Uniqueness Verification</h3><img src="assets/fig4_darp_mt10_four_instruments_and_uniqueness.png" alt="DARP-MT10 four holdout instruments, LiDAR void coverage, and 290-raster uniqueness verification" style="width:100%;height:auto;border-radius:8px"><p class="note">Leakage canary: 68/68 features tested, max single-feature AUC = 0.7965 &le; 0.90 (<a href="../evidence/darp_mt10_canary_20261027.json">receipt ↗</a>).</p></div></div></section>
-<section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
-<h1 id="hero-title">No submission<br>cleared yet.</h1><p class="lead">The previous candidate is a useful research artifact, but it fails the requested literal duplicate rule. Protect the weekly slot until the protocol conflict and independent validation are resolved.</p>
-<div class="hero-actions"><a class="btn" href="downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif" download>↓ Download research TIFF</a><a class="btn secondary" href="executive-summary.html">Read the submission guide →</a></div>
-<p class="note"><strong>DO NOT SUBMIT.</strong> This is an existing research file, not a new, cleared entry.</p></div>
-<div class="hero-aside"><div class="eyebrow">Current decision</div><h3>Literal registry stop</h3><p><strong>99.968%</strong> of the previous file’s dots fall within 3 pixels of a registered raster, exceeding the 70% limit.</p><p>Its pixels pass local range checks; that is not organizer acceptance or permission to submit.</p><div class="hash mono">kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif<br>SHA-256 f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb</div></div></section>
-<div class="metrics" aria-label="Decision metrics"><div class="metric"><div class="label">Duplicate overlap</div><div class="value">99.968%</div><div class="hint">37,642 of 37,654 prior dots · ≤70% required</div></div>
-<div class="metric"><div class="label">Minimum possible</div><div class="value">82.34%</div><div class="hint">Any 37,654-dot placement · same witness</div></div>
-<div class="metric"><div class="label">New experiments</div><div class="value">0</div><div class="hint">Stopped before fitting or placing dots</div></div>
-<div class="metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public #1 DW-Tversky ↗</a></div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated public snapshot…</div><noscript><span class="note">JavaScript disabled; view the linked official leaderboard.</span></noscript></div></div>
-<section class="section"><div class="section-head"><div><div class="eyebrow">Start here</div><h2>One result, three different questions.</h2><p>A valid-looking file is not necessarily a distinct or high-scoring submission.</p></div></div>
-<div class="grid-three"><article class="card"><div class="card-icon">01</div><h3>Is the file in range?</h3><p>Yes, locally: one float32 band on the mirror grid, with finite whole-array values in [0, 1]. The sample uses NaN outside its footprint; this file uses zeros. Portal acceptance is unverified.</p></article>
-<article class="card"><div class="card-icon">02</div><h3>Is it unique?</h3><p>No under the literal rule. A single registered witness is enough to stop. A different file hash does not make a method or its dots unique.</p></article>
-<article class="card"><div class="card-icon">03</div><h3>Will it score higher?</h3><p>Unknown. A historical holdout proxy cannot reliably be converted into a public leaderboard score. No current experiment or organizer receipt establishes a gain.</p></article></div></section>
-<section class="section"><div class="section-head"><div><div class="eyebrow">The evidence</div><h2>Why the stop is unavoidable</h2><p>Exact counting on the pinned sample footprint and registered lattice.</p></div><a class="section-link" href="irregularities.html">See all open issues →</a></div>
-<div class="grid-two"><div class="card"><h3>The constraint</h3><p>The witness covers <strong>5,160,724</strong> of 5,167,373 footprint pixels within 3 px. Only <strong>6,649</strong> are outside its neighborhood.</p><p>For any 37,654 distinct dots, at least 31,005 must therefore be inside it: <strong>82.34%</strong>. Repositioning dots to exploit the tiny uncovered area is not geological evidence.</p><p class="note">This bound is specific to this budget, footprint, witness and radius. It does not prove that every possible smaller raster fails.</p></div>
-<div class="card"><h3>What we restored</h3><p>Competition and scientific owner mirrors were restored through GitHub and checked against pinned SHA-256 hashes. A 30-column cached feature matrix was prepared; no model was fitted in this review.</p><p>The mirrors are not independently authenticated organizer downloads. Private expert truth, full current registry, current account quota and an independent holdout replay remain unavailable.</p><a class="section-link" href="../evidence/release_audit_20261027.json">Open exact-byte audit ↗</a></div></div></section>
-<section class="section"><div class="section-head"><div><div class="eyebrow">Focus sites</div><h2>The nine-site picture</h2><p>The largest reported historical result is GEMSDOE32’s 0.2778, but its file is not a new or unique submission.</p></div><a class="section-link" href="executive-summary.html">Full comparison & guide →</a></div>
-<div class="callout"><strong>No defensible leaderboard estimate for a new file.</strong><p>The nine historical numbers are user/owner reports without archived submission-page receipts. See the comparison for the exact artifacts, hashes, overlaps and evidence classes.</p></div></section></main>
-<footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Built from auditable, dated evidence. No upload is automated.</div></div></footer><script>
-(function(){
-  const value=document.getElementById('leader-value'), label=document.getElementById('leader-status');
-  if(!value||!label)return;
-  fetch('data/public_leaderboard.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('unavailable');return r.json()}).then(d=>{
-    let s=(d.status==='success'||d.status==='verified_snapshot')?d:d.last_verified_snapshot;
-    if(!s||typeof s.top_public_dti!=='number'||s.top_public_dti<0||s.top_public_dti>1){value.textContent='Unavailable';label.textContent='No verified snapshot';return;}
-    value.textContent=s.top_public_dti.toFixed(4);
-    const fifth=(typeof s.fifth_public_dti==='number'&&s.fifth_public_dti>=0&&s.fifth_public_dti<=1)?' · #5 '+s.fifth_public_dti.toFixed(4):'';
-    label.textContent=(d.status==='unavailable'?'Refresh failed · last snapshot ':'Public snapshot · ')+(s.observed_utc||'unknown date')+fifth;
-  }).catch(()=>{value.textContent='Unavailable';label.textContent='Feed could not be loaded'});
-})();</script></body></html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Current decision · GEMS Fieldnotes</title><meta name="description" content="Evidence-led, fail-closed review of geothermal fault submissions for the DOE GEMS Prize.">
+<link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><div class="wrap topbar-inner">
+  <a href="index.html" class="brand" aria-label="GEMS Fieldnotes home"><span class="brand-mark">G</span><span class="brand-name">GEMS / FIELDNOTES<small>KANLERGEMSDOE2 · EVIDENCE PORTAL</small></span></a>
+  <nav class="nav" aria-label="Main navigation"><a href="index.html" class="active" aria-current="page">Overview</a><a href="executive-summary.html">Decision & sites</a><a href="research.html">Hypotheses</a><a href="irregularities.html">Open issues</a><a href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">Repository ↗</a></nav>
+</div></header>
+<main id="main" class="wrap"><div class="breadcrumb">DOE GEMS PRIZE <span>/</span> <strong>Current decision</strong></div>
+<section class="hero"><div class="hero-main"><div class="eyebrow">HTCADS-K2 · review dated 27 October 2026</div>
+<span class="pill stop large-pill">NEGATIVE · DO NOT SUBMIT</span>
+<h1>No TIFF is cleared<br>for submission.</h1>
+<p class="lead">The frozen 37,654-dot lane is blocked by the literal any-registry uniqueness gate. No model was fit, no holdout was run, and no new raster or score was produced in this review.</p>
+<div class="hero-actions"><a class="btn" href="executive-summary.html">Read the decision &amp; site table <span aria-hidden="true">→</span></a><a class="btn secondary" href="research.html">Review ranked hypotheses</a></div>
+<p class="subtle"><strong>Submit:</strong> no file. &nbsp; <strong>Download:</strong> historical artifacts are linked for research comparison only.</p></div>
+<aside class="hero-aside"><div class="eyebrow">Literal pre-fit stop</div><div class="big-number">82.3418%</div>
+<p>Minimum possible within-3-pixel overlap at the frozen budget, versus the <strong>70%</strong> hard limit.</p>
+<div class="divider"></div><div class="eyebrow">Best of nine historical reports</div><div class="mid-number">0.2778</div>
+<p>GEMSDOE32 · USER/OWNER-REPORTED, not receipt-confirmed.</p></aside></section>
+
+<div class="metrics">
+<div class="metric"><div class="label">Forced minimum overlap</div><div class="value">82.34%</div><div class="hint">31,005 of 37,654 dots must overlap</div></div>
+<div class="metric"><div class="label">Prior raster vs witness</div><div class="value">99.968%</div><div class="hint">37,642 / 37,654 dots</div></div>
+<div class="metric"><div class="label">Unique focus-site rasters</div><div class="value">0 / 9</div><div class="hint">All exceed the 70% directional 3 px threshold</div></div>
+<div class="metric"><div class="label">New HOLDOUT-DTI</div><div class="value">Not measured</div><div class="hint">No new candidate; hard stop precedes fitting</div></div>
+<div class="metric leader-metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public leaderboard #1 ↗</a></div><div class="value" id="public-top-score">Loading…</div><div class="hint" id="public-top-label">Dated snapshot; never a score for this project</div></div>
+</div>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Why the answer is “no”</div><h2>The gate fails before modeling.</h2><p>A mathematically forced collision is not fixed by hand-picking dots, changing filenames, or calling the lattice a calibration control.</p></div></div>
+<div class="grid-two"><article class="card accent-card"><div class="step">01</div><h3>One witness blocks every placement at this budget</h3><p>Within 3 px, the registered witness covers <strong>5,160,724</strong> of 5,167,373 footprint pixels. Only 6,649 pixels lie outside its neighborhood, so at least 31,005 of any 37,654 distinct dots overlap.</p><p class="small-warning">This is a precise lower bound for this footprint, witness, radius and frozen dot budget—not a claim that every possible smaller raster fails.</p></article>
+<article class="card"><div class="step muted-step">02</div><h3>No live validation followed</h3><p>The complete current registry, pre-placement surface, shared cached stack, leakage canary and buffered hide-and-recover evaluator were not replayed. The sandbox has no restored <code>data/</code> or <code>.cache/</code> stack.</p><p>Not running holdout or fitting is the correct fail-closed result while the hard stop holds.</p></article></div></section>
+<section class="callout stop-callout"><div class="eyebrow">Clear download / submit decision</div><h2>There is no approved file to download or submit.</h2><p>The old kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif is an archived research artifact. Its exact bytes are locally range-valid but it has 99.968% overlap with the registered witness and zero organizer acceptance evidence. Do not use it for a live slot.</p><a href="executive-summary.html" class="section-link">See historical files and the full comparison →</a></section>
+<section class="section compact-section"><div class="section-head"><div><div class="eyebrow">Public leaderboard reference</div><h2>A dated observation, not a project prediction.</h2></div></div>
+<div class="card"><p>The committed official-source snapshot records public #1 = <strong>0.4544</strong>, #5 = <strong>0.3566</strong>, and 0.3195 at #25. The user’s earlier statement that 0.3195 was the highest is inconsistent with that snapshot. Ranks change; the auto-refreshed feed above is explicitly dated or marked unavailable.</p><p>The reported GEMSDOE32 0.2778 is below the snapshot’s rank-50 0.2857, but is not receipt-confirmed. None of these values predicts a new submission’s score.</p><a href="../registry/official_sources_20261027.json">Open official-source snapshot and limitations ↗</a></div></section>
+<section class="section compact-section"><div class="grid-three"><article class="card"><div class="eyebrow">Evidence class</div><h3>Reported ≠ confirmed</h3><p>All nine site scores are user/owner-reported. No matching organizer submission receipt was found in the reviewed evidence.</p></article><article class="card"><div class="eyebrow">Physics labeling</div><h3>Two proxy caveats</h3><p>HTCADS index 28 was fixed-axis strike alignment, not slip tendency. Its “upgradient” plume follows terrain elevation, not measured groundwater head.</p></article><article class="card"><div class="eyebrow">Next</div><h3>Rank hypotheses; do not fit</h3><p>Three physically grounded variants are documented with exact layers, signatures, mimics and data-access limits. They remain untested and unpreregistered.</p></article></div></section></main>
+<footer class="footer"><div class="wrap footer-inner"><div><strong>GEMS / FIELDNOTES</strong><br>Evidence before a submission slot.</div><div>Maximize P(Win) · Own the Outcome<br>Research artifacts are not submission authorization.</div><div><a href="data/status_feed.json">Status feed ↗</a> · <a href="../evidence/current_run_card.json">Current run card ↗</a></div></div></footer><script>
+(async function () {
+  const score = document.getElementById('public-top-score');
+  const label = document.getElementById('public-top-label');
+  if (!score || !label) return;
+  try {
+    const response = await fetch('data/public_leaderboard.json', {cache: 'no-store'});
+    if (!response.ok) throw new Error('feed unavailable');
+    const feed = await response.json();
+    const snapshot = (feed.status === 'success' || feed.status === 'verified_snapshot')
+      ? feed : feed.last_verified_snapshot;
+    if (!snapshot || typeof snapshot.top_public_dti !== 'number'
+        || snapshot.top_public_dti < 0 || snapshot.top_public_dti > 1) {
+      score.textContent = 'Unavailable';
+      label.textContent = 'No verified public snapshot';
+      return;
+    }
+    score.textContent = snapshot.top_public_dti.toFixed(4);
+    const stale = feed.status === 'unavailable';
+    const when = snapshot.observed_utc || 'date not recorded';
+    label.textContent = (stale ? 'Refresh failed; last verified snapshot · ' : 'Public leaderboard snapshot · ')
+      + when + ' · not a score for our file';
+  } catch (_) {
+    score.textContent = 'Unavailable';
+    label.textContent = 'Feed could not be loaded';
+  }
+})();
+</script></body></html>

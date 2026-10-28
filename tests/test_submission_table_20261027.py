@@ -83,9 +83,35 @@ def test_current_comparison_has_no_unsupported_projection() -> None:
 def test_submission_table_html_links_resolve() -> None:
     html_text = (ROOT / "docs/submission-table.html").read_text(encoding="utf-8")
     hrefs = re.findall(r'href="(downloads/[^"]+)"', html_text)
-    assert hrefs, "table must link downloadable files"
+    assert hrefs, "table must link historical research files"
     for h in hrefs:
         assert (ROOT / "docs" / h).exists(), f"broken download link: {h}"
+    assert "Local format / portal status" in html_text
+    assert "USER/OWNER-REPORTED" in html_text
+    assert "Not estimated" in html_text
+    assert "Do not submit" in html_text
+
+
+def test_public_pages_remove_stale_positive_promotion_sections() -> None:
+    pages = ["index.html", "executive-summary.html", "research.html", "irregularities.html", "submission-table.html"]
+    all_html = "\n".join((ROOT / "docs" / name).read_text(encoding="utf-8") for name in pages)
+    for stale in ("PROMOTE — OK TO SUBMIT", "DARP-EXP-2", "SESSION-2 CANDIDATE", "verdict_control_separated_policy"):
+        assert stale not in all_html
+    home = (ROOT / "docs/index.html").read_text(encoding="utf-8")
+    assert "NEGATIVE · DO NOT SUBMIT" in home
+    assert "There is no approved file to download or submit" in home
+    assert "href=\"downloads/kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif\"" not in home
+    issues = (ROOT / "docs/irregularities.html").read_text(encoding="utf-8")
+    assert "Archived “promote” verdicts are not current authorization" in issues
+    assert "supersession_manifest_20261027.json" in issues
+    supersession = _load("evidence/supersession_manifest_20261027.json")
+    assert supersession["current_decision"]["verdict"] == "negative"
+    assert supersession["current_decision"]["ok_to_submit"] is False
+    assert all(row["current_interpretation"] for row in supersession["superseded_records"])
+    assert "not current download or submission authorization" in supersession["notice"]
+    feed = _load("docs/data/status_feed.json")
+    assert feed["ok_to_submit"] is False and feed["file_to_submit"] is None
+    assert "session2_candidate" not in feed and "darp_mt10_lane" not in feed
 
 
 def test_all_pages_download_links_resolve() -> None:
@@ -109,3 +135,8 @@ def test_official_sources_record_has_urls_and_quotes() -> None:
     lb = next(s for s in src["sources"] if s["id"] == "OS-3")
     assert lb["snapshot_values_used"]["rank_1"] == 0.4544
     assert lb["snapshot_values_used"]["rank_25"] == 0.3195
+    registry = _load("registry/sources.json")
+    record = next(s for s in registry["official_competition_sources"] if s["id"] == "SRC-DD-LEADERBOARD")
+    assert "#1 = 0.4544" in record["verified_facts"]
+    assert "#5 = 0.3566" in record["verified_facts"]
+    assert "not a live verification" in record["verified_facts"]

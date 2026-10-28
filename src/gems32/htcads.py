@@ -60,12 +60,12 @@ SUBSURF_FEATURE_NAMES: list[str] = [
     "gdr_geotherm_upgrad",
     "gdr_sinter_vent_strike",
     "hydro_conduit_coupled",
-    # Pillar 3: Crustal Strain, Microseismicity, Anderson Tendency & Meso-Topography (12)
+    # Pillar 3: Crustal Strain, Microseismicity, Fixed-Axis Strike Alignment & Meso-Topography (12)
     "gps_transtension",
     "gps_strain_2ndinv",
     "gps_dilatation",
     "seismic_swarm_idx",
-    "anderson_slip_tendency",
+    "strike_alignment_fixed_62deg",
     "piedmont_break_s1",
     "piedmont_break_s3",
     "piedmont_apron_zone",
@@ -304,7 +304,12 @@ def _parse_2m_probes_grid(zpath: Path, transform: rasterio.Affine, shape: tuple[
 
 
 def _advective_upgradient_plume(seed_grid: np.ndarray, uy: np.ndarray, ux: np.ndarray, foot: np.ndarray) -> np.ndarray:
-    """Back-project shallow thermal discharge seeds 0.5-1.5 km up the smoothed hydraulic gradient."""
+    """Back-project shallow thermal seeds along a terrain-elevation-gradient proxy.
+
+    The project inputs do not include measured groundwater hydraulic head; the
+    terrain gradient is only a proxy and must not be described as a measured
+    hydraulic gradient or groundwater-flow vector.
+    """
     ys, xs = np.nonzero(seed_grid > 0.0)
     vals = seed_grid[ys, xs]
     acc = np.zeros_like(seed_grid, dtype=np.float32)
@@ -315,6 +320,14 @@ def _advective_upgradient_plume(seed_grid: np.ndarray, uy: np.ndarray, ux: np.nd
         np.maximum.at(acc, (ty, tx), vals * weight)
     plume = gaussian_filter(acc, sigma=6.5, mode="nearest")
     return _pos_norm_2d(plume, foot, q=99.2)
+
+
+def _fixed_axis_strike_alignment(strike_rad: np.ndarray) -> np.ndarray:
+    """Cosine-squared axial alignment to a fixed 62-degree reference axis.
+
+    This geometric descriptor is not an Anderson slip-tendency calculation.
+    """
+    return (np.cos(strike_rad - np.deg2rad(62.0)) ** 2).astype(np.float32)
 
 
 def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
@@ -488,7 +501,7 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
     np.maximum(struct_1d, mt_edge, out=struct_1d)
     del mt_edge
 
-    # Precompute hydraulic up-gradient vector once from det_elev
+    # Terrain-elevation-gradient proxy (not measured hydraulic head / groundwater flow).
     elev_sm12 = gaussian_filter(det_elev, sigma=12.0, mode="nearest")
     egy12, egx12 = _grad_yx_f32(elev_sm12)
     egnorm = np.hypot(egy12, egx12).astype(np.float32) + 1e-4
@@ -591,7 +604,7 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
     X_sub.flush()
     gc.collect()
 
-    # --- PILLAR 3: Crustal Strain, Microseismicity, Anderson Tendency & Meso-Topography (cols 24..34) ---
+    # --- PILLAR 3: Crustal Strain, Microseismicity, Fixed-Axis Strike Alignment & Meso-Topography (cols 24..34) ---
     with rasterio.open(ddir / "training_features.tif") as src:
         geod_2nd = _read_core(src, 4)
         geod_shear = _read_core(src, 7)
@@ -626,7 +639,9 @@ def build_static_feature_stack(ddir: Path, cache_dir: Path) -> dict:
     sin2 = w_g * np.sin(2.0 * sg_fp) + w_m * np.sin(2.0 * sm_fp) + w_t * np.sin(2.0 * st_fp)
     cos2 = w_g * np.cos(2.0 * sg_fp) + w_m * np.cos(2.0 * sm_fp) + w_t * np.cos(2.0 * st_fp)
     dom_strike_fp = 0.5 * np.mod(np.arctan2(sin2, cos2), 2.0 * np.pi)
-    X_sub[:, 28] = (np.cos(dom_strike_fp - np.deg2rad(62.0)) ** 2).astype(np.float32)
+    # Axial alignment to a fixed 62-degree reference only. No stress tensor,
+    # fault-plane normal, friction, or slip model enters this expression.
+    X_sub[:, 28] = _fixed_axis_strike_alignment(dom_strike_fp)
     del w_g, w_m, w_t, sg_fp, sm_fp, st_fp, sin2, cos2, dom_strike_fp
 
     X_sub[:, 31] = _pos_norm_2d(elev_slope, foot)[foot]

@@ -1,12 +1,15 @@
 {
-  "schema": "gems.submission-comparison.v2",
-  "generated_utc": "2026-10-27T17:31:11.562697+00:00",
+  "schema": "gems.submission-comparison.v3",
+  "generated_utc": "2026-10-27",
+  "evidence_source_generated_utc": "2026-10-27T17:31:11.562697+00:00",
   "verdict": "negative",
   "ok_to_submit": false,
+  "current_candidate": null,
   "new_raster": null,
+  "new_file_score_estimate": null,
   "leaderboard_estimate": null,
-  "warning": "Historical scores are user/owner reports without receipts; files are research only.",
-  "previous_artifact": {
+  "warning": "Historical scores are USER/OWNER-REPORTED without submission receipts; these files are research-only and none is unique within the focus nine.",
+  "prior_research_artifact": {
     "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
     "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
     "size_bytes": 204099,
@@ -337,5 +340,12 @@
         "GEMSDOE24": 0.9801884946517089
       }
     }
-  ]
+  ],
+  "focus_lineage_geometry": {
+    "g32_b2_vs_g25_d28_filtered_by_distance_gt_2px_xor": 0,
+    "g25_to_g32_removed_pixels": 6436,
+    "g32_not_in_g36_pixels": 0,
+    "g36_extra_pixels_over_g32": 1200,
+    "caveat": "Geometry and user-reported scores are observable; hidden-truth contributions and causal mechanisms are not."
+  }
 }
