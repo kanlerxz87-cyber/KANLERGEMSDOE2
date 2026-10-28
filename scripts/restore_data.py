@@ -109,11 +109,19 @@ def main() -> None:
     root.mkdir(parents=True, exist_ok=True)
 
     results = []
+    unavailable = []
     for e in man["files"]:
         if args.group in ("all", e["group"]):
-            r = restore_entry(e, root)
+            try:
+                r = restore_entry(e, root)
+            except (subprocess.CalledProcessError, OSError) as exc:
+                # IR-KG2S3-RESTORE-02: one deleted optional upstream file must not abort the whole
+                # group. Core competition inputs still fail closed (non-zero exit below).
+                r = {"id": e["id"], "dest": e["dest"], "group": e["group"], "status": "unavailable",
+                     "bytes": None, "sha256": e["sha256"], "error": f"{type(exc).__name__}: {exc}"}
+                unavailable.append(r)
             results.append(r)
-            print(f"{r['status']:>8}  {e['dest']:82s}  sha256={r['sha256'][:12]}…")
+            print(f"{r['status']:>11}  {e['dest']:82s}  sha256={r['sha256'][:12]}…")
 
     try:
         storage_root = root.resolve().relative_to(ROOT.resolve()).as_posix()
@@ -121,7 +129,8 @@ def main() -> None:
         storage_root = str(root)
     receipt = {
         "schema_version": 1,
-        "verified_files_count": len(results),
+        "verified_files_count": len([r for r in results if r["status"] != "unavailable"]),
+        "unavailable_files": unavailable,
         "storage_root": storage_root,
         "files": results,
     }
@@ -134,7 +143,10 @@ def main() -> None:
     tmp = output.with_suffix(".tmp")
     tmp.write_text(json.dumps(receipt, indent=2) + "\n")
     tmp.replace(output)
-    print(f"Verified {len(results)} files; receipt written to {output.relative_to(ROOT)}")
+    ok = [r for r in results if r["status"] != "unavailable"]
+    print(f"Verified {len(ok)} files ({len(unavailable)} unavailable upstream); receipt written to {output.relative_to(ROOT)}")
+    if any(r["group"] == "core" for r in unavailable):
+        raise SystemExit("A core competition input is unavailable; refusing to continue")
 
 
 if __name__ == "__main__":

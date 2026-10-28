@@ -17,7 +17,7 @@
         0.08595140754809347,
         0.11266835751415871
       ],
-      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232, 95% CI [0.0860, 0.1127]); file score 0.2778 ORGANIZER-CONFIRMED"
+      "label": "HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22232, 95% CI [0.0860, 0.1127]); file score 0.2778 USER-REPORTED (relabelled KG2-S3, no organizer receipt)"
     },
     "REF-B2-SGMC-static": {
       "sgmc_prevalence_calibrated_dti": 0.0641209376417646,
@@ -835,7 +835,7 @@
     "r_squared": 0.9995891388337661,
     "inferred_TPw_px": 5210.353353959066,
     "inferred_K_hidden_px": 14019.828352696892,
-    "identity": "DTI = TPw/(0.2*N + 0.8*K); 1/DTI linear in N across collar family (44090,0.2600),(40199,0.2708),(37654,0.2778) ORGANIZER-CONFIRMED"
+    "identity": "DTI = TPw/(0.2*N + 0.8*K); 1/DTI linear in N across collar family (44090,0.2600),(40199,0.2708),(37654,0.2778) USER-REPORTED (relabelled KG2-S3)"
   },
   "bundle": {
     "candidate_id": "EXP-1",

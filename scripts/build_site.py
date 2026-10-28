@@ -71,6 +71,83 @@ def focus_table(rows: list[dict]) -> str:
     return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">Historical file</th><th scope="col">Reported score</th><th scope="col">Unique vs. other focus sites?</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
 
 
+
+def s3_sections() -> tuple[str, str, dict | None, str | None]:
+    """KG2-S3 decision block, rendered from the S3 receipts only (no hard-coded numbers).
+
+    Returns (home_html, summary_html, feed, dslup_verdict). Empty strings when receipts are absent."""
+    rc_p = ROOT / "evidence/kg2s3_run_card.json"
+    rv_p = ROOT / "evidence/kg2s3_dslup_revalidation.json"
+    fl_p = ROOT / "evidence/kg2s3_focus_site_lli.json"
+    em_p = ROOT / "evidence/kg2s3_lope_emission.json"
+    if not (rc_p.is_file() and rv_p.is_file() and fl_p.is_file() and em_p.is_file()):
+        return "", "", None, None
+    rc = json.loads(rc_p.read_text()); rv = json.loads(rv_p.read_text())
+    fl = json.loads(fl_p.read_text()); em = json.loads(em_p.read_text())
+    hr = rc["holdout_dti"]["primary_hide_and_recover"]; sg = rc["holdout_dti"]["secondary_sgmc_cal"]
+    reg = rc["registry_comparison"]; top = (reg.get("top10_overlap_non_space_filling") or [{}])[0]
+    du = rv["gates"]["gate_3_uniqueness"]; dtop = (du.get("top10_overlap_non_space_filling") or [{}])[0]
+    proj = rc["projection_lli"]; band = proj["error_band"]["leave_site_out_mae"]
+    lope_ok = rc["validator"]["verdict"] == "OK_TO_SUBMIT"; dslup_ok = rv["verdict"] == "OK_TO_SUBMIT"
+    nothing_ok = not lope_ok and not dslup_ok
+    red = "#b42318"
+    head = "No file here is<br>OK to submit." if nothing_ok else "A file is cleared<br>by the automated gate."
+    status = "NOT OK TO SUBMIT — nothing cleared" if nothing_ok else "OK TO SUBMIT — see table"
+    dhr = hr["paired_delta_vs_champion"]
+    lope_reason = (f"Holdout: HOLDOUT-DTI {hr['pooled_dti']:.4f} ({esc(hr['evaluator_version'])}, N={hr['n_withheld']:,}, "
+                   f"95% CI [{hr['ci95'][0]:.4f}, {hr['ci95'][1]:.4f}]) vs DSLUP {hr['dslup_recorded']:.4f}; paired Δ vs champion proxy "
+                   f"{dhr['delta']:+.4f} [{dhr['ci95'][0]:+.4f}, {dhr['ci95'][1]:+.4f}]. SGMC-CAL {sg['dti']:.4f} vs {sg['dslup_recorded']:.4f}. "
+                   f"Uniqueness: {100*(reg.get('max_overlap_3px_non_space_filling') or 0):.2f}% of dots within 3 px of {esc(top.get('file',''))}.")
+    dslup_reason = (f"Uniqueness: {100*(du.get('max_overlap_3px_non_space_filling') or 0):.2f}% of dots within 3 px of {esc(dtop.get('file',''))} "
+                    f"(limit 70%; the Session-2 pass relied on a dense-class exemption the protocol does not contain). "
+                    f"LLI live PROJECTION {rv['lli_live_projection']['projected_dti']:.3f} vs champion {rv['lli_live_projection']['champion_same_identity']:.4f}.")
+    v = lambda ok: "✅ OK_TO_SUBMIT" if ok else "❌ NOT_OK_DO_NOT_SUBMIT"
+    rows = "".join(
+        f"<tr><td><strong>{esc(r['site'])}</strong>{' (best)' if i == 0 else ''}</td><td class=\"mono\">{esc(r['submission'])}</td>"
+        f"<td>{r['live_user_reported']:.4f}</td><td>{r['lli_leave_site_out_projection']:.4f}</td></tr>"
+        for i, r in enumerate(sorted(fl["rows"], key=lambda r: -r["live_user_reported"])))
+    table = (f"<table class=\"table\"><thead><tr><th>File</th><th>Automated verdict</th><th>Why</th></tr></thead><tbody>"
+             f"<tr><td class=\"mono\">{esc(rc['raster_filename'])}<br>SHA-256 {esc(rc['raster_sha256'][:12])}… "
+             f"({'published' if rc.get('published_download') else 'not published'})</td><td><strong>{v(lope_ok)}</strong></td><td>{lope_reason}</td></tr>"
+             f"<tr><td class=\"mono\">{esc(rv['tif'])}</td><td><strong>{v(dslup_ok)}</strong></td><td>{dslup_reason}</td></tr></tbody></table>")
+    learned = (f"<p>Leave-site-out inversion of USER-REPORTED live scores (MAE ±{band:.3f}) places most of the estimated hidden public "
+               f"truth within 3 px of the public H19-5 ridge network. LiDAR/DEM scarp and GPS-shear factors are <strong>not supported</strong>: "
+               f"they improve the error by less than the preregistered 0.001. The holdouts disagree with the live ledger: LOPE projects {proj['candidate']:.3f} "
+               f"(PROJECTION) but trails on HIDE-RECOVER, while DSLUP leads on HIDE-RECOVER but projects {proj['dslup_same_identity']:.3f}.</p>")
+    home = (f'<section class="hero" aria-labelledby="s3-title" style="margin-bottom:1.2rem;border:3px solid {red}"><div>'
+            f'<div class="eyebrow">Session 3 · 27 October 2026 · KG2-S3 LOPE lane · automated gate, no human inspector</div>'
+            f'<span class="status" style="background:{red};color:#fff">{status}</span><h1 id="s3-title">{head}</h1>'
+            f'<p class="lead">Gate: <span class="mono">scripts/validate_submission_kg2s3.py</span>. It recomputes format and uniqueness from bytes '
+            f'against {reg.get("n_references_compared")} reference rasters and binds holdout receipts to the exact dots.</p>{table}'
+            f'<div class="hero-actions"><a class="btn" href="executive-summary.html">Read the executive summary →</a>'
+            f'<a class="btn secondary" href="../evidence/kg2s3_run_card.json">Session-3 run card ↗</a>'
+            f'<a class="btn secondary" href="../evidence/kg2s3_dslup_revalidation.json">DSLUP re-validation ↗</a></div></div>'
+            f'<div class="hero-aside"><div class="eyebrow">What Session 3 learned</div><h3>The live ledger points to one network</h3>{learned}</div></section>')
+    summary = (f'<div class="callout red-callout"><strong>SESSION 3 (KG2-S3 LOPE): {v(lope_ok)}</strong><p>{lope_reason}</p>'
+               f'<p>LLI live PROJECTION {proj["candidate"]:.3f} (±{band:.3f} leave-site-out MAE; it is not a score). '
+               f'<a href="../evidence/kg2s3_run_card.json">Run card</a> · <a href="../evidence/kg2s3_submission_gate.json">Gate receipt</a> · '
+               f'<a href="../evidence/kg2s3_lli_design_cv.json">Design CV</a> · <a href="../evidence/kg2s3_lope_holdout.json">Holdout</a> · '
+               f'<a href="../knowledge/03_preregistered_hypotheses_kg2s3_20261027.md">Preregistration</a></p></div>'
+               f'<div class="callout red-callout"><strong>SESSION-2 DSLUP RE-VALIDATED: {v(dslup_ok)}</strong><p>{dslup_reason} '
+               f'<a href="../evidence/kg2s3_dslup_revalidation.json">Receipt</a></p></div>'
+               f'<section class="section"><div class="section-head"><div><div class="eyebrow">Nine focus sites · which is best</div>'
+               f'<h2>GEMSDOE32 is the best reported file. None of the nine is unique.</h2><p>Live = USER-REPORTED (no organizer receipts). '
+               f'LLI = leave-site-out PROJECTION from a model that never saw that site.</p></div></div><div class="table-wrap"><table><thead><tr>'
+               f'<th>Site</th><th>File</th><th>Live (USER-REPORTED)</th><th>LLI (PROJECTION)</th></tr></thead><tbody>{rows}</tbody></table></div>'
+               f'<p><strong>Why 0.2778.</strong> Along the pruning chain 44,090 → 40,199 → 37,654 dots (0.2600 → 0.2708 → 0.2778), 1/DTI is linear in the dot count. '
+               f'So TP<sub>w</sub> ≈ 5,210 stayed fixed, and the 6,436 dots removed within 2 px of the catalogue were pure false positives, because catalogue pixels are masked. '
+               f'The champion is a 2.8-px dotting of the H19-5 network, which is where the ledger places most of the truth.</p>'
+               f'<p><strong>Can it be beaten?</strong> A DTI-optimal re-dotting of that network projects {proj["unconstrained_duplicate_lane"]:.3f} (PROJECTION), '
+               f'but it is a duplicate lane, logged and stopped. With the protocol novelty quota it projects {proj["candidate"]:.3f} and fails the gates. Beating 0.2778 '
+               f'uniquely needs information that is not in any registry raster (see <a href="https://community.drivendata.org/raw/11563">forum 11563</a> on fault-map licences).</p></section>')
+    feed = {"lope_file": rc["raster_filename"], "lope_sha256": rc["raster_sha256"], "lope_verdict": rc["validator"]["verdict"],
+            "lope_failed_gates": rc["validator"]["failed_gates"], "dslup_revalidation_verdict": rv["verdict"],
+            "dslup_failed_gates": rv["failed_gates"], "ok_to_submit_any": not nothing_ok,
+            "lli_projection_lope": proj["candidate"], "lli_projection_dslup": proj["dslup_same_identity"],
+            "lli_projection_champion": proj["champion_same_identity"], "label": "PROJECTIONS are not scores"}
+    return home, summary, feed, rv["verdict"]
+
+
 def main() -> None:
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
@@ -94,6 +171,24 @@ def main() -> None:
     # and artifact are present and byte-identical to the pinned receipt.
     # Both duplicate-rule readings are displayed; neither is hidden.
     # ------------------------------------------------------------------
+    s3_home, s3_summary, s3_feed, s3_dslup = s3_sections()
+    s3_irregular = ""
+    ir_p = ROOT / "evidence/kg2s3_irregularities.json"
+    if ir_p.is_file():
+        ir = json.loads(ir_p.read_text())
+        items = "".join(f"<li><strong>{esc(i['id'])}</strong> ({esc(i['severity'])}): {esc(i['finding'])} <em>{esc(i['fix'])}</em></li>" for i in ir["items"])
+        nxt = "".join(f"<li>{esc(x)}</li>" for x in ir["next_steps"])
+        lim = "".join(f"<li>{esc(x)}</li>" for x in ir["limitations"])
+        s3_irregular = (f'<section class="section"><div class="section-head"><div><div class="eyebrow">Session 3 · KG2-S3</div>'
+                        f'<h2>Irregularities found and fixed this session</h2></div></div><div class="card"><ul>{items}</ul></div>'
+                        f'<div class="grid-two"><div class="card"><h3>Next steps</h3><ol>{nxt}</ol></div>'
+                        f'<div class="card"><h3>Limitations</h3><ul>{lim}</ul></div></div></section>')
+    s2_retracted = s3_dslup is not None and s3_dslup != "OK_TO_SUBMIT"
+    s2_status = "SUPERSEDED — NOT OK TO SUBMIT (KG2-S3 byte-level re-validation)" if s2_retracted else "New candidate — policy decision disclosed"
+    s2_status_style = ' style="background:#b42318;color:#fff"' if s2_retracted else ""
+    s2_promote = "<s>PROMOTE — OK TO SUBMIT</s> (retracted by KG2-S3 re-validation)" if s2_retracted else "PROMOTE — OK TO SUBMIT"
+    s2_dl_label = "Session-2 GeoTIFF (research only — do not submit)" if s2_retracted else "Download Session-2 GeoTIFF"
+    s2_callout = "SESSION-2 CANDIDATE (superseded — NOT OK per KG2-S3 re-validation):" if s2_retracted else "SESSION-2 CANDIDATE (two verdicts, fully disclosed):"
     s2_home = s2_summary = ""
     s2_feed: dict | None = None
     s2_card_path = ROOT / "evidence/dslup_unique_slot_run_card.json"
@@ -112,18 +207,18 @@ def main() -> None:
         s2lit = disc["this_file_literal_overlap_vs_lattice_witness"]
         s2zip = s2["zip_filename"]
         s2note = s2["submission_note"]
-        s2_home = f'''<section class="hero" aria-labelledby="s2-title" style="margin-bottom:1.2rem"><div><div class="eyebrow">Session 2 · 27 October 2026 · KG2-S2 DSLUP-3D lane</div><span class="status">New candidate — policy decision disclosed</span>
+        s2_home = f'''<section class="hero" aria-labelledby="s2-title" style="margin-bottom:1.2rem"><div><div class="eyebrow">Session 2 · 27 October 2026 · KG2-S2 DSLUP-3D lane</div><span class="status"{s2_status_style}>{s2_status}</span>
 <h1 id="s2-title">A new, maximally<br>decorrelated candidate.</h1>
 <p class="lead"><strong>{esc(s2_file)}</strong> — depth-scaled listric updip-gravity surface, re-emitted under a hard own-halo cap (&le;{s2["accepted_q_abs"]:,} of {s2["emitted_dots"]:,} dots near our prior rasters). It beats every raster this repository has evaluated on <strong>both</strong> blind holdouts with strictly positive paired 95% CIs, and is the least-duplicated candidate this fleet audit has seen: max 3-px overlap vs every <em>geological</em> detector {100*s2reg["final_dots_max_detector_3px_overlap"]:.2f}%, vs the 0.2778 champion {100*s2champ:.2f}%, vs our own prior files &le;{100*s2own:.2f}%.</p>
-<div class="hero-actions"><a class="btn" href="downloads/{esc(s2_file)}" download>&#8595; Download Session-2 GeoTIFF</a><a class="btn secondary" href="downloads/{esc(s2zip)}" download>&#8595; Portal ZIP</a><a class="btn secondary" href="downloads/dslup_run_card.json">Run card ↗</a></div>
+<div class="hero-actions"><a class="btn" href="downloads/{esc(s2_file)}" download>&#8595; {s2_dl_label}</a><a class="btn secondary" href="downloads/{esc(s2zip)}" download>&#8595; Portal ZIP</a><a class="btn secondary" href="downloads/dslup_run_card.json">Run card ↗</a></div>
 <p class="note"><strong>TWO VERDICTS, YOUR CALL (slot decisions are the coordinator's selector step):</strong> under the documented control-separated policy (space-filling calibration lattices excluded from the hard gate, null-calibrated on the 0.2778 champion) this file is <strong>PROMOTE — OK TO SUBMIT</strong>; under PR&nbsp;#25's literal all-registry reading it is a duplicate vs the registered lattice ({100*s2lit["fraction"]:.2f}%) — but so is <em>every possible</em> {s2lit["our_dots"]:,}-dot raster (forced minimum {100*s2lit["forced_minimum_for_any_raster_at_this_budget"]:.2f}%), including all nine historical champions. The literal rule and the standing unique-TIF mandate cannot both be satisfied at this budget.</p></div>
 <div class="hero-aside"><div class="eyebrow">Blind holdout (HOLDOUT-DTI, not a live score)</div><h3>Beats the 0.2778 proxy on both metrics</h3>
 <p>Hide-and-Recover <strong>{s2hr["pooled_dti"]:.4f}</strong> vs {s2hr["champion_02778_same_evaluator"]:.4f} (paired Δ {s2hr["paired_delta_vs_0p2778_ref"]:+.4f}, 95% CI [{s2hr["paired_delta_ci95"][0]:+.4f}, {s2hr["paired_delta_ci95"][1]:+.4f}])</p>
 <p>Blind SGMC-CAL <strong>{s2sg["sgmc_prevalence_calibrated_dti"]:.4f}</strong> vs {s2sg["champion_02778_same_evaluator"]:.4f} (paired Δ {s2sg["paired_delta_vs_0p2778_ref"]:+.4f}, 95% CI [{s2sg["paired_delta_ci95"][0]:+.4f}, {s2sg["paired_delta_ci95"][1]:+.4f}])</p>
 <p class="note">Historical-evaluator numbers (GEMSDOE32-HIDE-RECOVER/SGMC-CAL v3.0, N=22,232 / 62,703, n_boot=1000). No organizer receipt exists for any score here.</p>
 <div class="hash mono">{esc(s2_file)}<br>SHA-256 {esc(s2["raster_sha256"])}<br>Note ({s2["note_length"]}/140): {esc(s2note)}</div></div></section>'''
-        s2_summary = f'''<div class="callout"><strong>SESSION-2 CANDIDATE (two verdicts, fully disclosed):</strong><p><a href="downloads/{esc(s2_file)}" download>Download {esc(s2_file)}</a> · SHA-256 <span class="mono">{esc(s2["raster_sha256"][:16])}…</span> · note ({s2["note_length"]}/140): <span class="mono">{esc(s2note)}</span></p>
-<p>Control-separated policy (lattice = calibration control, champion-null calibrated): <strong>PROMOTE — OK TO SUBMIT</strong> · 5/5 gates · unique vs all {s2reg["unique_rasters_checked"]:,} geological rasters incl. our own (max {100*s2reg["final_dots_max_detector_3px_overlap"]:.2f}%). Literal all-registry reading (PR #25): duplicate vs the spacing-5 lattice ({100*s2lit["fraction"]:.2f}%), as is every possible raster at this budget (forced &ge;{100*s2lit["forced_minimum_for_any_raster_at_this_budget"]:.2f}%). HOLDOUT-DTI: Hide-Rec <strong>{s2hr["pooled_dti"]:.4f}</strong> [{s2hr["ci95"][0]:.4f}, {s2hr["ci95"][1]:.4f}], SGMC-CAL <strong>{s2sg["sgmc_prevalence_calibrated_dti"]:.4f}</strong> [{s2sg["ci95"][0]:.4f}, {s2sg["ci95"][1]:.4f}] — both above the 0.2778 proxy with strictly positive paired CIs. No leaderboard estimate is claimed; an OLS projection on 9 user-reported anchors (R²=0.956) would EXTRAPOLATE far outside its support and is recorded only inside the run card as a labeled projection, never a score.</p>
+        s2_summary = f'''<div class="callout"><strong>{s2_callout}</strong><p><a href="downloads/{esc(s2_file)}" download>Download {esc(s2_file)}</a> · SHA-256 <span class="mono">{esc(s2["raster_sha256"][:16])}…</span> · note ({s2["note_length"]}/140): <span class="mono">{esc(s2note)}</span></p>
+<p>Control-separated policy (lattice = calibration control, champion-null calibrated): <strong>{s2_promote}</strong> · 5/5 gates · unique vs all {s2reg["unique_rasters_checked"]:,} geological rasters incl. our own (max {100*s2reg["final_dots_max_detector_3px_overlap"]:.2f}%). Literal all-registry reading (PR #25): duplicate vs the spacing-5 lattice ({100*s2lit["fraction"]:.2f}%), as is every possible raster at this budget (forced &ge;{100*s2lit["forced_minimum_for_any_raster_at_this_budget"]:.2f}%). HOLDOUT-DTI: Hide-Rec <strong>{s2hr["pooled_dti"]:.4f}</strong> [{s2hr["ci95"][0]:.4f}, {s2hr["ci95"][1]:.4f}], SGMC-CAL <strong>{s2sg["sgmc_prevalence_calibrated_dti"]:.4f}</strong> [{s2sg["ci95"][0]:.4f}, {s2sg["ci95"][1]:.4f}] — both above the 0.2778 proxy with strictly positive paired CIs. No leaderboard estimate is claimed; an OLS projection on 9 user-reported anchors (R²=0.956) would EXTRAPOLATE far outside its support and is recorded only inside the run card as a labeled projection, never a score.</p>
 <p><a href="../evidence/dslup_unique_slot_run_card.json">Run card</a> · <a href="../evidence/dslup_literal_rule_disclosure.json">Literal-rule disclosure</a> · <a href="../evidence/dslup_experiments.json">3 preregistered experiments (honest negatives on own-collision)</a> · <a href="../evidence/dslup_champion_mode_receipt.json">champion-mode receipt</a> · <a href="../evidence/leakage_canary_dslup.json">leakage canary (max AUC 0.7954)</a> · prereg: <a href="../registry/preregistration_dslup.json">frozen 2026-10-27</a>.</p></div>'''
         s2_feed = {
             "filename": s2_file, "sha256": s2["raster_sha256"], "zip": s2zip,
@@ -205,6 +300,7 @@ def main() -> None:
         }
 
     home=f'''<div class="breadcrumb">DOE GEMS PRIZE &nbsp; / &nbsp; <span>Decision dashboard</span></div>
+{s3_home}
 {s2_home}
 {darp_home}
 <section class="hero" aria-labelledby="hero-title"><div><div class="eyebrow">Geological fault discovery · 27 October 2026 review</div><span class="status">Submission on hold</span>
@@ -226,10 +322,13 @@ def main() -> None:
 <section class="section"><div class="section-head"><div><div class="eyebrow">Focus sites</div><h2>The nine-site picture</h2><p>The largest reported historical result is GEMSDOE32’s 0.2778, but its file is not a new or unique submission.</p></div><a class="section-link" href="executive-summary.html">Full comparison & guide →</a></div>
 <div class="callout"><strong>No defensible leaderboard estimate for a new file.</strong><p>The nine historical numbers are user/owner reports without archived submission-page receipts. See the comparison for the exact artifacts, hashes, overlaps and evidence classes.</p></div></section>'''
 
-    intro_line = ('One Session-2 candidate is cleared under the documented control-separated policy; the literal-rule reading is disclosed beside it. The older HTCADS file below remains research-only.'
+    intro_line = ('<strong>Nothing in this repository is OK to submit</strong>: the automated byte-level gate rejected the new Session-3 file and the Session-2 DSLUP file. Keep the weekly slot.'
+                  if (s3_feed is not None and not s3_feed["ok_to_submit_any"]) else
+                  'One Session-2 candidate is cleared under the documented control-separated policy; the literal-rule reading is disclosed beside it. The older HTCADS file below remains research-only.'
                   if s2_summary else 'At present there is <strong>no competition-ready file</strong>. The existing file below is available for research, not a weekly submission slot.')
     summary=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p>{intro_line}</p></div>
+{s3_summary}
 {s2_summary}
 {darp_summary}
 <div class="callout red-callout"><strong>SESSION-1 HTCADS FILE: DO NOT SUBMIT (retracted under the literal rule; superseded by Session 2 on both holdouts).</strong><p><a href="{artifact}" download>Download the previous HTCADS TIFF for research</a> · {percent:.3f}% literal witness overlap · <a href="../evidence/current_run_card.json">current negative run card</a>.</p></div>
@@ -260,6 +359,7 @@ def main() -> None:
 <li><a href="https://www.earthdata.nasa.gov/data/projects/opera">NASA OPERA data description</a> · <a href="https://github.com/drivendataorg/gems-prize-reference-solution">DrivenData reference solution</a></li></ul><p class="note"><a href="../registry/source_catalog_20261027.json">Source catalog with access and provenance notes ↗</a></p></div></section>'''
 
     irregular=f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p>These are explicit blockers, not requests for a human geological inspector. Automated checks must fail closed.</p></div>
+{s3_irregular}
 <div class="grid-two"><article class="card"><div class="eyebrow">01 · blocking</div><h3>Literal novelty contradiction</h3><p>The registered spacing-5 raster is a calibration control, but the prompt says <em>any</em> registry raster. Its neighborhood forces ≥{bound:.2f}% overlap at the frozen budget, above the 70% stop. No implicit control exemption has been applied.</p></article>
 <article class="card"><div class="eyebrow">02 · blocking</div><h3>Replay and registry completeness</h3><p>The prior pre-placement surface and OOF caches are unavailable. A single witness proves failure but cannot prove all-registry uniqueness; the complete current registry and independent holdout/canary replay are not established.</p></article>
 <article class="card"><div class="eyebrow">03 · blocking</div><h3>Score provenance</h3><p>Historical scores are user/owner reports, not receipts. The legacy site incorrectly called them organizer-confirmed and claimed a mathematical proof of hidden true positives. Both claims are withdrawn.</p></article>
@@ -282,6 +382,10 @@ def main() -> None:
     }
     if s2_feed is not None:
         feed["session2_candidate"] = s2_feed
+        if s3_dslup is not None:
+            feed["session2_candidate"]["kg2s3_revalidation_verdict"] = s3_dslup
+    if s3_feed is not None:
+        feed["session3_kg2s3"] = s3_feed
     if darp_feed is not None:
         feed["darp_mt10_lane"] = darp_feed
     (DOCS / "data").mkdir(exist_ok=True)

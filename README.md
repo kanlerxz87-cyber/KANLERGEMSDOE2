@@ -1,11 +1,70 @@
 # KANLERGEMSDOE2 — geothermal fault discovery
 
-> ### ⭐ SESSION 2 (2026-10-27, KG2-S2 DSLUP-3D lane): NEW UNIQUE CANDIDATE — TWO VERDICTS, FULLY DISCLOSED
+> ## 🛑 SESSION 3 DECISION (2026-10-27, KG2-S3): **NO FILE IN THIS REPOSITORY IS OK TO SUBMIT**
+>
+> | File | Automated verdict | Why |
+> |---|---|---|
+> | **NEW** `kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros.tif` (SHA-256 `f1e37cb2dc2c407a395cf282fd760be4a84ed90cdb5a60fceced4cace9aee86d`; **not published, work cache only**) | ❌ **NOT_OK_DO_NOT_SUBMIT** | It fails the holdout gate and the uniqueness gate (see below). |
+> | Session-2 DSLUP `kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif` | ❌ **NOT_OK_DO_NOT_SUBMIT** (byte-level re-validation) | **72.69 %** of its dots lie within 3 px of `gems22-h23-a-dti-optimal-emission-6pct`, which is above the 70 % limit. Session 2 passed it only through a "dense-class" exemption that the protocol does not contain. The LLI live projection is **0.092** (PROJECTION) against **0.2795** for the champion under the same identity. |
+>
+> * **New lane: KG2-S3 LOPE (Ledger-Optimal Physical Emission).**
+>   * **Method.** A truth-density model was fitted to the USER-REPORTED live scores of **123 unique, byte-pinned rasters**. The dot set was then emitted greedily against that density, with a 32 % novelty quota.
+>   * **HOLDOUT-DTI** (GEMSDOE32-HIDE-RECOVER-v3.0, N=22,232, 95 % CI [0.0845, 0.1120]): **0.0982**. That is below DSLUP's 0.1259. The paired Δ against the champion proxy is −0.0010 (95 % CI [−0.0061, +0.0036]).
+>   * **HOLDOUT-DTI** (GEMSDOE32-SGMC-CAL-v3.0, N=62,703, 95 % CI [0.0696, 0.0892]): **0.0794**, below DSLUP's 0.0981.
+>   * **Uniqueness.** **88.42 %** of the dots lie within 3 px of `gems22-h23-a-dti-optimal-emission-6pct`, and the file overlaps six other registry rasters by more than 70 %.
+>   * **Leakage canary:** maximum single-feature AUC 0.742, so it passes.
+>   * **PROJECTION** (LLI, leave-site-out MAE ±0.025): 0.298. This sits inside the model's error band and is not a score. → **NEGATIVE**.
+> * **Main scientific finding.**
+>   * **Where the truth sits.** The live ledger puts about **80 % of the estimated hidden public truth within 3 px of the public H19-5 ridge network (79.9 % selected design C1; 81.4 % design C0)**, which covers 19 % of the scored area.
+>   * **What the extra layers add.** Label-free LiDAR/DEM scarp and GPS-shear layers improve the leave-site-out error by only 0.0002, below the preregistered 0.001 bar. **H1's physical factor is not supported.**
+>   * **The holdouts disagree with the live ledger.** DSLUP leads on HIDE-RECOVER but projects 0.092 live; LOPE projects 0.298 live but trails on HIDE-RECOVER.
+>   * **What it would take.** Beating 0.2778 *uniquely* requires information that is not in any registry raster. The candidate source is fault maps whose licence is still being discussed on [forum 11563](https://community.drivendata.org/raw/11563) and [forum 11584](https://community.drivendata.org/raw/11584).
+> * **Experiments used: 2 of 3.** Preregistration: [`knowledge/03_preregistered_hypotheses_kg2s3_20261027.md`](knowledge/03_preregistered_hypotheses_kg2s3_20261027.md).
+> * **Receipts:**
+>   * [run card](evidence/kg2s3_run_card.json)
+>   * [automated gate (LOPE)](evidence/kg2s3_submission_gate.json)
+>   * [DSLUP re-validation](evidence/kg2s3_dslup_revalidation.json)
+>   * [design CV](evidence/kg2s3_lli_design_cv.json)
+>   * [emission and projections](evidence/kg2s3_lope_emission.json)
+>   * [holdout](evidence/kg2s3_lope_holdout.json)
+>   * [focus-site LLI](evidence/kg2s3_focus_site_lli.json)
+> * **One command to re-check any file:** `.venv/bin/python scripts/validate_submission_kg2s3.py --tif <file.tif> --name <name> --note "<note>"`. It prints `OK_TO_SUBMIT` or `NOT_OK_DO_NOT_SUBMIT`.
+
+### Session-3 irregularities, next steps and limitations
+
+Full record: [`evidence/kg2s3_irregularities.json`](evidence/kg2s3_irregularities.json).
+
+**Irregularities and fixes**
+
+* **IR-KG2S3-MANIFEST-01 (fixed):** the dem10 manifest paths were wrong at the pinned tag.
+* **IR-KG2S3-RESTORE-02 (fixed):** the restore aborted on a deleted optional file.
+* **IR-KG2S3-LABEL-03 (fixed):** the 0.2778 chain was mislabelled `ORGANIZER-CONFIRMED`; it is now `USER-REPORTED`.
+* **IR-KG2S3-DSLUP-RETRACT-04 (high):** the Session-2 OK verdict is retracted.
+* **IR-KG2S3-INSTRUMENT-05 (high):** the holdouts and the live-calibrated model disagree.
+* **IR-KG2S3-LATTICE-06 (medium):** the lattice null calibration is sensitive to footprint-boundary avoidance.
+* **IR-KG2S3-ACCOUNTS-07 (flag for you):** the official rules allow **three submissions per week** ([rules §3.2](https://docs.nlr.gov/docs/fy26osti/96647.pdf)). The pinned ledger holds 123 scored rasters across about 70 sites in about five weeks. Please confirm that every account is a distinct eligible competitor or team member.
+* **IR-KG2S3-TARGETS-08:** the 0.4413/0.3195 targets are stale. The live #1 is 0.4544 and #5 is 0.3566 (2026-10-27).
+
+**Next steps**
+
+1. Decide which instrument governs promotion.
+2. Get an organizer ruling on NBMG and USGS fault-map licences ([forum 11563](https://community.drivendata.org/raw/11563), [forum 11584](https://community.drivendata.org/raw/11584)). If they are allowed, add a fault-map factor and refit (it must improve LLI by at least 0.001).
+3. Build a 1 m LiDAR scarp detector (USGS 3DEP; not reachable from this sandbox).
+4. Re-audit the H19-5 provenance.
+
+**Limitations**
+
+* There are no organizer receipts.
+* Projections carry ±0.025 error, a +0.012 family bias and an optimiser-curse bias.
+* The registry coverage is 484 rasters.
+
+
+> ### ~~⭐ SESSION 2 (2026-10-27, KG2-S2 DSLUP-3D lane): NEW UNIQUE CANDIDATE — TWO VERDICTS, FULLY DISCLOSED~~ — **SUPERSEDED BY KG2-S3: NOT OK TO SUBMIT** (72.69 % overlap with `gems22-h23-a-dti-optimal-emission-6pct`, see [re-validation](evidence/kg2s3_dslup_revalidation.json))
 >
 > - **File**: [`docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif`](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · [ZIP](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.zip) · SHA-256 `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3`
 > - **Note (114/140)**: `KANLERGEMS2 DSLUP-3D unique-slot: listric depth-scaled updip grav + own-halo cap 15000 (SGMC=0.0981 vs ref 0.0641)`
 > - **HOLDOUT-DTI (GEMSDOE32-HIDE-RECOVER-v3.0, N=22,232 withheld-positive occurrences, 95% CI [0.1129, 0.1382])**: **0.125925** vs 0.2778-proxy 0.099202 (paired Δ +0.0267, 95% CI [+0.0169, +0.0369]). **HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62,703, 95% CI [0.0884, 0.1061])**: **0.098140** vs 0.064121 (paired Δ +0.0340, CI strictly positive). Historical evaluator, not replayed independently; **no organizer receipt**; no leaderboard estimate is claimed.
-> - **Verdict under the documented control-separated policy** (space-filling spacing-5 lattice = calibration control, excluded from the hard 3-px gate; null-calibrated on the 0.2778 champion which "fails" that gate at 99.97%): **PROMOTE — OK TO SUBMIT.** Max 3-px overlap vs every *geological* registry raster (1,201 checked, **including our own prior files**): **59.77% ≤ 70%**; vs the 0.2778 champion **30.49%**; vs our own Slot-1 file **≤39.71%**.
+> - **Verdict under the documented control-separated policy** (space-filling spacing-5 lattice = calibration control, excluded from the hard 3-px gate; null-calibrated on the 0.2778 champion which "fails" that gate at 99.97%): ~~PROMOTE — OK TO SUBMIT~~ (retracted by KG2-S3). Max 3-px overlap vs every *geological* registry raster (1,201 checked, **including our own prior files**): **59.77% ≤ 70%**; vs the 0.2778 champion **30.49%**; vs our own Slot-1 file **≤39.71%**.
 > - **Verdict under the literal all-registry rule (PR #25)**: duplicate vs the registered lattice (99.98%) — **as is every possible 37,654-dot raster** (forced minimum **82.34%**), including all nine historical focus champions. The literal rule and the standing HIGHEST-URGENCY unique-TIF mandate cannot both be satisfied at this budget; the slot decision is the coordinator's separate selector step. Full disclosure: [`evidence/dslup_literal_rule_disclosure.json`](evidence/dslup_literal_rule_disclosure.json).
 > - **Receipts**: [run card](evidence/dslup_unique_slot_run_card.json) · [validator (unique-slot mode)](evidence/dslup_unique_slot_validator_receipt.json) · [validator (original champion mode — also passes)](evidence/dslup_champion_mode_receipt.json) · [3 preregistered experiments, honest negatives on own-collision](evidence/dslup_experiments.json) · [leakage canary max AUC 0.7954](evidence/leakage_canary_dslup.json) · [frozen prereg](registry/preregistration_dslup.json)
 

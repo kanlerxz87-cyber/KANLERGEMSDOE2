@@ -61,7 +61,26 @@
         "ci95_strictly_positive": true,
         "label": "HOLDOUT-DTI (GEMSDOE32-SGMC-CAL-v3.0, N=62703 off-catalogue SGMC positives, 95% CI [0.0884, 0.1061])"
       }
-    }
+    },
+    "kg2s3_revalidation_verdict": "NOT_OK_DO_NOT_SUBMIT"
+  },
+  "session3_kg2s3": {
+    "lope_file": "kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros.tif",
+    "lope_sha256": "f1e37cb2dc2c407a395cf282fd760be4a84ed90cdb5a60fceced4cace9aee86d",
+    "lope_verdict": "NOT_OK_DO_NOT_SUBMIT",
+    "lope_failed_gates": [
+      "gate_3_uniqueness",
+      "gate_4_holdout"
+    ],
+    "dslup_revalidation_verdict": "NOT_OK_DO_NOT_SUBMIT",
+    "dslup_failed_gates": [
+      "gate_3_uniqueness"
+    ],
+    "ok_to_submit_any": false,
+    "lli_projection_lope": 0.2977783100301354,
+    "lli_projection_dslup": 0.09204431480424678,
+    "lli_projection_champion": 0.2794730133592791,
+    "label": "PROJECTIONS are not scores"
   },
   "darp_mt10_lane": {
     "filename": "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif",

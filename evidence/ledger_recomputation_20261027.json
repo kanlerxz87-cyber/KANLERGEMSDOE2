@@ -2,7 +2,7 @@
   "schema": "kanlergemsdoe2.ledger_recomputation.v1",
   "date": "2026-10-27",
   "irregularity_id": "IR-CPR-LEDGER-01",
-  "method": "OLS of 1/DTI on N over the pure collar-pruning chain (44090,0.2600),(40199,0.2708),(37654,0.2778) ORGANIZER-CONFIRMED; DTI=TPw/(0.2N+0.8K)",
+  "method": "OLS of 1/DTI on N over the pure collar-pruning chain (44090,0.2600),(40199,0.2708),(37654,0.2778) USER-REPORTED (relabelled 2026-10-27 KG2-S3: no organizer receipt exists; was mislabelled ORGANIZER-CONFIRMED); DTI=TPw/(0.2N+0.8K)",
   "recomputed": {
     "r_squared": 0.999589,
     "tp_w_px": 5210.4,

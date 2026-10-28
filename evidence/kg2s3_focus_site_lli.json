@@ -1,0 +1,83 @@
+{
+ "schema": "kg2s3.focus_lli.v1",
+ "design": "C1_dcat_x_dH19_x_phys",
+ "ridge": 0.001,
+ "labels": {
+  "live_user_reported": "USER-REPORTED",
+  "lli_*": "PROJECTION"
+ },
+ "rows": [
+  {
+   "site": "GEMSDOE24",
+   "submission": "h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan",
+   "live_user_reported": 0.2477,
+   "lli_in_sample_fit": 0.2703359559104333,
+   "lli_leave_site_out_projection": 0.27168829346452933,
+   "dots": 60069
+  },
+  {
+   "site": "GEMSDOE25",
+   "submission": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
+   "live_user_reported": 0.26,
+   "lli_in_sample_fit": 0.2728621057123996,
+   "lli_leave_site_out_projection": 0.2736654064322346,
+   "dots": 44090
+  },
+  {
+   "site": "GEMSDOE27",
+   "submission": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
+   "live_user_reported": 0.2449,
+   "lli_in_sample_fit": 0.2681500555507458,
+   "lli_leave_site_out_projection": 0.26685736838199936,
+   "dots": 61328
+  },
+  {
+   "site": "GEMSDOE28",
+   "submission": "h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan",
+   "live_user_reported": 0.271,
+   "lli_in_sample_fit": 0.2751246123719745,
+   "lli_leave_site_out_projection": 0.27726671514440676,
+   "dots": 37660
+  },
+  {
+   "site": "GEMSDOE30",
+   "submission": "d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca",
+   "live_user_reported": 0.26,
+   "lli_in_sample_fit": 0.2728621057123996,
+   "lli_leave_site_out_projection": 0.2734109714175461,
+   "dots": 44090
+  },
+  {
+   "site": "GEMSDOE31",
+   "submission": "h27-4-solo-d28-20261004-8acb75e1-nan",
+   "live_user_reported": 0.2708,
+   "lli_in_sample_fit": 0.2777253926251741,
+   "lli_leave_site_out_projection": 0.27822087427482906,
+   "dots": 40199
+  },
+  {
+   "site": "GEMSDOE32",
+   "submission": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+   "live_user_reported": 0.2778,
+   "lli_in_sample_fit": 0.27947301335928026,
+   "lli_leave_site_out_projection": 0.279609538890278,
+   "dots": 37654
+  },
+  {
+   "site": "GEMSDOE33",
+   "submission": "h33d-analog-tip-stepover-r30-20261004-cb490425926e",
+   "live_user_reported": 0.2632,
+   "lli_in_sample_fit": 0.27650915763770567,
+   "lli_leave_site_out_projection": 0.27738026343859384,
+   "dots": 41865
+  },
+  {
+   "site": "GEMSDOE36",
+   "submission": "anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros",
+   "live_user_reported": 0.275,
+   "lli_in_sample_fit": 0.277792777865461,
+   "lli_leave_site_out_projection": 0.2776799865618094,
+   "dots": 38854
+  }
+ ]
+}
