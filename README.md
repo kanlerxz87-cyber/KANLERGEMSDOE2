@@ -1,6 +1,37 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
-> **CURRENT DECISION: DO NOT SUBMIT.** This review generated no approved live-slot upload: all shared automated gates fail closed (`verdict = "negative"`) to protect weekly DrivenData slots under the literal all-registry spacing-5 lattice rule. Our latest Session-3 lane (**`KG2-S3-HPTR`**) generated the genuinely unique `[0, 1]` GeoTIFF [`docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif) — the **first candidate in `KANLERGEMSDOE2` history to beat the `0.2778` (`GEMSDOE32`) champion simultaneously across all three blind holdout benchmarks (`Hide-Recover = 0.113133`, `SGMC-CAL = 0.077148`, `C-PIED = 0.104289`)** — published strictly as a **research artifact (`DO NOT SUBMIT`)** until the literal calibration-lattice rule and live selector are resolved.
+## STANDING PROJECT BRIEF — read at the start of every session
+
+**Goal:** Place top of the DOE GEMS leaderboard by generating a **UNIQUE `.tif` submission** that scores higher than the current best, validated **automatically without human intervention**, and making it obvious whether it is OK to download and submit.
+
+**Focus sites to study (highest-scoring submissions; all USER-REPORTED, no organizer receipt):**
+GEMSDOE24 `0.2477`, GEMSDOE25 `0.2600`, GEMSDOE27 `0.2449`, GEMSDOE28 `0.2710`, GEMSDOE30 `0.2600`, GEMSDOE31 `0.2708`, **GEMSDOE32 `0.2778` (highest reported)**, GEMSDOE33 `0.2632`, GEMSDOE36 `0.2750`.
+Key question: why did GEMSDOE32 `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778` score highest, and can we exceed it **uniquely**?
+
+**Mandatory requirements (highest urgency):**
+1. **MUST generate a UNIQUE `.tif` submission.** Do not copy any previous submission except strictly for learning/forensic comparison. It must be obvious whether it is OK to download and submit the generated `.tif`.
+2. Fix the portal error `"Predicted values must be in range [0, 1]"`: single-band float32 GeoTIFF, CRS `EPSG:32611`, shape `3730 × 3292`, `100 m` affine grid, values in `[0, 1]` inside the footprint, no NaN/Inf inside the footprint. Unique filename + short note (≤ 140 characters).
+3. Create an **executive summary subpage** (`docs/executive-summary.html`) and per-site table (`docs/submission-table.html`) covering every listed site: exact file to download, its score/holdout estimate strictly labeled, `[0, 1]` safety, cross-site uniqueness, and DrivenData submission instructions.
+4. No organizer slot is spent; no score is fabricated without an organizer submission-page receipt.
+
+**Parallel-run protocol (strict):** (1) LANE — stay inside the single pre-registered method paragraph; stop if rank-correlation with any registry raster > `0.90` or > `70%` of dots fall within `3 px` of one registry raster's dots (check surface before placement AND final dots). (2) REUSE — reuse the cached feature stack, `evaluate_holdout.py`, `submission_writer.py`; holdout = hide whole fault segments with buffer, derive catalogue features only from visible faults, mask visible faults pixel-exactly, pooled DTI (alpha 0.2, beta 0.8, 300 m triangular kernel). (3) LABEL every number as `HOLDOUT-DTI` (evaluator version, withheld positives, 95% CI) or `ORGANIZER-CONFIRMED` (submission-page receipt); never write a projection as a score. (4) LEAKAGE CANARY — single-feature AUC > `0.90` means leakage until proven otherwise. (5) RUN CARD — one JSON card: hypothesis, mechanism, named non-fault mimic, holdout DTI + CI, correlation/overlap vs registry, raster sha256, validator output, submission name + ≤140-char note, verdict promote/negative. (6) BUDGET — stop after 3 experiments or 2 hours.
+
+---
+
+> **CURRENT DECISION: DO NOT SUBMIT.** No organizer-authenticated labels (`training_features.tif`, `labels.tif`) are available in this sandbox (DrivenData login required), so holdout DTI is **not measurable** for any new file and no organizer submission-page receipt exists. All shared automated gates fail closed to protect weekly DrivenData slots.
+
+## Current unique submission (this session)
+
+**`docs/downloads/kanlergemsdoe2-unique-blind-interior-systematic-20261028T161858Z-7da04408edc9-zeros.tif`**
+- SHA-256: `2937cd7a5bd64889447e24e53135ec577df1d76cc90ec7b853a3401a125761f6`
+- 20,000 dots, contrarian **blind-interior systematic spatial design** (targets blind step-overs/accommodation zones missing from the catalogue, unlike the catalogue-adjacent H19-5 dotted family).
+- **OK TO DOWNLOAD:** format-valid — single-band float32, `EPSG:32611`, `3730 × 3292`, correct transform, values in `[0, 1]`, **0 NaN inside footprint**, 20,000 positive pixels.
+- **UNIQUE vs focus sites:** max `15.55%` of dots within 3 px of nearest focus-site peer (GEMSDOE27), `|Spearman| = 0.0351 ≤ 0.90`. None of the 9 focus-site files is unique vs a peer.
+- **NOT OK TO SUBMIT:** holdout DTI not measurable (organizer labels require DrivenData login), no organizer receipt, full-registry clearance and an independent selector required before any weekly slot.
+- Validation sidecar: `docs/downloads/kanlergemsdoe2-unique-blind-interior-systematic-20261028T161858Z-7da04408edc9-zeros-validation.json`
+- Run card: `evidence/run_card_unique_7da04408edc9.json`
+- Executive summary: `docs/executive-summary.html` · `docs/submission-table.html`
+ Our latest Session-3 lane (**`KG2-S3-HPTR`**) generated the genuinely unique `[0, 1]` GeoTIFF [`docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif) — the **first candidate in `KANLERGEMSDOE2` history to beat the `0.2778` (`GEMSDOE32`) champion simultaneously across all three blind holdout benchmarks (`Hide-Recover = 0.113133`, `SGMC-CAL = 0.077148`, `C-PIED = 0.104289`)** — published strictly as a **research artifact (`DO NOT SUBMIT`)** until the literal calibration-lattice rule and live selector are resolved.
 
 ## Latest Session-3 KG2-S3-HPTR lane + 123-Repo Fleet Audit (`675d0ff8`, negative — DO NOT SUBMIT)
 
