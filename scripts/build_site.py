@@ -72,8 +72,8 @@ def focus_table(rows: list[dict]) -> str:
         result.append(f'''<tr><td><strong><a href="{esc(row['site_url'])}">{esc(row['site'])} ↗</a></strong><small>{exterior} · <a href="{esc(row['pinned_source_url'])}">pinned source</a></small></td>
 <td class="file"><a href="{esc(link)}" download>{esc(name)}</a><small>Research only · SHA-256 {esc(row['sha256'][:12])}…</small></td>
 <td><strong>{row['owner_reported_score']:.4f}</strong><small>USER/OWNER-REPORTED<br>No organizer receipt</small></td>
-<td><strong>No</strong><small>{overlap:.2f}% within 3 px of {esc(row['nearest_focus_site'])}</small></td><td><span class="pill stop">Do not submit</span><small>Historical file, not a new candidate</small></td></tr>''')
-    return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">Historical download</th><th scope="col">Reported score</th><th scope="col">Unique vs focus sites?</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
+<td>Unavailable<small>No validated leaderboard estimate</small></td><td><strong>No</strong><small>{overlap:.2f}% within 3 px of {esc(row['nearest_focus_site'])}</small></td><td><span class="pill stop">Do not submit</span><small>Historical file, not a new candidate</small></td></tr>''')
+    return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">Historical download</th><th scope="col">Reported score</th><th scope="col">Leaderboard estimate</th><th scope="col">Unique vs focus sites?</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
 
 
 
@@ -464,10 +464,55 @@ def main() -> None:
         raise SystemExit("Stop evidence changed; rerun review before building")
     if len(audit["focus_nine"]) != 9:
         raise SystemExit("The focus-site comparison is incomplete")
+    # Published replay claims must agree with both the pinned release audit and
+    # exact research artifact; a missing or tampered replay fails the build.
+    replay = json.loads((ROOT / "evidence/review_20261028_replay.json").read_text())
+    hptr_record = json.loads((ROOT / "evidence/session3_hptr_run_card_20261027.json").read_text())
+    hptr_path = DOCS / "downloads" / hptr_record["raster_filename"]
+    hptr_audit = replay["hptr_exact_bytes"]
+    if (replay.get("verdict") != "negative" or replay.get("ok_to_submit") is not False
+            or replay.get("preflight") != pre or replay.get("geometry") != audit["focus_lineage_geometry"]
+            or not hptr_audit.get("duplicate_under_literal_rule")
+            or hptr_audit.get("sha256") != hptr_record.get("raster_sha256")
+            or not hptr_path.is_file() or hashlib.sha256(hptr_path.read_bytes()).hexdigest() != hptr_audit["sha256"]):
+        raise SystemExit("Independent replay is missing or inconsistent; refuse publication")
+    keys = ("site", "sha256", "nearest_focus_site", "max_directional_focus_overlap_within_3px")
+    fresh = replay.get("focus_nine", [])
+    previous = audit["focus_nine"]
+    if len(fresh) != len(previous) or any(
+            any(a.get(k) != b.get(k) for k in keys) for a, b in zip(fresh, previous)):
+        raise SystemExit("Focus-site replay differs from the published comparison")
     table = focus_table(audit["focus_nine"])
     hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
+    # Archive lane self-reports without presenting their unreplayed comparisons as
+    # verified science or a win over a leaderboard score. In particular SGMC-CAL
+    # incorporates an inferred hidden-truth count, not a measured holdout DTI.
+    archive_warning = """<section class="section"><div class="callout red-callout">
+    <strong>Archived KG2-S3-HPTR, LOPE and TRBVC: DO NOT SUBMIT.</strong>
+    <p>Historical runs and figures have not been independently replayed. Their
+    procedure proxies do not demonstrate a leaderboard win; SGMC-CAL is an
+    unvalidated transformation, not a measured holdout or a promotion gate.
+    Detector-only overlaps omit registered controls and do not establish uniqueness.
+    <a href="../evidence/review_20261028_replay.json">Independent lattice and focus-site replay ↗</a> ·
+    <a href="../evidence/session3_hptr_run_card_20261027.json">Archived HPTR card ↗</a> ·
+    <a href="downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif" download>HPTR TIFF (research only) ↗</a></p></div></section>"""
+    hptr_home = hptr_summary = hptr_research = hptr_irregular = archive_warning
+    lope_home = lope_summary = lope_irregular = ""
+    trbvc_home = trbvc_summary = trbvc_research = trbvc_irregular = ""
+    if hptr_feed is not None:
+        # The old boolean equated three proxy comparisons with beating 0.2778.
+        # Leave unknown, not false: the actual organizer outcome is unobserved.
+        hptr_feed["beats_02778_across_all_three_blind_holdouts"] = None
+        hptr_feed["sgmc_cal_v3_dti"] = None
+        hptr_feed["hide_recover_v3_dti"] = None
+        hptr_feed["c_pied_v1_dti"] = None
+    if trbvc_feed is not None:
+        for key in ("hide_recover_v3_dti", "sgmc_cal_v3_dti", "c_pied_v1_dti", "segment_v1_dti"):
+            trbvc_feed[key] = None
+        trbvc_feed["warning"] = "Unreplayed historical proxies, not leaderboard scores; detector-only overlaps exclude controls."
+        hptr_feed["warning"] = "Unreplayed historical proxies; SGMC-CAL is not measured holdout DTI. No leaderboard win or novelty established."
     percent = 100 * prior["witness_overlap_fraction"]
     bound = 100 * pre["minimum_directional_overlap"]
     s2 = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
