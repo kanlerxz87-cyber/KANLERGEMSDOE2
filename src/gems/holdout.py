@@ -246,14 +246,13 @@ def segment_folds(footprint, labels, buffer_px=30):
     """
     from scipy.ndimage import distance_transform_edt
 
-    fp, truth = np.asarray(footprint, bool), np.asarray(labels, bool)
-    if (
-        fp.shape != truth.shape
-        or np.any(truth & ~fp)
-        or not np.isfinite(buffer_px)
-        or buffer_px < 0
-    ):
-        raise ValueError("Aligned footprint/truth, truth inside footprint and buffer >=0 required")
+    fp, truth = np.asarray(footprint), np.asarray(labels)
+    if (fp.ndim != 2 or fp.shape != truth.shape or not np.isin(fp, [0, 1]).all()
+            or not np.isin(truth, [0, 1]).all() or not np.isfinite(buffer_px) or buffer_px < 0):
+        raise ValueError("Aligned finite binary footprint/truth and buffer >=0 required")
+    fp, truth = fp.astype(bool), truth.astype(bool)
+    if np.any(truth & ~fp):
+        raise ValueError("Truth must lie inside the footprint")
     components, count = ndi_label(truth, structure=np.ones((3, 3), int))
     if not count:
         raise ValueError("No fault components to withhold")
@@ -407,17 +406,13 @@ class SegmentHoldout:
     def __init__(self, footprint, labels, *, buffer_px=15):
         from scipy.ndimage import distance_transform_edt
 
-        self.footprint = np.asarray(footprint, bool)
-        self.labels = np.asarray(labels, bool)
-        if (
-            self.footprint.shape != self.labels.shape
-            or self.footprint.ndim != 2
-            or not np.isfinite(buffer_px)
-            or buffer_px < 3
-            or np.any(self.labels & ~self.footprint)
-            or not self.labels.any()
-        ):
-            raise ValueError("Aligned nonempty catalogue, footprint and >=3 px collar required")
+        fp, truth = np.asarray(footprint), np.asarray(labels)
+        if (fp.shape != truth.shape or fp.ndim != 2 or not np.isin(fp, [0, 1]).all()
+                or not np.isin(truth, [0, 1]).all() or not np.isfinite(buffer_px) or buffer_px < 3):
+            raise ValueError("Aligned finite binary catalogue, footprint and >=3 px collar required")
+        self.footprint, self.labels = fp.astype(bool), truth.astype(bool)
+        if np.any(self.labels & ~self.footprint) or not self.labels.any():
+            raise ValueError("Aligned nonempty catalogue inside footprint required")
         self.components, self.n_components = ndi_label(self.labels, structure=np.ones((3, 3), int))
         self.fold_grid, names = make_quadrant_folds(self.footprint)
         self.folds = []

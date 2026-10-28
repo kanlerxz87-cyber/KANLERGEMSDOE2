@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Build KG2-ECPU-20261027 run card + same-session 9-site re-audit from measured receipts.
+"""ARCHIVED: CLI disabled; historical claims below are not current evidence.
+
+Build KG2-ECPU-20261027 run card + same-session 9-site re-audit from measured receipts.
 
 Reads evidence/ecpu_experiments_20261027.json (frozen experiment output) and recomputes:
 - 4-point Tversky ledger inversion (matches prior session TPw=5151/K=13735; 3-point
@@ -55,6 +57,14 @@ def proj(tpw, K, n_dots, ratio):
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived audit writer disabled: it can overwrite current evidence with "
+        "self-attested scores or legacy promotion claims. Use audit_release.py."
+    )
+
+
+def _legacy_main_archived() -> int:
+    """Retained only as historical code; not a current evidence generator."""
     t0 = time.time()
     ddir, edir = data_dir(), evidence_dir()
     exps = json.loads((edir / "ecpu_experiments_20261027.json").read_text())
