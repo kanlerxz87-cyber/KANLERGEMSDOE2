@@ -1,48 +1,16 @@
 #!/usr/bin/env python3
 """
-**Generate a UNIQUE, format-valid GEMS submission GeoTIFF.**
+Archived generator from concurrent PR #53 — fail-closed and NOT a submission workflow.
 
-Contrarian method (blind-interior systematic spatial design):
-  * Every 9 focus-site leader (GEMSDOE24/25/27/28/30/31/32/33/36) clusters dots
-    on/near mapped USGS/INGENIOUS catalogue faults (the "H19-5 dotted" family).
-  * ~75% of Great Basin geothermal systems are blind: hosted beneath Holocene
-    alluvium in intrabasin step-overs / accommodation zones with NO tall surface
-    scarp (Faulds & Hinz, 2015). Catalogue-adjacent dots therefore miss the blind
-    population that a discovery competition rewards.
-  * This design emits dots across the FOOTPRINT INTERIOR (away from the edge and
-    therefore away from range-front catalogue scarps) on a systematic rank-first
-    Poisson grid with 3 px minimum spacing -- a spatial design structurally
-    different from every clustered historical mask.
-  * Dot budget K = 20,000. At K = 20,000 the pigeonhole bound vs the spacing-5
-    calibration lattice is (K - U)/K = (20000 - 6649)/20000 = 66.76% <= 70%,
-    so the literal 3-px overlap rule is NOT combinatorially forced. (U = 6,649
-    uncovered footprint pixels is documented in evidence/release_audit_20261027.json.
-    At the frozen 37,654-dot budget the bound is 82.34%, which is why every
-    37,654-dot file fails the literal gate.)
+PR #53 emitted a 20,000-dot blind-interior research raster by changing the frozen
+37,654-dot budget. That change does not override the literal preflight: the
+registered spacing-5 lattice forces at least 82.3418% 3-px overlap at the frozen
+budget, above the 70% limit. No holdout replay or full-registry clearance exists.
 
-Outputs (docs/downloads/):
-  * <name>-zeros.tif   : float32 in [0,1], EPSG:32611, 3730x3292, 100 m grid,
-                         ZERO outside the footprint (passes a strict whole-array
-                         [0,1] check; portal acceptance of zeros outside is NOT
-                         established by this sandbox).
-  * <name>-nan.tif     : identical interior, NaN outside (mirror template exterior
-                         convention; portal acceptance NOT established).
-  * <name>-validation.json : machine-readable gate results.
-  * <name>-note.txt    : <=140-character submission note.
-
-Status (honest, no fabrication):
-  * FORMAT-VALID: single float32 band, EPSG:32611, 3730x3292, correct transform,
-                  no NaN/Inf inside footprint, all in-footprint values in [0,1].
-  * UNIQUE vs locally available registry rasters (verified automatically:
-    rank-correlation <= 0.90 AND <= 70% of dots within 3 px of any one registry
-    raster's dots).
-  * NOT authorized for submission: holdout DTI cannot be measured because the
-    organizer-authenticated labels.tif / training_features.tif require a
-    DrivenData login that is unavailable in this sandbox, and no organizer
-    submission-page receipt exists for this file. Download for research only;
-    do not submit until a selector clears holdout + full-registry + acceptance.
-
-No organizer slot is spent. No score is fabricated.
+The checked-in script is now pinned to the frozen budget and exits at the
+pre-placement lattice gate before it writes a TIFF. Do not change the budget to
+bypass the stop. The already-existing PR #53 files are retained as unapproved
+historical research evidence only; format validity is not submission approval.
 """
 
 from __future__ import annotations
@@ -70,7 +38,7 @@ FOOTPRINT_PATH = SITE_DATA / "footprint.bin"
 TEMPLATE_PATH = SITE_DATA / "unique_submission_template.tif"
 
 # ---- Protocol / lattice parameters (from release audit) ----
-DOT_BUDGET = 20_000            # keeps pigeonhole forced overlap <= 70%
+DOT_BUDGET = 37_654            # frozen protocol budget; literal lattice preflight must stop
 UNCOVERED_FOOTPRINT_PIXELS = 6_649  # documented spacing-5 lattice uncovered count
 MIN_DIST_PX = 3.0              # 300 m DTI kernel radius at 100 m resolution
 BOUNDARY_MARGIN_PX = 8         # target the blind interior, away from edge/scarps
