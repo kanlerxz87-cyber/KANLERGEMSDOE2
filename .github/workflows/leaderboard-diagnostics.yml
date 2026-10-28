@@ -30,6 +30,12 @@ jobs:
           parser = Tables()
           parser.feed(text)
           print(f'::notice file=scripts/refresh_public_feed.py,title=Public leaderboard table count::tables={len(parser.tables)}')
+          if not parser.tables:
+              title = re.search(r'<title[^>]*>(.*?)</title>', text, re.I | re.S)
+              title = ' '.join(title.group(1).split())[:100] if title else '<missing>'
+              sources = re.findall(r'<script[^>]+src=[\"\']([^\"\']+)', text, re.I)
+              routes = re.findall(r'[\"\'](/[^\"\'<> ]{0,120}leaderboard[^\"\'<> ]{0,120})[\"\']', text, re.I)
+              print(f'::notice file=scripts/refresh_public_feed.py,title=Public page structure::title={title!r}; bytes={len(text)}; scripts={sources[:12]!r}; routes={routes[:12]!r}')
           for i, table in enumerate(parser.tables):
               if not table:
                   continue
