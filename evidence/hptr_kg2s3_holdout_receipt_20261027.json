@@ -1,0 +1,62 @@
+{
+  "schema": "kg2s3.hptr_holdout_receipt.v1",
+  "candidate_tif": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
+  "candidate_sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
+  "candidate_dots_sha256": "d1c29444ed0ecbabecdc6cfa57bb58553730dcb4f64b09406e5161caa81b92cf",
+  "leakage_canary": {
+    "passed": true,
+    "max_auc": 0.79654,
+    "max_feature": "vis_aniso_prior",
+    "n_features_tested": 81
+  },
+  "hide_and_recover": {
+    "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+    "n_withheld_positives": 22232,
+    "pooled_dti": 0.113133,
+    "ci95_cluster_bootstrap": [
+      0.102212,
+      0.124945
+    ]
+  },
+  "hide_and_recover_paired_delta_vs_champion": {
+    "delta": 0.01393,
+    "ci95": [
+      0.004451,
+      0.023158
+    ],
+    "ci95_strictly_positive": true
+  },
+  "sgmc_cal": {
+    "evaluator_version": "GEMSDOE32-SGMC-CAL-v3.0",
+    "n_withheld_positives": 62703,
+    "sgmc_prevalence_calibrated_dti": 0.077148,
+    "ci95_cluster_bootstrap": [
+      0.070291,
+      0.083683
+    ],
+    "paired_delta_vs_champion": 0.013027,
+    "paired_delta_ci95_vs_champion": [
+      0.006666,
+      0.019361
+    ],
+    "paired_delta_ci95_strictly_positive": true
+  },
+  "c_pied": {
+    "evaluator_version": "GEMSDOE70-C-PIED-v1.0",
+    "n_withheld_positives": 9847,
+    "pooled_dti": 0.104289,
+    "ci95": [
+      0.09031,
+      0.116644
+    ],
+    "champion_02778_same_evaluator": 0.101166,
+    "paired_delta_vs_0p2778_ref": 0.003122,
+    "paired_delta_ci95": [
+      -0.012449,
+      0.016898
+    ],
+    "win_prob_vs_ref": 0.69,
+    "ci95_strictly_positive": false,
+    "label": "HOLDOUT-DTI (GEMSDOE70-C-PIED-v1.0, N=9847 blind piedmont positives, 95% CI [0.0903, 0.1166])"
+  }
+}

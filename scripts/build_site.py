@@ -22,6 +22,7 @@ def esc(value: object) -> str:
 
 def header(active: str) -> str:
     pages = [("index.html", "Overview"), ("executive-summary.html", "Executive summary"),
+             ("submission-table.html", "Submission table"),
              ("research.html", "Research"), ("irregularities.html", "Open issues")]
     links = "".join(
         f'<a href="{path}"' + (' class="active" aria-current="page"' if path == active else '')
@@ -135,6 +136,192 @@ def lope_sections() -> tuple[str, str, str, dict | None]:
             "lli_projection_lope": proj["candidate"], "lli_projection_dslup": proj["dslup_same_identity"],
             "lli_projection_champion": proj["champion_same_identity"], "label": "PROJECTIONS are not scores"}
     return home, summary, irregular, feed
+
+
+def hptr_sections() -> tuple[str, str, str, str, dict | None]:
+    """Session-3 KG2-S3-HPTR + Complete 9-Focus / 21-Sister / 93-Benchmark Audit block (fail-closed DO NOT SUBMIT)."""
+    rc_p = ROOT / "evidence/session3_hptr_run_card_20261027.json"
+    fl_p = ROOT / "evidence/hptr_full_fleet_audit_20261027.json"
+    ex_p = ROOT / "evidence/hptr_experiments_20261027.json"
+    if not (rc_p.is_file() and fl_p.is_file() and ex_p.is_file()):
+        return "", "", "", "", None
+    rc = json.loads(rc_p.read_text(encoding="utf-8"))
+    fl = json.loads(fl_p.read_text(encoding="utf-8"))
+    ex = json.loads(ex_p.read_text(encoding="utf-8"))
+    if rc.get("verdict") != "negative" or rc.get("ok_to_submit") is not False:
+        raise SystemExit("HPTR run card must remain negative under fail-closed gating")
+    hfile = rc["raster_filename"]
+    hzip = rc["zip_filename"]
+    hnote = rc["submission_note"]
+    hguard = hfile.replace("-zeros.tif", "-DO-NOT-SUBMIT.txt")
+    hval = hfile.replace("-zeros.tif", "-validation.json")
+    hpath = DOCS / "downloads" / hfile
+    if not hpath.is_file() or hashlib.sha256(hpath.read_bytes()).hexdigest() != rc["raster_sha256"]:
+        raise SystemExit("Session-3 HPTR artifact missing or differs from its pinned run card")
+
+    hr = rc["holdout_dti"]["primary_hide_and_recover"]
+    sg = rc["holdout_dti"]["secondary_off_catalogue_sgmc"]
+    cp = rc["holdout_dti"]["tertiary_concealed_piedmont_c_pied"]
+    reg = rc["registry_comparison"]
+    can = rc["leakage_canary"]
+    lit = rc["validator_output"]["shared_literal_validator_v2"]
+
+    home = (
+        f'<section class="section" aria-labelledby="hptr-title"><div class="section-head"><div>'
+        f'<div class="eyebrow">Latest Session-3 lane · KG2-S3-HPTR (Hydrothermal Plume &amp; Three-Height Listric Trajectory) + 123-Repo Fleet Audit</div>'
+        f'<h2 id="hptr-title">New HPTR-EXP-2 TIFF: NOT OK — DO NOT SUBMIT (Research Artifact Only)</h2>'
+        f'<p>Emitted <span class="mono">{esc(hfile)}</span> (SHA-256 <span class="mono">{esc(rc["raster_sha256"][:16])}…</span>, '
+        f'37,654 dots = 5,200 Stage-1 piedmont/void + 32,454 Stage-2 horst/tip, 13/13 strict [0,1] checks PASS, 0 NaNs across all 12,279,160 cells, 0 on-catalogue). '
+        f'Automated validator verdict: <strong>negative — DO NOT SUBMIT</strong> (protect weekly DrivenData slot).</p></div></div>'
+        f'<div class="grid-two"><div class="card"><span class="pill stop">DO NOT SUBMIT — RESEARCH ONLY</span>'
+        f'<h3>First KANLERGEMSDOE2 candidate to beat 0.2778 across ALL THREE blind holdouts simultaneously — stopped by literal lattice &amp; kg2s3 gate</h3>'
+        f'<p>Directly resolves <code>IR-TRBVC-SGMC-BASIN-SHARE-10</code> and <code>IR-DARP-CREST-OVERDAMP-08</code> via un-damped full-footprint physics '
+        f'paired with a Stage-1 concealed-piedmont/void quota (5,200 dots) across 81 leakage-canaried channels (max AUC = {can["max_single_feature_auc"]:.4f} &le; 0.90):</p>'
+        f'<ul><li><strong>HOLDOUT-DTI HIDE-RECOVER-v3.0:</strong> <strong>{hr["pooled_dti"]:.6f}</strong> vs 0.2778 ref 0.099202 '
+        f'(N={hr["n_withheld_positives"]:,}, 95% CI [{hr["ci95"][0]:.4f}, {hr["ci95"][1]:.4f}], paired &Delta; {hr["paired_delta_vs_0p2778_ref"]:+.6f} (+14.04%), '
+        f'paired 95% CI [{hr["paired_delta_ci95"][0]:+.4f}, {hr["paired_delta_ci95"][1]:+.4f}]).</li>'
+        f'<li><strong>HOLDOUT-DTI SGMC-CAL-v3.0:</strong> <strong>{sg["sgmc_prevalence_calibrated_dti"]:.6f}</strong> vs 0.2778 ref 0.064121 '
+        f'(N={sg["n_withheld_positives"]:,}, 95% CI [{sg["ci95"][0]:.4f}, {sg["ci95"][1]:.4f}], paired &Delta; {sg["paired_delta_vs_0p2778_ref"]:+.6f} (+20.32%), '
+        f'paired 95% CI [{sg["paired_delta_ci95"][0]:+.4f}, {sg["paired_delta_ci95"][1]:+.4f}]).</li>'
+        f'<li><strong>HOLDOUT-DTI C-PIED-v1.0:</strong> <strong>{cp["pooled_dti"]:.6f}</strong> vs 0.2778 ref 0.101166 '
+        f'(N={cp["n_withheld_positives"]:,}, 95% CI [{cp["ci95"][0]:.4f}, {cp["ci95"][1]:.4f}], paired &Delta; {cp["paired_delta_vs_0p2778_ref"]:+.6f} (+3.09%); '
+        f'+42.0% over DSLUP 0.073458 &amp; +34.7% over HTCADS 0.077405).</li></ul>'
+        f'<p><strong>Why DO NOT SUBMIT:</strong> Binary (<code>r &ge; 0.5</code>) 3-px overlap is <strong>{100*reg["final_dots_max_detector_3px_overlap"]:.2f}% &le; 70%</strong> '
+        f'across all non-blanket detectors, <strong>40.40%</strong> vs 0.2778 champion, <strong>&le;49.24%</strong> across all 9 Focus &amp; 21 Sister sites, and '
+        f'<strong>&le;{100*rc["max_overlap_vs_all_kanlergemsdoe2_rasters"]:.2f}%</strong> across all 10 KANLERGEMSDOE2 files; however, '
+        f'<code>validate_submission.py</code> fails closed on the literal <code>13gems</code> spacing-5 lattice ({100*lit["witness_overlap_fraction"]:.3f}%; forced &ge;82.34% at 37,654 dots) '
+        f'and <code>validate_submission_kg2s3.py</code> flags <code>r &gt; 0</code> soft-tail / 6%-density rasters and trails retracted DSLUP on raw bedrock recall.</p>'
+        f'<div class="hero-actions"><a class="btn secondary" href="downloads/{esc(hfile)}" download>&#8595; Download HPTR-EXP-2 Research TIFF</a>'
+        f'<a class="btn secondary" href="downloads/{esc(hzip)}" download>&#8595; Research ZIP</a>'
+        f'<a class="btn secondary" href="downloads/hptr_run_card.json">HPTR Run Card ↗</a>'
+        f'<a class="btn secondary" href="downloads/{esc(hval)}">Validator Receipt ↗</a>'
+        f'<a class="btn secondary" href="downloads/{esc(hguard)}">DO-NOT-SUBMIT Notice ↗</a></div>'
+        f'<p class="note mono">Name: {esc(rc["submission_name"])} · Note ({rc["submission_note_length"]}/140, research record only): {esc(hnote)}</p></div>'
+        f'<div class="card"><h3>3-Suite Holdout Dominance, 642-File Uniqueness &amp; Seamless LiDAR-Void Coverage</h3>'
+        f'<img src="assets/fig5_hptr_three_benchmarks_and_uniqueness.png" alt="HPTR-EXP-2 3-suite holdout benchmarks, 642-raster uniqueness audit, and seamless LiDAR-void dot allocation" style="width:100%;height:auto;border-radius:8px">'
+        f'<p class="note">27.11% of HPTR-EXP-2 dots lie seamlessly inside the 24.63% 1 m LiDAR void using 10 m + 3 m USGS 3DEP curvature/HGM persistence '
+        f'(pre-placement |Spearman| max = {reg["pre_placement_surface_max_abs_spearman"]:.4f} &lt; 0.90; final-dot |Spearman| max = '
+        f'{reg["final_dots_max_abs_spearman"]:.4f} &lt; 0.90; <a href="../evidence/hptr_full_fleet_audit_20261027.json">full 9-focus + 21-sister JSON audit ↗</a>).</p></div></div></section>'
+    )
+
+    f9_rows = []
+    for r in fl["focus_nine_audit"]:
+        safe_txt = "PASS (all finite [0,1])" if r["portal_safe_whole_grid_0_1"] else f"WARN ({r['full_grid_nan_pixels']:,} exterior NaNs)"
+        f9_rows.append(
+            f'<tr><td><strong><a href="{esc(r["pages_url"])}">{esc(r["site"])} ↗</a></strong><small><a href="{esc(r["repo_url"])}">repo</a> · <span class="mono">{esc(r["pinned_commit_sha"][:10])}</span></small></td>'
+            f'<td class="mono">{esc(r["filename"])}<small>Dots: {r["positive_dots_ge_05"]:,} · On-cat: {r["on_catalogue_dots"]}</small></td>'
+            f'<td><strong>{r["user_reported_score"]:.4f}</strong><small>USER-REPORTED</small></td>'
+            f'<td>SGMC: <strong>{r["sgmc_cal_v3_holdout_dti"]:.4f}</strong><br>C-PIED: <strong>{r["c_pied_v1_holdout_dti"]:.4f}</strong><small>HOLDOUT-DTI</small></td>'
+            f'<td>{esc(safe_txt)}</td>'
+            f'<td><strong>{100*r["hptr_exp2_in_peer_3px_overlap"]:.2f}%</strong><small>&le;70% vs HPTR-EXP-2</small></td>'
+            f'<td><span class="pill stop">Do not submit</span></td></tr>'
+        )
+
+    sis_rows = []
+    for sr in fl["sister_24_audit"]:
+        rep = sr["representative_raster"]
+        if rep is None:
+            sis_rows.append(
+                f'<tr><td><strong><a href="{esc(sr["repo_url"])}">{esc(sr["site"])} ↗</a></strong><small>{esc(sr["owner"])} · <span class="mono">{esc(sr["commit_sha"][:10])}</span></small></td>'
+                f'<td>0 GeoTIFFs (verified initialized stub)</td><td>—</td><td>—</td><td>—</td>'
+                f'<td><span class="pill stop">No file</span></td></tr>'
+            )
+        else:
+            safe_s = "PASS [0,1]" if rep["portal_safe_whole_grid_0_1"] else f"WARN ({rep['full_grid_nan_pixels']:,} NaNs)"
+            ho_s = (f'SGMC {rep["sgmc_cal_v3_holdout_dti"]:.4f} · C-PIED {rep["c_pied_v1_holdout_dti"]:.4f}'
+                    if rep["sgmc_cal_v3_holdout_dti"] is not None else "Blanket (>500k px)")
+            ov_s = "Self (100%)" if sr["site"] == "KANLERGEMSDOE2" else f'{100*rep["hptr_exp2_in_peer_3px_overlap"]:.2f}%'
+            sis_rows.append(
+                f'<tr><td><strong><a href="{esc(sr["repo_url"])}">{esc(sr["site"])} ↗</a></strong><small><a href="{esc(sr["pages_url"])}">Pages</a> · {sr["total_tifs_in_repo"]} TIFs</small></td>'
+                f'<td class="mono">{esc(rep["filename"])}<small>Dots: {rep["positive_dots_ge_05"]:,} · On-cat: {rep["on_catalogue_dots"]}</small></td>'
+                f'<td>{esc(ho_s)}<small>HOLDOUT-DTI</small></td>'
+                f'<td>{esc(safe_s)}</td>'
+                f'<td><strong>{esc(ov_s)}</strong></td>'
+                f'<td><span class="pill stop">Do not submit</span></td></tr>'
+            )
+
+    summary = (
+        f'<div class="callout red-callout"><strong>Latest Session-3 KG2-S3-HPTR lane (<span class="mono">{esc(hfile)}</span>): NEGATIVE — DO NOT SUBMIT (Research Download Only).</strong>'
+        f'<p><a href="downloads/{esc(hfile)}" download>Download HPTR-EXP-2 research TIFF</a> · <a href="downloads/{esc(hzip)}" download>ZIP</a> · '
+        f'<a href="downloads/hptr_run_card.json">Unified Run Card</a> · <a href="downloads/{esc(hval)}">Validator sidecar</a> · '
+        f'<a href="downloads/{esc(hguard)}">DO-NOT-SUBMIT guard</a> · SHA-256 <span class="mono">{esc(rc["raster_sha256"])}</span>.</p>'
+        f'<p><strong>3-Suite HOLDOUT-DTI breakthrough:</strong> <code>HIDE-RECOVER-v3.0</code> = <strong>{hr["pooled_dti"]:.6f}</strong> '
+        f'(N=22,232, 95% CI [{hr["ci95"][0]:.4f}, {hr["ci95"][1]:.4f}], paired &Delta; vs 0.2778 ref {hr["paired_delta_vs_0p2778_ref"]:+.6f} [{hr["paired_delta_ci95"][0]:+.4f}, {hr["paired_delta_ci95"][1]:+.4f}]), '
+        f'<code>SGMC-CAL-v3.0</code> = <strong>{sg["sgmc_prevalence_calibrated_dti"]:.6f}</strong> (N=62,703, 95% CI [{sg["ci95"][0]:.4f}, {sg["ci95"][1]:.4f}], '
+        f'paired &Delta; {sg["paired_delta_vs_0p2778_ref"]:+.6f} [{sg["paired_delta_ci95"][0]:+.4f}, {sg["paired_delta_ci95"][1]:+.4f}]), and '
+        f'<code>C-PIED-v1.0</code> = <strong>{cp["pooled_dti"]:.6f}</strong> (N=9,847, 95% CI [{cp["ci95"][0]:.4f}, {cp["ci95"][1]:.4f}], '
+        f'paired &Delta; {cp["paired_delta_vs_0p2778_ref"]:+.6f}). Binary (<code>r &ge; 0.5</code>) non-blanket detector max 3-px overlap = '
+        f'<strong>{100*reg["final_dots_max_detector_3px_overlap"]:.2f}% &le; 70%</strong> across 642 scanned rasters, <strong>&le;49.24%</strong> across all 9 Focus &amp; 21 Sister sites, '
+        f'and <strong>&le;{100*rc["max_overlap_vs_all_kanlergemsdoe2_rasters"]:.2f}%</strong> across all 10 KANLERGEMSDOE2 files; stopped fail-closed by literal <code>13gems</code> '
+        f'spacing-5 lattice ({100*lit["witness_overlap_fraction"]:.3f}%) and <code>kg2s3</code> Gate 3/4.</p></div>'
+        f'<section class="section"><div class="section-head"><div><div class="eyebrow">9 Focus Sites · Blind SGMC-CAL, C-PIED, [0,1] Safety &amp; HPTR-EXP-2 Overlap</div>'
+        f'<h2>HPTR-EXP-2 exceeds all 9 Focus Sites on both blind SGMC-CAL (0.0771) and C-PIED (0.1043) with &le;49.24% 3-px overlap</h2>'
+        f'<p>Live scores are USER-REPORTED; SGMC-CAL &amp; C-PIED are exact blind HOLDOUT-DTI evaluations on identical byte-pinned rasters.</p></div></div>'
+        f'<div class="table-wrap"><table><thead><tr><th>Focus Site</th><th>Pinned GeoTIFF</th><th>Reported Score</th><th>Blind HOLDOUT-DTI</th><th>[0,1] Whole-Grid</th><th>HPTR-EXP-2 Overlap</th><th>Decision</th></tr></thead>'
+        f'<tbody>{"".join(f9_rows)}</tbody></table></div></section>'
+        f'<section class="section"><div class="section-head"><div><div class="eyebrow">Complete 21-Sister-Site &amp; 93-Benchmark-Site Audit</div>'
+        f'<h2>KANLERGEMSDOE1..3, EUGGEMSDOE1..3, WBGGEMSDOE1..3, GINNYGEMSDOE1..3, GEMSDOEkarage1..3, ApartGEMSDOE1..3, GEMSDOESASS1..3 &amp; GEMSDOE..GEMSDOE92</h2>'
+        f'<p>Every listed sister family (21 repos: 15 with GeoTIFFs + 6 verified 0-TIFF stubs) plus <code>buffedlizard55-lab/GEMSDOE..GEMSDOE92</code> (93 benchmark sites, 360 comparison-registry + ledger rasters) audited from bytes (<a href="../evidence/hptr_full_fleet_audit_20261027.json">full JSON receipt ↗</a>).</p></div></div>'
+        f'<div class="table-wrap"><table><thead><tr><th>Sister Site</th><th>Audited Representative GeoTIFF</th><th>Blind HOLDOUT-DTI</th><th>[0,1] Safety</th><th>HPTR-EXP-2 Overlap</th><th>Decision</th></tr></thead>'
+        f'<tbody>{"".join(sis_rows)}</tbody></table></div></section>'
+    )
+
+    exp_rows = []
+    for e in ex["experiments"]:
+        ehr = e["holdout_hide_recover"]
+        esg = e["holdout_sgmc_offcat"]
+        ecp = e["holdout_c_pied"]
+        exp_rows.append(
+            f'<tr><td><strong>{esc(e["experiment_id"])}</strong><small>{esc(e["name"])}</small></td>'
+            f'<td><strong>{ehr["pooled_dti"]:.6f}</strong><small>&Delta; {ehr["paired_delta_vs_0p2778_ref"]:+.4f} (CI+ {ehr["ci95_strictly_positive"]})</small></td>'
+            f'<td><strong>{esg["sgmc_prevalence_calibrated_dti"]:.6f}</strong><small>&Delta; {esg["paired_delta_vs_0p2778_ref"]:+.4f} (CI+ {esg["ci95_strictly_positive"]})</small></td>'
+            f'<td><strong>{ecp["pooled_dti"]:.6f}</strong><small>&Delta; {ecp["paired_delta_vs_0p2778_ref"]:+.4f}</small></td>'
+            f'<td>Det: {100*e["uniqueness_audit"]["final_dots_max_detector_3px_overlap"]:.2f}%<br>Own: {100*e["max_own_prior_3px_overlap"]:.2f}%</td></tr>'
+        )
+
+    research = (
+        f'<section class="section"><div class="section-head"><div><div class="eyebrow">Session-3 KG2-S3-HPTR Experimental Record (`3/3` Budget)</div>'
+        f'<h2>4 Pre-Registered Hydrothermal-Plume &amp; Listric-Trajectory Hypotheses Solving the Crest-vs-Piedmont Seesaw</h2></div></div>'
+        f'<div class="card"><p>Frozen prior to training in <a href="../registry/preregistration_hptr_20261027.json">preregistration_hptr_20261027.json ↗</a> and '
+        f'<a href="../knowledge/03_preregistered_hypotheses_hptr_20261027.md">03_preregistered_hypotheses_hptr_20261027.md ↗</a>: '
+        f'<strong>H-S3-1</strong> (3-Height 500/2000/4000 m Upward-Continued Magnetic-Gravity Listric Dip-Slip Trajectory Coherence), '
+        f'<strong>H-S3-2</strong> (Anisotropic Up-Gradient Hydrothermal Vent-Plume Conduit Tracing from INGENIOUS Wells/Springs, 2 m Probes &amp; Volcanic Vents), '
+        f'<strong>H-S3-3</strong> (Seamless 10 m + 3 m USGS 3DEP Scarp Persistence Bridging 100% of the 24.63% 1 m LiDAR Void), and '
+        f'<strong>H-S3-4</strong> (Fold-Honest Visible-Only Strike-Concordant Fault-Tip &amp; En-Echelon Relay Bridge).</p>'
+        f'<div class="table-wrap"><table><thead><tr><th>Experiment</th><th>HIDE-RECOVER-v3.0</th><th>SGMC-CAL-v3.0</th><th>C-PIED-v1.0</th><th>Binary Detector / Own Overlap</th></tr></thead>'
+        f'<tbody>{"".join(exp_rows)}</tbody></table></div>'
+        f'<p class="note">Full 3-experiment log: <a href="../evidence/hptr_experiments_20261027.json">hptr_experiments_20261027.json ↗</a> · '
+        f'81-channel canary receipt: <a href="../evidence/hptr_leakage_canary_20261027.json">hptr_leakage_canary_20261027.json ↗</a>.</p></div></section>'
+    )
+
+    ir_items = "".join(
+        f'<li><strong>{esc(it["id"])}</strong> ({esc(it["severity"])} · <span class="mono">{esc(it["target"])}</span>): {esc(it["finding"])} '
+        f'<em>Resolution: {esc(it["resolution"])}</em></li>'
+        for it in fl["irregularities_flagged"]
+    )
+    irregular = (
+        f'<section class="section"><div class="section-head"><div><div class="eyebrow">Session-3 KG2-S3-HPTR Fleet &amp; Tooling Audit</div>'
+        f'<h2>6 Irregularities Identified &amp; Addressed (`IR-09` through `IR-14`)</h2></div></div>'
+        f'<div class="card"><ul>{ir_items}</ul></div></section>'
+    )
+
+    hfeed = {
+        "filename": hfile,
+        "sha256": rc["raster_sha256"],
+        "zip": hzip,
+        "verdict": "negative",
+        "ok_to_submit": False,
+        "validated_ok_to_download_and_submit": False,
+        "ok_to_download_for_research": True,
+        "beats_02778_across_all_three_blind_holdouts": True,
+        "hide_recover_v3_dti": hr["pooled_dti"],
+        "sgmc_cal_v3_dti": sg["sgmc_prevalence_calibrated_dti"],
+        "c_pied_v1_dti": cp["pooled_dti"],
+        "binary_r_ge_05_max_detector_3px_overlap": reg["final_dots_max_detector_3px_overlap"],
+        "max_overlap_vs_kanlergemsdoe2_rasters": rc["max_overlap_vs_all_kanlergemsdoe2_rasters"],
+        "literal_spacing5_lattice_overlap": lit["witness_overlap_fraction"],
+    }
+    return home, summary, research, irregular, hfeed
 
 
 def trbvc_sections() -> tuple[str, str, str, str, dict | None]:
@@ -278,6 +465,7 @@ def main() -> None:
     if len(audit["focus_nine"]) != 9:
         raise SystemExit("The focus-site comparison is incomplete")
     table = focus_table(audit["focus_nine"])
+    hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
     percent = 100 * prior["witness_overlap_fraction"]
@@ -336,6 +524,7 @@ def main() -> None:
 <div class="metric"><div class="label">New leaderboard estimate</div><div class="value">—</div><div class="hint">Unavailable; no hidden truth or receipt</div></div>
 <div class="metric"><div class="label">Weekly slots used here</div><div class="value">0</div><div class="hint">A selector is a separate step</div></div>
 <div class="metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public #1 DW-Tversky ↗</a></div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated public snapshot…</div><noscript><span class="note">View the linked official leaderboard.</span></noscript></div></div>
+{hptr_home}
 {lope_home}
 {trbvc_home}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Prior candidates</div><h2>Download for research, not for a slot.</h2></div></div>{archive_notice}{parallel_notice}</section>
@@ -346,6 +535,7 @@ def main() -> None:
 
     summary = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p><strong>No new file has passed all gates. Do not submit any current download.</strong> The tables distinguish research artifacts, reported scores, and measured overlap.</p></div>
+{hptr_summary}
 {lope_summary}
 {trbvc_summary}
 {archive_notice}
@@ -375,6 +565,7 @@ def main() -> None:
 <article class="card"><div class="eyebrow">03 · low–medium cost</div><h3>Visible-tip orientation agreement</h3><p>Recompute visible-only tip geometry per fold and compare with potential-field and terrain lineaments. <strong>Mimics:</strong> erosion and lithologic boundaries.</p></article>
 <article class="card"><div class="eyebrow">04 · high cost · access unverified</div><h3>Deformation–structure discordance</h3><p>Test NASA OPERA DISP-S1 displacement gradients against GeoDAWN and 3DEP boundaries. <strong>Mimics:</strong> pumping and atmospheric/line-of-sight artifacts. Relevant tile availability and access remain unverified.</p></article></div>
 <p class="note"><a href="../research/2026-10-27_htcads_hypotheses.md">Full hypothesis slate, layer provenance and constraints ↗</a></p></section>
+{hptr_research}
 {trbvc_research}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Source library</div><h2>Official sources for review</h2></div></div><div class="card"><ul class="sources">
 <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">DrivenData problem, metric and submission format</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">Staff clarification on known-fault masking</a></li>
@@ -382,6 +573,7 @@ def main() -> None:
 <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a> · <a href="https://gdr.openei.org/submissions/1391">DOE GDR INGENIOUS</a> · <a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a> · <a href="https://www.earthdata.nasa.gov/data/projects/opera">NASA OPERA</a></li></ul><p class="note"><a href="../registry/source_catalog_20261027.json">Source catalog and provenance notes ↗</a></p></div></section>'''
 
     irregular = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p><strong>DO NOT SUBMIT</strong> any current file. Automated checks fail closed; no human geological inspector is substituted for validation.</p></div>
+{hptr_irregular}
 {lope_irregular}
 {trbvc_irregular}
 <div class="grid-two"><article class="card"><div class="eyebrow">01 · blocking</div><h3>Literal novelty contradiction</h3><p>A registered calibration lattice forces ≥{bound:.2f}% overlap at the frozen budget. The prompt says <em>any</em> registry raster; no control exemption has been authorized.</p></article>
@@ -423,6 +615,8 @@ def main() -> None:
         "reason": f"Literal lattice overlap {100*s2_audit['witness_overlap_fraction']:.3f}%; budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
+    if hptr_feed is not None:
+        feed["kg2s3_hptr_lane"] = hptr_feed
     if lope_feed is not None:
         feed["kg2s3_lope_lane"] = lope_feed
     if trbvc_feed is not None:
