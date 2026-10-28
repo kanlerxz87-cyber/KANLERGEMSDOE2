@@ -1,0 +1,47 @@
+name: Diagnose public leaderboard feed
+on:
+  workflow_dispatch:
+  push:
+    branches: ['arena/**']
+permissions:
+  contents: read
+jobs:
+  inspect-public-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Report table structure without participant names
+        run: |
+          python - <<'PY'
+          import re, sys
+          from urllib.request import Request, urlopen
+          sys.path.insert(0, 'scripts')
+          from refresh_public_feed import Tables, URL
+          request = Request(URL, headers={'User-Agent': 'GEMS-evidence-feed/1.0'})
+          with urlopen(request, timeout=25) as response:
+              if response.geturl().split('?')[0].rstrip('/') != URL.rstrip('/'):
+                  raise RuntimeError('Unexpected redirect')
+              text = response.read(5_000_001).decode('utf-8')
+          if len(text) > 5_000_000:
+              raise RuntimeError('Unexpectedly large response')
+          parser = Tables()
+          parser.feed(text)
+          print(f'::notice file=scripts/refresh_public_feed.py,title=Public leaderboard table count::tables={len(parser.tables)}')
+          for i, table in enumerate(parser.tables):
+              if not table:
+                  continue
+              joined = ' | '.join(table[0])[:600]
+              header = joined.replace('%', '%25') if 'rank' in joined.lower() and 'tversky' in joined.lower() else '<unrecognized header>'
+              print(f'::notice file=scripts/refresh_public_feed.py,title=Public table {i} header::rows={len(table)} header={header}')
+              for row in table[1:3]:
+                  if not row:
+                      continue
+                  # Inspect the first cell and standalone numeric cells only;
+                  # participant names and profile URLs never enter annotations.
+                  rank = row[0] if re.fullmatch(r'[#0-9.,\s]+', row[0]) else f'<non-numeric, length={len(row[0])}>'
+                  nums = [c for c in row[1:] if re.fullmatch(r'[#0-9.,\s]+', c)]
+                  print(f'::notice file=scripts/refresh_public_feed.py,title=Public table {i} row::rank_cell={rank!r}; cells={len(row)}; numeric_cells={nums!r}')
+          PY
