@@ -1,5 +1,8 @@
 # Executive summary — submission decision
 
+> **2026-10-28 integrity correction:** **DO NOT SUBMIT** any existing file. The independently replayed literal witness and nine-site geometry are in [the current preflight record](evidence/preflight_replay_20261028.json). The narratives below are historical and may contain superseded promotion, causality, or improperly labeled SGMC-calibrated figures. SGMC prevalence calibration is an unverified projection, not a HOLDOUT-DTI; no proxy demonstrates a higher organizer score. A unique hash does not establish protocol uniqueness. The [current review](REVIEW_2026-10-28.md) supersedes conflicting statements below.
+
+
 > **DO NOT SUBMIT. This review generated no candidate; no file is approved.** A registered lattice makes the frozen 37,654-dot budget mathematically incompatible with the user's literal any-registry overlap limit. Concurrently generated research TIFFs and the previously promoted DSLUP TIFF are not approved. No competition slot was used in this review.
 
 ## Latest Session-3 KG2-S3-HPTR lane + 123-Repository Fleet Audit (`kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`): NEGATIVE — DO NOT SUBMIT (Research Download Only)

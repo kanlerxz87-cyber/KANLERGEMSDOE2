@@ -1,5 +1,8 @@
 # Standing Project Brief & Parallel-Run Protocol (`KANLERGEMSDOE2`)
 
+> **2026-10-28 integrity correction:** **DO NOT SUBMIT** any existing file. The independently replayed literal witness and nine-site geometry are in [the current preflight record](evidence/preflight_replay_20261028.json). The narratives below are historical and may contain superseded promotion, causality, or improperly labeled SGMC-calibrated figures. SGMC prevalence calibration is an unverified projection, not a HOLDOUT-DTI; no proxy demonstrates a higher organizer score. A unique hash does not establish protocol uniqueness. The [current review](REVIEW_2026-10-28.md) supersedes conflicting statements below.
+
+
 > **Epistemic integrity:** This is the prior-session condensed standing brief, not a verbatim transcript. Read it with `README.md`, including its preserved request, at the start of every session. **Current decision: do not submit.** Historical user/owner reports are not organizer receipts; old target scores are historical snapshots.
 
 ---
