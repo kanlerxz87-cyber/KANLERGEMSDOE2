@@ -43,7 +43,7 @@ bash scripts/download_competition_data.sh --group external
 .venv/bin/python scripts/evaluate_holdout.py --verify-kg2  # archived hash checks only
 ```
 
-The [partial restore receipt](evidence/data_restore_recheck_20261027.json) records **31/46** manifest files verified and all **15** missing entries; nine focus-site TIFFs were restored separately. It is a dated snapshot, not a guarantee the remote mirrors remain available. The restore tool stages and hashes each file before replacement; it never treats a failed entry as verified. The assigned HTCADS runner stops at the literal preflight. Old parallel-lane entry points are disabled pending a valid assigned protocol and independent replay; their historical code is retained for forensic review.
+The [partial restore receipt](evidence/data_restore_recheck_20261027.json) records **31/46** manifest files verified and all **15** missing entries; nine focus-site TIFFs were restored separately. It is a dated snapshot, not a guarantee the remote mirrors remain available. The restore tool stages and hashes each file before replacement; it never treats a failed entry as verified. The assigned HTCADS runner stops at the literal preflight. Old parallel-lane entry points are disabled pending a valid assigned protocol and independent replay; their historical code is retained for forensic review. Three distinct implementation, independent numerical and clean-cache deployment passes are summarized in the [verification record](evidence/verification_passes_20261027.json).
 
 ## Next steps, not current permission
 

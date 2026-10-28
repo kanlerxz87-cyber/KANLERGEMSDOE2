@@ -1,0 +1,54 @@
+{
+  "schema": "gems.three-pass-verification.v1",
+  "generated_utc": "2026-10-27T23:59:48.428835+00:00",
+  "scope": "Review and verification only; no model fit, new candidate TIFF, organizer upload or live slot in this session.",
+  "passes": [
+    {
+      "pass": 1,
+      "type": "implementation and adversarial unit verification",
+      "checks": [
+        "Full pytest suite with restored owner-mirror cache: 69 passed",
+        "Atomic hash-before-replace and partial-restore failures covered",
+        "Legacy validator and archived generators fail closed",
+        "Generated status cards and pages cannot authorize archived TIFFs"
+      ],
+      "limitations": [
+        "One rasterio PendingDeprecationWarning in the cache-enabled test run."
+      ]
+    },
+    {
+      "pass": 2,
+      "type": "independent numerical and exact-byte review",
+      "checks": [
+        "Euclidean distance transform independently reproduced binary-dilation lattice coverage and all six checked candidate overlaps",
+        "Both legacy validator modes returned negative on DSLUP",
+        "15,000-dot artifact passes this one witness but fails the frozen budget and remains negative",
+        "Archived KG2 and DARP hash/ZIP metadata checks passed"
+      ],
+      "evidence": [
+        "evidence/independent_witness_20261027.json",
+        "evidence/dslup_literal_revalidation_20261027.json",
+        "evidence/off36_literal_revalidation_20261027.json"
+      ],
+      "limitations": [
+        "No independent holdout/canary replay; no complete current registry, account quota, or portal acceptance verification."
+      ]
+    },
+    {
+      "pass": 3,
+      "type": "clean-cache deployment and reproducibility review",
+      "checks": [
+        "Full pytest suite with empty GEMS_DATA_DIR: 69 passed",
+        "Two static site builds produced identical HTML and JSON SHA-256 hashes",
+        "Compileall and git diff --check passed",
+        "Local preview served dashboard, negative status feed and research download successfully",
+        "Rendered-page local-link tests passed"
+      ],
+      "limitations": [
+        "Actual organizer data require login; the overall mirror restore is 31/46, with 15 external-file failures."
+      ]
+    }
+  ],
+  "verdict": "negative",
+  "ok_to_submit": false
+}
