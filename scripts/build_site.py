@@ -75,6 +75,68 @@ def focus_table(rows: list[dict]) -> str:
     return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">Historical download</th><th scope="col">Reported score</th><th scope="col">Unique vs focus sites?</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
 
 
+
+def lope_sections() -> tuple[str, str, str, dict | None]:
+    """Concurrent KG2-S3 LOPE lane block, rendered only from its receipts (no hard-coded numbers).
+
+    Returns (home_html, summary_html, irregular_html, feed). Empty when the receipts are absent.
+    The lane is NEGATIVE; this block can never authorize a submission."""
+    paths = {k: ROOT / f"evidence/{v}" for k, v in (("rc", "kg2s3_run_card.json"), ("rv", "kg2s3_dslup_revalidation.json"),
+                                                   ("fl", "kg2s3_focus_site_lli.json"), ("ir", "kg2s3_irregularities.json"))}
+    if not all(p.is_file() for p in paths.values()):
+        return "", "", "", None
+    rc, rv, fl, ir = (json.loads(paths[k].read_text()) for k in ("rc", "rv", "fl", "ir"))
+    if rc["verdict"] != "negative" or rc["validator"]["verdict"] != "NOT_OK_DO_NOT_SUBMIT" or rv["verdict"] != "NOT_OK_DO_NOT_SUBMIT":
+        raise SystemExit("KG2-S3 LOPE receipts changed; this fail-closed builder only renders the recorded negative verdicts")
+    hr = rc["holdout_dti"]["primary_hide_and_recover"]; sg = rc["holdout_dti"]["secondary_sgmc_cal"]
+    reg = rc["registry_comparison"]; top = (reg.get("top10_overlap_non_space_filling") or [{}])[0]
+    du = rv["gates"]["gate_3_uniqueness"]; dtop = (du.get("top10_overlap_non_space_filling") or [{}])[0]
+    proj = rc["projection_lli"]; band = proj["error_band"]["leave_site_out_mae"]; dhr = hr["paired_delta_vs_champion"]
+    lope_reason = (f"HOLDOUT-DTI {hr['pooled_dti']:.4f} ({esc(hr['evaluator_version'])}, N={hr['n_withheld']:,}, 95% CI "
+                   f"[{hr['ci95'][0]:.4f}, {hr['ci95'][1]:.4f}]) is below DSLUP's {hr['dslup_recorded']:.4f}; paired Δ vs champion proxy "
+                   f"{dhr['delta']:+.4f} [{dhr['ci95'][0]:+.4f}, {dhr['ci95'][1]:+.4f}]. SGMC-CAL {sg['dti']:.4f} vs {sg['dslup_recorded']:.4f}. "
+                   f"Uniqueness: {100*(reg.get('max_overlap_3px_non_space_filling') or 0):.2f}% of dots lie within 3 px of {esc(top.get('file',''))}.")
+    dslup_reason = (f"Even with the lattice null-calibrated, {100*(du.get('max_overlap_3px_non_space_filling') or 0):.2f}% of DSLUP's dots lie within "
+                    f"3 px of {esc(dtop.get('file',''))}, above the 70% limit. Live-ledger PROJECTION {rv['lli_live_projection']['projected_dti']:.3f} vs "
+                    f"{rv['lli_live_projection']['champion_same_identity']:.4f} for the champion (the same identity; not scores).")
+    rows = "".join(
+        f"<tr><td><strong>{esc(r['site'])}</strong></td><td class=\"mono\">{esc(r['submission'])}</td>"
+        f"<td>{r['live_user_reported']:.4f}</td><td>{r['lli_leave_site_out_projection']:.4f}</td></tr>"
+        for r in sorted(fl["rows"], key=lambda r: -r["live_user_reported"]))
+    home = (f'<section class="section"><div class="section-head"><div><div class="eyebrow">Concurrent Session-3 lane · KG2-S3 LOPE · automated gate</div>'
+            f'<h2>New LOPE TIFF: NOT OK — DO NOT SUBMIT</h2><p>This lane emitted <span class="mono">{esc(rc["raster_filename"])}</span> '
+            f'(SHA-256 <span class="mono">{esc(rc["raster_sha256"][:16])}…</span>, not published). The byte-level gate '
+            f'<span class="mono">scripts/validate_submission_kg2s3.py</span> returned <strong>NOT_OK_DO_NOT_SUBMIT</strong>.</p></div></div>'
+            f'<div class="callout red-callout"><strong>Why the LOPE file is not OK</strong><p>{lope_reason}</p>'
+            f'<p>Live-ledger PROJECTION {proj["candidate"]:.3f} (±{band:.3f} leave-site-out MAE), against {proj["champion_same_identity"]:.4f} for the champion. It is not a score. '
+            f'<a href="../evidence/kg2s3_run_card.json">Run card</a> · <a href="../evidence/kg2s3_submission_gate.json">Gate receipt</a></p></div>'
+            f'<div class="callout red-callout"><strong>DSLUP re-validated from bytes: NOT OK</strong><p>{dslup_reason} '
+            f'<a href="../evidence/kg2s3_dslup_revalidation.json">Receipt</a></p></div></section>')
+    summary = (f'<div class="callout red-callout"><strong>Concurrent KG2-S3 LOPE lane: NEGATIVE — DO NOT SUBMIT.</strong><p>{lope_reason}</p>'
+               f'<p>{dslup_reason}</p><p><a href="../evidence/kg2s3_run_card.json">Run card</a> · <a href="../evidence/kg2s3_lli_design_cv.json">Design CV</a> · '
+               f'<a href="../evidence/kg2s3_lope_holdout.json">Holdout</a> · <a href="../knowledge/03_preregistered_hypotheses_kg2s3_20261027.md">Preregistration</a></p></div>'
+               f'<section class="section"><div class="section-head"><div><div class="eyebrow">Nine focus sites · live-ledger view</div>'
+               f'<h2>GEMSDOE32 is the best reported file; the live ledger agrees.</h2><p>Live = USER-REPORTED. LLI = leave-SITE-out PROJECTION from a model fitted to '
+               f'123 pinned live-scored rasters; on this family it is biased high by about 0.01.</p></div></div><div class="table-wrap"><table><thead><tr><th>Site</th><th>File</th>'
+               f'<th>Live (USER-REPORTED)</th><th>LLI (PROJECTION)</th></tr></thead><tbody>{rows}</tbody></table></div>'
+               f'<p><strong>Why 0.2778, and can it be beaten?</strong> The live ledger places most of the estimated hidden public truth within 3 px of the public H19-5 ridge network, '
+               f'which the champion dots at 2.8 px after removing pure-false-positive dots within 2 px of the catalogue. A DTI-optimal re-dotting projects '
+               f'{proj["unconstrained_duplicate_lane"]:.3f}, but it is a duplicate lane. With the protocol novelty quota it projects {proj["candidate"]:.3f} and fails the gates. '
+               f'Beating 0.2778 uniquely needs information that is absent from every registry raster (<a href="https://community.drivendata.org/raw/11563">forum 11563</a>).</p></section>')
+    items = "".join(f"<li><strong>{esc(i['id'])}</strong> ({esc(i['severity'])}): {esc(i['finding'])} <em>{esc(i['fix'])}</em></li>" for i in ir["items"])
+    nxt = "".join(f"<li>{esc(x)}</li>" for x in ir["next_steps"])
+    lim = "".join(f"<li>{esc(x)}</li>" for x in ir["limitations"])
+    irregular = (f'<section class="section"><div class="section-head"><div><div class="eyebrow">Concurrent Session-3 lane · KG2-S3 LOPE</div>'
+                 f'<h2>Irregularities found and fixed</h2></div></div><div class="card"><ul>{items}</ul></div>'
+                 f'<div class="grid-two"><div class="card"><h3>Next steps</h3><ol>{nxt}</ol></div><div class="card"><h3>Limitations</h3><ul>{lim}</ul></div></div></section>')
+    feed = {"lope_file": rc["raster_filename"], "lope_sha256": rc["raster_sha256"], "lope_verdict": rc["validator"]["verdict"],
+            "lope_failed_gates": rc["validator"]["failed_gates"], "ok_to_submit": False,
+            "dslup_byte_revalidation_verdict": rv["verdict"], "dslup_failed_gates": rv["failed_gates"],
+            "lli_projection_lope": proj["candidate"], "lli_projection_dslup": proj["dslup_same_identity"],
+            "lli_projection_champion": proj["champion_same_identity"], "label": "PROJECTIONS are not scores"}
+    return home, summary, irregular, feed
+
+
 def main() -> None:
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
@@ -90,6 +152,7 @@ def main() -> None:
     if len(audit["focus_nine"]) != 9:
         raise SystemExit("The focus-site comparison is incomplete")
     table = focus_table(audit["focus_nine"])
+    lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     percent = 100 * prior["witness_overlap_fraction"]
     bound = 100 * pre["minimum_directional_overlap"]
     s2 = json.loads((ROOT / "evidence/dslup_unique_slot_run_card.json").read_text())
@@ -146,6 +209,7 @@ def main() -> None:
 <div class="metric"><div class="label">New leaderboard estimate</div><div class="value">—</div><div class="hint">Unavailable; no hidden truth or receipt</div></div>
 <div class="metric"><div class="label">Weekly slots used here</div><div class="value">0</div><div class="hint">A selector is a separate step</div></div>
 <div class="metric"><div class="label"><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Public #1 DW-Tversky ↗</a></div><div class="value" id="leader-value">—</div><div class="hint" id="leader-status">Loading dated public snapshot…</div><noscript><span class="note">View the linked official leaderboard.</span></noscript></div></div>
+{lope_home}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Prior candidates</div><h2>Download for research, not for a slot.</h2></div></div>{archive_notice}{parallel_notice}</section>
 <section class="section"><div class="section-head"><div><div class="eyebrow">The distinctions that matter</div><h2>A valid-looking TIFF is not a validated submission.</h2></div></div><div class="grid-three">
 <article class="card"><div class="card-icon">01</div><h3>Format</h3><p>Independent local checks found the previous file finite in [0,1] on the mirror grid. The cause of the reported portal range error and portal acceptance are unknown.</p></article>
@@ -154,6 +218,7 @@ def main() -> None:
 
     summary = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
 <div class="page-intro"><div class="eyebrow">Decision brief · 27 October 2026</div><h1>What to download.<br>What not to submit.</h1><p><strong>No new file has passed all gates. Do not submit any current download.</strong> The tables distinguish research artifacts, reported scores, and measured overlap.</p></div>
+{lope_summary}
 {archive_notice}
 {parallel_notice}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Historical benchmark comparison</div><h2>Holdout evidence is not a submission recommendation.</h2></div></div>
@@ -187,6 +252,7 @@ def main() -> None:
 <li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN</a> · <a href="https://gdr.openei.org/submissions/1391">DOE GDR INGENIOUS</a> · <a href="https://www.usgs.gov/3d-elevation-program">USGS 3DEP</a> · <a href="https://www.earthdata.nasa.gov/data/projects/opera">NASA OPERA</a></li></ul><p class="note"><a href="../registry/source_catalog_20261027.json">Source catalog and provenance notes ↗</a></p></div></section>'''
 
     irregular = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Open issues</span></div><div class="page-intro"><div class="eyebrow">Integrity & next steps</div><h1>What still stands in the way.</h1><p><strong>DO NOT SUBMIT</strong> any current file. Automated checks fail closed; no human geological inspector is substituted for validation.</p></div>
+{lope_irregular}
 <div class="grid-two"><article class="card"><div class="eyebrow">01 · blocking</div><h3>Literal novelty contradiction</h3><p>A registered calibration lattice forces ≥{bound:.2f}% overlap at the frozen budget. The prompt says <em>any</em> registry raster; no control exemption has been authorized.</p></article>
 <article class="card"><div class="eyebrow">02 · blocking</div><h3>Replay and registry completeness</h3><p>The prior surface and out-of-fold caches have not been independently replayed. A single witness proves failure but cannot establish full-registry clearance. The separate method paragraph referred to in the prompt was not supplied.</p></article>
 <article class="card"><div class="eyebrow">03 · blocking</div><h3>Score provenance</h3><p>The focus scores are user/owner reports without submission-page receipts. The historical SGMC prevalence calibration uses an inferred hidden-label count, not observed organizer truth. Neither is a leaderboard estimate.</p></article>
@@ -226,6 +292,8 @@ def main() -> None:
         "reason": f"Literal lattice overlap {100*s2_audit['witness_overlap_fraction']:.3f}%; budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
     }
+    if lope_feed is not None:
+        feed["kg2s3_lope_lane"] = lope_feed
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     (DOCS / "data/current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")

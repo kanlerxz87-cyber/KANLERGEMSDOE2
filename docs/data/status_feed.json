@@ -37,5 +37,23 @@
   },
   "reason": "Literal lattice overlap 99.981%; budget lower bound 82.34% > 70%.",
   "run_card": "../../evidence/current_run_card.json",
-  "public_leaderboard": "public_leaderboard.json"
+  "public_leaderboard": "public_leaderboard.json",
+  "kg2s3_lope_lane": {
+    "lope_file": "kanlergems2-s3-lope-q68-59633dots-20261028T001727Z-c0fef4d2-zeros.tif",
+    "lope_sha256": "f1e37cb2dc2c407a395cf282fd760be4a84ed90cdb5a60fceced4cace9aee86d",
+    "lope_verdict": "NOT_OK_DO_NOT_SUBMIT",
+    "lope_failed_gates": [
+      "gate_3_uniqueness",
+      "gate_4_holdout"
+    ],
+    "ok_to_submit": false,
+    "dslup_byte_revalidation_verdict": "NOT_OK_DO_NOT_SUBMIT",
+    "dslup_failed_gates": [
+      "gate_3_uniqueness"
+    ],
+    "lli_projection_lope": 0.2977783100301354,
+    "lli_projection_dslup": 0.09204431480424678,
+    "lli_projection_champion": 0.2794730133592791,
+    "label": "PROJECTIONS are not scores"
+  }
 }
