@@ -1,0 +1,5 @@
+DO NOT SUBMIT TO DRIVENDATA WEEKLY SLOT — RESEARCH-ONLY NEGATIVE ARTIFACT (verdict: negative).
+Passed Gates 1, 2, 3, 5 (0 NaNs, [0,1] exact, 64.77% <= 70% max 3px overlap across 281 fleet rasters),
+beat 0.2778 Champion on HIDE-RECOVER-v3.0 (0.118472, paired 95% CI [+0.004912, +0.033130]) and C-PIED-v1.0 (0.112840, +53.6% over DSLUP),
+but failed Gate 4 on SGMC-CAL-v3.0 (0.052775 < 0.064121) and trailed repo champion DSLUP c71122d5 (0.125925).
+Use kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif (5/5 gates PASS) if submitting under control-separated policy.

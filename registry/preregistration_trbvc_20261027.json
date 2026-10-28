@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "lane_id": "TRBVC-20261027",
+  "session_date_utc": "2026-10-27",
+  "branch": "arena/f6c5d188-kanlergemsdoe2",
+  "parent_commit": "bd31c5582720e5c95f4cde1989c7e190bb19f26e",
+  "frozen_before_training": true,
+  "assigned_method_paragraph": "Unmapped permeable faults hosting concealed hydrothermal upflow across the Great Basin (EPSG:32611) occupy two physically distinct crustal cover regimes that single-regime detectors trade off against one another (DSLUP-3D reached HIDE-RECOVER-v3.0 = 0.125925 and SGMC-CAL-v3.0 = 0.098140 on shallow bedrock/range-front corridors but fell to 0.073458 on concealed Z_b >= 250 m piedmont faults C-PIED-v1.0, whereas DARP-MT10 reached C-PIED-v1.0 = 0.140750 +39.1% over the 0.2778 champion yet starved shallow contacts to SGMC-CAL = 0.043178 due to cubic piedmont_habitat_prior over-damping IR-DARP-CREST-OVERDAMP-08). We partition out-of-quadrant (1.5 km-collared, cross-segment-purged) fault-conduit inference continuously by sedimentary cover thickness w_basin(Z_b) = clip((Z_b - 120 m)/380 m, 0, 1) into a Shallow Range-Front & Void-Bridged 1m/3m/10m Geomorphic Specialist (1 - w_basin) and a Concealed Basin-Margin & Blind Geothermal Fault-Valve Specialist (w_basin) incorporating cohort-detrended 1m-to-2m vertical probe conductive temperature gradients, cold-aquifer (<28 C) silica/cation geothermometer disequilibrium, Quaternary silica-cemented sand / explosion fault-valve loci, 2-D Fourier Poisson gravity-minus-pseudogravity hydrothermal decoupling ridges, and off-catalogue accommodation-zone strike-divergence hinges, allocated via 300 m triangular-kernel CELF submodular greedy placement (37,654 dots).",
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "id": "H-KG2S3-1",
+      "short_name": "TRBVC-Valve",
+      "title": "Depth-Partitioned Fault-Valve Clay-Cap Breach, Cohort-Detrended 2 m Vertical Conductive Flux & Cold-Spring Cryptothermal Silica Disequilibrium",
+      "external_fetch_required": false,
+      "status": "tested_in_session"
+    },
+    {
+      "rank": 2,
+      "id": "H-KG2S3-2",
+      "short_name": "PGBI",
+      "title": "2-D Fourier Poisson Gravity-Pseudogravity Hydrothermal Leaching Decoupling Ridge",
+      "external_fetch_required": false,
+      "status": "tested_in_session_feature_bank"
+    },
+    {
+      "rank": 3,
+      "id": "H-KG2S3-3",
+      "short_name": "ATSD",
+      "title": "Off-Catalogue Opposing-Dip Accommodation-Zone Strike-Divergence & Hanging-Wall Rollover Hinge",
+      "external_fetch_required": false,
+      "status": "tested_in_session_feature_bank"
+    },
+    {
+      "rank": 4,
+      "id": "H-KG2S3-4",
+      "short_name": "ASTER-TIR-SWIR-Sinter",
+      "title": "Spaceborne ASTER AST_05/07XT Silica Reststrahlen Sinter & SWIR Al-OH Argillic Fault-Gouge + Pre-Dawn Landsat ST_B10",
+      "external_fetch_required": true,
+      "official_sources": [
+        "https://lpdaac.usgs.gov/products/ast_05v003/",
+        "https://lpdaac.usgs.gov/products/ast_07xtv003/",
+        "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature"
+      ],
+      "status": "documented_deferred_sandbox_allowlist"
+    },
+    {
+      "rank": 5,
+      "id": "H-KG2S3-5",
+      "short_name": "USArray-3D-MT-OPERA-InSAR",
+      "title": "EarthScope USArray 3-D MT Phase-Tensor Skew |beta| + NASA ASF OPERA Sentinel-1 InSAR Fault-Compaction Velocity Step",
+      "external_fetch_required": true,
+      "official_sources": [
+        "https://ds.iris.edu/spud/emmodel",
+        "https://asf.alaska.edu/datasets/daac/opera/"
+      ],
+      "status": "documented_deferred_sandbox_allowlist"
+    }
+  ],
+  "budget": {
+    "max_experiments": 3,
+    "max_wall_clock_hours": 2.0,
+    "preregistered_experiments": [
+      "TRBVC-EXP-1",
+      "TRBVC-EXP-2",
+      "TRBVC-EXP-3"
+    ]
+  },
+  "gates": {
+    "leakage_canary_max_single_feature_auc": 0.90,
+    "pre_placement_max_abs_spearman": 0.90,
+    "post_placement_max_3px_dot_overlap": 0.70,
+    "target_dot_budget": 37654,
+    "required_holdout_evaluators": [
+      "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "GEMSDOE32-SGMC-CAL-v3.0",
+      "GEMSDOE70-C-PIED-v1.0",
+      "gems-segment-pooled-v1"
+    ]
+  }
+}
