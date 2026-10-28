@@ -2,6 +2,10 @@
 
 > **DO NOT SUBMIT. This review generated no candidate; no file is approved.** A registered lattice makes the frozen 37,654-dot budget mathematically incompatible with the user's literal any-registry overlap limit. Concurrently generated research TIFFs and the previously promoted DSLUP TIFF are not approved. No competition slot was used in this review.
 
+## Concurrent Session-3 GMV lane (KG2-S3-GMV): negative, no file
+
+A concurrent lane preregistered and ran 3 GMV experiments (H1 range-front Smf/Vf/tilt/TPI-discordance + H2 RANSAC fossil-vent corridors, 716 s, 430-raster registry): best Hide-Recover HOLDOUT-DTI 0.1176 vs the 0.0992 procedure reference (paired Δ +0.0184, strictly positive CI), but blind SGMC paired CIs all cross zero and 75–87% of emitted dots fall within 3 px of the retracted Session-1 file — **verdict negative, no GMV file emitted or approved**. Supporting record: [run card](evidence/gmv_run_card_20261027.json) · [experiments](evidence/gmv_experiments_20261027.json) · [frozen prereg](registry/preregistration_gmv.json) · [5 ranked hypotheses](knowledge/03_preregistered_hypotheses_gmv_20261027.md) · [0.2778 forensic](research/2026-10-27_gmv_forensic_02778.md). Diagnostics: the static 37,654-dot champion mask scores Hide-Recover ≈ 0.0045 (the 0.0992 reference is procedural, IR-KG2S3-REF-01); public board re-observed 2026-10-28T00:05Z at #1 0.4544 / #5 0.3566 / #25 0.3195. This lane agrees with the fail-closed decision above: **nothing to download or submit.**
+
 ## Current research file and decision
 
 | Filename / SHA-256 | Research holdout (not a leaderboard estimate) | Literal uniqueness | Decision |

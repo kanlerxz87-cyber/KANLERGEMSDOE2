@@ -2,6 +2,10 @@
 
 > **CURRENT DECISION: DO NOT SUBMIT.** This review generated no new GeoTIFF, and no file is cleared. Other concurrent sessions generated research TIFFs, but they are not approved uploads. The previous DSLUP “promotion” is superseded by the user's literal all-registry rule. No weekly slot was used in this review.
 
+## Concurrent Session-3 GMV lane (negative, no file)
+
+The concurrent KG2-S3-GMV lane ran 3 preregistered experiments (range-front geomorphology + fossil-vent corridors) with verdict **negative**: SGMC significance missed and 75–87% dot overlap vs the retracted Session-1 file. No GMV file was emitted. Record: [run card](evidence/gmv_run_card_20261027.json) · [0.2778 forensic](research/2026-10-27_gmv_forensic_02778.md) · [hypotheses](knowledge/03_preregistered_hypotheses_gmv_20261027.md). This lane concurs with the DO-NOT-SUBMIT decision.
+
 ## Start here
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)

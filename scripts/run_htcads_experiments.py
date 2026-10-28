@@ -146,11 +146,23 @@ def _build_physical_conduit_scores(X_sub: np.ndarray, X_lid: np.ndarray, lidar_v
 def _collect_registry_rasters(foot: np.ndarray) -> tuple[list[dict], np.ndarray, set[str]]:
     """Load and deduplicate all valid-grid local GEMSDOE registry rasters in <50 MB RAM with pre-ranked vectors."""
     ddir = data_dir()
+    # IR-KG2S3-REG-01 (shared-tool fix, Protocol Rule 2, 2026-10-27): the collector
+    # previously depended on /tmp/explore staging that does not exist on fresh runners,
+    # silently shrinking the registry to ddir/scored only. Also glob this repository's
+    # own downloads (all focus mirrors + prior lanes) and $GEMS_REGISTRY_DIR fleet staging.
+    import os as _os
+
+    _extra = []
+    _reg_env = _os.environ.get("GEMS_REGISTRY_DIR")
+    if _reg_env:
+        _extra += glob.glob(str(Path(_reg_env) / "*.tif"))
     cand_paths = sorted(set(
         glob.glob(str(ddir / "scored" / "*.tif"))
         + glob.glob(str(ddir / "scored_extra" / "*.tif"))
+        + glob.glob(str(ROOT / "docs" / "downloads" / "*.tif"))
         + glob.glob("/tmp/explore/GEMSDOE*/docs/downloads/*.tif")
         + glob.glob("/tmp/explore/GEMSDOE*/submissions/*.tif")
+        + _extra
     ))
     H, W = foot.shape
     n_fp = int(foot.sum())
