@@ -1,0 +1,30 @@
+{
+  "schema": "gems.parallel-run-card.v2",
+  "hypothesis": "HTCADS height-persistent magnetic and gravity cross-gradient ablation, not fitted",
+  "mechanism": "Compare continuation-height persistence and orientation of magnetic and gravity gradients alongside independent hydrothermal indicators to target buried structural discontinuities.",
+  "named_non_fault_mimic": "Unfaulted lithological contacts or survey leveling seams",
+  "holdout_dti": null,
+  "holdout_ci95": null,
+  "holdout_status": "Not measured: stopped on the budget-specific lattice witness before feature canaries, surface generation or fitting. Historical scores were not replayed.",
+  "correlation_overlap_vs_registry": {
+    "surface_pre_placement": null,
+    "new_final_dots": null,
+    "complete_registry_checked": false,
+    "historical_hptr_final_overlap_vs_witness": 0.9996281935518139,
+    "historical_hptr_final_spearman_vs_witness": 0.00016691726447952516,
+    "unavoidable_overlap_at_37654_dots": 0.8234184947150369,
+    "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster": "not produced",
+    "historical_hptr": "Locally single-band float32, no in-footprint NaN or infinity, values in [0,1], CRS/shape/transform match the hash-pinned owner template; literal overlap fails. Not organizer-authenticated or portal-accepted.",
+    "evidence": "evidence/review_20261028_replay.json"
+  },
+  "submission_name": null,
+  "note": "No new candidate; literal registry overlap stop. Research only; do not submit.",
+  "experiments_run": 0,
+  "weekly_slots_spent_this_session": 0,
+  "ok_to_submit": false,
+  "verdict": "negative"
+}
