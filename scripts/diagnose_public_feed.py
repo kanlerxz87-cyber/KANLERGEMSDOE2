@@ -15,6 +15,8 @@ from urllib.request import Request, urlopen
 
 from refresh_public_feed import URL, Tables, parse_leaderboard
 
+PARTIAL_URL = URL.replace("/leaderboard/", "/leaderboard_partial/")
+
 
 class Structure(HTMLParser):
     def __init__(self) -> None:
@@ -65,7 +67,7 @@ class Structure(HTMLParser):
 def main() -> None:
     report: dict = {}
     try:
-        req = Request(URL, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
+        req = Request(PARTIAL_URL, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
         with urlopen(req, timeout=25) as response:
             html = response.read(5_000_001).decode("utf-8", errors="replace")
             report.update(status=response.status, chars=len(html),
@@ -75,6 +77,7 @@ def main() -> None:
         parser = Tables()
         parser.feed(html)
         report.update(title=structure.title, table_count=len(parser.tables),
+                      table_headers=[table[0] for table in parser.tables[:2] if table],
                       numeric_score_samples=structure.scores,
                       query_free_endpoint_paths=sorted(structure.paths)[:20],
                       visible_signin_message=structure.visible_signin)
