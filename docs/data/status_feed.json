@@ -38,12 +38,16 @@
   "reason": "Literal lattice overlap 99.981%; budget lower bound 82.34% > 70%.",
   "run_card": "../../evidence/current_run_card.json",
   "public_leaderboard": "public_leaderboard.json",
+  "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
+  "latest_run_card": "../../evidence/run_card_20261028_preflight.json",
   "kg2s3_hptr_lane": {
     "filename": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
     "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
     "verdict": "negative",
     "ok_to_submit": false,
-    "warning": "Historical holdouts not replayed; SGMC calibration is a projection, not measured DTI."
+    "warning": "Historical holdouts not replayed; SGMC calibration is a projection, not measured DTI.",
+    "beats_02778_leaderboard_score": null,
+    "comparison_warning": "SGMC calibration uses an unverified count and is not a holdout DTI."
   },
   "kg2s3_trbvc_lane": {
     "filename": "kanlergems2-trbvc-exp-3-37654dots-20261028T004644Z-decad771-zeros.tif",
