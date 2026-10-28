@@ -1,18 +1,9 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
-> **CURRENT DECISION: DO NOT SUBMIT.** This review generated no approved live-slot upload: all shared automated gates fail closed (`verdict = "negative"`) to protect weekly DrivenData slots under the literal all-registry spacing-5 lattice rule. Our latest Session-3 lane (**`KG2-S3-HPTR`**) generated the genuinely unique `[0, 1]` GeoTIFF [`docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif) — the **first candidate in `KANLERGEMSDOE2` history to beat the `0.2778` (`GEMSDOE32`) champion simultaneously across all three blind holdout benchmarks (`Hide-Recover = 0.113133`, `SGMC-CAL = 0.077148`, `C-PIED = 0.104289`)** — published strictly as a **research artifact (`DO NOT SUBMIT`)** until the literal calibration-lattice rule and live selector are resolved.
 
-## Latest Session-3 KG2-S3-HPTR lane + 123-Repo Fleet Audit (`675d0ff8`, negative — DO NOT SUBMIT)
-
-> **Concurs with `DO NOT SUBMIT` (`verdict = "negative"` — research download only; zero weekly DrivenData slots spent).**
-> - **Unique Research GeoTIFF (`DO NOT SUBMIT`):** [`docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif`](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif) (`218,677` B, SHA-256 `2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3`) · [ZIP](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.zip) · [Unified Run Card](docs/downloads/hptr_run_card.json) · [Validator Sidecar](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-validation.json) · [DO-NOT-SUBMIT Guard](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-DO-NOT-SUBMIT.txt).
-> - **Portal `[0, 1]` Safety (`13/13` checks PASS):** `3730 x 3292` single-band `float32`, `EPSG:32611`, `nodata=None`, **`0` NaNs across all `12,279,160` cells**, values in `[0.0, 1.0]`, `37,654` dots (`5,200` Stage-1 piedmont/void + `32,454` Stage-2 horst/tip), `0` on-catalogue dots. Name: `kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros` · Note (`89/140`): `KG2-S3 HPTR-EXP-2: 3-z listric xgrad+vent plume+10m/3m scarp+tip strike CELF 37654d [0,1]`.
-> - **Pre-Registered Hypotheses (`3/3` experiments in `739.8s`, `81/81` canary max AUC `0.79654 <= 0.90`):** [`registry/preregistration_hptr_20261027.json`](registry/preregistration_hptr_20261027.json) · [`knowledge/03_preregistered_hypotheses_hptr_20261027.md`](knowledge/03_preregistered_hypotheses_hptr_20261027.md) · [`evidence/hptr_leakage_canary_20261027.json`](evidence/hptr_leakage_canary_20261027.json) · [`evidence/hptr_experiments_20261027.json`](evidence/hptr_experiments_20261027.json).
-> - **Resolves `IR-TRBVC-SGMC-BASIN-SHARE-10` & Beats `0.2778` Across ALL THREE Blind Holdouts Simultaneously:**
->   - `HOLDOUT-DTI` `GEMSDOE32-HIDE-RECOVER-v3.0` (`N=22,232`): **`0.113133`** (`95% CI [0.1022, 0.1249]`, paired $\Delta = +0.013931$ `+14.04%` vs `0.2778` ref `0.099202`, paired `95% CI [+0.004451, +0.023158]`, win prob `0.999`).
->   - `HOLDOUT-DTI` `GEMSDOE32-SGMC-CAL-v3.0` (`N=62,703`): **`0.077148`** (`95% CI [0.0703, 0.0837]`, paired $\Delta = +0.013027$ `+20.32%` vs `0.2778` ref `0.064121`, paired `95% CI [+0.006666, +0.019361]`, win prob `1.000`).
->   - `HOLDOUT-DTI` `GEMSDOE70-C-PIED-v1.0` (`N=9,847`): **`0.104289`** (`95% CI [0.0903, 0.1166]`, `+3.09%` vs `0.2778` ref `0.101166`; `+42.0%` over `DSLUP` `0.073458`).
-> - **123-Repo Fleet Uniqueness & Automated Gate Receipts ([`evidence/hptr_full_fleet_audit_20261027.json`](evidence/hptr_full_fleet_audit_20261027.json)):** Audited all 9 Focus Sites, all 21 Sister Sites (`KANLERGEMSDOE1..3`, `EUGGEMSDOE1..3`, `WBGGEMSDOE1..3`, `GINNYGEMSDOE1..3`, `GEMSDOEkarage1..3`, `ApartGEMSDOE1..3`, `GEMSDOESASS1..3`), and `GEMSDOE..GEMSDOE92` (`642` scanned GeoTIFFs): pre-placement `max |Spearman| = 0.3721 < 0.90`, final-dot `max |Spearman| = 0.0702 < 0.90`, binary (`r >= 0.5`) non-blanket detector max 3-px overlap = **`65.98% <= 70%`**, **`40.40%`** vs `0.2778` Champion, **`<= 49.24%`** across all Focus & Sister repos, and **`<= 46.46%`** across all 10 `KANLERGEMSDOE2` files. Stopped fail-closed (`negative`) by [`scripts/validate_submission.py`](scripts/validate_submission.py) ([receipt](evidence/hptr_validation_literal_witness_20261027.json), `99.963%` `13gems` lattice witness) and [`scripts/validate_submission_kg2s3.py`](scripts/validate_submission_kg2s3.py) ([receipt](evidence/hptr_kg2s3_gate_receipt_20261027.json), `IR-KG2S3-SOFTTAIL-SUPPORT-14` `r > 0` soft-tail + retracted-`DSLUP` bar).
+> **CURRENT DECISION — DO NOT SUBMIT.** The 2026-10-28 byte audit reconfirmed a literal registry-duplicate stop. No new model, leaderboard estimate, or approved TIFF was produced. The historical HPTR research TIFF has 37,640 of 37,654 dots within three pixels of the registered lattice, so it is **not unique under the requested rule**. Its local [0,1] check is not proof of portal acceptance. [Fresh audit](evidence/release_audit_20261028.json) · [current run card](evidence/current_run_card.json) · [executive site](docs/executive-summary.html).
+>
+> **Evidence correction:** Older lane reports and archived cards below may say "unique", "breakthrough", or label SGMC prevalence-calibrated projections as HOLDOUT-DTI. They do not establish the literal all-registry criterion, a measured hidden leaderboard score, or a causal explanation. Historical holdouts have not been independently replayed in this session. Treat those claims as superseded, not as submission authorization. See the [three-pass review](evidence/review_20261028.md).
 
 ## Concurrent Session-3 LOPE lane (KG2-S3, negative): the new TIFF is NOT OK, and DSLUP fails the byte-level gate too
 
@@ -93,7 +84,7 @@ The concurrent KG2-S3-GMV lane ran 3 preregistered experiments (range-front geom
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
 - [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md)
-- [Current negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261027.json)
+- [Current negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261028.json)
 - [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
 - [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)
 - [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [source catalog](registry/source_catalog_20261027.json)
@@ -136,7 +127,7 @@ python scripts/restore_data.py --group core --target-dir data/review_20261027
 python scripts/restore_data.py --group scored --target-dir data/review_20261027
 GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/restore_focus_sites.py
 GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/audit_release.py \
-  --out evidence/release_audit_20261027.json --card-out evidence/current_run_card.json
+  --out evidence/release_audit_20261028.json --card-out evidence/current_run_card.json
 GEMS_DATA_DIR="$PWD/data/review_20261027" python scripts/validate_submission.py \
   --tif docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif \
   --run-card evidence/dslup_unique_slot_run_card.json \

@@ -58,25 +58,27 @@ def parse_leaderboard(text: str) -> dict[int, float]:
     parser = Tables()
     parser.feed(text)
     for table in parser.tables:
-        headers = " ".join(table[0]).lower() if table else ""
-        if "rank" not in headers or "tversky" not in headers or "public" not in headers:
+        headers = [cell.lower() for cell in table[0]] if table else []
+        ranks = [i for i, cell in enumerate(headers) if cell.strip() == "rank"]
+        public_scores = [i for i, cell in enumerate(headers) if "public" in cell and "tversky" in cell]
+        if len(ranks) != 1 or len(public_scores) != 1 or ranks[0] == public_scores[0]:
             continue
+        rank_col, score_col = ranks[0], public_scores[0]
         found = {}
         for row in table[1:]:
-            if not row:
+            if len(row) != len(headers):
                 continue
-            rank_match = re.fullmatch(r"#\s*(\d+)", row[0].strip())
-            if not rank_match:
+            rank_match = re.fullmatch(r"#\s*(\d+)", row[rank_col].strip())
+            score_text = row[score_col].strip()
+            if not rank_match or not re.fullmatch(r"(?:0|1)\.\d{4,}", score_text):
                 continue
-            # Values live in their own score cell. Do not parse a date, name,
-            # avatar URL or submission-count field as a leaderboard score.
-            scores = [float(c) for c in row[1:] if re.fullmatch(r"(?:0|1)\.\d{4,}", c)]
-            if len(scores) != 1 or not 0 <= scores[0] <= 1:
+            score = float(score_text)
+            if not 0 <= score <= 1:
                 continue
             rank = int(rank_match.group(1))
             if rank in found:
                 raise ValueError("Duplicate leaderboard rank")
-            found[rank] = scores[0]
+            found[rank] = score
         if all(i in found for i in range(1, 6)) and all(found[i] >= found[i + 1] for i in range(1, 5)):
             return found
     raise ValueError("Public leaderboard table/ranks not recognized; refusing to invent a score")
