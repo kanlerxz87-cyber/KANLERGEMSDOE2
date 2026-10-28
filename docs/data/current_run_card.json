@@ -1,15 +1,15 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-27T23:59:36.094488+00:00",
-  "hypothesis": "H-K1 HTCADS frozen lane; proposed height-persistent cross-gradient ablation is not yet registered or fitted",
-  "mechanism": "Compare potential-field gradient orientation and displacement across continuation heights with separate hydrothermal evidence; proposed, not fitted.",
-  "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
+  "generated_utc": "2026-10-28T16:16:54Z",
+  "hypothesis": "HTCADS-K2 remains frozen. Four next-session ablations were ranked for future testing; no candidate was fitted because the literal novelty preflight is forced to fail.",
+  "mechanism": "No new mechanism was implemented or tested. The registered HTCADS-K2 mechanism remains the only assigned lane; proposed ablations are documented in research/2026-10-28_focus-nine-hypotheses.md.",
+  "named_non_fault_mimic": "No candidate was scored. For the top proposed multi-height potential-field test: unfaulted lithologic contacts and survey leveling seams.",
   "holdout_dti": null,
   "holdout_ci95": null,
-  "holdout_status": "Not measured in this session: stopped before fit. Prior results are historical, not replayed.",
+  "holdout_status": "Not measured on 2026-10-28: the mandatory pre-placement novelty gate fails first. No model fit, dot placement, TIFF emission, or weekly slot use.",
   "correlation_overlap_vs_registry": {
     "surface_pre_placement": null,
-    "surface_status": "No new surface was built or compared",
+    "surface_status": "Not built/replayed in this review; exact preflight lower bound is 82.3418% overlap at the frozen 37,654-dot budget, greater than the 70% cap.",
     "prior_final_dots_spearman_vs_witness": -0.0007267409018060083,
     "prior_final_dots_overlap_vs_witness": 0.9996813087586977,
     "prior_dslup_final_dots_spearman_vs_witness": 0.0005034898206130378,
@@ -20,7 +20,7 @@
   },
   "raster_sha256": null,
   "validator_output": {
-    "new_raster": "not produced",
+    "new_raster": "not produced; no submission candidate",
     "prior_raster_exact_byte_audit": {
       "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
       "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
@@ -174,10 +174,11 @@
       "organizer_acceptance_verified": false
     },
     "parallel_pr36_policy_stop": "15,000-dot budget and intentional lattice-gap placement violate the frozen lane; no holdout or full-registry clearance.",
-    "note": "All prior and parallel rasters are research artifacts only; range/grid checks are not portal acceptance."
+    "note": "All prior and parallel rasters are research artifacts only; range/grid checks are not portal acceptance.",
+    "scope_note": "Historical exact-byte checks remain archived. No new surface, candidate, holdout, full-registry audit, or organizer acceptance was performed on 2026-10-28."
   },
   "submission_name": null,
-  "note": "No new candidate; literal registry duplicate stop. Research only; do not submit.",
+  "note": "No new TIFF; preflight is forced duplicate. Do not submit any existing file.",
   "experiments_run": 0,
   "maximum_experiments": 3,
   "weekly_slots_spent_this_session": 0,

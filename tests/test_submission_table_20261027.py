@@ -80,6 +80,40 @@ def test_current_comparison_has_no_unsupported_projection() -> None:
     assert len(d["focus_nine"]) == 9
     assert all(r["score_evidence_class"].startswith("USER/OWNER-REPORTED") for r in d["focus_nine"])
 
+def test_executive_summary_has_nine_sites_and_no_fabricated_leaderboard_estimate() -> None:
+    html_text = (ROOT / "docs/executive-summary.html").read_text(encoding="utf-8")
+    assert "NO new TIFF is approved" in html_text
+    assert "82.34%" in html_text
+    assert "Leaderboard-score estimate" in html_text
+    assert "No defensible mapping" in html_text
+    for site in ("GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30", "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"):
+        assert site in html_text
+    assert "0.2778" in html_text and "USER/OWNER-REPORTED" in html_text
+    assert "97.58%" in html_text
+    assert "Do not submit" in html_text
+
+
+def test_hypothesis_agenda_is_ranked_but_does_not_claim_unmeasured_gain() -> None:
+    research = (ROOT / "research/2026-10-28_focus-nine-hypotheses.md").read_text(encoding="utf-8")
+    html_text = (ROOT / "docs/research.html").read_text(encoding="utf-8")
+    for phrase in ("potential-field crest migration", "Thermal transport-direction uncertainty", "Alteration-edge", "Seasonal deformation"):
+        assert phrase.casefold() in research.casefold()
+    assert "not fitted" in research and "no gain forecast" in research
+    assert "NASA OPERA" in research and "not viable" in research
+    assert "Four testable geological hypotheses" in html_text
+    assert "not a numerical DTI forecast" in html_text
+    assert "0.2778" in html_text
+
+
+def test_current_run_card_is_negative_and_no_candidate_was_emitted() -> None:
+    card = _load("evidence/current_run_card.json")
+    assert card["verdict"] == "negative" and card["ok_to_submit"] is False
+    assert card["experiments_run"] == 0 and card["weekly_slots_spent_this_session"] == 0
+    assert card["raster_sha256"] is None and card["submission_name"] is None
+    assert card["holdout_dti"] is None and card["holdout_ci95"] is None
+    assert "novelty gate" in card["holdout_status"]
+
+
 def test_submission_table_html_links_resolve() -> None:
     html_text = (ROOT / "docs/submission-table.html").read_text(encoding="utf-8")
     hrefs = re.findall(r'href="(downloads/[^"]+)"', html_text)
