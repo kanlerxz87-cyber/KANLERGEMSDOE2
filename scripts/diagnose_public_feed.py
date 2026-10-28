@@ -1,98 +1,92 @@
 #!/usr/bin/env python3
-"""Report non-personal table structure of the public feed to GitHub Actions annotations.
+"""Read-only public leaderboard markup diagnostic; no account or submissions.
 
-This is a read-only diagnostic, not a score, an account check, or a submission.
-It prints headers and numeric-only cells from two rows, never names or raw HTML.
+A single GitHub Actions notice reports numeric samples, structural classes,
+and query-free public endpoint paths only. It never records participant names,
+HTML, cookies, tokens, or full URLs with query strings.
 """
 from __future__ import annotations
 
+import json
 import re
 from html.parser import HTMLParser
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 from refresh_public_feed import URL, Tables, parse_leaderboard
 
 
-def notice(title: str, text: str) -> None:
-    # Actions workflow-command escaping prevents remote text from injecting commands.
-    safe = text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
-    print(f"::notice title={title}::{safe}")
-
-
-class Scripts(HTMLParser):
+class Structure(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
-        self.items: list[list] = []
-        self.current: list | None = None
+        self.stack: list[tuple[str, str]] = []
+        self.scores: list[dict] = []
+        self.paths: set[str] = set()
+        self.title = ""
+        self.visible_signin = False
 
     def handle_starttag(self, tag, attrs) -> None:
-        if tag == "script":
-            self.current = [dict(attrs), ""]
-            self.items.append(self.current)
+        attrs = dict(attrs)
+        class_id = " ".join(attrs.get(k, "") for k in ("id", "class", "role"))[:120]
+        # Classes/IDs are structure, but filter out unexpected characters.
+        class_id = re.sub(r"[^A-Za-z0-9_:. -]", "", class_id)
+        self.stack.append((tag, class_id.strip()))
+        for key in ("href", "src", "hx-get", "hx-post", "data-url"):
+            value = attrs.get(key, "")
+            if re.search(r"leaderboard|ranking|/api/", value, re.I):
+                path = urlsplit(value)._replace(query="", fragment="").geturl()
+                if len(path) < 180 and not re.search(r"token|session|csrf|cookie|password", path, re.I):
+                    self.paths.add(path)
 
-    def handle_data(self, data) -> None:
-        if self.current is not None:
-            self.current[1] += data
+    def handle_startendtag(self, tag, attrs) -> None:
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
     def handle_endtag(self, tag) -> None:
-        if tag == "script":
-            self.current = None
+        # HTML is not always strictly nested; pop the matching tag and descendants.
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i][0] == tag:
+                del self.stack[i:]
+                break
 
-
-def inspect_script(label: str, text: str) -> None:
-    """Emit endpoint paths and counts only, never public team names or tokens."""
-    count = len(re.findall(r"leaderboard|ranking", text, re.I))
-    paths = set(re.findall(r"[\"']((?:/|https?://)[^\"'\s<>]{1,180}(?:leaderboard|ranking)[^\"'\s<>]*)[\"']", text, re.I))
-    clean = []
-    for path in sorted(paths):
-        path = urlsplit(path)._replace(query="", fragment="").geturl()
-        if not re.search(r"csrf|token|cookie|password|session", path, re.I):
-            clean.append(path)
-    if count or clean:
-        notice("Script hints", f"{label}; matches={count}; endpoint_paths={clean[:8]!r}"[:900])
+    def handle_data(self, data) -> None:
+        text = data.strip()
+        if not text:
+            return
+        if self.stack and self.stack[-1][0] == "title":
+            self.title = text[:100]
+        if re.search(r"sign in to (?:view|see) the leaderboard", text, re.I):
+            self.visible_signin = True
+        # Scores only; never capture free-text rows or participants.
+        if re.fullmatch(r"0\.\d{4,6}", text) and len(self.scores) < 6:
+            self.scores.append({"value": text, "ancestors": self.stack[-5:]})
 
 
 def main() -> None:
+    report: dict = {}
     try:
         req = Request(URL, headers={"User-Agent": "GEMS-evidence-feed/1.0 (+public leaderboard read only)"})
         with urlopen(req, timeout=25) as response:
-            html = response.read(5_000_001).decode("utf-8")
-            notice("Response", f"status={response.status}; url={response.geturl().split('?')[0]}; chars={len(html)}")
-        scripts = Scripts()
-        scripts.feed(html)
-        js_fetched = 0
-        for attrs, content in scripts.items:
-            src = attrs.get("src", "")
-            clean_src = urlsplit(src)._replace(query="", fragment="").geturl()
-            notice("Script", f"src={clean_src}; id={attrs.get('id', '')}; type={attrs.get('type', '')}; inline_chars={len(content)}")
-            inspect_script(f"inline {attrs.get('id', '')}", content)
-            full = urljoin(URL, src)
-            if src and urlsplit(full).hostname == urlsplit(URL).hostname and js_fetched < 8:
-                js_fetched += 1
-                try:
-                    req_js = Request(full, headers={"User-Agent": "GEMS-public-feed-diagnostic/1.0"})
-                    with urlopen(req_js, timeout=8) as response:
-                        inspect_script(clean_src, response.read(1_000_000).decode("utf-8", errors="replace"))
-                except Exception as exc:
-                    notice("Script unavailable", f"{clean_src}: {type(exc).__name__}")
+            html = response.read(5_000_001).decode("utf-8", errors="replace")
+            report.update(status=response.status, chars=len(html),
+                          url=response.geturl().split("?")[0])
+        structure = Structure()
+        structure.feed(html)
         parser = Tables()
         parser.feed(html)
-        notice("Tables", f"count={len(parser.tables)}")
-        for i, table in enumerate(parser.tables[:8]):
-            headers = table[0] if table else []
-            samples = []
-            for row in table[1:3]:
-                numeric = [c for c in row if re.fullmatch(r"[#\d.\s]+", c)]
-                samples.append({"cells": len(row), "numeric_only": numeric[:8]})
-            notice(f"Table {i}", f"headers={headers!r}; rows={len(table)}; sample={samples!r}"[:900])
+        report.update(title=structure.title, table_count=len(parser.tables),
+                      numeric_score_samples=structure.scores,
+                      query_free_endpoint_paths=sorted(structure.paths)[:20],
+                      visible_signin_message=structure.visible_signin)
         try:
-            values = parse_leaderboard(html)
-            notice("Parser", f"recognized={len(values)} ranks")
+            report["parser_recognized_ranks"] = len(parse_leaderboard(html))
         except ValueError as exc:
-            notice("Parser", f"not recognized: {exc}")
+            report["parser_error"] = str(exc)
     except Exception as exc:
-        notice("Feed diagnostic", f"unavailable: {type(exc).__name__}: {exc}")
+        report["unavailable"] = type(exc).__name__
+    text = json.dumps(report, ensure_ascii=True, separators=(",", ":"))[:6000]
+    safe = text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    print(f"::notice title=Public feed structure::{safe}")
 
 
 if __name__ == "__main__":
