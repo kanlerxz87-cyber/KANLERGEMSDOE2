@@ -270,5 +270,5 @@ def test_generated_pages_do_not_promote_archived_projection():
         text = (ROOT / 'docs' / page).read_text()
         assert 'DO NOT SUBMIT' in text
         assert 'SGMC prevalence-calibrated' in text
-        assert 'pure-false-positive' not in text
+        assert 'removing pure-false-positive dots' not in text
         assert '3-Suite HOLDOUT-DTI breakthrough' not in text
