@@ -24,6 +24,7 @@ def validate_all_gates(
         raise ValueError("Unknown legacy validation mode")
     result = shared_validate(tif_path, run_card_path, ddir)
     result["requested_legacy_mode"] = mode
+    result["legacy_mode_ignored"] = mode  # compatibility: no mode relaxes the literal gate
     result["legacy_mode_status"] = (
         "Retired: no calibration-raster exemption or self-attested promotion; "
         "all modes use scripts/validate_submission.py."

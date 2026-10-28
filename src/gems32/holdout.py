@@ -688,6 +688,8 @@ def evaluate_hide_and_recover(
     prediction is appropriate only for a demonstrably label-independent surface.
     Scores use the 300 m triangular kernel, with a spatial-block bootstrap CI.
     """
+    if grid_n <= 0 or n_boot <= 0:
+        raise ValueError("grid_n and n_boot must be positive")
     h, w = ctx.foot.shape
     n_blocks = grid_n * grid_n
     tp_blk = np.zeros(n_blocks, dtype=np.float64)
@@ -714,6 +716,8 @@ def evaluate_hide_and_recover(
         sl = cell.bbox
         r0, c0 = int(sl[0].start), int(sl[1].start)
         if is_cell_dict:
+            if cell.key not in pred_or_cells:
+                raise ValueError(f"Missing prediction for holdout cell {cell.key}")
             raw_cell = np.asarray(pred_or_cells[cell.key])
             if raw_cell.shape == (h, w):
                 _validate_probability_grid(raw_cell, ctx.foot)
@@ -832,6 +836,8 @@ def evaluate_sgmc_with_ci(
     transformed value relies on an inferred hidden-truth count and must not be
     used as a measured score or promotion gate.
     """
+    if grid_n <= 0 or n_boot <= 0:
+        raise ValueError("grid_n and n_boot must be positive")
     h, w = ctx.foot.shape
     raw_arr = np.asarray(mask)
     _validate_probability_grid(raw_arr, ctx.foot)
@@ -928,6 +934,7 @@ def evaluate_sgmc_with_ci(
         "sgmc_calibrated_ci95": cal_ci95,
         "calibration_status": "UNVALIDATED RESEARCH TRANSFORM; not a holdout DTI, leaderboard score or promotion gate",
         "calibration_assumption": "Fixed hidden-truth count inferred from unverified historical reports; not organizer-confirmed.",
+        "_block_totals": (tp_blk, fp_blk, fn_blk, active_blocks),
         "_cal_boots": cal_boots,
     }
 

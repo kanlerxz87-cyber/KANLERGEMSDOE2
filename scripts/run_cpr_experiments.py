@@ -158,7 +158,7 @@ def _collect_registry(foot: np.ndarray, ddir: Path) -> tuple[list[dict], np.ndar
 
 def main() -> int:
     raise SystemExit(
-        "Archived lane disabled: the literal all-registry witness forces a duplicate "
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
         "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 

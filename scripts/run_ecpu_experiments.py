@@ -106,7 +106,7 @@ def _emit_stratified(pi2d, elig2d, e2d, ridge2d=None):
 
 def main() -> int:
     raise SystemExit(
-        "Archived lane disabled: the literal all-registry witness forces a duplicate "
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
         "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 

@@ -60,7 +60,7 @@ CHAMPION_TAG = dmod.CHAMPION_TAG
 
 def main() -> int:
     raise SystemExit(
-        "Archived lane disabled: the literal all-registry witness forces a duplicate "
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
         "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 

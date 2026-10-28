@@ -168,7 +168,7 @@ def _overlap_vs_named(dots_2d: np.ndarray, registry: list[dict], name_tag: str) 
 
 def main() -> int:
     raise SystemExit(
-        "Archived lane disabled: the literal all-registry witness forces a duplicate "
+        "Archived lane disabled; Archived runner disabled: the literal all-registry witness forces a duplicate "
         "at the frozen budget; fresh authorization and a safe replay path are required."
     )
 

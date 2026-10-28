@@ -91,5 +91,8 @@
     "scope": "Local checks against owner-mirror template and one registered witness; not organizer acceptance, complete novelty, or slot authorization."
   },
   "historical_run_card": "../../evidence/dslup_unique_slot_run_card.json",
-  "historical_note": "Archive is preserved for audit; its promotion and detector-only gate are superseded."
+  "historical_note": "Archive is preserved for audit; its promotion and detector-only gate are superseded.",
+  "ok_to_submit": false,
+  "historical_record_sha256": "886e2492978be2ea63426bd7a5befa1312f9569c368931ff1b1d00a451844e07",
+  "historical_record_warning": "Historical detector-only promotion is retracted and not submission authorization."
 }
