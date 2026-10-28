@@ -79,7 +79,9 @@
       "id": "OS-6",
       "title": "DrivenData data page (training data)",
       "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/data/",
-      "claims_verified": ["NOT-VERIFIED this session: the page requires login. Prior-session notes say it redirects to login; the restored files are owner-supplied mirrors (see registry/data_manifest.json)."],
+      "claims_verified": [
+        "NOT-VERIFIED this session: the page requires login. Prior-session notes say it redirects to login; the restored files are owner-supplied mirrors (see registry/data_manifest.json)."
+      ],
       "quote": null,
       "irregularity": "IRR-2026-10-27-04: competition inputs come from owner-mirror GitHub repos, pinned by SHA-256, not from organizer downloads."
     },
@@ -87,9 +89,73 @@
       "id": "OS-7",
       "title": "GeoDAWN USGS data release (DOI 10.5066/P93LGLVQ)",
       "url": "https://doi.org/10.5066/P93LGLVQ",
-      "claims_verified": ["Cited by OS-2 PDF footnote 3 as the GeoDAWN source; the DOI string appears verbatim in the rules PDF."],
+      "claims_verified": [
+        "Cited by OS-2 PDF footnote 3 as the GeoDAWN source; the DOI string appears verbatim in the rules PDF."
+      ],
       "quote": "[https://doi.org/10.5066/P93LGLVQ](https://doi.org/10.5066/P93LGLVQ)",
       "irregularity": null
+    },
+    {
+      "id": "OS-8",
+      "title": "DOE Geothermal Data Repository: INGENIOUS Great Basin Regional Dataset Compilation",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "claims_verified": [
+        "The record is marked publicly accessible and CC BY 4.0.",
+        "The compilation describes 2-meter temperature probes, well/spring temperatures and chemistry, heat flow, magnetotellurics, gravity/magnetics, faults and related geothermal datasets.",
+        "The record provides direct download links for the 2m temperature probe archive and well/spring archive; no binary was downloaded into this checkout.",
+        "The page does not establish site-by-site coverage or competition-use provenance for any owner mirror."
+      ],
+      "quote": "These datasets may be redistributed with attribution (see citation information below).",
+      "irregularity": "The public catalog record and access links were verified, but binaries were not downloaded; external repository access is outside the sandbox shell host allowlist. Verify exact file checksums, site coverage and data provenance before use."
+    },
+    {
+      "id": "OS-9",
+      "title": "NASA Earthdata OPERA DISP-S1 product description (DOI 10.5067/SNWG/OPL3DISPS1-V1)",
+      "url": "https://www.earthdata.nasa.gov/data/catalog/asf-opera-l3-disp-s1-v1-1",
+      "claims_verified": [
+        "The catalog describes an active Version 1 DISP-S1 product with a 30 m spatial posting and line-of-sight surface displacement.",
+        "The catalog states a broad North American extent including the United States, U.S. territories, parts of Canada and mainland areas south to Panama.",
+        "The catalog listed 205,761 files/granules on the page fetch dated 2026-10-27.",
+        "These statements establish product/catalog existence and broad extent only; no tile-level coverage, usable acquisition dates or downloads for a proposed site were verified."
+      ],
+      "quote": "DISP-S1 products provide spatial coverage across North America, encompassing the United States, U.S. territories within 200 km of the U.S. border, Canada, and mainland countries from the southern U.S. border to Panama.",
+      "irregularity": "The separate OPERA Data Access and Tools page showed six dataset rows and did not list DISP-S1 in those rows; the product DOI resolves to this separate active NASA/ASF catalog record. Treat access and site-level coverage as unverified until searched in the ASF tools."
+    },
+    {
+      "id": "OS-10",
+      "title": "NASA Earthdata OPERA Data Access and Tools",
+      "url": "https://www.earthdata.nasa.gov/data/projects/opera/data-access-tools",
+      "claims_verified": [
+        "The page fetch displayed six OPERA dataset rows; none of the six was DISP-S1.",
+        "The same page lists ASF Displacement Portal, ASF SearchAPI and asf_search among OPERA access/search tools.",
+        "The page itself therefore does not prove the DISP-S1 product is absent; the separate product DOI resolves to an active catalog record (OS-9)."
+      ],
+      "quote": "You're viewing 6 of 6",
+      "irregularity": "Catalog presentation discrepancy: the current tools page dataset table omits DISP-S1, while the OPERA project/product pages describe it and the DOI resolves to an active catalog entry. No tile search was performed."
+    },
+    {
+      "id": "OS-11",
+      "title": "USGS 3D Elevation Program (3DEP)",
+      "url": "https://www.usgs.gov/3d-elevation-program",
+      "claims_verified": [
+        "The USGS page says 3DEP products are free of charge and without use restrictions.",
+        "The page points to spatial metadata as a source for current lidar availability and project information.",
+        "This program-level page does not verify lidar coverage, resolution or acquisition date at the proposed study sites."
+      ],
+      "quote": "All 3DEP products are available free of charge and without use restrictions.",
+      "irregularity": "The program access and use statement is not evidence of site-specific coverage; verify spatial metadata for a specific tile before including terrain-derived features."
+    },
+    {
+      "id": "OS-12",
+      "title": "USGS GeoDAWN airborne magnetic and radiometric data release",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "claims_verified": [
+        "USGS describes magnetic and radiometric surveys over northern and western Nevada and eastern California, with magnetic, radiometric and lidar-related products.",
+        "The USGS data release page marks the work CC0 1.0 Universal.",
+        "The release geography is broad; exact footprint/resolution at any proposed site still needs to be verified from its data products."
+      ],
+      "quote": "The USGS and the Department of Energy have collaborated to acquire high-resolution airborne magnetic and radiometric data, over northern and western Nevada and eastern California.",
+      "irregularity": "The page supports broad source availability and licensing, not site-level coverage or accuracy. No new GeoDAWN binaries were downloaded into the current checkout."
     }
   ]
 }

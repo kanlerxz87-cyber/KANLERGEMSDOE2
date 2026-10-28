@@ -5,6 +5,7 @@
   "time_precision": "date only; source viewed via the research page-fetch tool",
   "top_public_dti": 0.4544,
   "fifth_public_dti": 0.3566,
+  "twenty_fifth_public_dti": 0.3195,
   "evidence_class": "ORGANIZER PUBLIC LEADERBOARD OBSERVATION; not a submission-page receipt",
   "warning": "Historical snapshot until an automated refresh succeeds; the leaderboard and account quota can change."
 }

@@ -1,12 +1,12 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-27T17:31:11.562697+00:00",
+  "generated_utc": "2026-10-27T23:55:23+00:00",
   "hypothesis": "H-K1 HTCADS; proposed height-persistent cross-gradient corroboration",
   "mechanism": "Compare potential-field gradient orientation and displacement across continuation heights with separate hydrothermal evidence; proposed, not fitted.",
   "named_non_fault_mimic": "Unfaulted lithologic contacts and survey leveling seams",
   "holdout_dti": null,
   "holdout_ci95": null,
-  "holdout_status": "Not measured in this session: stopped before fit. Prior results are historical, not replayed.",
+  "holdout_status": "Not measured in this review: the literal registry witness proves the frozen-budget gate fails before fitting; the current checkout has no data/ or cached feature stack. Prior results are historical and not independently replayed.",
   "correlation_overlap_vs_registry": {
     "surface_pre_placement": null,
     "surface_status": "No new surface was built or compared",
@@ -65,5 +65,9 @@
   "maximum_experiments": 3,
   "weekly_slots_spent_this_session": 0,
   "ok_to_submit": false,
-  "verdict": "negative"
+  "verdict": "negative",
+  "review_scope": "Three-pass repository, source and presentation review only. No feature fit, placement, new raster or submission slot. Official public leaderboard, DrivenData problem page, USGS GeoDAWN, DOE GDR 1391, USGS 3DEP, NASA OPERA, EPSG:32611 and reference-solution pages were checked via web retrieval; external binaries were not downloaded.",
+  "leaderboard_estimate": null,
+  "eligible_downloads": [],
+  "ok_to_download_and_submit": false
 }

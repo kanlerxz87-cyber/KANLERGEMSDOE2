@@ -86,8 +86,8 @@ def test_shared_holdout_empty_truth_fold_counts_false_positives() -> None:
     assert r_soft_noisy["pooled_dti"] < r_soft_clean["pooled_dti"] - 0.20
 
 
-def test_unified_run_cards_and_new_darp_geotiff_portal_safety() -> None:
-    """Verify byte-identical DARP-MT10 run cards + 13/13 GeoTIFF checks + <=70% vs DSLUP/ECPU."""
+def test_archived_darp_run_cards_and_historical_geotiff_receipt() -> None:
+    """Verify byte-identical archived DARP records and their no-submit status."""
     paths = [
         ROOT / "evidence/darp_mt10_run_card_20261027.json",
         ROOT / "docs/downloads/darp_mt10_run_card.json",
@@ -99,6 +99,10 @@ def test_unified_run_cards_and_new_darp_geotiff_portal_safety() -> None:
     assert rc["correlation_overlap_vs_registry"]["overlap_3px_vs_dslup_c71122d5"] <= 0.70
     assert rc["correlation_overlap_vs_registry"]["overlap_3px_vs_ecpu_cecbdca7"] <= 0.70
     assert rc["verdict"] == "negative"
+    assert rc["archive_status"] == "archived_negative_not_current_lane"
+    assert "not the current assignment or a submission recommendation" in rc["archive_notice"]
+    assert "fleet-wide gain" in rc["archive_notice"]
+    assert rc["current_authoritative_run_card"] == "../../evidence/current_run_card.json"
     assert rc["ok_to_download_for_research"] is True
     assert rc["ok_to_download_and_submit"] is False
     assert rc["submission_filename"] == "kanlergems2-darp-exp-1-37654dots-20261027T181633Z-4ad35e71-zeros.tif"
@@ -131,7 +135,7 @@ def test_unified_run_cards_and_new_darp_geotiff_portal_safety() -> None:
 
 
 def test_68ch_canary_and_c_pied_breakthrough_and_pigeonhole_proof() -> None:
-    """Verify 68-channel Rule 4 canary, DARP-EXP-2 +39.1% C_pied win, and exact U=6,649 Pigeonhole bound."""
+    """Verify the archived canary, restricted-split HOLDOUT-DTI receipt, and exact U=6,649 bound."""
     canary = json.loads((ROOT / "evidence/darp_mt10_canary_20261027.json").read_text(encoding="utf-8"))
     assert canary["passed"] is True
     assert canary["total_features_tested"] == 68
@@ -150,7 +154,7 @@ def test_68ch_canary_and_c_pied_breakthrough_and_pigeonhole_proof() -> None:
     min_ov = (37_654 - ph["exact_uncovered_pixels_U"]) / 37_654
     assert min_ov > 0.8234
 
-    # DARP-EXP-2 C-PIED-v1.0 breakthrough (+39.1% over 0.2778 Champion)
+    # This is a restricted-split HOLDOUT-DTI ablation, not a leaderboard gain or general proof.
     exp2 = next(e for e in darp["experiments"] if e["id"] == "DARP-EXP-2")
     cp2 = exp2["c_pied_piedmont_off_catalogue"]
     champ_cp = darp["reference_benchmarks"]["GEMSDOE32_B2_0p2778_champ"]["c_pied_v1_0_dti"]
@@ -184,3 +188,20 @@ def test_sister_sites_audited_and_evaluate_holdout_verify_darp() -> None:
     assert out["verified"] is True
     assert out["verdict"] == "negative"
     assert out["ok_to_download_and_submit"] is False
+    assert out["exp2_c_pied_holdout"]["evidence_class"] == "HOLDOUT-DTI"
+    assert out["exp2_c_pied_holdout"]["evaluator_version"] == "GEMSDOE70-C-PIED-v1.0"
+    assert out["exp2_c_pied_holdout"]["withheld_positive_count"] == 9847
+
+
+def test_archived_darp_one_off_script_fails_closed_without_overwriting_current_state() -> None:
+    card = (ROOT / "evidence/current_run_card.json").read_bytes()
+    docs_card = (ROOT / "docs/data/run_card.json").read_bytes()
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts/audit_sister_and_focus_20261027.py")],
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode != 0
+    assert "Archived DARP/sister audit is disabled" in proc.stderr
+    assert (ROOT / "evidence/current_run_card.json").read_bytes() == card
+    assert (ROOT / "docs/data/run_card.json").read_bytes() == docs_card

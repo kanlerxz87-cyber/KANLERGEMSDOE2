@@ -71,6 +71,8 @@ EXPERIMENT_JSON = ROOT / "evidence/kg2_experiment_20261026.json"
 RUN_CARD_JSON = ROOT / "evidence/kg2_run_card_20261026.json"
 ROOT_RUN_CARD_JSON = ROOT / "run_card.json"
 DOCS_RUN_CARD_JSON = ROOT / "docs/data/run_card.json"
+CURRENT_RUN_CARD_JSON = ROOT / "evidence/current_run_card.json"
+STATUS_FEED_JSON = ROOT / "docs/data/status_feed.json"
 
 
 def save_json(obj: Any, path: Path) -> None:
@@ -1071,46 +1073,84 @@ def run_stage_emit_and_audit(
 
 
 def verify_recorded() -> dict[str, Any]:
-    for p in (CANARY_JSON, HOLDOUT_JSON, RUN_CARD_JSON, ROOT_RUN_CARD_JSON, DOCS_RUN_CARD_JSON):
+    """Verify archived KG2 bytes separately from the current fail-closed run card."""
+    for p in (
+        CANARY_JSON,
+        HOLDOUT_JSON,
+        RUN_CARD_JSON,
+        ROOT_RUN_CARD_JSON,
+        DOCS_RUN_CARD_JSON,
+        CURRENT_RUN_CARD_JSON,
+        STATUS_FEED_JSON,
+    ):
         if not p.exists():
-            raise SystemExit(f"Missing recorded KG2 artifact: {p}")
-    c1 = json.loads(RUN_CARD_JSON.read_text())
-    c2 = json.loads(ROOT_RUN_CARD_JSON.read_text())
-    c3 = json.loads(DOCS_RUN_CARD_JSON.read_text())
-    if not (c1 == c2 == c3):
-        raise SystemExit("Run card copies in root, evidence/, and docs/data/ disagree")
+            raise SystemExit(f"Missing recorded KG2/current-status artifact: {p}")
 
-    tif_path = ROOT / "docs/downloads" / c1["submission_filename"]
-    zip_path = ROOT / "docs/downloads" / c1["zip_artifact"]
-    if sha256_file(tif_path) != c1["raster_sha256"]:
-        raise SystemExit("Saved GeoTIFF SHA-256 mismatch")
-    if sha256_file(zip_path) != c1["zip_sha256"]:
-        raise SystemExit("Saved ZIP SHA-256 mismatch")
+    # These two copies are the immutable KG2-MGHV lane record.  The docs copy is
+    # intentionally the current, negative selector card and must not be compared
+    # with a historical card that names an old TIFF.
+    archived = json.loads(RUN_CARD_JSON.read_text(encoding="utf-8"))
+    root_archive = json.loads(ROOT_RUN_CARD_JSON.read_text(encoding="utf-8"))
+    if archived != root_archive:
+        raise SystemExit("Historical KG2 Run Card copies in root and evidence/ disagree")
+    current = json.loads(CURRENT_RUN_CARD_JSON.read_text(encoding="utf-8"))
+    docs_current = json.loads(DOCS_RUN_CARD_JSON.read_text(encoding="utf-8"))
+    if current != docs_current:
+        raise SystemExit("Current Run Card copies in evidence/ and docs/data/ disagree")
+    if current.get("verdict") != "negative" or current.get("ok_to_submit") is not False:
+        raise SystemExit("Current Run Card is not fail-closed")
+    if current.get("ok_to_download_and_submit") is not False:
+        raise SystemExit("Current Run Card does not explicitly deny download-and-submit")
+    if current.get("raster_sha256") is not None or current.get("holdout_dti") is not None:
+        raise SystemExit("Current Run Card unexpectedly contains a candidate or score")
+    if current.get("leaderboard_estimate") is not None or current.get("eligible_downloads") != []:
+        raise SystemExit("Current Run Card unexpectedly offers a score estimate or eligible TIFF")
+
+    feed = json.loads(STATUS_FEED_JSON.read_text(encoding="utf-8"))
+    prior_audit = current.get("validator_output", {}).get("prior_raster_exact_byte_audit", {})
+    if feed.get("verdict") != "negative" or feed.get("ok_to_download_and_submit") is not False:
+        raise SystemExit("Generated status feed is not fail-closed")
+    if feed.get("research_artifact_sha256") != prior_audit.get("sha256"):
+        raise SystemExit("Generated status feed lost the archived research-artifact hash")
+
+    tif_path = ROOT / "docs/downloads" / archived["submission_filename"]
+    zip_path = ROOT / "docs/downloads" / archived["zip_artifact"]
+    if sha256_file(tif_path) != archived["raster_sha256"]:
+        raise SystemExit("Archived KG2 GeoTIFF SHA-256 mismatch")
+    if sha256_file(zip_path) != archived["zip_sha256"]:
+        raise SystemExit("Archived KG2 ZIP SHA-256 mismatch")
     with zipfile.ZipFile(zip_path) as zf:
         if zf.namelist() != [tif_path.name]:
-            raise SystemExit("ZIP member list mismatch")
-        if hashlib.sha256(zf.read(tif_path.name)).hexdigest() != c1["raster_sha256"]:
-            raise SystemExit("ZIP inner GeoTIFF hash mismatch")
-    if c1["submission_note_length"] > 140 or len(c1["submission_note"]) > 140:
-        raise SystemExit("Submission note exceeds 140 characters")
+            raise SystemExit("Archived KG2 ZIP member list mismatch")
+        if hashlib.sha256(zf.read(tif_path.name)).hexdigest() != archived["raster_sha256"]:
+            raise SystemExit("Archived KG2 ZIP inner GeoTIFF hash mismatch")
+    if archived["submission_note_length"] > 140 or len(archived["submission_note"]) > 140:
+        raise SystemExit("Historical KG2 note exceeds 140 characters")
+
+    holdout = archived["holdout_dti"]
     return {
         "verified": True,
-        "submission_filename": c1["submission_filename"],
-        "raster_sha256": c1["raster_sha256"],
-        "holdout_dti": c1["holdout_dti"]["dti"],
-        "ci95": c1["holdout_dti"]["ci95"],
-        "max_competing_3px_overlap": c1["correlation_overlap_vs_registry"][
-            "post_placement_competing_max_3px_overlap"
-        ],
-        "max_surface_spearman": c1["correlation_overlap_vs_registry"][
-            "pre_placement_surface_max_abs_spearman"
-        ],
-        "historical_recorded_verdict": c1.get("historical_verdict_at_creation", c1["verdict"]),
-        "scope": "Archived hash/ZIP/metadata verification only; does not replay holdout or authorize upload.",
-        "ok_to_download": True,
+        "historical_archive_verified": True,
+        "historical_filename": tif_path.name,
+        "historical_raster_sha256": archived["raster_sha256"],
+        "historical_holdout": {
+            "evidence_class": holdout.get("label", "HOLDOUT-DTI"),
+            "evaluator_version": holdout["evaluator_version"],
+            "withheld_positive_count": holdout["withheld_positive_pixels"],
+            "dti": holdout["dti"],
+            "ci95": holdout["ci95"],
+        },
+        "current_run_card_generated_utc": current["generated_utc"],
+        "current_verdict": current["verdict"],
+        "current_raster_sha256": current["raster_sha256"],
+        "current_holdout_dti": current["holdout_dti"],
+        "current_leaderboard_estimate": current["leaderboard_estimate"],
+        "current_eligible_downloads": current["eligible_downloads"],
+        "ok_to_download_and_submit": False,
         "ok_to_submit": False,
+        "scope": "Historical TIFF/ZIP/metadata hash verification only; does not replay holdout, estimate a leaderboard score, or authorize submission.",
+        "reason": "The current negative Run Card and literal registry-witness stop supersede the historical KG2 lane record.",
         "verdict": "negative",
-        "reason": "Current literal registry-witness audit supersedes the historical promotion flag.",
     }
 
 

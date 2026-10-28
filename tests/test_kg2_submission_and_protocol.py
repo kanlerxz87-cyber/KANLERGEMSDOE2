@@ -60,32 +60,47 @@ def test_geotiff_strict_competition_compliance_without_human_intervention() -> N
 
 
 def test_run_card_and_parallel_run_protocol_gates() -> None:
-    card = json.loads((ROOT / "run_card.json").read_text())
-    card_ev = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
-    card_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
-    assert card == card_ev == card_docs
+    # Historical KG2 byte/experiment records remain archived and are not the
+    # current selector card copied to docs/data/.
+    archived = json.loads((ROOT / "run_card.json").read_text())
+    archived_ev = json.loads((ROOT / "evidence/kg2_run_card_20261026.json").read_text())
+    current = json.loads((ROOT / "evidence/current_run_card.json").read_text())
+    current_docs = json.loads((ROOT / "docs/data/run_card.json").read_text())
+    assert archived == archived_ev
+    assert current == current_docs
+    assert archived != current
 
     required = {
         "hypothesis",
         "mechanism",
-        "non_fault_mimic_process",
+        "named_non_fault_mimic",
         "holdout_dti",
         "correlation_overlap_vs_registry",
         "raster_sha256",
         "validator_output",
         "submission_name",
-        "submission_note",
+        "note",
         "verdict",
     }
-    assert required.issubset(card.keys())
-    assert card["verdict"] == "negative"
-    assert card["ok_to_submit"] is False
-    assert len(card["submission_note"]) <= 140
-    assert card["experiments_used"] <= card["budget_max_experiments"] <= 3
-    assert card["weekly_slot_spent_automatically"] is False
+    assert required.issubset(current.keys())
+    assert current["verdict"] == "negative"
+    assert current["ok_to_submit"] is False
+    assert current["ok_to_download_and_submit"] is False
+    assert current["raster_sha256"] is None and current["holdout_dti"] is None
+    assert current["leaderboard_estimate"] is None and current["eligible_downloads"] == []
+    assert len(current["note"]) <= 140
+    assert current["experiments_run"] <= current["maximum_experiments"] <= 3
+    assert current["weekly_slots_spent_this_session"] == 0
 
-    # Gate 1: Uniqueness BOTH pre-placement continuous surface AND post-placement final dots
-    uniq = card["correlation_overlap_vs_registry"]
+    # Archived KG2-MGHV evidence is historical, not a current recommendation.
+    assert archived["verdict"] == "negative"
+    assert archived["ok_to_submit"] is False
+    assert len(archived["submission_note"]) <= 140
+    assert archived["experiments_used"] <= archived["budget_max_experiments"] <= 3
+    assert archived["weekly_slot_spent_automatically"] is False
+
+    # Gate 1: historical KG2 uniqueness audit, including the literal all-registry stop.
+    uniq = archived["correlation_overlap_vs_registry"]
     assert uniq["rasters_checked"] == 360
     assert uniq["competing_detectors_checked"] == 359
     assert uniq["pre_placement_surface_max_abs_spearman"] <= 0.90
@@ -105,12 +120,12 @@ def test_run_card_and_parallel_run_protocol_gates() -> None:
 
     # Holdout beat prior record and paired 95% CIs vs controls all > 0
     hold = json.loads((ROOT / "evidence/kg2_holdout_20261026.json").read_text())
-    assert card["holdout_dti"]["evaluator_version"] == "gems-segment-pooled-v1"
-    assert card["holdout_dti"]["withheld_positive_pixels"] == 60_988
-    assert card["holdout_dti"]["dti"] > 0.1637924246971501
-    for comp_key, comp in card["holdout_dti"]["paired_delta_ci95"].items():
+    assert archived["holdout_dti"]["evaluator_version"] == "gems-segment-pooled-v1"
+    assert archived["holdout_dti"]["withheld_positive_pixels"] == 60_988
+    assert archived["holdout_dti"]["dti"] > 0.1637924246971501
+    for comp_key, comp in archived["holdout_dti"]["paired_delta_ci95"].items():
         assert comp["paired_delta_ci95"][0] > 0.0, f"Paired 95% CI lower bound <= 0 for {comp_key}"
-    assert len(hold["arms"]) == 3 and card["experiments_used"] == 3
+    assert len(hold["arms"]) == 3 and archived["experiments_used"] == 3
 
 
 def test_c2st_ben_david_and_nine_site_receipts() -> None:
@@ -151,6 +166,13 @@ def test_evaluate_holdout_cli_verify_kg2() -> None:
     )
     out = json.loads(proc.stdout)
     assert out["verified"] is True
-    assert out["ok_to_download"] is True
+    assert out["historical_archive_verified"] is True
+    assert out["historical_holdout"]["evidence_class"] == "HOLDOUT-DTI"
+    assert out["current_verdict"] == "negative"
+    assert out["current_raster_sha256"] is None
+    assert out["current_holdout_dti"] is None
+    assert out["current_leaderboard_estimate"] is None
+    assert out["current_eligible_downloads"] == []
+    assert out["ok_to_download_and_submit"] is False
     assert out["ok_to_submit"] is False
     assert out["verdict"] == "negative"

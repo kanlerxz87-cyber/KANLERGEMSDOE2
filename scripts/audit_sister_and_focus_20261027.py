@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Comprehensive 2026-10-27 multi-site audit covering:
-  - New KANLERGEMSDOE2 candidate (`kanlergems2-darp-exp-1-37654dots-...-4ad35e71-zeros.tif`) + DARP-EXP-2/3
-  - Historical KANLERGEMSDOE2 candidates (`11a2f251`, `f5a469e94b14`, `cab53e1b`)
-  - All 9 Focus Sites (`GEMSDOE24, 25, 27, 28, 30, 31, 32, 33, 36`)
-  - All Sister Sites (`KANLERGEMSDOE1, KANLERGEMSDOE3, WBGGEMSDOE1..3, EUGGEMSDOE1..3, GINNYGEMSDOE1..3`)
-  - Non-H19-5 Fleet Leader (`GEMSDOE70` `0.2478 USER-REPORTED`)
+"""ARCHIVED one-off multi-site/DARP audit; execution is intentionally disabled.
 
-Synchronizes `run_card.json` == `evidence/run_card.json` == `docs/data/run_card.json` ==
-`docs/downloads/darp_mt10_run_card.json` and emits `evidence/darp_validator_receipt_20261027.json`
-and `evidence/sister_and_focus_audit_20261027.json`.
+Its outputs are historical evidence only. The old `main` overwrote the root and
+Pages run-card paths with a non-current lane, and its DARP ablation prose
+attributed restricted-split HOLDOUT-DTI to general fault recovery. Do not rerun
+or use this script to regenerate current status. The current selector is
+`evidence/current_run_card.json`; no file is cleared for download-and-submit.
 """
 from __future__ import annotations
 
@@ -43,6 +40,10 @@ def _ov3_asym(m_a: np.ndarray, d3_b: np.ndarray) -> float:
 
 
 def main() -> int:
+    raise SystemExit(
+        "Archived DARP/sister audit is disabled: it would overwrite current run-card paths and is not the assigned lane. "
+        "Use evidence/current_run_card.json and the fail-closed current builder."
+    )
     ddir, edir, dldir = data_dir(), evidence_dir(), downloads_dir()
     extra = ddir / "scored_extra"
     scored = ddir / "scored"
@@ -196,10 +197,10 @@ def main() -> int:
                 "secondary_off_catalogue_sgmc": exp2["sgmc_off_catalogue"],
                 "piedmont_off_catalogue_c_pied": exp2["c_pied_piedmont_off_catalogue"],
                 "finding": (
-                    "DARP-EXP-2 achieved 0.140750 HOLDOUT-DTI on GEMSDOE70-C-PIED-v1.0 (+0.039584 / +39.1% over 0.2778 Champion "
-                    "0.101166, paired 95% CI [+0.017906, +0.057064]; +81.8% over prior HTCADS EXP-2 0.077405), proving seamless "
-                    "10m+3m+1m piedmont fusion strongly recovers concealed basin-margin faults, while cubing `piedmont_habitat_prior` "
-                    "(`IR-DARP-CREST-OVERDAMP-08`) over-damped Z_b < 150m range-front contacts (-0.002837 on Hide-Rec)."
+                    "ARCHIVED restricted-split HOLDOUT-DTI diagnostic on GEMSDOE70-C-PIED-v1.0; not an organizer score "
+                    "and not proof of general or causal fault recovery. The DARP full-catalogue/literal-registry verdict is "
+                    "negative; no file is cleared for competition submission. See the structured HOLDOUT-DTI fields for the "
+                    "evaluator, withheld-positive count and confidence interval."
                 ),
             },
             "ablation_darp_exp3_dinkelbach": {
@@ -251,12 +252,17 @@ def main() -> int:
         "verdict": "negative",
         "ok_to_download_for_research": True,
         "ok_to_download_and_submit": False,
+        "archive_status": "archived_negative_not_current_lane",
+        "archive_notice": (
+            "ARCHIVED NEGATIVE LANE — not the current assignment or a submission recommendation. Restricted-split DARP "
+            "ablations are HOLDOUT-DTI diagnostics, not public scores or fleet-wide gains. The full-catalogue/literal-registry "
+            "decision is negative. The current authority is evidence/current_run_card.json; no DARP file is cleared to download and submit."
+        ),
+        "current_authoritative_run_card": "evidence/current_run_card.json",
         "decision_summary": (
-            "OK TO DOWNLOAD FOR RESEARCH (13/13 [0,1] portal-safe format PASS, 0 NaNs, 68/68 leakage canaries PASS, "
-            "detector uniqueness PASS at 67.08% <= 70% across 287 competing detectors & 58.83% vs prior 11a2f251) · "
-            "NEGATIVE / DO NOT SUBMIT TO DRIVENDATA (primary HIDE-RECOVER-v3.1 delta is -0.001153 [-0.0169, +0.0141] vs "
-            "0.2778 Champion despite +15.5% / +39.1% C_pied piedmont fault gains, and literal all-registry check hits the "
-            "99.87%-footprint 13gems 5-px calibration grid; 0 weekly slots spent)."
+            "ARCHIVED DARP-MT10 LANE: local format and canary checks are historical diagnostics only. The primary full-catalogue "
+            "holdout and literal all-registry checks ended negative. Restricted piedmont ablations are HOLDOUT-DTI diagnostics, "
+            "not organizer scores or fleet-wide performance claims. No DARP file is cleared to download and submit."
         ),
     }
 

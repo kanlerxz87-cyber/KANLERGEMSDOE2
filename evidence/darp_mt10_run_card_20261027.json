@@ -651,5 +651,8 @@
   "verdict": "negative",
   "ok_to_download_for_research": true,
   "ok_to_download_and_submit": false,
-  "decision_summary": "OK TO DOWNLOAD FOR RESEARCH (13/13 [0,1] portal-safe format PASS, 0 NaNs, 68/68 leakage canaries PASS, detector uniqueness PASS at 67.08% <= 70% across 287 competing detectors & 58.83% vs prior 11a2f251) \u00b7 NEGATIVE / DO NOT SUBMIT TO DRIVENDATA (primary HIDE-RECOVER-v3.1 delta is -0.001153 [-0.0169, +0.0141] vs 0.2778 Champion despite +15.5% / +39.1% C_pied piedmont fault gains, and literal all-registry check hits the 99.87%-footprint 13gems 5-px calibration grid; 0 weekly slots spent)."
+  "decision_summary": "OK TO DOWNLOAD FOR RESEARCH (13/13 [0,1] portal-safe format PASS, 0 NaNs, 68/68 leakage canaries PASS, detector uniqueness PASS at 67.08% <= 70% across 287 competing detectors & 58.83% vs prior 11a2f251) · NEGATIVE / DO NOT SUBMIT TO DRIVENDATA (primary HIDE-RECOVER-v3.1 delta is -0.001153 [-0.0169, +0.0141] vs 0.2778 Champion despite +15.5% / +39.1% C_pied piedmont fault gains, and literal all-registry check hits the 99.87%-footprint 13gems 5-px calibration grid; 0 weekly slots spent).",
+  "archive_status": "archived_negative_not_current_lane",
+  "archive_notice": "ARCHIVED NEGATIVE LANE — not the current assignment or a submission recommendation. The restricted DARP-EXP-2 piedmont ablation is a HOLDOUT-DTI diagnostic, not an organizer score or a fleet-wide gain. The full-catalogue/literal-registry decision is negative. Use evidence/current_run_card.json as the current authority; no DARP file is cleared to download and submit.",
+  "current_authoritative_run_card": "../../evidence/current_run_card.json"
 }

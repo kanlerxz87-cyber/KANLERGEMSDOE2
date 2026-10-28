@@ -174,9 +174,10 @@ def test_current_evidence_has_no_new_raster_or_score():
 def test_public_feed_parses_only_ranked_public_score_table(tmp_path):
     rows = ''.join(f'<tr><td>#{i}</td><td>Team {i}</td><td>{score:.4f}</td><td>2</td></tr>'
                    for i, score in enumerate([.4544, .40, .39, .37, .3566], 1))
+    rows += '<tr><td>#25</td><td>Team 25</td><td>0.3195</td><td>3</td></tr>'
     valid = '<html><table><tr><th>Rank</th><th>Participant</th><th>Best public DW-Tversky</th><th>Count</th></tr>' + rows + '</table></html>'
     values = refresh_public_feed.parse_leaderboard(valid)
-    assert values[1] == .4544 and values[5] == .3566
+    assert values[1] == .4544 and values[5] == .3566 and values[25] == .3195
     with pytest.raises(ValueError):
         refresh_public_feed.parse_leaderboard('<form>Log in</form>')
     with pytest.raises(ValueError):
@@ -185,7 +186,9 @@ def test_public_feed_parses_only_ranked_public_score_table(tmp_path):
     fixture.write_text(valid)
     out = tmp_path / 'snapshot.json'
     assert refresh_public_feed.main(['--input-html', str(fixture), '--out', str(out)]) == 0
-    assert json.loads(out.read_text())['status'] == 'fixture_only'  # not an organizer observation
+    fixture_snapshot = json.loads(out.read_text())
+    assert fixture_snapshot['status'] == 'fixture_only'  # not an organizer observation
+    assert fixture_snapshot['twenty_fifth_public_dti'] == .3195
     fixture.write_text('<form>login</form>')
     assert refresh_public_feed.main(['--input-html', str(fixture), '--out', str(out), '--strict']) == 1
     failed = json.loads(out.read_text())

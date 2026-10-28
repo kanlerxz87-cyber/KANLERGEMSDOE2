@@ -113,6 +113,7 @@ def main(argv=None) -> int:
             "observed_utc": observed,
             "top_public_dti": values[1],
             "fifth_public_dti": values[5],
+            "twenty_fifth_public_dti": values.get(25),
             "evidence_class": "ORGANIZER PUBLIC LEADERBOARD OBSERVATION; not a submission-page receipt" if not args.input_html else "TEST FIXTURE; not an organizer observation",
             "warning": "Public leaderboard snapshot only; scores and account quota can change.",
         }
@@ -126,6 +127,7 @@ def main(argv=None) -> int:
             "error": f"{type(exc).__name__}: {exc}",
             "top_public_dti": None,
             "fifth_public_dti": None,
+            "twenty_fifth_public_dti": None,
             "last_verified_snapshot": snapshot,
             "warning": "Refresh failed. Any last snapshot is stale and no account quota was checked.",
         }
