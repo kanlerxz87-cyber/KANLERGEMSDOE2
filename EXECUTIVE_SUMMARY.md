@@ -4,6 +4,12 @@
 
 The prior HPTR research TIFF ([download for research only](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif)) is locally finite and matches the owner-mirror grid, but 37,640 of 37,654 dots (99.963%) overlap the lattice within 3 pixels. Its surface and holdout were not replayed. The SGMC-CAL transform relies on an inferred hidden-truth count and is not measured HOLDOUT-DTI. [Archived card](evidence/session3_hptr_run_card_20261027.json).
 
+## 2026-10-29 verification update
+
+- **Status: DO NOT SUBMIT (unchanged).** Independently recomputed from restored bytes: footprint 5,167,373 px; registry control witness (SHA-256 `b4570b40…47dc9b2`) leaves 6,649 px uncovered within 3 px. At 37,654 dots the minimum overlap is **82.34%** > 70%, so every placement is a forced duplicate under the literal rule. [Evidence](evidence/counting_bound_20261029.json) · [script](scripts/verify_counting_bound.py).
+- The largest dot count this single control does not force is **22,163**. Using it requires an explicit protocol change from you, plus holdout DTI and checks against all 359 other registry rasters. Neither exists yet.
+- Scores in the table below remain USER/OWNER-REPORTED. No leaderboard estimate is produced for any new file.
+
 ## Current research file and decision
 
 | Filename / SHA-256 | Research holdout (not a leaderboard estimate) | Literal uniqueness | Decision |
