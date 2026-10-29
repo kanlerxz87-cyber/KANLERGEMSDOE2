@@ -36,6 +36,11 @@ The overlap column is the nearest *focus-site* raster only, from [`evidence/pref
 - Sources are owner mirrors (SHA-pinned), not organizer-authenticated; the DrivenData data page requires login and was not reachable.
 
 [Independent budget-bound receipt](evidence/budget_bound_20261029.json) · [Replay receipt](evidence/preflight_replay_20261028.json)
+## 2026-10-29 verification update
+
+- **Status: DO NOT SUBMIT (unchanged).** Independently recomputed from restored bytes: footprint 5,167,373 px; registry control witness (SHA-256 `b4570b40…47dc9b2`) leaves 6,649 px uncovered within 3 px. At 37,654 dots the minimum overlap is **82.34%** > 70%, so every placement is a forced duplicate under the literal rule. [Evidence](evidence/counting_bound_20261029.json) · [script](scripts/verify_counting_bound.py).
+- The largest dot count this single control does not force is **22,163**. Using it requires an explicit protocol change from you, plus holdout DTI and checks against all 359 other registry rasters. Neither exists yet.
+- Scores in the table below remain USER/OWNER-REPORTED. No leaderboard estimate is produced for any new file.
 
 ## Current research file and decision
 
