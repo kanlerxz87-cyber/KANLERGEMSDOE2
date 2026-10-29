@@ -1,0 +1,41 @@
+{
+  "schema": "gems.final-verification.v1",
+  "verified_utc": "2026-10-29T02:50:35.909182+00:00",
+  "file": "kanlergemsdoe2-geothermal-blind-conduit-20261029T024633Z-60a6b7f6ca71-zeros.tif",
+  "sha256": "58967b215cf5351d2fd66861b51c23ab3c0d8b854864331d0ed988b6d544ad7a",
+  "sha_matches_run_card": true,
+  "name_matches_run_card": true,
+  "format_gates": {
+    "file_exists": true,
+    "name_matches_run_card": true,
+    "sha256_matches_run_card": true,
+    "single_band": true,
+    "dtype_float32": true,
+    "crs_epsg_32611": true,
+    "shape_3730x3292": true,
+    "geotransform_matches": true,
+    "footprint_all_finite": true,
+    "footprint_range_0_1": true,
+    "whole_array_0_1_no_nan": true,
+    "n_dots_20000": true,
+    "surface_max_abs_rank_corr_le_0_90": true,
+    "max_dot_overlap_le_0_70_local": true,
+    "lattice_overlap_le_0_70": true,
+    "pigeonhole_bound_le_0_70": true
+  },
+  "format_all_pass": true,
+  "unique_locally": true,
+  "registry_rasters_checked": 15,
+  "max_abs_surface_rank_correlation": 0.0047,
+  "max_dot_overlap_local_rasters": 0.2488,
+  "lattice_dot_overlap": 0.675,
+  "pigeonhole_min_lattice_overlap": 0.66755,
+  "n_dots": 20000,
+  "ok_to_download": true,
+  "ok_to_submit": false,
+  "verdict": "negative",
+  "reasons": [
+    "Format and local uniqueness verified.",
+    "Not cleared to submit: full 360-raster clearance and an independent selector are required; holdout estimate is modest."
+  ]
+}

@@ -82,13 +82,17 @@ def test_current_comparison_has_no_unsupported_projection() -> None:
 
 def test_executive_summary_has_nine_sites_and_no_fabricated_leaderboard_estimate() -> None:
     html_text = (ROOT / "docs/executive-summary.html").read_text(encoding="utf-8")
-    assert "NO new TIFF is approved" in html_text
-    assert "82.34%" in html_text
-    assert "Leaderboard-score estimate" in html_text
-    assert "No defensible mapping" in html_text
+    # New state: a unique candidate was generated this session — OK to download,
+    # not cleared to submit. The fail-closed verdict is preserved.
+    assert "kanlergemsdoe2-geothermal-blind-conduit-20261029T024633Z-60a6b7f6ca71-zeros.tif" in html_text
+    assert "58967b215cf5351d2fd66861b51c23ab3c0d8b854864331d0ed988b6d544ad7a" in html_text
+    assert "OK to DOWNLOAD" in html_text
+    assert "not cleared to submit" in html_text.lower()
+    assert "HOLDOUT-DTI 0.009154" in html_text
+    assert "no organizer receipt" in html_text
     for site in ("GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30", "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"):
         assert site in html_text
-    assert "0.2778" in html_text and "USER/OWNER-REPORTED" in html_text
+    assert "0.2778" in html_text and "USER-REPORTED" in html_text
     assert "97.58%" in html_text
     assert "Do not submit" in html_text
 
@@ -105,13 +109,19 @@ def test_hypothesis_agenda_is_ranked_but_does_not_claim_unmeasured_gain() -> Non
     assert "0.2778" in html_text
 
 
-def test_current_run_card_is_negative_and_no_candidate_was_emitted() -> None:
+def test_current_run_card_is_negative_and_no_submission_authorized() -> None:
     card = _load("evidence/current_run_card.json")
     assert card["verdict"] == "negative" and card["ok_to_submit"] is False
-    assert card["experiments_run"] == 0 and card["weekly_slots_spent_this_session"] == 0
-    assert card["raster_sha256"] is None and card["submission_name"] is None
-    assert card["holdout_dti"] is None and card["holdout_ci95"] is None
-    assert "novelty gate" in card["holdout_status"]
+    assert card["ok_to_download"] is True and card["ok_to_download_and_submit"] is False
+    assert card.get("experiments_run") == 1
+    assert card.get("weekly_slots_spent_this_session") == 0
+    assert card["raster_sha256"] and card["submission_name"]
+    tif = ROOT / "docs/downloads" / card["submission_name"]
+    assert tif.is_file() and _sha256(tif) == card["raster_sha256"]
+    assert card["holdout_dti"] == 0.009154
+    assert card["holdout_ci95"] == [0.006528, 0.012243]
+    assert len(card["note"]) <= 140
+    assert card["leakage_canary_auc"] <= 0.90
 
 
 def test_submission_table_html_links_resolve() -> None:
