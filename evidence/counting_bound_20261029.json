@@ -1,0 +1,32 @@
+{
+  "schema": "gems.counting-bound.v1",
+  "generated_utc": "2026-10-29T02:30:59.700381Z",
+  "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "witness_sha256_expected": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "witness_sha256_match": true,
+  "crs": "EPSG:32611",
+  "shape": [
+    3730,
+    3292
+  ],
+  "transform_first6": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+  ],
+  "footprint_pixels": 5167373,
+  "witness_positive_pixels": 206895,
+  "covered_within_3px": 5160724,
+  "uncovered_pixels": 6649,
+  "coverage_fraction": 0.9987132726822701,
+  "limit": 0.7,
+  "reference_budget": 37654,
+  "minimum_overlap_at_reference_budget": 0.8234184947150369,
+  "forced_duplicate_at_reference_budget": true,
+  "max_budget_not_forced_by_this_witness": 22163,
+  "scope": "Single registry control only. Does NOT test the other 359 registry rasters, surface rank correlation, holdout DTI, or organizer acceptance."
+}

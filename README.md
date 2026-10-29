@@ -4,6 +4,8 @@
 
 > **DO NOT SUBMIT.** No file is cleared. The research HPTR TIFF is not unique under the literal rule, and no new file or reliable leaderboard estimate was produced this session. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop. Historical proxy comparisons do not establish a leaderboard win. [Executive summary](EXECUTIVE_SUMMARY.md) · [GitHub Pages dashboard](docs/index.html)
 
+> **2026-10-29 update — still DO NOT SUBMIT.** An independent recomputation from restored, SHA-verified bytes ([script](scripts/verify_counting_bound.py) · [evidence](evidence/counting_bound_20261029.json)) confirms that at the frozen 37,654-dot budget any placement overlaps the registry control `13gems_…r13-lattice…` by at least **82.34%** (limit 70%). The largest budget the literal rule does not force is **22,163 dots**. Changing the frozen budget is a protocol decision; no file is cleared.
+
 ## Start here
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
