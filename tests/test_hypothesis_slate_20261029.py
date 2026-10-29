@@ -17,10 +17,10 @@ def test_current_card_remains_negative_and_contains_no_score_or_artifact():
     assert card["weekly_slots_spent_this_session"] == 0
     assert len(card["note"]) <= 140
     assert card["correlation_overlap_vs_registry"]["full_registry_checked"] is False
-    assert card["correlation_overlap_vs_registry"]["surface_pre_placement"] is None
-    assert card["validator_output"]["new_candidate_no_nan_inside_footprint"] is None
-    assert card["validator_output"]["new_candidate_values_in_0_1"] is None
-    assert card["validator_output"]["new_candidate_crs_shape_transform_match"] is None
+    assert card["correlation_overlap_vs_registry"]["preplacement_surface_rank_correlation"] is None
+    assert card["validator_output"]["no_nan_inside_footprint"] is None
+    assert card["validator_output"]["values_in_0_1"] is None
+    assert card["validator_output"]["crs_shape_transform_match"] is None
     prior = card["validator_output"]["historical_hptr_research_only"]
     assert prior["no_nan_inside_footprint"] and prior["values_in_0_1_inside_footprint"]
     assert prior["shape"] == [3730, 3292] and prior["crs"] == "EPSG:32611"
@@ -28,15 +28,17 @@ def test_current_card_remains_negative_and_contains_no_score_or_artifact():
     assert prior["usable_for_submission"] is False
 
 
-def test_research_slate_has_three_falsifiable_candidates_and_official_sources():
+def test_research_slate_has_four_falsifiable_candidates_and_official_sources():
     text = (ROOT / "research/2026-10-29_hypothesis_slate.md").read_text()
-    assert "No experiment was run" in text
-    assert "not an exhaustive forensic review" in text
-    assert "graph-based centerline bend/termination" in text
-    assert "Three-way blind-system interaction" in text
-    assert "Background-corrected heat-flow residual" in text
-    for label in ("Named non-fault mimic", "Distinction from local prior implementation", "Expected DTI priority / cost / data status"):
-        assert label in text
+    assert "Hypothesis-only; no new experiment" in text
+    assert "external GEMSDOE repositories were not exhaustively source-audited" in text
+    assert "Uncertainty-aware hydrothermal path-convergence stability" in text
+    assert "Potential-field anomaly break/turn geometry" in text
+    assert "Blind-system gravity-termination" in text
+    assert "Fold-local heat-flow residual" in text
+    assert "Named non-fault mimic" in text
+    assert "Difference from prior implementations" in text
+    assert "Rank is a qualitative priority ordering" in text
     for url in (
         "https://www.usgs.gov/publications/influence-pre-existing-structures-geothermal-springs-inferences-potential-field",
         "https://www.usgs.gov/publications/discovering-blind-geothermal-systems-great-basin-region-integrated-geologic-and",
@@ -44,8 +46,8 @@ def test_research_slate_has_three_falsifiable_candidates_and_official_sources():
         "https://pubs.usgs.gov/of/2005/1207/",
     ):
         assert url in text
-    assert "no numerical gain forecast" in text
-    assert "not viable until the exact inputs are obtained" in text
+    assert "numeric expected DTI gain" in text
+    assert "not viable until inputs are obtained and audited" in text
 
 
 def test_generated_research_page_and_readme_point_to_current_slate():
