@@ -1,0 +1,38 @@
+{
+  "schema": "gems.budget-bound-receipt.v1",
+  "generated_utc": "2026-10-29T02:39:56.906291+00:00",
+  "scope": "Single-witness lower bound. NOT a full-registry clearance. Authorises no file.",
+  "provenance": "SHA-pinned owner mirrors; not organizer-authenticated.",
+  "inputs": {
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "witness_file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "grid": {
+      "shape": [
+        3730,
+        3292
+      ],
+      "crs": "EPSG:32611",
+      "transform": [
+        100.0,
+        0.0,
+        243350.0,
+        0.0,
+        -100.0,
+        4508550.0
+      ]
+    }
+  },
+  "footprint_pixels": 5167373,
+  "witness_positive_pixels": 206895,
+  "covered_within_3px": 5160724,
+  "uncovered_pixels": 6649,
+  "limit": 0.7,
+  "frozen_budget": 37654,
+  "min_overlap_at_frozen_budget": 31005,
+  "min_overlap_frac_at_frozen_budget": 0.823418,
+  "frozen_budget_passes_single_witness_bound": false,
+  "max_budget_passing_single_witness_bound": 22163,
+  "decision_required": "Budget reduction to <= max_budget is a LANE/PROTOCOL change and needs explicit user approval. The full registry, surface rank check, leakage canaries and holdout must still pass.",
+  "ok_to_submit": false
+}

@@ -4,6 +4,44 @@
 
 The prior HPTR research TIFF ([download for research only](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif)) is locally finite and matches the owner-mirror grid, but 37,640 of 37,654 dots (99.963%) overlap the lattice within 3 pixels. Its surface and holdout were not replayed. The SGMC-CAL transform relies on an inferred hidden-truth count and is not measured HOLDOUT-DTI. [Archived card](evidence/session3_hptr_run_card_20261027.json).
 
+## 2026-10-29 status — read this first
+
+**Answer to "which file can I submit?": none.** Every file for the nine focus sites fails the user's literal uniqueness rule, and the gate cannot be cleared at the lane's frozen 37,654-dot budget. The gate outcome below is a proof, not an opinion: it was re-derived on 2026-10-29 by an independent script and receipt ([`scripts/verify_budget_bound_20261029.py`](scripts/verify_budget_bound_20261029.py) → [`evidence/budget_bound_20261029.json`](evidence/budget_bound_20261029.json)).
+
+**Why the gate is unavoidable at 37,654 dots.** A single registry witness (`13gems_20261001_r13-lattice-s5_v2_nan-outside.tif`, SHA-256 `b4570b406efe…`, 206,895 positive cells) lies within 3 px of **5,160,724 of 5,167,373** footprint cells. Only **6,649** cells lie outside that zone, so at least 37,654 − 6,649 = **31,005 dots (82.34%)** must fall within 3 px of it. The rule fails above 70%. The re-derivation agrees with the earlier replay ([`evidence/preflight_replay_20261028.json`](evidence/preflight_replay_20261028.json)).
+
+**What would change this.** The 37,654 figure is not a competition rule. It is GEMSDOE32's dot count, which this lane copied. For the single witness alone, the largest budget that passes is **22,163 dots**. The full 360-raster registry could lower that further. Reducing the budget changes the lane, so it needs your explicit approval; it has not been done.
+
+| Site | File to download | Estimated leaderboard score | Unique vs. the other focus sites? | Decision |
+|---|---|---|---|---|
+| GEMSDOE32 | [gemsdoe32-h33-…-zeros.tif](docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) | None (user-reported 0.2778; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE36 | **DO NOT SUBMIT** |
+| GEMSDOE36 | [gemsdoe36-anderson-…-zeros.tif](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) | None (user-reported 0.2750; no receipt) | **NO** — 97.58% within 3 px of GEMSDOE27 | **DO NOT SUBMIT** |
+| GEMSDOE28 | [gems28-h36-1-rung30-…-nan.tif](docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif) | None (user-reported 0.2710; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE25 | **DO NOT SUBMIT** |
+| GEMSDOE31 | [gemsdoe31-h27-4-solo-d28-…-nan.tif](docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif) | None (user-reported 0.2708; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE25 | **DO NOT SUBMIT** |
+| GEMSDOE33 | [GEMSDOE33-h33d-…-cb490425926e.tif](docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) | None (user-reported 0.2632; no receipt) | **NO** — 99.71% within 3 px of GEMSDOE27 | **DO NOT SUBMIT** |
+| GEMSDOE25 | [gems25-dotted-h19-5-d2-8-…-nan.tif](docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif) | None (user-reported 0.2600; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE30 | **DO NOT SUBMIT** |
+| GEMSDOE30 | [gemsdoe30-d28-poisson300m-…-91eae1ca.tif](docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) | None (user-reported 0.2600; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE25 | **DO NOT SUBMIT** |
+| GEMSDOE24 | [gems24-h25-1-dotted-…-nan.tif](docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) | None (user-reported 0.2477; no receipt) | **NO** — 100.00% within 3 px of GEMSDOE25 | **DO NOT SUBMIT** |
+| GEMSDOE27 | [gems27-topo-gap-closure-…-nan.tif](docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif) | None (user-reported 0.2449; no receipt) | **NO** — 98.02% within 3 px of GEMSDOE24 | **DO NOT SUBMIT** |
+
+The overlap column is the nearest *focus-site* raster only, from [`evidence/preflight_replay_20261028.json`](evidence/preflight_replay_20261028.json). It is not a full-registry check. **No row has a validated leaderboard estimate**, and the user-reported scores are not organizer receipts.
+
+**Decision needed from you (not taken autonomously):**
+1. **Approve a budget change** (for example ≤22,163 dots) to the lane. Then the full registry, a surface rank check, per-feature leakage canaries and a whole-segment holdout must all pass before any file is generated. None of these exist for a new file yet.
+2. Or **accept a negative result**: no file is cleared, and the highest reported focus-site score (0.2778) remains unmatched by any validated submission.
+
+**Irregularities for review (flagged, not resolved):**
+- The request cites 0.3195 as "the highest score right now" and 0.4413 as the leaderboard high. The stored public snapshot ([`docs/data/public_leaderboard.json`](docs/data/public_leaderboard.json), observed 2026-10-28) has rank 1 = **0.4544** and rank 25 = **0.3195**. The two figures are not reconciled, and this sandbox cannot reach DrivenData to refresh them.
+- Positive-cell counts disagree between sources. The 2026-10-28 replay counts cells with value `> 0` (for example GEMSDOE24 = 60,069). The older knowledge note counts `>= 0.5` (85,729). Any threshold-based claim needs one fixed definition before it is used.
+- Sources are owner mirrors (SHA-pinned), not organizer-authenticated; the DrivenData data page requires login and was not reachable.
+
+[Independent budget-bound receipt](evidence/budget_bound_20261029.json) · [Replay receipt](evidence/preflight_replay_20261028.json)
+## 2026-10-29 verification update
+
+- **Status: DO NOT SUBMIT (unchanged).** Independently recomputed from restored bytes: footprint 5,167,373 px; registry control witness (SHA-256 `b4570b40…47dc9b2`) leaves 6,649 px uncovered within 3 px. At 37,654 dots the minimum overlap is **82.34%** > 70%, so every placement is a forced duplicate under the literal rule. [Evidence](evidence/counting_bound_20261029.json) · [script](scripts/verify_counting_bound.py).
+- The largest dot count this single control does not force is **22,163**. Using it requires an explicit protocol change from you, plus holdout DTI and checks against all 359 other registry rasters. Neither exists yet.
+- Scores in the table below remain USER/OWNER-REPORTED. No leaderboard estimate is produced for any new file.
+
 ## Current research file and decision
 
 | Filename / SHA-256 | Research holdout (not a leaderboard estimate) | Literal uniqueness | Decision |

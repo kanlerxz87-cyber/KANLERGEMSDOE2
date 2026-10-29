@@ -1,12 +1,12 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-29T02:32:14Z",
+  "generated_utc": "2026-10-29T02:41:22Z",
   "hypothesis": "Top research-only candidate: test whether potential-field anomaly-centerline bends, breaks, or terminations co-located with gravity-gradient discontinuities identify unmapped geothermal fault conduits; not fitted.",
   "mechanism": "Use cached magnetic and gravity grids to extract graph-based anomaly-centerline discontinuities and test their localized coincidence with independent shallow thermal evidence. This is a proposed feature ablation, not an established mechanism or score improvement.",
   "named_non_fault_mimic": "An unfaulted dike swarm or lithologic contact can create a magnetic anomaly bend; survey-leveling seams can create spurious breaks.",
   "holdout_dti": null,
   "holdout_ci95": null,
-  "holdout_status": "Not measured. The mandatory literal novelty gate stops first. No competition data, cached feature stack, labels, or holdout predictions are present in this checkout.",
+  "holdout_status": "Not measured. The mandatory literal novelty gate stops first. Only the SHA-pinned owner-mirror sample template and one lattice witness were restored for the counting proof; organizer-authenticated feature bands, labels, cached features, and holdout predictions are absent.",
   "correlation_overlap_vs_registry": {
     "surface_pre_placement": null,
     "surface_status": "Not created or compared. At the frozen 37,654-dot budget, the checked registered lattice witness forces at least 31,005/37,654 = 0.8234184947150369 overlap within 3 px; this exceeds the 0.70 limit.",
@@ -23,7 +23,7 @@
     "new_candidate_values_in_0_1": null,
     "new_candidate_crs_shape_transform_match": null,
     "historical_artifact": "The 2026-10-28 byte audit found the prior HPTR raster single-band float32 on the pinned owner-mirror EPSG:32611 3730x3292 grid and transform, finite in [0,1] across its array, but duplicate under the literal witness rule. Organizer provenance and portal acceptance are unverified.",
-    "official_template_provenance": "Not authenticated; no competition data or template in current checkout.",
+    "official_template_provenance": "Not authenticated. The sample template was restored from an owner mirror solely for the counting proof; no organizer-authenticated features or labels are present.",
     "historical_hptr_research_only": {
       "source_receipt": "evidence/hptr_revalidation_20261028.json",
       "file": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
