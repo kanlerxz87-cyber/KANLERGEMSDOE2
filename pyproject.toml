@@ -17,6 +17,7 @@ dependencies = [
     "matplotlib>=3.8",
     "pandas>=2.1",
     "shapely>=2.0",
+    "pyshp>=2.3",
     "pyproj>=3.6",
     "scikit-image>=0.22",
     "pytest>=8.0",
