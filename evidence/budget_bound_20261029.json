@@ -1,6 +1,6 @@
 {
   "schema": "gems.budget-bound-receipt.v1",
-  "generated_utc": "2026-10-29T02:32:13.106208+00:00",
+  "generated_utc": "2026-10-29T02:39:56.906291+00:00",
   "scope": "Single-witness lower bound. NOT a full-registry clearance. Authorises no file.",
   "provenance": "SHA-pinned owner mirrors; not organizer-authenticated.",
   "inputs": {
