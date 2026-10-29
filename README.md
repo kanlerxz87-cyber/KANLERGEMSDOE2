@@ -1,5 +1,7 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
+> **Current review, 2026-10-29: DO NOT SUBMIT.** No new TIFF or score estimate was produced. The prior literal novelty preflight has a minimum-overlap witness of 82.3418% against the registered 70% cap; the `data/` directory and Python scientific dependencies are absent in this checkout. See [the dated review](REVIEW_2026-10-29.md) for the nine-site comparison, four ranked tests, three review passes and exact blockers. Read this README and [`PROMPT.md`](PROMPT.md) before every project session.
+
 > **Separate concurrent artifact — NOT APPROVED.** PR #53 added a 20,000-dot blind-interior TIFF, but its generator changes the frozen 37,654-dot budget to bypass the literal lattice lower-bound stop. It has no holdout replay, and its local 29-raster check is not full-registry clearance. Its own format receipt says `submission_authorized: false`. This focus-nine review did not create or test that artifact; do not treat it as a candidate. See [the audit note](evidence/pr53_artifact_review_20261028.md) and [its run card](evidence/run_card_unique_7da04408edc9.json).
 
 > **DO NOT SUBMIT.** No file is cleared. The research HPTR TIFF is not unique under the literal rule, and no new file or reliable leaderboard estimate was produced this session. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop. Historical proxy comparisons do not establish a leaderboard win. [Executive summary](EXECUTIVE_SUMMARY.md) · [GitHub Pages dashboard](docs/index.html)
