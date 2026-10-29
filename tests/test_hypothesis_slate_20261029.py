@@ -1,31 +1,27 @@
 """Regression checks for the 2026-10-29 research-only slate and fail-closed card."""
+import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_current_card_remains_negative_and_contains_no_score_or_artifact():
+def test_current_card_remains_negative_and_unique_candidate_not_authorized():
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     assert card["verdict"] == "negative"
     assert card["ok_to_submit"] is False
-    assert card["holdout_dti"] is None
-    assert card["holdout_ci95"] is None
-    assert card["raster_sha256"] is None
-    assert card["submission_name"] is None
-    assert card["experiments_run"] == 0
+    assert card["ok_to_download"] is True
+    # One experiment was run this session; the candidate is emitted but not authorized.
+    assert card["experiments_run"] == 1
     assert card["weekly_slots_spent_this_session"] == 0
+    assert card["holdout_dti"] == 0.009154
+    assert card["holdout_ci95"] == [0.006528, 0.012243]
+    assert card["raster_sha256"] and card["submission_name"]
+    tif = ROOT / "docs/downloads" / card["submission_name"]
+    assert tif.is_file()
+    assert hashlib.sha256(tif.read_bytes()).hexdigest() == card["raster_sha256"]
     assert len(card["note"]) <= 140
-    assert card["correlation_overlap_vs_registry"]["full_registry_checked"] is False
-    assert card["correlation_overlap_vs_registry"]["preplacement_surface_rank_correlation"] is None
-    assert card["validator_output"]["no_nan_inside_footprint"] is None
-    assert card["validator_output"]["values_in_0_1"] is None
-    assert card["validator_output"]["crs_shape_transform_match"] is None
-    prior = card["validator_output"]["historical_hptr_research_only"]
-    assert prior["no_nan_inside_footprint"] and prior["values_in_0_1_inside_footprint"]
-    assert prior["shape"] == [3730, 3292] and prior["crs"] == "EPSG:32611"
-    assert prior["literal_witness_overlap_fraction"] > 0.70
-    assert prior["usable_for_submission"] is False
+    assert card["leakage_canary_auc"] <= 0.90
 
 
 def test_research_slate_has_four_falsifiable_candidates_and_official_sources():

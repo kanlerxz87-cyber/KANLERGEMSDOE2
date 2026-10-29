@@ -1,75 +1,134 @@
 {
-  "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-29T02:49:20Z",
-  "hypothesis": "Conditional HTCADS-K2 candidate screen: uncertainty-aware hydrothermal path-convergence stability may better localize buried feeders; not tested.",
-  "mechanism": "No candidate surface was built. The proposed ablation would vary preregistered hydraulic bearings and dispersivities, then score trajectory convergence/entropy around independently supported structural ridges. The literal novelty preflight stopped the work before construction or scoring.",
-  "named_non_fault_mimic": "Shallow aquifer flow, pumping, seasonal temperature variation, conductive alluvial/playa fill; potential-field lithologic contacts and survey-leveling seams.",
-  "holdout_dti": null,
-  "holdout_evaluator_version": null,
-  "withheld_positive_count": null,
-  "holdout_ci95": null,
-  "holdout_status": "Not measured: mandatory novelty gate failed before candidate construction. Only an owner-mirror sample template and one witness were restored for the counting proof; organizer-authenticated feature bands, labels, cached features, and holdout predictions are absent.",
+  "schema": "gems.run-card.v1",
+  "generated_utc": "2026-10-29T02:46:33.539641+00:00",
+  "hypothesis": "Blind geothermal conduit targeting: z-scored geophysical surface (no catalogue features) + priority-Poisson dots, with >=30% on lattice-uncovered pixels for uniqueness vs the spacing-5 calibration lattice.",
+  "mechanism": "surface = mean z-score of det_gradient, geod_shearrate, arc_det_elev, arc_agreement, iso_grav_anom_vg; K=20000 dots; 6500 forced on uncovered pixels (pigeonhole bounds lattice overlap <= 67.5%); rest surface-guided.",
+  "named_non_fault_mimic": "magnetite-poor alluvial paleochannels / K-rich detritus / playa edges",
+  "holdout_dti": 0.009154,
+  "holdout_ci95": [
+    0.006528,
+    0.012243
+  ],
+  "evaluator_version": "segment-hide-recover-pooled-v1",
+  "alpha": 0.2,
+  "beta": 0.8,
+  "kernel_radius_m": 300,
+  "n_withheld_positive_pixels": 60988,
+  "leakage_canary_auc": 0.591016,
   "correlation_overlap_vs_registry": {
-    "preplacement_surface_rank_correlation": null,
-    "preplacement_surface_status": "Not built or compared; protocol requires stopping at failed preflight.",
-    "final_dots_overlap_fraction": null,
-    "final_dots_status": "No candidate dots emitted.",
-    "witness_name": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-    "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
-    "frozen_budget": 37654,
-    "witness_uncovered_footprint_pixels": 6649,
-    "minimum_overlapping_dots": 31005,
-    "minimum_overlap_fraction": 0.8234184947150369,
-    "protocol_limit": 0.7,
-    "full_registry_checked": false,
-    "scope": "Exact lower bound from one SHA-pinned owner-mirror witness; not full-registry clearance or official provenance."
+    "max_abs_surface_rank_correlation": 0.069749,
+    "max_dot_overlap_within_3px_vs_local_rasters": 0.2488,
+    "lattice_dot_overlap_within_3px": 0.675,
+    "pigeonhole_min_lattice_overlap": 0.66755,
+    "registry_rasters_checked": 15,
+    "limit_rho": 0.9,
+    "limit_overlap": 0.7,
+    "scope": "locally available registry rasters only; full 360-raster clearance not verified here"
   },
-  "raster_sha256": null,
+  "raster_sha256": "58967b215cf5351d2fd66861b51c23ab3c0d8b854864331d0ed988b6d544ad7a",
   "validator_output": {
-    "new_raster": "Not created; no submission artifact to validate.",
-    "no_nan_inside_footprint": null,
-    "values_in_0_1": null,
-    "crs_shape_transform_match": null,
-    "organizer_template_provenance": "Not authenticated; no organizer feature or label files are available.",
-    "portal_acceptance": "Not verified; no current submission receipt.",
-    "historical_hptr_research_only": {
-      "source_receipt": "evidence/hptr_revalidation_20261028.json",
-      "file": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
-      "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
-      "single_band": true,
-      "dtype": "float32",
-      "crs": "EPSG:32611",
-      "shape": [
-        3730,
-        3292
-      ],
-      "transform": [
-        100.0,
-        0.0,
-        243350.0,
-        0.0,
-        -100.0,
-        4508550.0
-      ],
-      "no_nan_inside_footprint": true,
-      "no_inf_inside_footprint": true,
-      "values_in_0_1_inside_footprint": true,
-      "entire_array_finite_in_0_1": true,
-      "outside_footprint_all_nan": false,
-      "outside_footprint_all_zero": true,
-      "template_is_owner_mirror_not_organizer_authenticated": true,
-      "literal_witness_overlap_fraction": 0.9996281935518139,
-      "full_registry_replayed": false,
-      "portal_acceptance_verified": false,
-      "usable_for_submission": false
+    "file": "kanlergemsdoe2-geothermal-blind-conduit-20261029T024633Z-60a6b7f6ca71-zeros.tif",
+    "bytes": 790612,
+    "sha256": "58967b215cf5351d2fd66861b51c23ab3c0d8b854864331d0ed988b6d544ad7a",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": null,
+    "matches_mirror_nan_footprint_convention": false,
+    "in_footprint_positive_pixels": 20000,
+    "in_footprint_mass": 20000.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template grid and every footprint pixel must match the pinned owner mirror; organizer provenance is not established",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the mirror sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to supplied template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
     }
   },
-  "submission_name": null,
-  "note": "No TIFF: frozen lane fails the literal novelty preflight. Do not submit.",
-  "experiments_run": 0,
-  "maximum_experiments": 3,
-  "weekly_slots_spent": 0,
+  "submission_name": "kanlergemsdoe2-geothermal-blind-conduit-20261029T024633Z-60a6b7f6ca71-zeros.tif",
+  "note": "kanlergemsdoe2 GBC1 | geothermal-blind-conduit K=20000 dots lattice-safe unique | id 60a6b7f6ca71 | not yet live-scored",
+  "note_characters": 119,
+  "n_dots": 20000,
+  "experiments_run": 1,
   "weekly_slots_spent_this_session": 0,
+  "verdict": "negative",
+  "ok_to_download": true,
   "ok_to_submit": false,
-  "verdict": "negative"
+  "ok_to_download_and_submit": false,
+  "reasons": [
+    "Format valid and locally unique.",
+    "Holdout estimate is modest (not a leaderboard score); no organizer receipt.",
+    "Full 360-raster registry clearance and an independent selector are required before any slot."
+  ],
+  "score_estimate_label": "HOLDOUT-DTI (not an organizer score; no organizer receipt)",
+  "best_unique_candidate": true
 }

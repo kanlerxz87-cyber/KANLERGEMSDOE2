@@ -1,0 +1,1 @@
+kanlergemsdoe2 GBC1 | geothermal-blind-conduit K=20000 dots lattice-safe unique | id 60a6b7f6ca71 | not yet live-scored

@@ -165,8 +165,14 @@ def test_current_evidence_new_unique_submission():
     card = json.loads((ROOT / "evidence/current_run_card.json").read_text())
     audit = json.loads((ROOT / "evidence/release_audit_20261027.json").read_text())
     assert card["verdict"] == "negative" and card["ok_to_submit"] is False
-    assert card["holdout_dti"] is None and card["experiments_run"] == 0
+    assert card["ok_to_download"] is True and card["ok_to_download_and_submit"] is False
+    assert card["experiments_run"] == 1 and card["weekly_slots_spent_this_session"] == 0
+    assert card["holdout_dti"] == 0.009154
+    assert card["holdout_ci95"] == [0.006528, 0.012243]
+    assert card["leakage_canary_auc"] <= 0.90
     assert len(card["note"]) <= 140
+    tif = ROOT / "docs/downloads" / card["submission_name"]
+    assert tif.is_file() and sha256_file(tif) == card["raster_sha256"]
     superseded = json.loads((ROOT / "evidence/superseded/current_run_card_pr36_promote_20261027.json").read_text())
     assert superseded["verdict"] == "promote" and superseded["holdout_dti"] is None
     assert superseded["raster_sha256"] == "0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4"

@@ -1,0 +1,1 @@
+kanlergemsdoe2 HS1 | holdout-screen z-scored geophysical surface, K=20000 dots | id d585301c744d | not yet live-scored
