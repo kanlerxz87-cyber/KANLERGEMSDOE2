@@ -80,10 +80,37 @@ def test_current_comparison_has_no_unsupported_projection() -> None:
     assert len(d["focus_nine"]) == 9
     assert all(r["score_evidence_class"].startswith("USER/OWNER-REPORTED") for r in d["focus_nine"])
 
+
+def test_20261029_head_refresh_preserves_historical_table_and_fails_closed() -> None:
+    old_path = ROOT / "evidence/submission_table_20261027.json"
+    old = _load("evidence/submission_table_20261027.json")
+    current = _load("evidence/submission_table_20261029.json")
+    assert _sha256(old_path) == "690877ab8a92508dc2088c44b32d34486671e845c8d2a217f96c63499b8b10a5"
+    assert old["generated_utc"] == "2026-10-28T16:16:54Z"
+    assert current["schema"] == "gems.submission-comparison.v3"
+    assert current["verdict"] == "negative" and current["ok_to_submit"] is False
+    assert current["new_raster"] is None and current["approved_candidate_filename"] is None
+    assert current["leaderboard_estimate"] is None
+    assert current["source_refresh"]["all_nine_heads_differ_from_historical_pinned_refs"] is True
+    assert current["source_refresh"]["official_leaderboard_refreshed"] is False
+    assert len(current["focus_nine"]) == 9
+    assert all(r["current_head_changed_from_pinned_artifact_ref"] for r in current["focus_nine"])
+    assert all(r["current_head_url"].endswith(r["current_remote_head"]) for r in current["focus_nine"])
+    assert all(r["leaderboard_score_estimate"] is None for r in current["focus_nine"])
+    g28 = next(r for r in current["focus_nine"] if r["site"] == "GEMSDOE28")
+    assert "CONFLICTED" in g28["current_claim_status"]
+    assert g28["sha256"] != g28["current_page_variant_sha256"]
+    g32 = current["peer_context_not_our_result"]
+    assert g32["initial_fold_local_reemission_arm"]["pooled_dti"] == 0.115134
+    assert g32["saved_byte_static_recheck"]["h51_candidate_dti"] == 0.002289
+    assert g32["saved_byte_static_recheck"]["b2_reference_dti"] == 0.004515
+    assert g32["saved_byte_static_recheck"]["paired_ci95_for_difference"] is None
+    assert g32["literal_r13_lattice"]["status"] == "FAIL"
+
 def test_executive_summary_has_nine_sites_and_no_fabricated_leaderboard_estimate() -> None:
     html_text = (ROOT / "docs/executive-summary.html").read_text(encoding="utf-8")
     assert "NO new TIFF is approved" in html_text
-    assert "82.34%" in html_text
+    assert "82.3418%" in html_text
     assert "Leaderboard-score estimate" in html_text
     assert "No defensible mapping" in html_text
     for site in ("GEMSDOE24", "GEMSDOE25", "GEMSDOE27", "GEMSDOE28", "GEMSDOE30", "GEMSDOE31", "GEMSDOE32", "GEMSDOE33", "GEMSDOE36"):
@@ -93,15 +120,20 @@ def test_executive_summary_has_nine_sites_and_no_fabricated_leaderboard_estimate
     assert "Do not submit" in html_text
 
 
-def test_hypothesis_agenda_is_ranked_but_does_not_claim_unmeasured_gain() -> None:
-    research = (ROOT / "research/2026-10-28_focus-nine-hypotheses.md").read_text(encoding="utf-8")
+def test_hypothesis_agenda_is_screened_and_does_not_claim_unmeasured_gain() -> None:
+    research = (ROOT / "research/2026-10-29_focus-nine-hypotheses.md").read_text(encoding="utf-8")
     html_text = (ROOT / "docs/research.html").read_text(encoding="utf-8")
-    for phrase in ("potential-field crest migration", "Thermal transport-direction uncertainty", "Alteration-edge", "Seasonal deformation"):
+    for phrase in ("Cross-strike basement", "multi-scale potential-field phase", "dilation share",
+                   "drainage-azimuth vorticity", "Seasonal InSAR"):
         assert phrase.casefold() in research.casefold()
-    assert "not fitted" in research and "no gain forecast" in research
-    assert "NASA OPERA" in research and "not viable" in research
-    assert "Four testable geological hypotheses" in html_text
-    assert "not a numerical DTI forecast" in html_text
+    assert "No expected DTI gain is assigned" in research and "not estimated" in research
+    assert "NASA OPERA" in research and "deferred" in research
+    assert "Five physically distinct geological mechanisms; zero cleared as novel and eligible" in html_text
+    assert "not a public score" in html_text
+    assert "0.177930" in html_text and "0.170588" in html_text
+    assert "86.0838%" in html_text
+    executive_html = (ROOT / "docs/executive-summary.html").read_text(encoding="utf-8")
+    assert "tree/97597a066d1c61d2c226fdba349716f41b30c1c6" in executive_html
     assert "0.2778" in html_text
 
 

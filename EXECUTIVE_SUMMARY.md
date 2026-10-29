@@ -1,55 +1,73 @@
-# Executive summary — submission decision
+# Executive summary — 2026-10-29 decision
 
-> **DO NOT SUBMIT.** No file is cleared for upload. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop; historical proxies do not establish a leaderboard win. The reported scores below are user/owner-reported, not organizer-confirmed. No credible leaderboard estimate is available for a new candidate.
+## Decision in one line
 
-The prior HPTR research TIFF ([download for research only](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif)) is locally finite and matches the owner-mirror grid, but 37,640 of 37,654 dots (99.963%) overlap the lattice within 3 pixels. Its surface and holdout were not replayed. The SGMC-CAL transform relies on an inferred hidden-truth count and is not measured HOLDOUT-DTI. [Archived card](evidence/session3_hptr_run_card_20261027.json).
+**DO NOT SUBMIT.**
 
-## Current research file and decision
+| Item | Current status |
+|---|---|
+| New candidate filename | **NONE** |
+| Approved candidate download | **NONE**. Existing downloads are historical research files only. |
+| New leaderboard-score estimate | **NOT ESTIMABLE**; No credible leaderboard estimate is supported, and no projection is claimed. |
+| Uniqueness | **No candidate exists.** Surface Spearman is not computed; final-dot uniqueness is not applicable, not passed. The complete current registry is not cleared. |
+| Approval | **DO NOT SUBMIT** — no `OK TO SUBMIT` path. |
+| Experiments / local holdouts / slots used this session | **0 / 0 / 0** |
 
-| Filename / SHA-256 | Research holdout (not a leaderboard estimate) | Literal uniqueness | Decision |
-|---|---|---|---|
-| [DSLUP TIFF](docs/downloads/kanlergems2-dslup-uniq-q15k-37654dots-20261027T181253Z-c71122d5-zeros.tif) · `8f66f32c56482501808977ac504a0abf517ff75db0af2b56774c0f08d476fbe3` | **HOLDOUT-DTI 0.125925**, `GEMSDOE32-HIDE-RECOVER-v3.0`, 22,232 withheld-positive occurrences, 95% CI [0.112880, 0.138176]. Archived procedure result, not independently replayed. | **FAIL:** 37,647/37,654 dots = **99.9814%** within 3 pixels of one registry lattice. Pre-placement surface not replayed. | **DO NOT SUBMIT** |
-| [KG2 historical benchmark](docs/downloads/kanlergemsdoe2-kg2-mghv-exp-1-37654-20261026-f5a469e94b14-zeros.tif) · `cf1d07726f5fb838dc75d9ffa00d5d6b6da7d5120f0362026ca241d454ce3c6e` | **HOLDOUT-DTI 0.177056**, `gems-segment-pooled-v1`, 60,988 withheld-positive pixels, 95% CI [0.163673, 0.190831]. Historical receipt, not independently replayed. | **FAIL:** 37,494/37,654 = **99.5751%** within 3 pixels of the lattice. | **DO NOT SUBMIT** |
-| [Parallel PR #34 research TIFF](docs/downloads/kanlergemsdoe2-unique-hypothesis1-binary-20261027.tif) · `f0cb191420da26d19ceccfd65f8987537f714d1b28660f8e3690ff2008a2b539` | Not measured or replayed. | **FAIL:** 37,652/37,654 = **99.9947%** vs lattice; 184 on-catalogue dots. | **DO NOT SUBMIT** |
-| [Parallel PR #36 research TIFF](docs/downloads/36GEMSDOE-off-catalogue-blind-geothermal-targeting-20261027T234345Z-2ecaae7a056e-zeros.tif) · `0e7e1da78fb80ba3ce0849cd32967836d4f3d73206426d43435fbe3958a446c4` | Not measured or replayed. | **NOT CLEARED:** 15,000 dots, 66.0% witness overlap, but 5,100 dots placed in lattice gaps to evade the gate, violating the frozen lane; 107 on-catalogue dots. Full registry not verified. | **DO NOT SUBMIT** |
+The frozen `HTCADS-K2` lane fixes the candidate budget at 37,654 dots. One registered witness leaves 6,649 of 5,167,373 footprint pixels outside its 3-pixel halo, forcing at least 31,005 dots to overlap: **31,005 / 37,654 = 82.3418%**, greater than the literal 70% stop. Work stopped before model fitting, a surface, dot placement, holdout, or TIFF. The budget and placement were not changed to evade the gate.
 
-The two historical HOLDOUT-DTI values use different evaluators and populations and cannot be directly ranked. No new holdout has been generated for a paired comparison. PR #36's previously positive card and sidecar are superseded and preserved under `evidence/superseded/`.
+**This is the filename/download/score/uniqueness/approval decision:** there is no new TIFF to download, there is no defensible score estimate, uniqueness was not passed, and no upload is approved. See the [three-pass review](evidence/review_20261029.md), [current-head score/source table](evidence/submission_table_20261029.json), and [current run card](evidence/current_run_card.json).
 
-[Exact-byte negative validator receipt](evidence/dslup_literal_revalidation_20261027.json) · [current JSON run card](evidence/current_run_card.json) · [full local release audit](evidence/release_audit_20261027.json). Local finite [0,1], shape, CRS and transform checks do not demonstrate portal acceptance or satisfy novelty. Current submission name and note are **not applicable** because no file is approved.
+## Nine highest reported submissions — historical claims, not current standings
 
-The historical SGMC-CAL 0.098140 number is an unvalidated transform using an inferred hidden-truth count; it is **not** a holdout DTI, a leaderboard score or a promotion gate. No valid leaderboard estimate is available for a new candidate.
+The list is the highest reported file/score pair retained in the historical focus-nine snapshot. The current public GitHub `HEAD` for every listed site was refreshed on 2026-10-29; all nine differ from the old pinned artifact ref. A refreshed source HEAD is not a leaderboard check. **No organizer submission receipt binding these scores to the listed raster hashes was found.** “No” in the uniqueness column means high overlap within this nine-file subset, not a complete-registry audit.
 
-## Nine highest reported sites
+| Site | Highest reported claim | Historical file (research only) | Current source HEAD | Score/file evidence status | Leaderboard estimate | Focus-nine uniqueness |
+|---|---:|---|---|---|---|---|
+| [GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/) | **0.2778** | [B2 TIFF](docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) · SHA `c55bafc47005…` | [`97597a066d1c`](https://github.com/buffedlizard55-lab/GEMSDOE32/tree/97597a066d1c61d2c226fdba349716f41b30c1c6) | USER/OWNER-REPORTED; no receipt ties score to hash. | Unavailable | **No** — 100.000% within 3 px of G36 |
+| [GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/) | 0.2750 | [Anderson PINN TIFF](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) · SHA `e15891020b9c…` | [`e280188adbbe`](https://github.com/buffedlizard55-lab/GEMSDOE36/tree/e280188adbbe762e6b7ac6f3b8e105e8e7915026) | Owner-reported in current peer registry; no receipt found. | Unavailable | **No** — 97.578% vs G27 |
+| [GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/) | **0.2710 — disputed** | [H36-1 TIFF](docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif) · SHA `5556aa1438fd…` | [`9509b73eaf35`](https://github.com/buffedlizard55-lab/GEMSDOE28/tree/9509b73eaf35f66d0b23fce63b2540ceff2a88e0) | Current executive page retains 0.2710 as a supplied claim, but the current registry says current downloads are unscored / no own scored artifact. Current page file variant hash differs. **Not verified as a G28 score.** | Unavailable | **No** — 100.000% vs G25 |
+| [GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/) | 0.2708 | [H27-4 TIFF](docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif) · SHA `07b6db440535…` | [`06930b9d0347`](https://github.com/buffedlizard55-lab/GEMSDOE31/tree/06930b9d03473a9313094a4f2312c4fc6efd4fbb) | User-reported; no receipt. H27-4 is also cross-attributed to G28 in peer records. | Unavailable | **No** — 100.000% vs G25 |
+| [GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/) | 0.2632 | [H33d TIFF](docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) · SHA `87f857d505e2…` | [`3eaf85efb49f`](https://github.com/buffedlizard55-lab/GEMSDOE33/tree/3eaf85efb49f364b84f8be04e8b084b12d0303b9) | Historical user-reported claim; no receipt. Current PHCONG results are research evidence, not a public score. | Unavailable | **No** — 99.709% vs G27 |
+| [GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/) | 0.2600 | [D2.8 TIFF](docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif) · SHA `91eae1ca42ec…` | [`fb1db3727477`](https://github.com/buffedlizard55-lab/GEMSDOE25/tree/fb1db37274776a29dbc48abe55b2e531f2ba6aad) | Owner-reported historical claim; no new organizer score. | Unavailable | **No** — 100.000% vs G30; exact positive-mask match |
+| [GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/) | 0.2600 | [D2.8 TIFF](docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) · SHA `8cf893ead566…` | [`31696c6541cf`](https://github.com/buffedlizard55-lab/GEMSDOE30/tree/31696c6541cfc54620ff850a748c51625461f27f) | Owner-reported historical claim in cross-site ledgers; no receipt found. | Unavailable | **No** — 100.000% vs G25; exact positive-mask match |
+| [GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/) | 0.2477 | [D1.5 TIFF](docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) · SHA `68d0e2e4fcc5…` | [`5e3fa8ff58ac`](https://github.com/buffedlizard55-lab/GEMSDOE24/tree/5e3fa8ff58acddb2d95a1eed30ca98a40ff14421) | Owner/task-reported; current submission ledger calls the local artifact unscored/not yet live-scored. No exact score/file receipt. | Unavailable | **No** — 100.000% vs G25 |
+| [GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/) | 0.2449 | [T-v2 TIFF](docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif) · SHA `33003374335d…` | [`6704fa2a5133`](https://github.com/buffedlizard55-lab/GEMSDOE27/tree/6704fa2a5133e751df2516feb2e32565ad5fc1df) | Historical owner/task-reported claim; no receipt found. | Unavailable | **No** — 98.019% vs G24 |
 
-The following values are USER/OWNER-REPORTED, not organizer-confirmed; submission-page receipts tying hashes to scores were unavailable. Each local file is historical and research only. The overlap column compares the row's dots to its most similar other *focus-site* raster within 3 pixels; this is not a complete-registry clearance.
+Every historical file is **research-only — DO NOT SUBMIT**. The stored-value checks in the source table are mirror-byte audits, not portal acceptance. G28’s 0.2710 and G31’s 0.2708 attributions remain unresolved; the reported values are not silently promoted to verified results. All nine current HEADs and per-repository claim notes are recorded in [`evidence/submission_table_20261029.json`](evidence/submission_table_20261029.json).
 
-| Site | Reported score | Leaderboard estimate | Focus-site overlap | Historical download / decision |
-|---|---:|---|---|---|
-| [GEMSDOE32](https://buffedlizard55-lab.github.io/GEMSDOE32/) | 0.2778 | Unavailable | 100.00% vs GEMSDOE36 | [Research only](docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) — DO NOT SUBMIT |
-| [GEMSDOE36](https://buffedlizard55-lab.github.io/GEMSDOE36/) | 0.2750 | Unavailable | 97.58% vs GEMSDOE27 | [Research only](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) — DO NOT SUBMIT |
-| [GEMSDOE28](https://buffedlizard55-lab.github.io/GEMSDOE28/) | 0.2710 | Unavailable | 100.00% vs GEMSDOE25 | [Research only](docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif) — DO NOT SUBMIT |
-| [GEMSDOE31](https://buffedlizard55-lab.github.io/GEMSDOE31/) | 0.2708 | Unavailable | 100.00% vs GEMSDOE25 | [Research only](docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif) — DO NOT SUBMIT |
-| [GEMSDOE33](https://buffedlizard55-lab.github.io/GEMSDOE33/) | 0.2632 | Unavailable | 99.71% vs GEMSDOE27 | [Research only](docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) — DO NOT SUBMIT |
-| [GEMSDOE25](https://buffedlizard55-lab.github.io/GEMSDOE25/) | 0.2600 | Unavailable | 100.00% vs GEMSDOE30 | [Research only](docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif) — DO NOT SUBMIT |
-| [GEMSDOE30](https://buffedlizard55-lab.github.io/GEMSDOE30/) | 0.2600 | Unavailable | 100.00% vs GEMSDOE25 | [Research only](docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) — DO NOT SUBMIT |
-| [GEMSDOE24](https://buffedlizard55-lab.github.io/GEMSDOE24/) | 0.2477 | Unavailable | 100.00% vs GEMSDOE25 | [Research only](docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) — DO NOT SUBMIT |
-| [GEMSDOE27](https://buffedlizard55-lab.github.io/GEMSDOE27/) | 0.2449 | Unavailable | 98.02% vs GEMSDOE24 | [Research only](docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif) — DO NOT SUBMIT |
+## What the evidence says about GEMSDOE32's 0.2778
 
-### What can explain GEMSDOE32's reported 0.2778?
+The 0.2778 remains the highest supplied historical claim among these sites, not an authenticated score-file pair and not a causal finding.
 
-Its mask equals GEMSDOE25's after 6,436 dots within two pixels of mirrored known faults are removed. Reducing such redundant emitted mass is a plausible mechanism, but no hidden labels, file-specific receipt or original scoring replay are available to establish why the scores differ. GEMSDOE25 and GEMSDOE30 have the same positive mask; GEMSDOE36 includes GEMSDOE32 plus 1,200 dots. These geometric observations are not score verification.
+- G25 and G30 have identical 44,090-positive masks (XOR 0) and each carry a reported 0.2600.
+- G32 B2 has 37,654 positives and matches G25 after removing 6,436 pixels within 2 px of the mirrored known-fault mask. This is consistent with precision-oriented thinning, but does **not** show that pruning caused the reported score difference.
+- G36 contains the G32 mask plus 1,200 dots in the recorded lineage and carries a 0.2750 claim. Geometry does not establish a score ordering.
+- Hidden labels, a receipt tying 0.2778 to the B2 hash, and an independently replayed organizer evaluation are unavailable. Score/file mismatch, an alternate evaluation, or another submission version remain possible.
 
-## Submission instructions — future, conditional only
+A newer GEMSDOE32 peer correction matters for the question of improvement. The initial H51-1 run card reports fold-local re-emission **HOLDOUT-DTI 0.115134 [0.101496, 0.128693]**, evaluator `GEMSDOE32-HIDE-RECOVER-v3.0`, N=22,232, versus a B2 proxy of 0.099202 [0.085951, 0.112668]. The current peer `registry/current_status.json` corrects that **0.115134 is not the downloadable TIFF bytes**. Its saved-byte static recheck reports H51 **0.002289 [0.001847, 0.002676]** versus B2 **0.004515 [0.003837, 0.005278]** under that same evaluator and N; no paired CI for the static difference is supplied. The peer's secondary SGMC-CAL diagnostic is 0.063032 vs 0.064121, with overlapping intervals. The saved H51 candidate also fails its literal r13 calibration-lattice rule (>99% overlap; peer status files differ on the exact percentage). This is peer-reported holdout/audit context, **not our experiment and not a leaderboard score**. It does not support an improvement claim.
 
-Do not perform these steps with an existing file. First obtain an explicitly authorized method and resolve the registry contradiction, independently replay fold-safe features and baseline with segment holdout, complete every registry and leakage gate, validate against organizer-authenticated data, and check quota in the current account. The selector and all positive evidence are currently missing.
+The most recent local public-board record is the dated snapshot at 2026-10-28 00:05 UTC (#1 0.4544, #5 0.3566, #25 0.3195). It was not refreshed in this review; it cannot establish current standings or a score/file relationship.
 
-If a future independent selector approves a uniquely named file, verify its exact SHA-256 and the organizer's current one-band float32 [0,1], CRS, resolution, extent, and exterior requirements. Open [DrivenData GEMS](https://www.drivendata.org/competitions/306/competition-doe-gems/) → **Submit → Make new submission**, upload that approved TIFF (or ZIP containing only that TIFF), enter its unique name and the approved ≤140-character note, and retain the receipt. Verify current account-specific weekly quota before uploading; choose **one** final entry for both rounds before the official deadline. This repository does not upload or reserve a slot.
+## Geological hypothesis screen
 
-## Explicit limitations
+Five physically distinct mechanism families were screened for unmapped-fault relevance, mimics, prior-work differences, costs, and official-source accessibility. **Zero are cleared as novel and eligible**; no feature was fitted and no gain was forecast. The detailed screen is [`research/2026-10-29_focus-nine-hypotheses.md`](research/2026-10-29_focus-nine-hypotheses.md):
 
-- Core, lattice, features, LiDAR and historical focus files were SHA-checked against owner-hosted mirror records, **not independently authenticated as organizer files**. Official data requires login.
-- The rejected file and portal error receipt are unavailable. The official page says null/NaN outside bounds; the mirror has an irregular footprint, whereas the locally checked DSLUP file is finite with zeros outside. Neither exterior encoding is portal-confirmed here.
-- The current full registry and archived pre-placement surface/OOF predictions were not independently replayed; a single valid witness proves failure but does not establish the maximum across the fleet.
-- No new geological fit, leakage screen, holdout score, TIFF or leaderboard score was produced in this review. Hypotheses and named confounders are in [the preregistration research note](research/2026-10-27_htcads_hypotheses.md).
+1. Cross-strike basement–alteration–conductivity ordering — overlaps local HTCADS/DARP and peer XFRONT/basement-conductivity work.
+2. Low-amplitude multi-scale potential-field phase ridges — implemented/reported by current GEMSDOE33 PHCONG and close phase-edge peers.
+3. Fault-relative extensional dilation share — overlaps local HTCADS, DARP, FVCA hypotheses/experiments, and related peer work.
+4. Alluvial-fan drainage vorticity / knickzones — exact local HTCADS H-K4 and ECPU H-N3 preregistrations; registered/deferred, not “untried.”
+5. Seasonal OPERA aquifer-barrier deformation — already a deferred local H-K5/OPERA prior; no current tile/time series is verified.
 
-Sources: [official problem and format](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [official rules](https://docs.nlr.gov/docs/fy26osti/96647.pdf), [known-fault masking clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516), [official public leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/), and [scientific source catalog](registry/source_catalog_20261027.json).
+These are a targeted prior-art review, not proof of global novelty. The local 600-file manifest is dated 2026-10-27 and the 360-raster comparison registry is historical, not a complete current fleet audit. Official data pages were not freshly retrieved; previous source links or owner mirrors do not prove current official bytes, tile coverage, or provenance. The competition `data/` directory is absent.
+
+## Validation and submission gate
+
+No TIFF is approved. Do not upload a historical file or create a different-budget variant. If a future compatible method lane is explicitly authorized after resolving the novelty rule without changing the frozen budget or placement, the minimum path is:
+
+1. Refresh and audit the full raster registry; compute pre-placement surface rank correlation and post-placement final-dot overlap separately against every raster. Require both Spearman limits `<=0.90` and `<=70%` of dots within 3 px.
+2. Reuse the cached feature stack/shared writer and holdout tooling. Derive catalogue features only from fold-visible fault segments; withhold whole fault segments with a buffer; mask visible faults pixel-exactly.
+3. Use pooled DTI with `alpha=0.2`, `beta=0.8`, and the 300 m triangular kernel. Canary every feature; single-feature AUC `>0.90` is leakage until independently explained.
+4. Report every actual result as `HOLDOUT-DTI` with evaluator/version, withheld-positive N, and 95% CI. A projection is never a score. No leaderboard estimate is claimed without a defensible calibration/receipt.
+5. Stop after three experiments or two hours. Only a separate selector plus current quota check can authorize a live slot. Validate the exact saved bytes and organizer template; portal acceptance requires an actual receipt.
+
+No manual inspection substitutes for automated validation. Current run card is [`evidence/current_run_card.json`](evidence/current_run_card.json). Historical local artifact reviews and exact-byte audits are preserved separately; none overrides this decision.

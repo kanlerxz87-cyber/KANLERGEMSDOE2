@@ -1,15 +1,15 @@
 {
   "schema": "gems.parallel-run-card.v2",
-  "generated_utc": "2026-10-28T16:16:54Z",
-  "hypothesis": "HTCADS-K2 remains frozen. Four next-session ablations were ranked for future testing; no candidate was fitted because the literal novelty preflight is forced to fail.",
-  "mechanism": "No new mechanism was implemented or tested. The registered HTCADS-K2 mechanism remains the only assigned lane; proposed ablations are documented in research/2026-10-28_focus-nine-hypotheses.md.",
-  "named_non_fault_mimic": "No candidate was scored. For the top proposed multi-height potential-field test: unfaulted lithologic contacts and survey leveling seams.",
+  "generated_utc": "2026-10-29T03:14:02Z",
+  "hypothesis": "No candidate selected. Five physically distinct geological mechanism families were screened against local/peer source code, scripts, preregistrations, experiment records and raster registries; none is cleared as novel and eligible.",
+  "mechanism": "No new mechanism was implemented or evaluated. Frozen HTCADS-K2 remains the only assigned lane; its registered 37,654-dot budget fails the literal 70% novelty gate before a surface or placement is built.",
+  "named_non_fault_mimic": "No candidate was fitted or scored. Named mimics and controls for each screened mechanism are documented in research/2026-10-29_focus-nine-hypotheses.md.",
   "holdout_dti": null,
   "holdout_ci95": null,
-  "holdout_status": "Not measured on 2026-10-28: the mandatory pre-placement novelty gate fails first. No model fit, dot placement, TIFF emission, or weekly slot use.",
+  "holdout_status": "NOT RUN locally: mandatory pre-placement novelty gate stopped first at a 31,005/37,654 = 82.3418% witness overlap lower bound (>70%). No feature fit, canary, buffered whole-fault-segment holdout, or TIFF was run. The GEMSDOE32 H51-1 peer result is recorded separately and is not transferable to a candidate here.",
   "correlation_overlap_vs_registry": {
     "surface_pre_placement": null,
-    "surface_status": "Not built/replayed in this review; exact preflight lower bound is 82.3418% overlap at the frozen 37,654-dot budget, greater than the 70% cap.",
+    "surface_status": "NOT BUILT / NOT COMPUTED. The frozen-budget witness lower bound already exceeds the 70% dot-overlap cap; do not change budget or placement to evade it.",
     "prior_final_dots_spearman_vs_witness": -0.0007267409018060083,
     "prior_final_dots_overlap_vs_witness": 0.9996813087586977,
     "prior_dslup_final_dots_spearman_vs_witness": 0.0005034898206130378,
@@ -20,7 +20,7 @@
   },
   "raster_sha256": null,
   "validator_output": {
-    "new_raster": "not produced; no submission candidate",
+    "new_raster": "NOT PRODUCED; no candidate filename or approved download.",
     "prior_raster_exact_byte_audit": {
       "file": "kanlergems2-htcads-exp-2-37654dots-20261026T235227Z-11a2f251-zeros.tif",
       "sha256": "f482d3bad4b390470be06363b60867c8e42942101271caf4fa82ae3c3975abeb",
@@ -175,13 +175,144 @@
     },
     "parallel_pr36_policy_stop": "15,000-dot budget and intentional lattice-gap placement violate the frozen lane; no holdout or full-registry clearance.",
     "note": "All prior and parallel rasters are research artifacts only; range/grid checks are not portal acceptance.",
-    "scope_note": "Historical exact-byte checks remain archived. No new surface, candidate, holdout, full-registry audit, or organizer acceptance was performed on 2026-10-28."
+    "scope_note": "Historical exact-byte checks remain archived. No new surface, candidate, holdout, full-registry audit, or organizer acceptance was performed on 2026-10-28.",
+    "approval_status": "DO NOT SUBMIT. No candidate exists; historical downloads are research only."
   },
   "submission_name": null,
-  "note": "No new TIFF; preflight is forced duplicate. Do not submit any existing file.",
+  "note": "N/A \u2014 no submission candidate, filename, download, or slot authorization exists.",
   "experiments_run": 0,
   "maximum_experiments": 3,
   "weekly_slots_spent_this_session": 0,
   "ok_to_submit": false,
-  "verdict": "negative"
+  "verdict": "negative",
+  "leaderboard_estimate": null,
+  "leaderboard_estimate_status": "NOT ESTIMABLE. No new local holdout and no defensible calibration from a local/peer HOLDOUT-DTI value to an organizer leaderboard score.",
+  "new_geotiff_created": false,
+  "new_candidate_filename": null,
+  "approved_download": null,
+  "preflight_result": {
+    "lane": "HTCADS-K2",
+    "frozen_candidate_dot_budget": 37654,
+    "witness_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "footprint_pixels": 5167373,
+    "pixels_outside_witness_3px_halo": 6649,
+    "minimum_overlap_dots": 31005,
+    "minimum_overlap_fraction": 0.8234184947150369,
+    "overlap_limit_fraction": 0.7,
+    "result": "FAIL_CLOSED before model fitting, placement, surface novelty comparison, or final-dot checks",
+    "budget_or_placement_changed": false
+  },
+  "current_source_refresh": {
+    "checked_utc": "2026-10-29T02:54:09Z",
+    "method": "Read-only git ls-remote HEAD plus targeted current-head review; no official leaderboard refresh.",
+    "all_nine_focus_heads_differ_from_historical_pinned_refs": true,
+    "heads": {
+      "GEMSDOE24": "5e3fa8ff58acddb2d95a1eed30ca98a40ff14421",
+      "GEMSDOE25": "fb1db37274776a29dbc48abe55b2e531f2ba6aad",
+      "GEMSDOE27": "6704fa2a5133e751df2516feb2e32565ad5fc1df",
+      "GEMSDOE28": "9509b73eaf35f66d0b23fce63b2540ceff2a88e0",
+      "GEMSDOE30": "31696c6541cfc54620ff850a748c51625461f27f",
+      "GEMSDOE31": "06930b9d03473a9313094a4f2312c4fc6efd4fbb",
+      "GEMSDOE32": "97597a066d1c61d2c226fdba349716f41b30c1c6",
+      "GEMSDOE33": "3eaf85efb49f364b84f8be04e8b084b12d0303b9",
+      "GEMSDOE36": "e280188adbbe762e6b7ac6f3b8e105e8e7915026"
+    },
+    "score_receipts_found": 0,
+    "full_fleet_registry_current": false,
+    "official_sources_refreshed": false,
+    "data_directory_present": false,
+    "submission_table": "evidence/submission_table_20261029.json"
+  },
+  "score_claim_status": {
+    "historical_highest_claim": "GEMSDOE32 0.2778, USER/OWNER-REPORTED; no receipt binds score to the B2 raster hash.",
+    "GEMSDOE28_0_2710": "CONFLICTED attribution: current page calls it a supplied claim; current score registry says current downloads are unscored/no own scored artifact; current page variant hash differs from historical pinned raster.",
+    "GEMSDOE31_0_2708": "USER-REPORTED, no receipt; H27-4 is cross-attributed in peer materials.",
+    "estimate": null
+  },
+  "peer_context_not_our_result": {
+    "repository": "buffedlizard55-lab/GEMSDOE32",
+    "artifact": "H51-1-EWSP downloadable TIFF",
+    "evidence_class": "PEER-REPORTED HOLDOUT-DTI and static saved-byte recheck; not a public score and not a local experiment.",
+    "fold_local_reemission_arm": {
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "withheld_positive_n": 22232,
+      "dti": 0.115134,
+      "ci95": [
+        0.101496,
+        0.128693
+      ],
+      "b2_proxy_dti": 0.099202,
+      "b2_proxy_ci95": [
+        0.085951,
+        0.112668
+      ],
+      "qualification": "Current peer status explicitly says this favorable arm is NOT the downloadable TIFF bytes."
+    },
+    "saved_byte_static_recheck": {
+      "evaluator_version": "GEMSDOE32-HIDE-RECOVER-v3.0",
+      "withheld_positive_n": 22232,
+      "h51_dti": 0.002289,
+      "h51_ci95": [
+        0.001847,
+        0.002676
+      ],
+      "b2_dti": 0.004515,
+      "b2_ci95": [
+        0.003837,
+        0.005278
+      ],
+      "paired_difference_ci95": null,
+      "qualification": "Peer static byte-level evaluator; H51 point estimate lower than B2; no paired difference interval supplied."
+    },
+    "secondary_sgmc_cal": {
+      "h51": 0.063032,
+      "b2": 0.064121,
+      "qualification": "Intervals overlap; diagnostic, not a leaderboard score."
+    },
+    "literal_lattice": "FAIL (>99% overlap in current peer status; exact rate differs across peer summary files).",
+    "sources": [
+      "/tmp/gems-focus32/registry/current_status.json",
+      "/tmp/gems-focus32/evidence/h51_ewsp_run_card.json",
+      "/tmp/gems-focus32/evidence/holdout_static_recheck_20261028.json"
+    ]
+  },
+  "hypothesis_screen": {
+    "path": "research/2026-10-29_focus-nine-hypotheses.md",
+    "physically_distinct_mechanism_families_screened": 5,
+    "cleared_as_novel_and_eligible": 0,
+    "numeric_holdout_or_leaderboard_forecasts": 0,
+    "experiment_authorized": false
+  },
+  "review_passes": [
+    {
+      "pass": 1,
+      "name": "source, score, and file-identity",
+      "result": "Nine current remote HEADs refreshed; no organizer receipts; G28/G31 attribution conflicts and G32 peer score/file correction preserved."
+    },
+    {
+      "pass": 2,
+      "name": "prior-art, preregistration, experiment-ledger, and raster-registry",
+      "result": "Five mechanism families have local/peer prior-art overlaps; no global novelty or complete current fleet audit claimed."
+    },
+    {
+      "pass": 3,
+      "name": "arithmetic, safety, and publication consistency",
+      "result": "82.3418% lower bound exceeds 70%; no surface, placement, experiment, holdout, TIFF, score estimate, or slot; public copy and structured card agree."
+    }
+  ],
+  "protocol_constraints_reaffirmed": {
+    "max_surface_abs_spearman": 0.9,
+    "max_final_dot_abs_spearman": 0.9,
+    "max_any_registry_raster_dot_overlap_within_3px": 0.7,
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "max_single_feature_canary_auc": 0.9,
+    "whole_fault_segments_with_buffer": true,
+    "catalogue_features_fold_visible_only": true,
+    "visible_fault_mask_pixel_exact": true,
+    "pooled_dti_alpha": 0.2,
+    "pooled_dti_beta": 0.8,
+    "triangular_kernel_m": 300,
+    "live_slot_requires_independent_selector_and_current_quota": true
+  }
 }

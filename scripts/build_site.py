@@ -33,7 +33,7 @@ def header(active: str) -> str:
 <nav class="nav" aria-label="Main navigation">{links}<a class="nav-link" href="https://github.com/kanlerxz87-cyber/KANLERGEMSDOE2">GitHub ↗</a></nav></div></header>'''
 
 
-REVIEW_NOTICE = """<section class="callout" role="note" aria-label="Current evidence correction"><strong>2026-10-28 review: DO NOT SUBMIT.</strong><p>This focus-nine review ran no new model experiment or holdout. A separate concurrent PR #53 added a 20,000-dot research TIFF, but it changes the frozen 37,654-dot budget to evade the literal lattice stop, has no holdout replay, and lacks full-registry clearance. Its own format receipt does not authorize submission. It is <strong>not an approved candidate</strong>. <a href="../evidence/pr53_artifact_review_20261028.md">Read the artifact review ↗</a> · <a href="../evidence/review_20261028.md">Read the three-pass review ↗</a>.</p><p>Historical leaderboard values are user-reported. No validated leaderboard estimate is available, and no organizer receipt ties the reported scores to file bytes.</p></section>"""
+REVIEW_NOTICE = """<section class="callout" role="note" aria-label="Current evidence correction"><strong>2026-10-29 review: DO NOT SUBMIT.</strong><p><strong>NO new TIFF is approved. New candidate filename: NONE. Approved download: NONE. Leaderboard-score estimate: NOT ESTIMABLE. Approval: DO NOT SUBMIT.</strong> No candidate raster, score, or surface was produced. The frozen 37,654-dot novelty preflight forces at least 31,005 dots (82.3418%) within 3 px of a registered witness, above the 70% limit; no budget or placement was changed. Surface correlation was not computed and final-dot uniqueness is not applicable, not passed. <a href="../evidence/review_20261029.md">Read the three-pass review ↗</a> · <a href="../evidence/submission_table_20261029.json">Read the refreshed focus-nine source/claim table ↗</a> · <a href="../research/2026-10-29_focus-nine-hypotheses.md">Read the five-mechanism prior-art screen ↗</a>.</p><p>Historical scores remain user/owner reports, not current standings or organizer receipts. GEMSDOE28's 0.2710 attribution is disputed. No validated leaderboard estimate is available. Historical downloads remain research-only; do not upload them.</p></section>"""
 
 
 def page(title: str, active: str, content: str, script: str = "") -> str:
@@ -61,7 +61,7 @@ FEED_SCRIPT = '''<script>
 
 
 def focus_table(rows: list[dict]) -> str:
-    """Render historical focus submissions without implying score calibration or authorization."""
+    """Render historical claims beside refreshed source heads, without score calibration or authorization."""
     result = []
     for row in rows:
         name = Path(row["path"]).name
@@ -79,15 +79,23 @@ def focus_table(rows: list[dict]) -> str:
             if row["strict_whole_array_finite_0_1"]
             else "nonstandard exterior encoding"
         )
+        score = row.get("owner_reported_score")
+        score_text = f"{score:.4f}" if isinstance(score, (float, int)) else "Unavailable"
+        claim_status = row.get("current_claim_status", "USER/OWNER-REPORTED; no organizer receipt")
+        claim_note = row.get("current_claim_review", "Historical claim; current attribution not verified.")
+        head = row.get("current_remote_head", "not refreshed")
+        head_url = row.get("current_head_url")
+        head_markup = (f'<a href="{esc(head_url)}"><span class="mono">{esc(head[:10])}</span> ↗</a>'
+                       if head_url else f'<span class="mono">{esc(head[:10])}</span>')
         overlap = 100 * row["max_directional_focus_overlap_within_3px"]
-        result.append(f'''<tr><td><strong><a href="{esc(row['site_url'])}">{esc(row['site'])} ↗</a></strong><small><a href="{esc(row['pinned_source_url'])}">Pinned source</a></small></td>
-<td class="file"><a href="{esc(link)}" download>{esc(name)}</a><small>Historical research download only · SHA-256 {esc(row['sha256'][:12])}…</small></td>
-<td><strong>{row['owner_reported_score']:.4f}</strong><small>USER/OWNER-REPORTED · no organizer receipt</small></td>
+        result.append(f'''<tr><td><strong><a href="{esc(row['site_url'])}">{esc(row['site'])} ↗</a></strong><small>Current source HEAD {head_markup}</small></td>
+<td class="file"><a href="{esc(link)}" download>{esc(name)}</a><small>Historical research download only · SHA-256 {esc(row['sha256'][:12])}… · pinned ref {esc(row['ref'][:10])}</small><small><a href="{esc(row['pinned_source_url'])}">Pinned source bytes</a></small></td>
+<td><strong>{esc(score_text)}</strong><small>USER/OWNER-REPORTED · no receipt binding claim to bytes</small><small>{esc(claim_status)}</small></td>
 <td><strong>Unavailable</strong><small>No defensible mapping from this holdout record to a leaderboard score; no estimate claimed</small></td>
-<td><strong>No</strong><small>{overlap:.2f}% of this raster's dots within 3 px of {esc(row['nearest_focus_site'])}</small></td>
+<td><strong>No</strong><small>{overlap:.2f}% of this raster's dots within 3 px of {esc(row['nearest_focus_site'])}; focus subset only</small></td>
 <td>{esc(exterior)}<small>Byte/grid check only; portal acceptance unverified</small></td>
 <td><span class="pill stop">Do not submit</span></td></tr>''')
-    return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site</th><th scope="col">File (research only)</th><th scope="col">Reported score</th><th scope="col">Leaderboard-score estimate</th><th scope="col">Unique vs focus sites?</th><th scope="col">Stored-value check</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
+    return f'''<div class="table-wrap"><table><thead><tr><th scope="col">Site / current source</th><th scope="col">Pinned historical file</th><th scope="col">Highest reported claim / status</th><th scope="col">Leaderboard-score estimate</th><th scope="col">Unique vs focus sites?</th><th scope="col">Stored-value check</th><th scope="col">Decision</th></tr></thead><tbody>{''.join(result)}</tbody></table></div>'''
 
 
 
@@ -477,6 +485,16 @@ def main() -> None:
         raise SystemExit("Research artifact missing or differs from current audit")
     if not pre["forced_duplicate"] or not prior["duplicate_under_literal_rule"]:
         raise SystemExit("Stop evidence changed; rerun review before building")
+    focus_refresh = json.loads((ROOT / "evidence/submission_table_20261029.json").read_text())
+    if (focus_refresh.get("schema") != "gems.submission-comparison.v3"
+            or focus_refresh.get("verdict") != "negative"
+            or focus_refresh.get("ok_to_submit") is not False
+            or focus_refresh.get("new_raster") is not None
+            or focus_refresh.get("leaderboard_estimate") is not None
+            or len(focus_refresh.get("focus_nine", [])) != 9
+            or any(row.get("current_head_url") != f"https://github.com/{row.get('repository')}/tree/{row.get('current_remote_head')}"
+                   for row in focus_refresh.get("focus_nine", []))):
+        raise SystemExit("The 2026-10-29 focus-nine refresh is incomplete or non-negative; refusing publication")
     if len(audit["focus_nine"]) != 9:
         raise SystemExit("The focus-site comparison is incomplete")
     replay = json.loads((ROOT / "evidence/review_20261028_replay.json").read_text())
@@ -494,7 +512,36 @@ def main() -> None:
     if len(fresh) != len(previous) or any(
             any(a.get(k) != b.get(k) for k in keys) for a, b in zip(fresh, previous)):
         raise SystemExit("Focus-site replay differs from the published comparison")
-    table = focus_table(previous)
+    refreshed = focus_refresh["focus_nine"]
+    refresh_keys = ("site", "path", "ref", "sha256", "owner_reported_score",
+                    "nearest_focus_site", "max_directional_focus_overlap_within_3px")
+    if len(refreshed) != len(previous) or any(
+            any(a.get(k) != b.get(k) for k in refresh_keys) for a, b in zip(refreshed, previous)):
+        raise SystemExit("2026-10-29 source refresh changed a historical artifact or focus geometry")
+    if not focus_refresh["source_refresh"].get("all_nine_heads_differ_from_historical_pinned_refs"):
+        raise SystemExit("Current focus-site heads were not all refreshed; refuse a current-source label")
+    if any(not row.get("current_head_changed_from_pinned_artifact_ref") for row in refreshed):
+        raise SystemExit("A focus-site head status is missing or stale")
+    table = focus_table(refreshed)
+    peer = focus_refresh["peer_context_not_our_result"]
+    fold = peer["initial_fold_local_reemission_arm"]
+    saved = peer["saved_byte_static_recheck"]
+    lattice_range = peer["literal_r13_lattice"]["reported_overlap_range_fraction"]
+    peer_section = (f'<section class="section"><div class="section-head"><div><div class="eyebrow">Peer evidence correction · not this repository\'s experiment</div>'
+                    f'<h2>GEMSDOE32 H51-1: the favorable fold-local number is not the downloaded TIFF</h2></div></div>'
+                    f'<div class="callout"><p>The initial peer run card reports fold-local re-emission HOLDOUT-DTI '
+                    f'<strong>{fold["pooled_dti"]:.6f}</strong> [{fold["ci95"][0]:.6f}, {fold["ci95"][1]:.6f}], '
+                    f'{esc(fold["evaluator_version"])}, N={fold["withheld_positive_n"]:,}, versus B2 proxy '
+                    f'{fold["same_card_b2_proxy_dti"]:.6f} [{fold["same_card_b2_proxy_ci95"][0]:.6f}, {fold["same_card_b2_proxy_ci95"][1]:.6f}]. '
+                    f'The current peer status explicitly corrects that this arm is <strong>not</strong> the emitted TIFF bytes. '
+                    f'The peer\'s static saved-byte recheck is H51 <strong>{saved["h51_candidate_dti"]:.6f}</strong> '
+                    f'[{saved["h51_candidate_ci95"][0]:.6f}, {saved["h51_candidate_ci95"][1]:.6f}] versus B2 '
+                    f'{saved["b2_reference_dti"]:.6f} [{saved["b2_reference_ci95"][0]:.6f}, {saved["b2_reference_ci95"][1]:.6f}] '
+                    f'({esc(saved["evaluator_version"])}, N={saved["withheld_positive_n"]:,}); no paired CI is supplied. '
+                    f'The saved file also fails the peer\'s literal r13 lattice rule; current peer summaries quote '
+                    f'{100*lattice_range[0]:.2f}%–{100*lattice_range[1]:.2f}% overlap, both above 70%. '
+                    f'This is peer-reported HOLDOUT-DTI/static audit evidence, not a public score, not a local result, '
+                    f'and not support for a leaderboard-score improvement. See the refreshed <a href="../evidence/submission_table_20261029.json">source table</a>.</p></div></section>')
     hptr_home, hptr_summary, hptr_research, hptr_irregular, hptr_feed = hptr_sections()
     lope_home, lope_summary, lope_irregular, lope_feed = lope_sections()
     trbvc_home, trbvc_summary, trbvc_research, trbvc_irregular, trbvc_feed = trbvc_sections()
@@ -590,11 +637,12 @@ def main() -> None:
 <article class="card"><div class="card-icon">03</div><h3>Performance</h3><p>Historical holdout results are proxy measurements, not scores for the hidden leaderboard. Their original fold predictions have not been independently replayed.</p></article></div></section>'''
 
     summary = f'''<div class="breadcrumb"><a href="index.html">Decision dashboard</a> &nbsp; / &nbsp; <span>Executive summary</span></div>
-<div class="page-intro"><div class="eyebrow">Decision brief · 28 October 2026</div><h1>What to download.<br>What not to submit.</h1><p><strong>NO new TIFF is approved. Do not submit any current download.</strong> Highest listed historical score: GEMSDOE32, 0.2778 USER/OWNER-REPORTED, not organizer-confirmed. It is not unique among the nine focus sites. A defensible leaderboard estimate for a new submission is unavailable.</p></div>
-<div class="callout red-callout"><strong>Current decision: do not submit; no new TIFF was generated in this review.</strong><p>The frozen lane's novelty preflight has an exact counting lower bound: at 37,654 dots, at least 31,005 (82.34%) must be within 3 px of the registered spacing-5 raster, above the literal 70% limit. The holdout was therefore not run, no model was fitted, no weekly slot was used, and no score estimate is claimed. This is a protocol stop, not a claim that a scientific model could never score higher if the conflict is resolved.</p><p><a href="../evidence/current_run_card.json">Current negative run card ↗</a> · <a href="../evidence/release_audit_20261028.json">Exact-byte release audit ↗</a> · <a href="../research/2026-10-28_focus-nine-hypotheses.md">Ranked next-experiment hypotheses ↗</a></p></div>
+<div class="page-intro"><div class="eyebrow">Decision brief · 29 October 2026</div><h1>What exists.<br>What is not approved.</h1><p><strong>New candidate filename: NONE. Approved download: NONE. New leaderboard-score estimate: NOT ESTIMABLE. Approval: DO NOT SUBMIT.</strong> The highest supplied historical claim is GEMSDOE32 0.2778, USER/OWNER-REPORTED—not an organizer receipt or current standing. GEMSDOE28's 0.2710 file attribution is disputed. No candidate is cleared as unique.</p></div>
+<div class="callout red-callout"><strong>Current decision: DO NOT SUBMIT; no new candidate TIFF was generated.</strong><p>The frozen HTCADS-K2 preflight proves a 31,005/37,654 (82.3418%) minimum 3-px overlap with one registered witness, above the 70% limit. No model, holdout, surface, placement, candidate, or live slot was produced. Surface rank correlation is not computed; final-dot uniqueness is not applicable, not passed. The frozen budget/placement was not altered.</p><p>All nine focus repositories' remote HEADs were refreshed, but historical score claims remain receipt-unverified and no official leaderboard refresh was performed. <a href="../evidence/current_run_card.json">Current negative run card ↗</a> · <a href="../evidence/submission_table_20261029.json">Refreshed focus-nine table ↗</a> · <a href="../evidence/review_20261029.md">Three-pass review ↗</a></p></div>
 {hptr_summary}
 {lope_summary}
 {trbvc_summary}
+{peer_section}
 {archive_notice}
 {parallel_notice}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Historical benchmark comparison</div><h2>Holdout evidence is not a submission recommendation.</h2></div></div>
@@ -616,13 +664,16 @@ def main() -> None:
 <div class="page-intro"><div class="eyebrow">Scientific review</div><h1>Better evidence, not a louder score.</h1><p><strong>DO NOT SUBMIT</strong> any current file. The competition predicts unmapped faults that may indicate geothermal resources. A heat anomaly or vent is not itself a confirmed fault.</p></div>
 <section class="section"><div class="section-head"><div><div class="eyebrow">Forensic analysis</div><h2>What could explain the reported 0.2778?</h2></div></div><div class="grid-two"><div class="card"><h3>What the raster bytes show</h3><p>GEMSDOE32's mask equals GEMSDOE25's after removing {audit['focus_lineage_geometry']['g25_to_g32_removed_pixels']:,} pixels at distance ≤2 px from the mirrored known-fault mask (XOR {audit['focus_lineage_geometry']['g32_b2_vs_g25_d28_filtered_by_distance_gt_2px_xor']:,}). GEMSDOE36 contains those dots plus {audit['focus_lineage_geometry']['g36_extra_pixels_over_g32']:,}. GEMSDOE25 and GEMSDOE30 have identical positive masks.</p></div>
 <div class="card"><h3>What remains unknown</h3><p>Thinning can reduce false-positive mass while retaining credit, but whether it caused the reported ordering is unknown. The hidden labels, an organizer receipt tying score to bytes, and the original replay are unavailable. We cannot establish that a new file will exceed 0.2778.</p></div></div></section>
-<section class="section"><div class="section-head"><div><div class="eyebrow">Ranked next experiments · method remains frozen to HTCADS-K2</div><h2>Four testable geological hypotheses</h2><p>Rank is qualitative research priority, not a numerical DTI forecast. Each remains unvalidated in this review; the top candidate was not fitted because the mandatory novelty preflight failed.</p></div></div><div class="grid-two">
-<article class="card"><div class="eyebrow">01 · highest priority · medium cost · existing inputs</div><h3>Height-persistent potential-field crest migration</h3><p><strong>Layers:</strong> cached <code>rtp</code>, <code>tmi_hg</code>, <code>iso_grav_anom</code>, <code>iso_grav_anom_hg</code>, <code>iso_grav_anom_vg</code>, plus available upward-continuation products. Measure ridge orientation and crest displacement/persistence across heights, not simply a static gradient magnitude. A buried, dipping fault may shift the potential-field crest with continuation height and project its near-surface trace beneath basin fill.</p><p><strong>Mimics:</strong> lithologic contacts, regional-field leveling seams, and magnetic remanence. <strong>Difference:</strong> explicit multi-height trajectory stability is an ablation of the frozen HT-CADS potential-field pillar; it must be tested separately, not assumed novel.</p><p class="note">Uses restored owner-mirror core/GeoDAWN layers; byte identity is recorded, official-source provenance is not independently authenticated here.</p></article>
-<article class="card"><div class="eyebrow">02 · medium priority · medium cost · owner-mirror data present</div><h3>Thermal transport-direction uncertainty</h3><p><strong>Layers:</strong> DOE GDR/INGENIOUS 2 m temperature probes and well/spring observations, <code>cond_surf</code>, terrain gradient, and structural ridge orientation. Compare a predeclared family of physically plausible up-gradient transport bearings and ask whether anomaly-to-structure convergence persists across bearings. This could target blind upflow offset from a mapped surface manifestation.</p><p><strong>Mimics:</strong> shallow groundwater flow, seasonal land-surface temperature, pumping, and conductive playa sediments. <strong>Difference:</strong> sensitivity/uncertainty analysis rather than the lane's deterministic hydraulic back-projection.</p><p class="note">The local owner mirror is listed present in the 2026-10-27 availability audit; confirm official GDR bytes and metadata before any model run. Official source: <a href="https://gdr.openei.org/submissions/1391">DOE GDR 1391 ↗</a>.</p></article>
-<article class="card"><div class="eyebrow">03 · lower priority · low–medium cost · existing inputs</div><h3>Hydrothermal alteration-edge / basement-step coincidence</h3><p><strong>Layers:</strong> GeoDAWN <code>TMI</code>, upward-continued magnetic data, radiometric <code>K/Th</code> (and relevant conductivity boundary), and gravity/magnetic cross-gradient. Test whether short-wavelength magnetic trough edges and radiometric alteration gradients coincide with a basement step, rather than scoring a broad thermal or alteration blob. Buried conduit margins may remain detectable where topographic scarps are absent.</p><p><strong>Mimics:</strong> unfaulted lithologic contacts, alteration unrelated to active permeability, and survey seams. <strong>Difference:</strong> an edge-coincidence interaction test, not an unconstrained radial anomaly or single-layer alteration score.</p><p class="note">GeoDAWN is an official USGS source; current local inputs are owner mirrors only. Source: <a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN ↗</a>.</p></article>
-<article class="card"><div class="eyebrow">04 · exploratory only · high cost · not currently viable</div><h3>Seasonal deformation barrier against structural conduits</h3><p><strong>Layers:</strong> NASA OPERA DISP-S1 time-series displacement gradients, <code>cond_surf</code>, and gravity-gradient structure. Seek repeatable cross-fault deformation discontinuities associated with buried hydraulic barriers, which could localize blind fault-fed circulation.</p><p><strong>Mimics:</strong> pumping/irrigation, atmospheric delay, decorrelation, and line-of-sight geometry. <strong>Difference:</strong> temporal InSAR rather than static GPS strain. The specific competition-footprint tile and aligned time series are not present in the audited availability inventory, so this is <strong>not viable for validation now</strong>.</p><p class="note">Free official source to check when access is available: <a href="https://www.earthdata.nasa.gov/data/projects/opera">NASA OPERA ↗</a>. No claim that the needed tile has been downloaded or verified.</p></article></div>
-<div class="callout"><strong>Validation and submission gate.</strong><p>The top hypothesis cannot be promoted on rationale alone. First resolve the frozen 37,654-dot versus literal registry-overlap contradiction; then reuse the cached feature stack and shared buffered segment holdout, run each feature alone as a leakage canary, and report HOLDOUT-DTI with evaluator version, withheld-positive count and 95% CI. No numeric gain or leaderboard projection is assigned before those steps. Weekly slot selection remains separate.</p></div>
-<p class="note"><a href="../research/2026-10-27_htcads_hypotheses.md">Prior preregistration and source/method notes ↗</a> · <a href="../registry/preregistration_htcads.json">Frozen HTCADS lane registration ↗</a></p></section>
+{peer_section}
+<section class="section"><div class="section-head"><div><div class="eyebrow">Current prior-art screen · no experiments authorized</div><h2>Five physically distinct geological mechanisms; zero cleared as novel and eligible</h2><p>These mechanisms differ physically, but source, script, preregistration, experiment-ledger, and available raster-registry checks found local or peer prior art for all five. They are not labeled “untried,” and none has a numeric HOLDOUT-DTI or leaderboard forecast.</p></div></div><div class="grid-two">
+<article class="card"><div class="eyebrow">01 · cross-strike structural / hydrothermal · medium–high cost</div><h3>Ordered basement step, alteration edge, and conductivity boundary</h3><p><strong>Layers:</strong> <code>depth_to_base_surf</code>, gravity/magnetic gradients, GeoDAWN K/Th, <code>cond_surf</code>. A concealed fault may order deep block offset, shallow alteration, and an asymmetric clay-cap edge under alluvium. <strong>Mimics:</strong> lithologic contacts, playa clays, and survey seams. <strong>Prior art:</strong> HTCADS/DARP, GEMSDOE24 XFRONT/MTR1, and GEMSDOE52 basement/conductivity families. Official GeoDAWN/GDR links exist, but current official bytes/footprint were not verified; local data cache is absent. <strong>Disposition:</strong> overlap; not cleared.</p></article>
+<article class="card"><div class="eyebrow">02 · potential-field signal structure · low–medium cost</div><h3>Low-amplitude multi-scale phase ridges</h3><p><strong>Layers:</strong> <code>rtp</code>, <code>tmi_hg</code>/<code>tmi_vg</code>, gravity derivatives, basement depth. Phase-coherent weak edges could retain blind-fault geometry where amplitudes change. <strong>Mimics:</strong> dikes, lithologic contacts, remanence, seams. <strong>Prior art:</strong> current GEMSDOE33 PHCONG code and 2026-10-28 runs, plus GEMSDOE45 phase-parity and GEMSDOE26 XEDGE. Computation is modest, but the required competition-band cache is absent. <strong>Disposition:</strong> implemented/reported elsewhere; not new.</p></article>
+<article class="card"><div class="eyebrow">03 · transtensional kinematics · low cost</div><h3>Fault-relative extensional dilation share</h3><p><strong>Layers:</strong> <code>geod_dilaterate</code>, <code>geod_shearrate</code>, <code>geod_2ndinv</code>, visible-only structural orientation. Relay-zone extension may differ from shear along concealed faults. <strong>Mimics:</strong> magmatic inflation, groundwater loading, and smooth GNSS artifacts. <strong>Prior art:</strong> local HTCADS, DARP, and FVCA hypothesis/experiment records, with related peer work. Bands are not cached locally and their official bytes were not refreshed. <strong>Disposition:</strong> existing local mechanism family; not untried.</p></article>
+<article class="card"><div class="eyebrow">04 · geomorphic expression · medium–high cost</div><h3>Alluvial-fan channel vorticity and knickzones</h3><p><strong>Layers:</strong> <code>det_elev</code>, slope, USGS 3DEP DEM / LiDAR. Multiple channel deflections may preserve low-slip fault traces after scarps erode. <strong>Mimics:</strong> capture, lithology, shorelines, roads, and ditches. <strong>Prior art:</strong> exact local HTCADS H-K4 and ECPU H-N3 preregistrations; local GMV D8 features and peer DKRn1/piedmont work. H-K4 is registered/deferred; no completed H-K4 run was located. USGS 3DEP source is public, but no current tile was verified. <strong>Disposition:</strong> registered, not cleared.</p></article>
+<article class="card"><div class="eyebrow">05 · temporal hydrogeodesy · high cost / unavailable here</div><h3>Seasonal OPERA deformation across an aquifer barrier</h3><p><strong>Layers:</strong> NASA OPERA DISP-S1 time series, <code>cond_surf</code>, gravity-gradient structure. A fault-gouge barrier may create a repeatable seasonal displacement phase step on flat basin floors. <strong>Mimics:</strong> pumping, compaction, atmosphere, decorrelation, and LOS geometry. <strong>Prior art:</strong> already deferred as local HTCADS H-K5 / OPERA-poroelastic preregistration; no usable tile, time series, or local run was found. NASA OPERA is an official starting point, but host access and footprint data are not verified. <strong>Disposition:</strong> deferred/outside available data lane.</p></article></div>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Pinned peer results · not this repository's experiments</div><h2>Related mechanisms have measured negatives and unresolved gates</h2><p>These peer values are labeled with their own evaluator, withheld-positive count, and confidence interval. They are not leaderboard scores and are not transferable estimates for this lane.</p></div></div><div class="table-wrap"><table><thead><tr><th>Prior mechanism / source</th><th>Peer HOLDOUT-DTI</th><th>Paired decision / separate gate</th></tr></thead><tbody><tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE52/blob/47f575c137d576e5664ceca11bea4008f235fa55/knowledge/82_h93_results_and_limits.md">GEMSDOE52 H93-ABS (signed basement-step channels)</a></td><td>0.177930 [0.157748, 0.199356], evaluator <code>gems52-pooled-hide-v1</code>, N=53,186 withheld positives; 300 m triangular kernel, alpha 0.2 / beta 0.8.</td><td>Paired Δ vs single-B +0.003358 [−0.001668, +0.008780]: CI crosses zero, so preregistered promotion rule fails. Peer reports 72.75% 3-px overlap with its comparison raster (>70%); no transfer claim.</td></tr><tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/blob/3eaf85efb49f364b84f8be04e8b084b12d0303b9/knowledge/30_phcong_results_20261028.md">GEMSDOE33 PHCONG (multi-scale phase congruency)</a></td><td>Confirmation 0.170588 [0.163996, 0.176581], evaluator <code>gems-segment-pooled-v1</code>, N=60,988 withheld positives.</td><td>Paired Δ vs matched-random −0.011098 [−0.016260, −0.006098], 0/4 folds: promote withdrawn. The same report records PHCONGDT Δ −0.009834 [−0.015758, −0.003545], also negative.</td></tr><tr><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/blob/3eaf85efb49f364b84f8be04e8b084b12d0303b9/knowledge/31_r7_pcsup_lane_correction_20261028.md">GEMSDOE33 PCSUP correction</a></td><td>Exploratory confirmation 0.163037 [0.150701, 0.175697], evaluator <code>gems-segment-pooled-v1</code>, N=60,988 withheld positives.</td><td>Exploratory paired Δ vs CELF-random −0.010163 [−0.022979, +0.002861]; pre-placement surface overlap 86.0838% >70%. Fails novelty and promotion; final-dot pass cannot cure the surface stop.</td></tr></tbody></table></div></section>
+<div class="callout"><strong>Validation and submission gate.</strong><p>The frozen 37,654-dot witness bound already exceeds the literal 70% stop. Do not fit or emit a file, change budget/placement, or use a submission slot. If a future compatible lane is explicitly authorized, use the shared cached features and writer, fold-visible-only catalogue features, pixel-exact visible-fault masking, buffered whole-fault-segment holdout, pooled DTI with alpha 0.2 / beta 0.8 and the 300 m triangular kernel, and per-feature leakage canaries (AUC &gt;0.90 is leakage until explained). Report evaluator/version, withheld-positive N, and 95% CI; separately verify pre-placement surface rank and post-placement dot novelty against a complete current registry. Stop at three experiments or 7,200 s. Require an independent selector and current quota before any live slot.</p></div>
+<p class="note"><a href="../research/2026-10-29_focus-nine-hypotheses.md">Full layers, mechanisms, mimics, prior-work differences, costs, and source-access review ↗</a> · <a href="../registry/preregistration_htcads.json">Unchanged frozen HTCADS lane registration ↗</a> · <a href="../evidence/submission_table_20261029.json">Focus-nine current-head source table ↗</a></p></section>
 {hptr_research}
 {trbvc_research}
 <section class="section"><div class="section-head"><div><div class="eyebrow">Source library</div><h2>Official sources for review</h2></div></div><div class="card"><ul class="sources">
@@ -672,6 +723,17 @@ def main() -> None:
         },
         "reason": f"Literal lattice overlap {100*s2_audit['witness_overlap_fraction']:.3f}%; budget lower bound {bound:.2f}% > 70%.",
         "run_card": "../../evidence/current_run_card.json", "public_leaderboard": "public_leaderboard.json",
+        "new_candidate_filename": None, "approved_download": None,
+        "leaderboard_estimate": None,
+        "leaderboard_estimate_status": focus_refresh["leaderboard_estimate_status"],
+        "submission_approval": "DO NOT SUBMIT",
+        "focus_nine_source_refresh": {
+            "generated_utc": focus_refresh["generated_utc"],
+            "all_nine_heads_changed": focus_refresh["source_refresh"]["all_nine_heads_differ_from_historical_pinned_refs"],
+            "table": "../../evidence/submission_table_20261029.json",
+            "organizer_receipts_found": focus_refresh["source_refresh"]["organizer_submission_receipts_found"],
+            "official_leaderboard_refreshed": focus_refresh["source_refresh"]["official_leaderboard_refreshed"],
+        },
     }
     # The old lane cards contain abbreviated and sometimes improperly labeled
     # proxy figures. Preserve identity/verdict only in the current feed; detailed
@@ -693,15 +755,12 @@ def main() -> None:
     (DOCS / "data").mkdir(exist_ok=True)
     (DOCS / "data/status_feed.json").write_text(json.dumps(feed, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     (DOCS / "data/current_run_card.json").write_text(json.dumps(card, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    table_data = {
-        "schema": "gems.submission-comparison.v2", "generated_utc": card["generated_utc"],
-        "verdict": "negative", "ok_to_submit": False, "new_raster": None,
-        "leaderboard_estimate": None,
-        "warning": "Historical scores are user/owner reports without receipts; files are research only.",
-        "previous_artifact": prior, "focus_nine": audit["focus_nine"],
-    }
-    (ROOT / "evidence/submission_table_20261027.json").write_text(json.dumps(table_data, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    print("Built seven fail-closed pages from exact-byte audit", audit["generated_utc"])
+    # Preserve the historical 2026-10-27 table byte-for-byte; publish the
+    # refreshed current-head claims under their own date and schema instead.
+    (ROOT / "evidence/submission_table_20261029.json").write_text(
+        json.dumps(focus_refresh, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    print("Built seven fail-closed pages from exact-byte audit and current focus-nine source refresh",
+          focus_refresh["generated_utc"])
 
 
 if __name__ == "__main__":

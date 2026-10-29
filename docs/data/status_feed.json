@@ -1,6 +1,6 @@
 {
   "schema": "gems.current-status.v3",
-  "generated_utc": "2026-10-28T16:16:54Z",
+  "generated_utc": "2026-10-29T03:14:02Z",
   "verdict": "negative",
   "validated_ok_to_download_and_submit": false,
   "ok_to_submit": false,
@@ -38,6 +38,18 @@
   "reason": "Literal lattice overlap 99.981%; budget lower bound 82.34% > 70%.",
   "run_card": "../../evidence/current_run_card.json",
   "public_leaderboard": "public_leaderboard.json",
+  "new_candidate_filename": null,
+  "approved_download": null,
+  "leaderboard_estimate": null,
+  "leaderboard_estimate_status": "NOT ESTIMABLE; no new local candidate/holdout, no organizer receipt, and no defensible mapping from a local or peer holdout to the public score.",
+  "submission_approval": "DO NOT SUBMIT",
+  "focus_nine_source_refresh": {
+    "generated_utc": "2026-10-29T02:54:09Z",
+    "all_nine_heads_changed": true,
+    "table": "../../evidence/submission_table_20261029.json",
+    "organizer_receipts_found": 0,
+    "official_leaderboard_refreshed": false
+  },
   "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
   "latest_run_card": "../../evidence/run_card_20261028_preflight.json",
   "kg2s3_hptr_lane": {

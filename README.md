@@ -1,19 +1,21 @@
 # KANLERGEMSDOE2 — DOE GEMS fault discovery
 
-> **Separate concurrent artifact — NOT APPROVED.** PR #53 added a 20,000-dot blind-interior TIFF, but its generator changes the frozen 37,654-dot budget to bypass the literal lattice lower-bound stop. It has no holdout replay, and its local 29-raster check is not full-registry clearance. Its own format receipt says `submission_authorized: false`. This focus-nine review did not create or test that artifact; do not treat it as a candidate. See [the audit note](evidence/pr53_artifact_review_20261028.md) and [its run card](evidence/run_card_unique_7da04408edc9.json).
-
-> **DO NOT SUBMIT.** No file is cleared. The research HPTR TIFF is not unique under the literal rule, and no new file or reliable leaderboard estimate was produced this session. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop. Historical proxy comparisons do not establish a leaderboard win. [Executive summary](EXECUTIVE_SUMMARY.md) · [GitHub Pages dashboard](docs/index.html)
+> **CURRENT STATUS — 2026-10-29: DO NOT SUBMIT.** New candidate filename: **NONE**. Approved download: **NONE**. New leaderboard-score estimate: **NOT ESTIMABLE**. No candidate surface, dots, holdout, TIFF, or live slot exists. Surface novelty was not computed; final-dot novelty is not applicable, not passed. The frozen 37,654-dot preflight forces at least 82.3418% overlap with one registered raster, above the 70% limit. See the [three-pass review](evidence/review_20261029.md), [refreshed nine-site claims and current remote HEADs](evidence/submission_table_20261029.json), and [five-mechanism prior-art screen](research/2026-10-29_focus-nine-hypotheses.md).
+>
+> **Historical parallel artifact — NOT APPROVED.** PR #53 added a 20,000-dot blind-interior TIFF, but its generator changes the frozen 37,654-dot budget to bypass the literal lattice lower-bound stop. It has no holdout replay, and its local 29-raster check is not full-registry clearance. Its own format receipt says `submission_authorized: false`. This review did not create or test that artifact; do not treat it as a candidate. See [the audit note](evidence/pr53_artifact_review_20261028.md) and [its run card](evidence/run_card_unique_7da04408edc9.json).
+>
+> The [executive summary](EXECUTIVE_SUMMARY.md) and [GitHub Pages dashboard](docs/index.html) use the same explicit negative decision. Historical proxy comparisons do not establish a leaderboard win; no organizer receipt binds the reported scores to the listed file hashes.
 
 ## Start here
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
-- [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md)
-- [Concurrent independent review](REVIEW_2026-10-28.md) · [artifact numeric inspection](evidence/review_run_card_20261028.json) · [parallel preflight replay](evidence/preflight_replay_20261028.json)
-- [This session’s negative run card](evidence/run_card_20261028_review.json) · [independent replay and three-pass review](evidence/review_20261028_lattice_and_site.md)
-- [Previous negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261028.json)
+- [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md) · [2026-10-29 three-pass review](evidence/review_20261029.md)
+- [Refreshed score claims / current HEAD table](evidence/submission_table_20261029.json) · [five-mechanism prior-art screen](research/2026-10-29_focus-nine-hypotheses.md)
+- [Previous concurrent review](REVIEW_2026-10-28.md) · [artifact numeric inspection](evidence/review_run_card_20261028.json) · [parallel preflight replay](evidence/preflight_replay_20261028.json)
+- [Current negative JSON run card](evidence/current_run_card.json) · [independent replay and three-pass review](evidence/review_20261028_lattice_and_site.md) · [exact-byte release audit](evidence/release_audit_20261028.json)
 - [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
 - [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)
-- [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [four focus-nine hypotheses](research/2026-10-28_focus-nine-hypotheses.md) · [focus-nine evidence supplement](evidence/review_20261028_focus_nine.md) · [source catalog](registry/source_catalog_20261027.json)
+- [Historical preregistration notes](research/2026-10-27_htcads_hypotheses.md) · [superseded 2026-10-28 slate](research/2026-10-28_focus-nine-hypotheses.md) · [focus-nine evidence supplement](evidence/review_20261028_focus_nine.md) · [dated source catalog](registry/source_catalog_20261027.json)
 
 ## Why the release stopped
 
@@ -25,11 +27,15 @@ Two concurrent PRs added research TIFFs while this review was underway. **Neithe
 
 ## What the scores do and do not establish
 
-The **0.2778** attributed to GEMSDOE32 is USER/OWNER-REPORTED; no organizer receipt ties it to a file hash. Exact mask analysis shows GEMSDOE32 is GEMSDOE25 with 6,436 dots near the mirrored known-fault mask removed, but cannot reveal the hidden-label cause of the reported score. GEMSDOE25 and 30 have identical positive masks; GEMSDOE36 contains the GEMSDOE32 mask plus 1,200 dots.
+The **0.2778** attributed to GEMSDOE32 is USER/OWNER-REPORTED; no organizer receipt ties it to the B2 file hash. Exact mask analysis shows GEMSDOE32 is GEMSDOE25 with 6,436 dots near the mirrored known-fault mask removed, but cannot reveal the hidden-label cause of the reported score. GEMSDOE25 and 30 have identical positive masks; GEMSDOE36 contains the GEMSDOE32 mask plus 1,200 dots.
+
+All nine requested peer repository HEADs were refreshed on 2026-10-29 and differ from the historical artifact refs. This is a source update, not a live standings check. **GEMSDOE28's 0.2710 is a disputed supplied claim:** its current page retains the claim but its current score registry says its current downloads are unscored/no own scored artifact, and the current all-finite page file has a different hash from the old pinned NaN-outside file. The 0.2708 H27-4 site/file attribution is also unresolved. Do not promote either as organizer-confirmed.
+
+A current GEMSDOE32 peer correction says its favorable H51-1 **HOLDOUT-DTI 0.115134** is a fold-local re-emission arm, **not** the downloadable TIFF. The peer's saved-byte static recheck reports 0.002289 [0.001847, 0.002676] for the H51 TIFF versus 0.004515 [0.003837, 0.005278] for B2 under that peer evaluator (N=22,232); the saved file also fails the peer's literal r13 lattice rule. This peer evidence is not our experiment or a leaderboard score and does not support a public-score improvement.
 
 The archived DSLUP procedure reports **HOLDOUT-DTI 0.125925**, `GEMSDOE32-HIDE-RECOVER-v3.0`, 22,232 withheld-positive occurrences, 95% CI [0.112880, 0.138176]. Another historical KG2 benchmark reports **HOLDOUT-DTI 0.177056**, `gems-segment-pooled-v1`, 60,988 withheld-positive pixels, 95% CI [0.163673, 0.190831]. The two evaluators and populations differ, so these values are not directly comparable. Neither original OOF prediction set has been independently replayed here. Neither is a leaderboard score or a validated estimate for any new submission. SGMC prevalence-calibrated numbers rely on an **unverified inferred hidden-truth count** and are research transformations, not measured holdout DTI, organizer scores, or valid promotion gates.
 
-The public leaderboard observed on 2026-10-27 had #1 **0.4544** and #5 **0.3566**; those public observations do not confirm any of this repository's file scores. The scheduled [feed](docs/data/public_leaderboard.json) preserves the last observed timestamp and marks refresh failures; always consult the [official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
+The latest local public-leaderboard snapshot is dated 2026-10-28 00:05 UTC: #1 **0.4544**, #5 **0.3566**, #25 **0.3195**. It was not refreshed on 2026-10-29 and does not confirm any focus-site file scores. The [feed](docs/data/public_leaderboard.json) is a dated snapshot, not a live board; consult the [official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) only through authorized access.
 
 ## Safe workflow and current limitations
 
@@ -78,6 +84,8 @@ The following prior-session prompt record is retained as it appeared before this
 
 See also [`PROMPT.md`](PROMPT.md).
 
+> **Current conditional enforcement (2026-10-29):** The historical “MUST GENERATE” wording below is not authorization to bypass a failing gate. Generate a candidate only if every frozen-lane, novelty, holdout, leakage, format, and approval gate passes. If any gate fails, candidate filename and approved download are **NONE**; clearly state **DO NOT SUBMIT**. Never change the frozen budget or placement to evade a stop.
+>
 > **Core Values:** **Maximize P(Win)** and **Own the Outcome**. No human-inspection fallback exists: automated validation gates fail closed.
 >
 > Review the repo and execute any next steps from previous sessions first.
