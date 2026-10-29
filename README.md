@@ -2,15 +2,16 @@
 
 > **Separate concurrent artifact — NOT APPROVED.** PR #53 added a 20,000-dot blind-interior TIFF, but its generator changes the frozen 37,654-dot budget to bypass the literal lattice lower-bound stop. It has no holdout replay, and its local 29-raster check is not full-registry clearance. Its own format receipt says `submission_authorized: false`. This focus-nine review did not create or test that artifact; do not treat it as a candidate. See [the audit note](evidence/pr53_artifact_review_20261028.md) and [its run card](evidence/run_card_unique_7da04408edc9.json).
 
-> **DO NOT SUBMIT.** No file is cleared. The research HPTR TIFF is not unique under the literal rule, and no new file or reliable leaderboard estimate was produced this session. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop. Historical proxy comparisons do not establish a leaderboard win. [Executive summary](EXECUTIVE_SUMMARY.md) · [GitHub Pages dashboard](docs/index.html)
+> **2026-10-29 review: DO NOT SUBMIT.** No file is cleared and no unique TIFF was generated: the frozen 37,654-dot lane is mathematically blocked by the literal any-registry 70% rule (minimum 82.34% overlap with one pinned owner-mirror witness). We stopped before model fitting, new holdout, or dot placement. No defensible leaderboard estimate exists. See the [current three-pass audit](evidence/review_20261029.md), [candidate-hypothesis screen](research/2026-10-29_candidate_hypothesis_screen.md), [current run card](evidence/current_run_card.json), [nine-site executive summary](EXECUTIVE_SUMMARY.md), and [GitHub Pages dashboard](docs/index.html).
 
 ## Start here
 
 - [GitHub Pages decision dashboard](https://kanlerxz87-cyber.github.io/KANLERGEMSDOE2/) · [local dashboard source](docs/index.html)
 - [Executive summary and nine-site comparison](EXECUTIVE_SUMMARY.md)
+- [Current three-pass review (2026-10-29)](evidence/review_20261029.md) · [current negative Run Card](evidence/current_run_card.json) · [archived 2026-10-28 Run Card](evidence/run_card_20261028_review_archive.json) · [candidate-hypothesis screen](research/2026-10-29_candidate_hypothesis_screen.md)
 - [Concurrent independent review](REVIEW_2026-10-28.md) · [artifact numeric inspection](evidence/review_run_card_20261028.json) · [parallel preflight replay](evidence/preflight_replay_20261028.json)
 - [This session’s negative run card](evidence/run_card_20261028_review.json) · [independent replay and three-pass review](evidence/review_20261028_lattice_and_site.md)
-- [Previous negative JSON run card](evidence/current_run_card.json) · [exact-byte release audit](evidence/release_audit_20261028.json)
+- [Previous dated preflight card](evidence/run_card_20261028_preflight.json) · [exact-byte release audit](evidence/release_audit_20261028.json)
 - [DSLUP revalidation](evidence/dslup_literal_revalidation_20261027.json) · [three-pass review](evidence/review_20261027_session3.md)
 - [Standing prompt and values](PROMPT.md) · [frozen lane and protocol](registry/preregistration_htcads.json) · [preregistration status](registry/PREREGISTRATION_STATUS.md)
 - [Ranked hypotheses](research/2026-10-27_htcads_hypotheses.md) · [four focus-nine hypotheses](research/2026-10-28_focus-nine-hypotheses.md) · [focus-nine evidence supplement](evidence/review_20261028_focus_nine.md) · [source catalog](registry/source_catalog_20261027.json)
