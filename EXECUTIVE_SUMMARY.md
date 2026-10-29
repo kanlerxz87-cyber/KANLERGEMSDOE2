@@ -1,6 +1,6 @@
 # Executive summary — submission decision
 
-> **DO NOT SUBMIT.** No file is cleared for upload. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop; historical proxies do not establish a leaderboard win. The reported scores below are user/owner-reported, not organizer-confirmed. No credible leaderboard estimate is available for a new candidate.
+> **Current review: 2026-10-29 — DO NOT SUBMIT.** The three-pass audit, current Run Card, and conditional candidate screen are [here](evidence/review_20261029.md), [here](evidence/current_run_card.json), and [here](research/2026-10-29_candidate_hypothesis_screen.md). No new candidate is cleared for upload. The [independent replay](evidence/review_20261028_replay.json) confirms the lattice stop; historical proxies do not establish a leaderboard win. The reported scores below are user/owner-reported, not organizer-confirmed. No credible leaderboard estimate is available for a new candidate.
 
 The prior HPTR research TIFF ([download for research only](docs/downloads/kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif)) is locally finite and matches the owner-mirror grid, but 37,640 of 37,654 dots (99.963%) overlap the lattice within 3 pixels. Its surface and holdout were not replayed. The SGMC-CAL transform relies on an inferred hidden-truth count and is not measured HOLDOUT-DTI. [Archived card](evidence/session3_hptr_run_card_20261027.json).
 

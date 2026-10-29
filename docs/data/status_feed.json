@@ -1,6 +1,6 @@
 {
   "schema": "gems.current-status.v3",
-  "generated_utc": "2026-10-28T16:16:54Z",
+  "generated_utc": "2026-10-29T02:31:45Z",
   "verdict": "negative",
   "validated_ok_to_download_and_submit": false,
   "ok_to_submit": false,
@@ -39,7 +39,7 @@
   "run_card": "../../evidence/current_run_card.json",
   "public_leaderboard": "public_leaderboard.json",
   "latest_preflight_review": "../../evidence/preflight_replay_20261028.json",
-  "latest_run_card": "../../evidence/run_card_20261028_preflight.json",
+  "latest_run_card": "../../evidence/current_run_card.json",
   "kg2s3_hptr_lane": {
     "filename": "kanlergems2-hptr-exp-2-37654dots-20261028T014401Z-675d0ff8-zeros.tif",
     "sha256": "2d53632cb161a2172806bae5e82f8c456d5717112504f45ca7ec91a1c1ba8ff3",
